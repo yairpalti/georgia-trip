@@ -40,7 +40,7 @@ const ROUTE_COORDS = [
 const DAY_COLORS = {
   1: "#e74c3c",
   2: "#e67e22",
-  3: "#f39c12",
+  3: "#2980b9",
   4: "#27ae60",
   5: "#1abc9c",
   6: "#3498db",

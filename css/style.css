@@ -1057,6 +1057,37 @@ img {
   margin-bottom: 0;
 }
 
+.story-section {
+  margin: 1.25rem 0;
+}
+
+.story-section h3 {
+  font-size: 1.05rem;
+  color: var(--wine-dark);
+  margin: 0 0 0.5rem;
+}
+
+.story-subsection {
+  margin: 0.75rem 0 0;
+  padding-right: 0.75rem;
+}
+
+.story-subsection h4 {
+  font-size: 0.95rem;
+  color: var(--forest);
+  margin: 0 0 0.35rem;
+}
+
+.story-section-list {
+  margin: 0;
+  padding-right: 1.25rem;
+}
+
+.story-section-list li {
+  margin-bottom: 0.45rem;
+  line-height: 1.55;
+}
+
 .story-links {
   list-style: none;
   padding: 0;

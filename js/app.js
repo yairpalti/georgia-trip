@@ -204,6 +204,36 @@ function renderStoryGallery(gallery) {
   `;
 }
 
+function renderStorySections(sections) {
+  if (!sections?.length) return "";
+  return sections
+    .map(
+      (section) => `
+    <div class="story-section">
+      <h3>${section.title}</h3>
+      ${
+        section.items?.length
+          ? `<ul class="story-section-list">${section.items.map((item) => `<li>${item}</li>`).join("")}</ul>`
+          : ""
+      }
+      ${
+        section.subsections?.length
+          ? section.subsections
+              .map(
+                (sub) => `
+        <div class="story-subsection">
+          <h4>${sub.title}</h4>
+          <ul class="story-section-list">${sub.items.map((item) => `<li>${item}</li>`).join("")}</ul>
+        </div>`
+              )
+              .join("")
+          : ""
+      }
+    </div>`
+    )
+    .join("");
+}
+
 function renderStoryFrame(story, index) {
   return `
     <article class="story-frame">
@@ -221,6 +251,7 @@ function renderStoryFrame(story, index) {
       ${story.image ? renderImg(story.image, "story-hero-img") : ""}
       <div class="story-body">
         ${(story.paragraphs || []).map((p) => `<p>${p}</p>`).join("")}
+        ${renderStorySections(story.sections)}
         ${renderStoryLinks(story.links)}
         ${renderStoryGallery(story.gallery)}
       </div>
