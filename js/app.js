@@ -88,8 +88,33 @@ function getDayById(id) {
   return DAYS.find((d) => d.id === id);
 }
 
+function enrichDay(day) {
+  if (!day || typeof DAY_ENRICHMENT === "undefined") return day;
+  const e = DAY_ENRICHMENT[day.id];
+  if (!e) return day;
+
+  const activities = (day.activities || []).map((a, i) => ({
+    ...a,
+    ...(e.activityExtras?.[i] || {}),
+  }));
+  if (e.extraActivities?.length) activities.push(...e.extraActivities);
+
+  const restaurants = [...(day.restaurants || []), ...(e.extraRestaurants || [])];
+  const hotels = [...(day.hotels || []), ...(e.extraHotels || [])];
+
+  return {
+    ...day,
+    summary: e.summary || day.summary,
+    tips: e.tips || day.tips || [],
+    heroImage: e.heroImage || day.heroImage,
+    activities,
+    restaurants,
+    hotels,
+  };
+}
+
 function renderDayPage(dayId) {
-  const day = getDayById(dayId);
+  const day = enrichDay(getDayById(dayId));
   if (!day) {
     document.getElementById("day-content").innerHTML =
       "<p>היום לא נמצא. <a href='index.html'>חזרה לדף הבית</a></p>";
@@ -187,19 +212,22 @@ function renderDaysGrid() {
   if (!grid) return;
 
   grid.innerHTML = DAYS.map(
-    (day) => `
+    (day) => {
+      const d = enrichDay(day);
+      return `
     <article class="day-card">
       <div class="day-card-header">
-        <div class="day-card-num">${day.emoji} יום ${day.id} · ${day.date} (${day.weekday})</div>
-        <h3 class="day-card-title">${day.title}</h3>
+        <div class="day-card-num">${d.emoji} יום ${d.id} · ${d.date} (${d.weekday})</div>
+        <h3 class="day-card-title">${d.title}</h3>
       </div>
       <div class="day-card-body">
-        <div class="day-card-meta">${day.theme} · ${day.driving}</div>
-        <p class="day-card-summary">${day.summary}</p>
-        <div class="day-card-overnight">🏨 ${day.overnight}</div>
-        <a href="day.html?id=${day.id}" class="day-card-link">פרטים מלאים ←</a>
+        <div class="day-card-meta">${d.theme} · ${d.driving}</div>
+        <p class="day-card-summary">${d.summary}</p>
+        <div class="day-card-overnight">🏨 ${d.overnight}</div>
+        <a href="day.html?id=${d.id}" class="day-card-link">פרטים מלאים ←</a>
       </div>
     </article>
-  `
+  `;
+    }
   ).join("");
 }
