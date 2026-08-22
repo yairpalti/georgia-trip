@@ -638,6 +638,70 @@ function enrichDay(day) {
   };
 }
 
+function isDroneEnRoute(spot) {
+  return spot?.kind === "enRoute";
+}
+
+function renderDroneSpotBadge(spot) {
+  if (!isDroneEnRoute(spot)) return "";
+  return `<span class="drone-spot-badge en-route">🛣 עצירה בדרך</span>`;
+}
+
+function renderDroneSpotChips(spots) {
+  const groups = [
+    { label: "📍 יעד", items: spots.filter((s) => !isDroneEnRoute(s)) },
+    { label: "🛣 בדרך", items: spots.filter((s) => isDroneEnRoute(s)) },
+  ].filter((g) => g.items.length);
+
+  return groups
+    .map(
+      (g) => `
+      <div class="drone-chip-group">
+        <span class="drone-chip-label">${g.label}</span>
+        <div class="drone-chip-row">
+          ${g.items
+            .map((s) => {
+              const globalIndex = spots.indexOf(s);
+              return `<button type="button" class="drone-spot-chip${isDroneEnRoute(s) ? " en-route" : ""}${globalIndex === 0 ? " active" : ""}" data-spot-id="${s.id}">${s.name}</button>`;
+            })
+            .join("")}
+        </div>
+      </div>`
+    )
+    .join("");
+}
+
+function renderDroneSpotsGrid(spots) {
+  const groups = [
+    { label: "📍 יעדי היום", items: spots.filter((s) => !isDroneEnRoute(s)) },
+    { label: "🛣 עצירות בדרך", items: spots.filter((s) => isDroneEnRoute(s)) },
+  ].filter((g) => g.items.length);
+
+  return groups
+    .map(
+      (g) => `
+      <div class="drone-spots-group">
+        <h3 class="drone-spots-group-title">${g.label}</h3>
+        <div class="drone-spots-grid">
+          ${g.items
+            .map(
+              (s) => `
+            <button type="button" class="drone-spot-card${isDroneEnRoute(s) ? " en-route" : ""}" data-spot-id="${s.id}">
+              ${renderImg(s.image, "drone-spot-card-img", s.name)}
+              <div class="drone-spot-card-body">
+                ${renderDroneSpotBadge(s)}
+                <strong>${s.name}</strong>
+                <p>${s.description}</p>
+              </div>
+            </button>`
+            )
+            .join("")}
+        </div>
+      </div>`
+    )
+    .join("");
+}
+
 function renderDroneSpotGallery(spot) {
   const items = spot.gallery?.length ? spot.gallery : [];
   if (!items.length) return "";
@@ -659,6 +723,7 @@ function renderDroneSpotDetail(spot) {
   return `
     ${renderImg(spot.image, "drone-detail-img", spot.name)}
     <div class="drone-detail-body">
+      ${renderDroneSpotBadge(spot)}
       <h3>${spot.name}</h3>
       <p>${spot.description}</p>
       ${
@@ -697,36 +762,22 @@ function renderDroneSpotsSection(dayId) {
           ? `<p class="drone-legal-note">⚠️ ${drones.summary}${legalLinks ? ` · ${legalLinks}` : ""} · <a href="logistics.html#drones" class="external-link">כללי רחפן</a></p>`
           : ""
       }
+      <div class="drone-map-legend">
+        <span><span class="drone-legend-dot destination"></span> יעד</span>
+        <span><span class="drone-legend-dot en-route"></span> עצירה בדרך</span>
+      </div>
       <div class="drone-map-layout">
         <div class="drone-map-wrap">
           <div id="drone-map-${dayId}" class="drone-map"></div>
           <div class="drone-spot-chips" id="drone-chips-${dayId}">
-            ${data.spots
-              .map(
-                (s, i) =>
-                  `<button type="button" class="drone-spot-chip${i === 0 ? " active" : ""}" data-spot-id="${s.id}">${s.name}</button>`
-              )
-              .join("")}
+            ${renderDroneSpotChips(data.spots)}
           </div>
         </div>
         <div class="drone-detail" id="drone-detail-${dayId}">
           ${renderDroneSpotDetail(data.spots[0])}
         </div>
       </div>
-      <div class="drone-spots-grid">
-        ${data.spots
-          .map(
-            (s) => `
-          <button type="button" class="drone-spot-card" data-spot-id="${s.id}">
-            ${renderImg(s.image, "drone-spot-card-img", s.name)}
-            <div class="drone-spot-card-body">
-              <strong>${s.name}</strong>
-              <p>${s.description}</p>
-            </div>
-          </button>`
-          )
-          .join("")}
-      </div>
+      ${renderDroneSpotsGrid(data.spots)}
     </div>`;
 }
 
@@ -914,7 +965,7 @@ function renderDaysGrid() {
       ${d.heroImage ? `<div class="day-card-thumb" style="background-image:url('${resolveImageUrl(d.heroImage)}')"></div>` : ""}
       <div class="day-card-header">
         <div class="day-card-num">${d.emoji} יום ${d.id} · ${d.date} (${d.weekday})</div>
-        <h3 class="day-card-title">${d.title}</h3>
+        <h3 class="day-card-title"><a href="day.html?id=${d.id}" class="day-card-title-link">${d.title}</a></h3>
       </div>
       <div class="day-card-body">
         <div class="day-card-meta">${d.theme} · ${d.driving}</div>

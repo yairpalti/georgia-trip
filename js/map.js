@@ -305,13 +305,15 @@ function initDayMap(containerId, points) {
   return map;
 }
 
-const DRONE_MARKER_COLOR = "#6c5ce7";
+const DRONE_COLORS = { destination: "#6c5ce7", enRoute: "#e67e22" };
 
-function createDroneIcon(selected) {
-  const ring = selected ? `box-shadow:0 0 0 3px #fff,0 0 0 5px ${DRONE_MARKER_COLOR};` : "";
+function createDroneIcon(selected, kind = "destination") {
+  const color = DRONE_COLORS[kind] || DRONE_COLORS.destination;
+  const emoji = kind === "enRoute" ? "🛣" : "🚁";
+  const ring = selected ? `box-shadow:0 0 0 3px #fff,0 0 0 5px ${color};` : "";
   return L.divIcon({
     className: "drone-marker-wrap",
-    html: `<div class="drone-marker${selected ? " drone-marker-selected" : ""}" style="background:${DRONE_MARKER_COLOR};${ring}">🚁</div>`,
+    html: `<div class="drone-marker${selected ? " drone-marker-selected" : ""}" style="background:${color};${ring}">${emoji}</div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 17],
   });
@@ -331,21 +333,23 @@ function initDroneSpotsMap(containerId, spots, onSelect) {
   const markerById = {};
 
   spots.forEach((spot) => {
+    const kind = spot.kind || "destination";
     const latlng = [spot.lat, spot.lng];
     bounds.push(latlng);
-    const marker = L.marker(latlng, { icon: createDroneIcon(false) }).addTo(map);
+    const marker = L.marker(latlng, { icon: createDroneIcon(false, kind) }).addTo(map);
     marker.on("click", () => onSelect(spot));
-    marker.bindTooltip(spot.name, {
+    const tipPrefix = kind === "enRoute" ? "🛣 " : "";
+    marker.bindTooltip(tipPrefix + spot.name, {
       permanent: false,
       direction: "top",
       offset: [0, -18],
       className: "drone-tooltip",
     });
-    markerById[spot.id] = marker;
+    markerById[spot.id] = { marker, kind };
   });
 
   if (bounds.length > 1) {
-    L.polyline(bounds, { color: DRONE_MARKER_COLOR, weight: 2, opacity: 0.45, dashArray: "6 6" }).addTo(map);
+    L.polyline(bounds, { color: "#888", weight: 2, opacity: 0.35, dashArray: "6 6" }).addTo(map);
   }
 
   map.fitBounds(bounds, { padding: [40, 40] });
@@ -353,9 +357,9 @@ function initDroneSpotsMap(containerId, spots, onSelect) {
   return {
     map,
     highlight(id) {
-      Object.entries(markerById).forEach(([sid, marker]) => {
+      Object.entries(markerById).forEach(([sid, { marker, kind }]) => {
         const selected = sid === id;
-        marker.setIcon(createDroneIcon(selected));
+        marker.setIcon(createDroneIcon(selected, kind));
         if (selected) map.panTo(marker.getLatLng(), { animate: true });
       });
     },

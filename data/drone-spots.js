@@ -30,9 +30,22 @@ const DRONE_SPOTS = {
     ],
   },
   2: {
-    intro: "יער גשם Colchic + קוטאיסי – שילוב טבע ועיר.",
+    intro: "יער גשm + קוטאיסi – יעדים ועצירה על חוף Kobuleti בדרך.",
     spots: [
-      {
+            {
+        id: "kobuleti-coast",
+        kind: "enRoute",
+        name: "חוף Kobuleti – בדרך למטיראלה",
+        lat: 41.812,
+        lng: 41.773,
+        description: "עצירה על כביש החוף בין באטומi למטיראלה – גalים, חול ויער. 5–10 דק' מהכביש הראשי.",
+        tips: ["חניה בצד הכביש", "רוחות יam – Windy", "בוקר – אור רך על הים"],
+        image: "IMG.batumiBoulevard",
+        gallery: [{ src: "IMG.ureki", caption: "חוף הים השחור" }],
+        link: "https://www.google.com/maps/search/Kobuleti+beach+Georgia",
+        linkLabel: "Kobuleti – מפה",
+      },
+{
         id: "mtirala-waterfall",
         name: "מפל Tsablnari – מטיראלה",
         lat: 41.884,
@@ -59,9 +72,22 @@ const DRONE_SPOTS = {
     ],
   },
   3: {
-    intro: "עמוד קצחי, צ'יאתורה ו-Sveri – נקודות דרמטיות לרחפן.",
+    intro: "קצחi, צ'יאתורה, Sveri – ומגווימבי כעצירה בדרך (אופציה א').",
     spots: [
-      {
+            {
+        id: "mgvimevi-enroute",
+        kind: "enRoute",
+        name: "מנזר מגווימבי – עצירה בדרך",
+        lat: 42.2694,
+        lng: 43.0456,
+        description: "מנזר חצוב בסלע – עצירה באופציה א' אחרי Lia, לפני לינה בצ'יאתורה.",
+        tips: ["חניה קטנה ליד המנזר", "VLOS – אתר דתי", "10–15 דק' צילום"],
+        image: "IMG.mgvimevi",
+        gallery: [{ src: "IMG.mgvimevi", caption: "מגווימבי מהאוויר" }],
+        link: "https://www.google.com/maps/search/Mgvimevi+Convent",
+        linkLabel: "מגווימבי",
+      },
+{
         id: "katskhi",
         name: "עמוד קצחי (Katskhi Pillar)",
         lat: 42.2872,
@@ -100,9 +126,35 @@ const DRONE_SPOTS = {
     ],
   },
   4: {
-    intro: "ראצ'ה – אגם, יקבים ונהר.",
+    intro: "ראצ'ה – עצירות בדרך (Alpana, Nakerala) + מאגר שאורi ויקb.",
     spots: [
+            {
+        id: "rioni-putin",
+        kind: "enRoute",
+        name: "נקודת רפטינg Alpana – בדרך",
+        lat: 42.45,
+        lng: 43.05,
+        description: "עצירה ראשונה ביום – ~88 ק\"מ מצ'יאתורה. צילום הנהר והעמק לפני/אחרי הרפטינg.",
+        tips: ["לתאם שעה עם Rafting in Kutaisi", "לא מעל המדריך/מטיילים", "להחליף לגopro אחרי"],
+        image: "IMG.rafting",
+        gallery: [{ src: "IMG.racha", caption: "עמק הריונi" }],
+        link: "https://www.google.com/maps/search/Alpana+Georgia+Rioni",
+        linkLabel: "Alpana / Rioni",
+      },
       {
+        id: "nakerala-pass",
+        kind: "enRoute",
+        name: "מעבר Nakerala – בדרך לראצ'ה",
+        lat: 42.418,
+        lng: 43.028,
+        description: "כביש הרים מפותל עם תצפיות לעמק – עצירת צילום קlassית בדרך לראצ'ה.",
+        tips: ["עצירה רק ב-mirror / pull-off", "רוחות בגobes", "לא מעל הכביש"],
+        image: "IMG.racha",
+        gallery: [{ src: "IMG.racha", caption: "נוף הרי ראצ'ה" }],
+        link: "https://www.google.com/maps/search/Nakerala+Pass+Georgia",
+        linkLabel: "Nakerala Pass",
+      },
+{
         id: "shaori",
         name: "מאגר שאורי (Shaori)",
         lat: 42.5833,
@@ -129,9 +181,22 @@ const DRONE_SPOTS = {
     ],
   },
   5: {
-    intro: "Urbex סובייטי ומערות – אדריכלות נטושה.",
+    intro: "Urbex ומערות – + נוף בירידה מראצ'ה בדרך.",
     spots: [
-      {
+            {
+        id: "racha-descent",
+        kind: "enRoute",
+        name: "ירידה מראצ'ה – נוף הריונi",
+        lat: 42.48,
+        lng: 42.72,
+        description: "בדרך מאמברולאורi לצקאלטובo – עמק ירוק, נהר וכפרים. עצירה ב-viewpoint.",
+        tips: ["כבישים מפותלים – לעצור בבטחה", "בוקר – ערפל בעמק", "VLOS"],
+        image: "IMG.racha",
+        gallery: [{ src: "IMG.racha", caption: "נוף בירידה לImereti" }],
+        link: "https://www.google.com/maps/search/Racha+road+viewpoint",
+        linkLabel: "כביש ראצ'ה–Imereti",
+      },
+{
         id: "tskaltubo",
         name: "צקאלטובו – סנטוריומים נטושים",
         lat: 42.3417,
@@ -158,9 +223,22 @@ const DRONE_SPOTS = {
     ],
   },
   6: {
-    intro: "קניונים ירוקים – גשרים, נהר ומעיינות.",
+    intro: "קניונים – + מעיינות Nokalakevi בדרך חזרה.",
     spots: [
-      {
+            {
+        id: "nokalakevi-enroute",
+        kind: "enRoute",
+        name: "מעיינות Nokalakevi – בדרך חזרה",
+        lat: 42.3533,
+        lng: 42.3167,
+        description: "עצירה אחרונה ביום – מעיינות חmים בטבע, בין מרטווili לזוגדידi.",
+        tips: ["לא מעל מתרחצים", "ערב – פחות קהל", "לחות גבוהה"],
+        image: "IMG.nokalakevi",
+        gallery: [{ src: "IMG.martvili", caption: "נהר וטבע ירוק" }],
+        link: "https://www.google.com/maps/search/Nokalakevi+Hot+Springs",
+        linkLabel: "Nokalakevi",
+      },
+{
         id: "okatse",
         name: "Okatse Canyon – תצפית",
         lat: 42.4167,
@@ -187,19 +265,33 @@ const DRONE_SPOTS = {
     ],
   },
   7: {
-    intro: "סכר אנגורי ומסטיה – הנדסה ומגדלי סוואנטי.",
+    intro: "עלייה לסוואנטi – סכr Enguri ועמק הנהר בדרך למסtיה.",
     spots: [
-      {
-        id: "enguri",
-        name: "סכר Enguri (Enguri Dam)",
+            {
+        id: "enguri-enroute",
+        kind: "enRoute",
+        name: "סכr Enguri – עצירה בדרך",
         lat: 42.7583,
         lng: 42.0333,
-        description: "אחד הסכרים הגבוהים באירופה (271 מ') – מים turquoise וגשר תלוי.",
-        tips: ["לבדוק airspace.gov.ge", "רוחות חזקות ב-gorge", "לא מעל הגשר עם תנועה"],
+        description: "עצירת חובה בנסיעה לסוואנטi – הסכr, הגorge והגשר. 45–60 דק' ביום 7.",
+        tips: ["לבדוק airspace.gov.ge", "רוחות חזקות", "לא מעל הגשר עם תנועה"],
         image: "IMG.enguriDam",
-        gallery: [{ src: "IMG.enguriDam", caption: "סכר Enguri" }],
+        gallery: [{ src: "IMG.enguriDam", caption: "סכr Enguri" }],
         link: "https://www.google.com/maps/search/Enguri+Dam",
-        linkLabel: "סכר Enguri",
+        linkLabel: "סכr Enguri",
+      },
+      {
+        id: "enguri-valley-road",
+        kind: "enRoute",
+        name: "עמק Enguri – בין הסכr למסtיה",
+        lat: 42.85,
+        lng: 42.45,
+        description: "כביש serpentine לאורך הנהר – צילום העמק, היער והכביש מהאוויר.",
+        tips: ["עצירה רק במפרץ חניה", "לנהוג לאט – serpentine", "אור צהריים בין העצים"],
+        image: "IMG.mestia",
+        gallery: [{ src: "IMG.enguriDam", caption: "נוף העמק" }],
+        link: "https://www.google.com/maps/search/Zugdidi+Mestia+road",
+        linkLabel: "כbיש זוגדידi–מסtיה",
       },
       {
         id: "mestia",
@@ -216,9 +308,22 @@ const DRONE_SPOTS = {
     ],
   },
   8: {
-    intro: "אושגולי – הכפר הגבוה באירופה וקרחון שחארה.",
+    intro: "אושגולi – הכbיש בג'יפ + יעד הכפר.",
     spots: [
-      {
+            {
+        id: "mestia-ushguli-road",
+        kind: "enRoute",
+        name: "כbיש מסtיה–אושגולi",
+        lat: 42.975,
+        lng: 42.87,
+        description: "הכbיש בג'יפ 4×4 – עמק Inguri, נהר ופסגות. צילום מהאוויר בזמן העצירות.",
+        tips: ["רק מהעצירות – לא בזמן נהיגה", "רוחות בעמק", "בוקר – ערפל"],
+        image: "IMG.ushguli",
+        gallery: [{ src: "IMG.ushguli", caption: "הכbיש לאושגולi" }],
+        link: "https://www.google.com/maps/search/Mestia+Ushguli+road",
+        linkLabel: "כbיש לאושגולi",
+      },
+{
         id: "ushguli",
         name: "אושגולי (Ushguli)",
         lat: 42.9114,
@@ -245,9 +350,22 @@ const DRONE_SPOTS = {
     ],
   },
   9: {
-    intro: "צ'לאדי ומאזרי – קרחון, יער ו-Ushba.",
+    intro: "צ'לאדי ומאzרi – + כbיש Becho בדרך.",
     spots: [
-      {
+            {
+        id: "becho-drive",
+        kind: "enRoute",
+        name: "כbיש לעמק בצ'o – ממסtיה",
+        lat: 43.06,
+        lng: 42.62,
+        description: "45 דק' נסיעה ממסtיה למאzרi – נוף ל-Ushba נפתח בהדרגה. עצירה ב-modpoint.",
+        tips: ["modpoint ב-Becho – חניה", "Ushba מכוסה ענanים אחר הצהריים", "צילום מהשדה"],
+        image: "IMG.ushba",
+        gallery: [{ src: "IMG.ushba", caption: "Ushba מהכbיש" }],
+        link: "https://www.google.com/maps/search/Mestia+Mazeri+road",
+        linkLabel: "כbיש למאzרi",
+      },
+{
         id: "chalaadi",
         name: "קרחון צ'לאדי",
         lat: 43.0667,
@@ -303,9 +421,35 @@ const DRONE_SPOTS = {
     ],
   },
   11: {
-    intro: "ירידה לים – אגmי הרים וחוף אנאקליה.",
+    intro: "ירידה לים – Koruldi, Dadiani ושpך Enguri בדרך.",
     spots: [
+            {
+        id: "dadiani-enroute",
+        kind: "enRoute",
+        name: "ארמון Dadiani – זוגדידi בדרך",
+        lat: 42.5233,
+        lng: 41.8683,
+        description: "עצירה בצהריים בירידה לים – ארמון, גנים וכיכר זוגdidi.",
+        tips: ["חניה ליד הארמון", "מרכז עיר – VLOS", "30–45 דק' ביקור + צילום"],
+        image: "IMG.dadiani",
+        gallery: [{ src: "IMG.zugdidi", caption: "זוגdidi" }],
+        link: "https://www.google.com/maps/search/Dadiani+Palace+Zugdidi",
+        linkLabel: "ארמון Dadiani",
+      },
       {
+        id: "inguri-estuary",
+        kind: "enRoute",
+        name: "שpך Enguri – בדרך לאנaklia",
+        lat: 42.44,
+        lng: 41.72,
+        description: "נהר רחb, דיונות וים – נוף משתנה בירידה לחוף.",
+        tips: ["שקיעה – golden hour", "רוחות פתוחות", "לא מעל גשרים עם תנועה"],
+        image: "IMG.anaklia",
+        gallery: [{ src: "IMG.anaklia", caption: "ים ונהר" }],
+        link: "https://www.google.com/maps/search/Enguri+estuary+Georgia",
+        linkLabel: "שpך Enguri",
+      },
+{
         id: "koruldi",
         name: "אגmי Koruldi (Koruldi Lakes)",
         lat: 43.05,
@@ -332,9 +476,35 @@ const DRONE_SPOTS = {
     ],
   },
   12: {
-    intro: "חוף מגנטי, פארk שעשועים וסיום בבאטומי.",
+    intro: "חוף מגנטi – Shekvetili ו-Tsitsinatela בדרך לבאטומi.",
     spots: [
+            {
+        id: "shekvetili-pines",
+        kind: "enRoute",
+        name: "יער Shekvetili – בדרך",
+        lat: 41.968,
+        lng: 41.678,
+        description: "יער אורן ייחודi ליד החוף – בין אורkי לצ'יצinatela. צילום ממעל העצים.",
+        tips: ["עצירה בחניון יער", "בוקר/צהריים – אור בין העצים", "לא מעל הולכי רגל"],
+        image: "IMG.ureki",
+        gallery: [{ src: "IMG.ureki", caption: "חוף ויער" }],
+        link: "https://www.google.com/maps/search/Shekvetili+pine+forest",
+        linkLabel: "Shekvetili",
+      },
       {
+        id: "tsitsinatela-coast",
+        kind: "enRoute",
+        name: "צ'יצinatela – חוף בדרך לבאטומi",
+        lat: 41.9683,
+        lng: 41.7233,
+        description: "פארk שעשועים על החוף – רkע לצילום חופi עם גalים וattractions.",
+        tips: ["לא מעל הפארk בזמן פעילות", "צהריים – קהל", "רוחות יam"],
+        image: "IMG.tsitsinatela",
+        gallery: [{ src: "IMG.batumi", caption: "חוף הים השחור" }],
+        link: "https://www.google.com/maps/search/Tsitsinatela+amusement+park",
+        linkLabel: "Tsitsinatela",
+      },
+{
         id: "ureki",
         name: "אורקי / Shekvetili – חוף",
         lat: 41.9833,
