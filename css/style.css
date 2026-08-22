@@ -679,9 +679,26 @@ img {
 .day-nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   padding: 2rem 0;
   border-top: 1px solid var(--cream-dark);
+}
+
+.day-nav-top {
+  padding: 0 0 1rem;
+  margin-bottom: 0.5rem;
+  border-top: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.day-nav-top a {
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.day-nav-top a:hover {
+  color: var(--white);
 }
 
 .day-nav a {
@@ -705,6 +722,58 @@ img {
   margin: 0;
   font-size: 0.9rem;
   color: var(--text-muted);
+}
+
+.alt-overnight {
+  margin: 0.5rem 0 0 !important;
+  font-size: 0.85rem !important;
+  color: var(--forest) !important;
+  font-weight: 500;
+}
+
+.alt-plan-recommended {
+  border-right: 3px solid var(--gold);
+  padding-right: 0.75rem;
+}
+
+.alt-plan-img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+}
+
+.alt-driving {
+  font-size: 0.85rem !important;
+  color: var(--forest) !important;
+  font-weight: 500;
+  margin-bottom: 0.35rem !important;
+}
+
+.alt-tips {
+  margin: 0.75rem 0 0;
+  padding-right: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.alt-activities {
+  margin-top: 1rem;
+}
+
+.alt-activities h5 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.alt-activities .activities-list {
+  margin-top: 0;
+}
+
+.alt-plan .external-link {
+  display: inline-block;
+  margin-top: 0.75rem;
 }
 
 /* Logistics */
@@ -908,6 +977,20 @@ img {
   gap: 0.75rem 1.25rem;
   font-size: 0.85rem;
   color: var(--text-muted);
+  align-items: center;
+}
+
+.story-source a {
+  font-weight: 500;
+}
+
+.stories-page-source {
+  margin: -0.75rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+.stories-page-source a {
+  font-weight: 600;
 }
 
 .story-hero-img {
@@ -1037,4 +1120,259 @@ img {
 .empty-stories {
   text-align: center;
   color: var(--text-muted);
+}
+
+/* Extreme activities page */
+.extreme-page {
+  padding-bottom: 3rem;
+}
+
+.extreme-map-intro {
+  color: var(--text-muted);
+  margin: -0.5rem 0 1rem;
+  font-size: 0.95rem;
+}
+
+.extreme-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.extreme-filter-btn {
+  border: 2px solid var(--cat-color, #ccc);
+  background: var(--white);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.extreme-filter-btn.active {
+  background: var(--cat-color, var(--wine));
+  color: #fff;
+  border-color: var(--cat-color, var(--wine));
+}
+
+.extreme-filter-route {
+  --cat-color: var(--wine);
+  margin-right: auto;
+}
+
+.extreme-map-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.extreme-map-wrap #extreme-map {
+  height: 520px;
+  width: 100%;
+}
+
+.extreme-detail {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: sticky;
+  top: 5rem;
+}
+
+.extreme-detail-empty {
+  padding: 2rem 1.25rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.extreme-detail-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.extreme-detail-body {
+  padding: 1.25rem;
+}
+
+.extreme-detail-cat {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cat-color);
+  margin-bottom: 0.5rem;
+}
+
+.extreme-detail h2 {
+  font-size: 1.1rem;
+  margin: 0 0 1rem;
+  line-height: 1.35;
+}
+
+.extreme-detail-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+  font-size: 0.82rem;
+}
+
+.extreme-detail-meta dt {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.extreme-detail-meta dd {
+  margin: 0.1rem 0 0;
+}
+
+.extreme-detail-desc {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+.extreme-detail-link {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+.extreme-category-block {
+  margin-bottom: 2rem;
+}
+
+.extreme-category-title {
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+  padding-right: 0.75rem;
+  border-right: 4px solid var(--cat-color);
+}
+
+.extreme-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.extreme-card {
+  text-align: right;
+  background: var(--white);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.extreme-card:hover,
+.extreme-card.selected {
+  border-color: var(--cat-color);
+  transform: translateY(-2px);
+}
+
+.extreme-card strong {
+  display: block;
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.extreme-card-cat {
+  font-size: 0.75rem;
+  color: var(--cat-color);
+  font-weight: 600;
+}
+
+.extreme-card-region {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.extreme-card-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  background: var(--cream-dark);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.extreme-legend-section {
+  margin-bottom: 0.75rem;
+}
+
+.extreme-legend-section:last-child {
+  margin-bottom: 0;
+}
+
+.extreme-legend-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.extreme-legend-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+}
+
+.extreme-marker-wrap {
+  background: transparent !important;
+  border: none !important;
+}
+
+.extreme-marker {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.extreme-marker-selected {
+  transform: scale(1.15);
+  z-index: 1000 !important;
+}
+
+.extreme-tooltip {
+  font-family: Rubik, sans-serif;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 960px) {
+  .extreme-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .extreme-detail {
+    position: static;
+  }
+
+  .extreme-map-wrap #extreme-map {
+    height: 400px;
+  }
 }

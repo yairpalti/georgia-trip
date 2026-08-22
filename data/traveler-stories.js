@@ -8,7 +8,7 @@ const TRAVELER_STORIES = {
         title: "גיאורגיה – ארץ מופלאה ונגישה",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Batumi_skyline.jpg/800px-Batumi_skyline.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Shipwreck_Batumi_Georgia_R_Bartz.jpg/960px-Shipwreck_Batumi_Georgia_R_Bartz.jpg",
         paragraphs: [
           "ראשית, באמת ארץ מופלאה – הנופים, אנשים מסבירי פנים, האוכל, הכל יוצא מן הכלל ונגיש לכיס.",
           "יצאנו משפחה בהרכב של 6 (הורים ו-4 ילדים: 18, 17, 13, 7) – קצת מאתגר מבחינת הצרכים והיכולות השונות, והצלחנו למצוא שילוב מוצלח שהתאים רוב הזמן.",
@@ -27,7 +27,7 @@ const TRAVELER_STORIES = {
         title: "הגעה, נהג פרטי ומלון בקוטאיסי",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Kutaisi_Center%2C_Georgia.jpg/800px-Kutaisi_Center%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/2014_Kutaisi%2C_Wielka_Synagoga_%2801%29.jpg/960px-2014_Kutaisi%2C_Wielka_Synagoga_%2801%29.jpg",
         paragraphs: [
           "במסלול דומה: נחיתה בערב, נהג עם שלט מחכה לנסיעה של כ-3 שעות לקוטאיסי – מלון נוח עם ארוחת בוקר מפנקת בטירוף (אחח, פאנקייקים עם הריבות הביתיות מיד – זה משהו).",
           "לא בטוחה שההליכות בטרקים קיזזו את הקלוריות… אבל שווה.",
@@ -39,7 +39,7 @@ const TRAVELER_STORIES = {
         ],
         gallery: [
           {
-            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Georgian_supra.jpg/640px-Georgian_supra.jpg",
+            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Georgian_supra.jpg/960px-Georgian_supra.jpg",
             caption: "ארוחה גיאורגית טיפוסית",
           },
         ],
@@ -53,7 +53,7 @@ const TRAVELER_STORIES = {
         title: "משפחה עם ילדים בגילאים שונים",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Katskhi_pillar.jpg/800px-Katskhi_pillar.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/2025-06-17_Katskhi_pillar_2.jpg/960px-2025-06-17_Katskhi_pillar_2.jpg",
         paragraphs: [
           "עם 4 ילדים בגילאים 7–18 – חשוב לתכנן ימים עם שילוב: בוקר פעיל, אחר צהריים רגוע, ולפעמים 'חצי מסלול' לילדים צעירים.",
           "SIM מקומי (Magti) – 22 לארי ל-SIM, כולל שיחות – שווה כל לארי לשקט ביתי בין מתבגרים ולתקשורת. עצירה ב-Magti ל-5 סימים לוקחת 5 דקות.",
@@ -73,7 +73,7 @@ const TRAVELER_STORIES = {
         title: "נהיגה בגיאורגיה – שמח שלא נהגנו (לפעמים)",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Racha_Region%2C_Georgia.jpg/800px-Racha_Region%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Racha_Region%2C_Georgia.jpg/960px-Racha_Region%2C_Georgia.jpg",
         paragraphs: [
           "במסלול סוואנטי: 'איזה כייף שלא צריך לנהוג' – כבישים עם פרות, מפולות סלעים, עבודות, בורות. אפשר לנהוג לבד, אבל חובה רכב גבוה ונהיגה מיומנת.",
           "אחרי טעימות יין בראצ'ה – לא לנהוג. להזמין נהג/מונית או ללון באזור.",
@@ -92,7 +92,7 @@ const TRAVELER_STORIES = {
         title: "כבישים מאתגרים – מה לצפות",
         author: "מטיילים לסוואנטי",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Prometheus_Cave%2C_Georgia.jpg/800px-Prometheus_Cave%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Prometheus_cave%2C_Georgia.jpg/960px-Prometheus_cave%2C_Georgia.jpg",
         paragraphs: [
           "השעה וחצי האחרונות לפני מסטיה: חתחתים עם פרות, מפולות, עבודות בכביש, בורות. SUV + נהיגה זהירה – חובה.",
           "לפני עלייה להרים: לקנות מצרכים, מזומן, חטיפים – ATM במסטיה מוגבל, לצאת עם מזומן.",
@@ -111,7 +111,7 @@ const TRAVELER_STORIES = {
         title: "עדכון ממפלי מרטווילי – אל תיפלו למלכודת",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Martvili_Canyon.jpg/800px-Martvili_Canyon.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Martvili_Canyon_View.jpg/960px-Martvili_Canyon_View.jpg",
         paragraphs: [
           "עדכון ממפלי מרטווילי: הפארק הרשמי (השמורה) – מיותר, מלכודת תיירים.",
           "עדיף ללכת למפל הסמוך המהמם – שם אפשר לשחות גם במים הקפואים, או למפלים בסביבה.",
@@ -124,7 +124,7 @@ const TRAVELER_STORIES = {
         ],
         gallery: [
           {
-            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Okatse_Canyon.jpg/640px-Okatse_Canyon.jpg",
+            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Okatse_Canyon%2C_Imereti%2C_Georgia.jpg/960px-Okatse_Canyon%2C_Imereti%2C_Georgia.jpg",
             caption: N.okatseCanyon,
           },
         ],
@@ -139,7 +139,7 @@ const TRAVELER_STORIES = {
         title: "נסיעה למסטיה – 6 שעות, Magti וסכר אנגורי",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Enguri_Dam.jpg/800px-Enguri_Dam.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Enguri_dam.jpg/960px-Enguri_dam.jpg",
         paragraphs: [
           "נסיעה של 6 שעות דרך זוגדידי – עצירת חָחָפורי/lobio בדרך, שהתארכה בגלל עצירה מרהיבה של שעה+ ב-Enguri Dam – אחד הסכרים הגדולים באירופה, מדהים, כולל אומגה מטורפת מעל (לא לבעלי לב חלש).",
           "הדרך למסטיה לאורך נהר טורקיזי. השעה וחצי האחרונות: חתחתים, פרות, מפולות, בורות. נהג מקומי שווה זהב – קבענו איסוף מאושגולי שבוע אחרי.",
@@ -155,7 +155,7 @@ const TRAVELER_STORIES = {
         title: "אגמי Koruldi – יום מנוחה לפני הטרק",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Mestia%2C_Georgia.jpg/800px-Mestia%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Mestia%2C_evening.jpg/960px-Mestia%2C_evening.jpg",
         paragraphs: [
           "בזכות המלצה – הקדשנו יום ל'מנוחה' לפני הטרק הגדול. בעל הגסטהאוס ארגן ג'יפ + נהג (300 לארי – אפשר בפחות, אבל היו מעולים).",
           "אי אפשר עם רכב רגיל – הוזהרתם. הדרך למעלה – הלב והסרעפת מחליפים מקום. נוף 360° של הרים מושלגים, שלוליות (לא אגמים ענקיים) – אבל מלחמת שלג מושלמת.",
@@ -168,7 +168,7 @@ const TRAVELER_STORIES = {
         ],
         gallery: [
           {
-            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ushba.jpg/640px-Ushba.jpg",
+            src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ushba.jpg/960px-Ushba.jpg",
             caption: N.ushba,
           },
         ],
@@ -183,7 +183,7 @@ const TRAVELER_STORIES = {
         title: "טרק מסטיה – זהאבשי – אדישי – אושגולי (ימים 4–7)",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Ushguli_village.jpg/800px-Ushguli_village.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ushguli%2C_lonely_tower.jpg/960px-Ushguli%2C_lonely_tower.jpg",
         paragraphs: [
           "העולם מתחלק לשניים: מי שמטפסים 900 מ' בקלילות, ומי שמקצרים – אבל אפשר גם וגם! עם ילד בן 7 – קילומטר וחצי עם עליות זה המקסימום (וחטיפי אנרגיה).",
           "בזכות נהגים מקומיים והקפצות – גם אנחנו נהנינו מנוף מטורף: 4 גלגלים, אוטו גבוה, גם אם יצא מקוסטריצה משנות ה-70.",
@@ -201,7 +201,7 @@ const TRAVELER_STORIES = {
         title: "Guesthouses בולטים בטרק",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Ushguli_village.jpg/640px-Ushguli_village.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ushguli%2C_lonely_tower.jpg/960px-Ushguli%2C_lonely_tower.jpg",
         paragraphs: [
           "זהאבשי – Ciuri (גם Tsiuri): מקסים, מאקה נהדרת, ארוחות מעולות, ריבת פטל מהשיח (תשאירו קצת!).",
           "קהלדה – Gaul Gavkhe: מפנק ברמות, הכי טוב בכל הטיול. שווה השקעה.",
@@ -218,7 +218,7 @@ const TRAVELER_STORIES = {
         title: "מחירי מוניות (לארי) – מסטיה וסביבה",
         author: "מטיילים · אוגוסט 2026",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Mestia%2C_Georgia.jpg/640px-Mestia%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Mestia%2C_evening.jpg/960px-Mestia%2C_evening.jpg",
         paragraphs: [
           "שדה תעופה–קוטאיסי–מסטיה: 700",
           "אושגולי–מרטווילי–קוטאיסי–טביליסי: 770",
@@ -239,7 +239,7 @@ const TRAVELER_STORIES = {
         title: "טרק קל יותר – גם עם ילדים",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Chalaadi_glacier.jpg/800px-Chalaadi_glacier.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Chalaadi_glacier.jpg/960px-Chalaadi_glacier.jpg",
         paragraphs: [
           "צ'לאדי – מסלול קל יחסית לעומת שדוגרה. אותם עקרונות: מקלות, שכבת גשם, חטיפים, מים, התחלה מוקדם.",
           "לפני יציאה למאזרי – לקנות מצרכים במסטיה: מזומן מהכספומט (הרבה!), אוכל לבקתה, חטיפי אנרגיה.",
@@ -259,7 +259,7 @@ const TRAVELER_STORIES = {
         title: "שדוגרה – המפל הגבוה בגיאורגיה",
         author: "מטיילים · אוגוסט 2026",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ushba.jpg/800px-Ushba.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ushba.jpg/960px-Ushba.jpg",
         paragraphs: [
           "4–5 שעות הליכה מאתג. אותם טיפים מהטרק לסוואנטי: mapy offline, מגנזיום, דוחה חרקים, מעיל גשם לסופת ברקים פתאומית.",
           "לא לנסות להגיע לבסיס המפל – מסוכן. תצפית מספיק מרהיב.",
@@ -279,7 +279,7 @@ const TRAVELER_STORIES = {
         title: "חזרה דרך מרטווילי – קצר ונוח",
         author: "משפחה (6 נפשות)",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Anaklia_pier.jpg/800px-Anaklia_pier.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Anaklia_pier.jpg/960px-Anaklia_pier.jpg",
         paragraphs: [
           "חזרנו דרך אושגולי למפלי מרטווילי – הדרך הרבה יותר קצרה ונוחה ממה שחשbנו, נוף מהמם.",
           "Koruldi בבוקר – אם לא עליתם ביום 7, אפשר לשלב בירידה (ג'יפ!).",
@@ -299,7 +299,7 @@ const TRAVELER_STORIES = {
         title: "מסטיה לים – שינוי קצר מושלם",
         author: "מטיילים",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Batumi_skyline.jpg/800px-Batumi_skyline.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Shipwreck_Batumi_Georgia_R_Bartz.jpg/960px-Shipwreck_Batumi_Georgia_R_Bartz.jpg",
         paragraphs: [
           "אחרי סוואנטי – אורכי, ציצינאטלה ובאטומי מרגישים כמו עולם אחר. מומלץ יום 'כיף' לפני הטיסה.",
           "ח'צפורי אג'רi בטיילת – חובה לפני סיום.",
@@ -319,7 +319,7 @@ const TRAVELER_STORIES = {
         title: "יום טיסה מבאטומי",
         author: "מטיילים",
         date: "אוגוסט 2026",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Batumi_International_Airport.jpg/800px-Batumi_International_Airport.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Batumi_Airport.jpg/960px-Batumi_Airport.jpg",
         paragraphs: [
           "החזרת רכֱ, דלק – תחנות ליד שדה. להגיע 2 שעות לפני.",
           "שקילת מזודנות – מזכרות מהטיול: guesthouses, נופים, lobio, פאנקיקים בקוטאיסי.",
@@ -332,5 +332,29 @@ const TRAVELER_STORIES = {
     ],
   },
 };
+
+if (typeof MESTIA_TREK_GUIDE !== "undefined") {
+  const guideIntro = "מדריך מלא: georgia.org.il – טרק מסטיה–אושגולי (PDF 2024).";
+  const guideSource = {
+    label: "georgia.org.il – טרק מסטיה–אושגולי (PDF)",
+    url: MESTIA_TREK_GUIDE.source.url,
+  };
+  const attachSource = (story) => ({
+    ...story,
+    source: story.source || guideSource,
+  });
+
+  for (const [dayId, guideStories] of Object.entries(MESTIA_TREK_GUIDE.byDay)) {
+    const id = parseInt(dayId, 10);
+    const withSource = guideStories.map(attachSource);
+    if (!TRAVELER_STORIES[id]) {
+      TRAVELER_STORIES[id] = { pageIntro: guideIntro, pageSource: guideSource, stories: [] };
+    } else {
+      TRAVELER_STORIES[id].pageIntro = `${guideIntro} ${TRAVELER_STORIES[id].pageIntro || ""}`.trim();
+      TRAVELER_STORIES[id].pageSource = TRAVELER_STORIES[id].pageSource || guideSource;
+    }
+    TRAVELER_STORIES[id].stories = [...withSource, ...(TRAVELER_STORIES[id].stories || [])];
+  }
+}
 
 if (typeof module !== "undefined") module.exports = { TRAVELER_STORIES };

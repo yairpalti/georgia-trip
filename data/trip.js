@@ -227,7 +227,7 @@ const DAYS = [
         cuisine: "גיאורגית – חצ'פורი, סלטים",
         note: "הזדמנות מעולה לטעום חצ'פורי אג'רי",
         link: "https://www.google.com/maps/search/restaurants+Batumi+boulevard",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Khachapuri_%28Adjarian%29.jpg/640px-Khachapuri_%28Adjarian%29.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Khachapuri_%28Adjarian%29.jpg/960px-Khachapuri_%28Adjarian%29.jpg",
       },
     ],
     hotels: [
@@ -237,7 +237,7 @@ const DAYS = [
         nights: 1,
         note: "לינה ראשונה – קרוב לטיילת ולמרינה",
         link: "https://www.google.com/maps/search/hotels+Batumi+center",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Batumi_skyline.jpg/640px-Batumi_skyline.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Shipwreck_Batumi_Georgia_R_Bartz.jpg/960px-Shipwreck_Batumi_Georgia_R_Bartz.jpg",
       },
     ],
     mapPoints: [{ name: N.batumi, lat: 41.6168, lng: 41.6367 }],
@@ -275,7 +275,7 @@ const DAYS = [
         name: fmt("מסעדות בקוטאיסי", "Restaurants in Kutaisi", "რესტორნები ქუთაისში"),
         cuisine: "גיאורגית מסורתית",
         link: "https://www.google.com/maps/search/restaurants+Kutaisi",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Kutaisi_Center%2C_Georgia.jpg/640px-Kutaisi_Center%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/2014_Kutaisi%2C_Wielka_Synagoga_%2801%29.jpg/960px-2014_Kutaisi%2C_Wielka_Synagoga_%2801%29.jpg",
       },
     ],
     hotels: [
@@ -285,7 +285,7 @@ const DAYS = [
         nights: 2,
         note: "בסיס לימים 3–4",
         link: "https://www.google.com/maps/search/hotels+Kutaisi+center",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Kutaisi_Center%2C_Georgia.jpg/640px-Kutaisi_Center%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/2014_Kutaisi%2C_Wielka_Synagoga_%2801%29.jpg/960px-2014_Kutaisi%2C_Wielka_Synagoga_%2801%29.jpg",
       },
     ],
     mapPoints: [
@@ -299,28 +299,54 @@ const DAYS = [
     weekday: "שישי",
     title: `${N.katskhiPillar.split(" · ")[0]} ו${N.chiatura.split(" · ")[0]}`,
     emoji: "🚠",
-    theme: "סוריאליזם תעשייתי",
+    theme: fmt("תרבות, מים ואקסטרים", "Culture, water & adventure", "კულტურა, წყალი და ექსტრემი"),
     overnight: fmt("מרכז קוטאיסי", "Kutaisi Center", "ქუთაისის ცენტრი"),
-    driving: "כ-2 שעות מעגלי (130 ק\"מ)",
-    summary: "Urbex בצ'יאתורה, רכבל Sanatorium, מנזר Mgvimevi.",
+    driving: "כ-2 שעות מעגלי (130 ק\"מ) · אופציה ב': פחות נסיעה",
+    summary:
+      "יום 3: אזור קוטאיסי וצ'יאתורה – Urbex, תרבות וארוחה ביתית, או אופציה ב' עם Via Ferrata באימרתי.",
     activities: [
       {
         name: N.katskhiPillar,
-        description: "סלע בגובה 40 מ' עם מנזר מבודד בראשו.",
+        description:
+          "עמוד קצחי (Katskhi Pillar) – סלע בגובה 40 מ' עם מנזר מבודד בראשו. עצירת צילום מהכביש; אפשר גם באופציה ב' כגיחה קצרה אחר הצהריים.",
         link: "https://www.google.com/maps/search/Katskhi+Pillar",
         linkLabel: N.katskhiPillar,
       },
       {
         name: N.chiatura,
-        description: "עיירת רכבלים – רכבל Sanatorium, תחנות ישנות, פסיפס לנין/סטלין.",
+        description:
+          "צ'יאתורה – עיירת רכבלים לחוויית Urbex: רכבל Sanatorium, תצפית על שיכונים ורכבלים חלודים, פסיפסים סובייטיים.",
         link: "https://www.google.com/maps/search/Chiatura+Georgia",
         linkLabel: N.chiatura,
       },
       {
+        name: N.lunchAtLia,
+        description: "ארוחת צהריים אצל משפחה מקומית – חוויה אותנטית. חובה להזמין מראש בוואטסאפ!",
+        link: "https://www.google.com/maps/search/Lunch+at+Lia+Georgia",
+        linkLabel: N.lunchAtLia,
+      },
+      {
         name: N.mgvimevi,
-        description: "מנזר חצוב בסלע.",
+        description: "מנזר מגווימבי (Mgvimevi) – מנזר חצוב בסלע, סיום יום תרבותי.",
         link: "https://www.google.com/maps/search/Mgvimevi+Convent",
         linkLabel: N.mgvimevi,
+      },
+    ],
+    alternatives: [
+      {
+        name: "📋 התכנון המקורי – קצחי, צ'יאתורה ומגווימבי",
+        description:
+          "נסיעה לעמוד קצחי, המשך לצ'יאתורה ל-Urbex ורכבל Sanatorium, ארוחת צהריים אצל Lia, וביקור במנזר מגווימבי.",
+        overnight: fmt("מרכז קוטאיסי", "Kutaisi Center", "ქუთაისის ცენტრი"),
+        recommended: true,
+      },
+      {
+        name: "🧗 אופציה ב' – Via Ferrata באימרתי (Rafting in Kutaisi)",
+        description:
+          "מוותרים על הנסיעה הארוכה לצ'יאתורה. בבוקר – חיבור ל-Rafting in Kutaisi לפעילות טיפוס Via Ferrata באזור אימרתי. אחרי האקסטרים – גיחה קצרה לעמוד קצחי (אם נשאר זמן).",
+        overnight: fmt("מרכז קוטאיסי", "Kutaisi Center", "ქუთაისის ცენტრი"),
+        link: "https://www.google.com/maps/search/Rafting+in+Kutaisi",
+        linkLabel: N.raftingInKutaisi,
       },
     ],
     restaurants: [
@@ -329,7 +355,7 @@ const DAYS = [
         cuisine: fmt("ארוחת צהריים גיאורגית אצל משפחה מקומית", "Georgian home lunch", "ქართული სახლის ლანჩი"),
         note: "חובה להזמין מראש בוואטסאפ!",
         link: "https://www.google.com/maps/search/Lunch+at+Lia+Georgia",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Georgian_supra.jpg/640px-Georgian_supra.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Georgian_supra.jpg/960px-Georgian_supra.jpg",
       },
     ],
     hotels: [
@@ -338,7 +364,7 @@ const DAYS = [
         area: N.kutaisi,
         nights: 1,
         link: "https://www.google.com/maps/search/hotels+Kutaisi+center",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Kutaisi_Center%2C_Georgia.jpg/640px-Kutaisi_Center%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/2014_Kutaisi%2C_Wielka_Synagoga_%2801%29.jpg/960px-2014_Kutaisi%2C_Wielka_Synagoga_%2801%29.jpg",
       },
     ],
     mapPoints: [
@@ -353,22 +379,47 @@ const DAYS = [
     weekday: "שבת",
     title: fmt("רפטינג וחבל ראצ'ה", "Rafting & Racha", "rafting და რაჭა"),
     emoji: "🛶",
-    theme: fmt("נהר הריוני וראצ'ה", "Rioni River & Racha", "რიონი და რაჭა"),
+    theme: fmt("נהר הריוני, ראצ'ה ואקסטרים", "Rioni River, Racha & adventure", "რიონი, რაჭა და ექსტრემი"),
     overnight: N.ambrolauri,
     driving: "כ-2 שעות (100 ק\"מ)",
-    summary: "רפטינג רמה 2–3 על נהר הריוני, תצפית במאגר שאורי, יקבים.",
+    summary:
+      "יום 4: נהר הריוני והטיפוס לחבל ראצ'ה – רפטינג, יין ונוף; או אופציה ב' עם קניונינג בנהר שאראולה.",
     activities: [
       {
         name: fmt("רפטינג על נהר הריוני", "Rioni River Rafting", "rafting მდ. რიონზე"),
-        description: "רפטינג בטיחותי ורגוע – רמה 2–3.",
+        description:
+          "רפטינג רגוע ומשפחתי – רמה 2–3 על נהר הריוני (Rioni River). חלק מהתכנון המקורי וגם מקדים את אופציה ב'.",
         link: "https://www.google.com/maps/search/Rioni+River+rafting",
         linkLabel: N.rioniRiver,
       },
       {
         name: N.shaoriReservoir,
-        description: `תצפית צפונה ב${N.racha.split(" · ")[0]}.`,
+        description: `תצפית במאגר שאורי (Shaori Reservoir) – עלייה צפונה ל${N.racha.split(" · ")[0]}, נוף ירוק מרהיב.`,
         link: "https://www.google.com/maps/search/Shaori+Reservoir",
         linkLabel: N.shaoriReservoir,
+      },
+      {
+        name: N.khvanchkaraWinery,
+        description: "ביקור ביקב מקומי באמברולאורי – טעימות Khvanchkara (יין חצי מתוק מפורסם).",
+        link: "https://www.google.com/maps/search/Khvanchkara+Winery",
+        linkLabel: N.khvanchkaraWinery,
+      },
+    ],
+    alternatives: [
+      {
+        name: "📋 התכנון המקורי – רפטינג, ראצ'ה ויין",
+        description:
+          "עוזבים את קוטאיסי לרפטינג רגוע (רמה 2–3) על הריוני, מטפסים לראצ'ה, עוצרים במאגר שאורי ומבקרים ביקב באמברולאורי.",
+        overnight: N.ambrolauri,
+        recommended: true,
+      },
+      {
+        name: "🛶 אופציה ב' – רפטינג + קניונינג (Rafting in Kutaisi)",
+        description:
+          "יום אקסטרים כפול עם Rafting in Kutaisi: מתחילים ברפטינג על הריוני, וממשיכים לפעילות קניונינג מאתגרת בנהר שאראולה (Shareula) שבחבל ראצ'ה. בסיום – הגעה לאמברולאורי.",
+        overnight: N.ambrolauri,
+        link: "https://www.google.com/maps/search/Rafting+in+Kutaisi",
+        linkLabel: N.raftingInKutaisi,
       },
     ],
     restaurants: [
@@ -376,7 +427,7 @@ const DAYS = [
         name: N.khvanchkaraWinery,
         cuisine: fmt("יקב – יין חצי מתוק", "Semi-sweet wine tasting", "ნახ. ღვინის დეგustatsia"),
         link: "https://www.google.com/maps/search/Khvanchkara+Winery",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Georgian_wine.jpg/640px-Georgian_wine.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Georgian_wine.jpg/960px-Georgian_wine.jpg",
       },
       {
         name: N.naberauliWines,
@@ -390,7 +441,7 @@ const DAYS = [
         area: `${N.ambrolauri}, ${N.racha}`,
         nights: 1,
         link: "https://www.google.com/maps/search/hotels+Ambrolauri",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Racha_Region%2C_Georgia.jpg/640px-Racha_Region%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Racha_Region%2C_Georgia.jpg/960px-Racha_Region%2C_Georgia.jpg",
       },
     ],
     mapPoints: [
@@ -435,7 +486,7 @@ const DAYS = [
         nights: 2,
         note: "בסיס לימים 5–6",
         link: "https://www.google.com/maps/search/hotels+Zugdidi",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Martvili_Canyon.jpg/640px-Martvili_Canyon.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Martvili_Canyon_View.jpg/960px-Martvili_Canyon_View.jpg",
       },
     ],
     mapPoints: [
@@ -480,7 +531,7 @@ const DAYS = [
         area: N.zugdidi,
         nights: 1,
         link: "https://www.google.com/maps/search/hotels+Zugdidi",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Martvili_Canyon.jpg/640px-Martvili_Canyon.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Martvili_Canyon_View.jpg/960px-Martvili_Canyon_View.jpg",
       },
     ],
     mapPoints: [
@@ -497,20 +548,49 @@ const DAYS = [
     emoji: "🏔",
     theme: fmt("עלייה לסוואנטי", "Ascent to Svaneti", "სვანეთში"),
     overnight: N.mestia,
-    driving: "כ-3 שעות (140 ק\"מ)",
-    summary: "סכר אנגורי הפוטוגני, טיפוס לעיירה האלפינית מסטיה.",
+    driving: "כ-4–5 שעות (140 ק\"מ) – כביש מפותל",
+    summary: "עלייה לסוואנטי: נסיעה מזוגדידי דרך סכר אנגורי, הגעה למסטיה – בירת ההרים.",
     activities: [
       {
+        name: fmt("יציאה מזוגדידי", "Departure from Zugdidi", "გასვლა ზუგდიდიდან"),
+        description:
+          "יציאה ב-08:00–08:30 אחרי ארוחת בוקר. לוודא: דלק מלא (תחנות נדירות בהמשך), מזומן, חטיפים, שכבות לבוש. הכביש עובר דרך עמק Enguri – נוף משתנה מירוק לטורקיז.",
+        link: "https://www.google.com/maps/search/Zugdidi+Georgia",
+        linkLabel: N.zugdidi,
+      },
+      {
         name: N.enguriDam,
-        description: "עצירה לתצפית על אחד הסכרים הגבוהים בעולם.",
+        description:
+          "עצירה של 45–60 דק' לתצפית על סכר אנגורי – בין הגבוהים באירופה (271 מ'). גשר תלוי מעל, נוף לעמק. אפשר לרדת לנקודת צילום – לא מומלץ לבעלי vertigo. כניסה חינם לרוב.",
         link: "https://www.google.com/maps/search/Enguri+Dam",
         linkLabel: N.enguriDam,
       },
       {
-        name: N.mestia,
-        description: `בירת ${N.svaneti} – מגדלי אבן, מוזיאון.`,
-        link: "https://www.google.com/maps/search/Mestia+Georgia",
+        name: fmt("עצירת צהריים בדרך", "Lunch stop en route", "სადილი გზაში"),
+        description:
+          "עצירה בכפר לאורך הדרך – ח'צפורי, lobio או kubdari מקומי. הזדמנות ל-5 דק' stretch. הדרך האחרונה לפני מסטיה (שעה–שעה וחצי) – serpentine עם פרות, מפולות סלעים ועבודות בכביש – לנהוג לאט.",
+        link: "https://www.google.com/maps/search/restaurant+Zugdidi+Mestia+road",
+        linkLabel: fmt("מסעדות בדרך", "Road restaurants", "გზის რესტორნები"),
+      },
+      {
+        name: fmt("הגעה ולינה במסטיה", "Arrival & check-in Mestia", "ჩასვლა მესტიაში"),
+        description:
+          "הגעה צפויה 13:30–14:30. check-in, מנוחה קצרה. לרכוש מזומן מהכספומט (ATM מוגבל), חטיפים ומים לימי הטרק. להזמין ג'יפ ל-Ushguli ליום 8.",
+        link: "https://www.google.com/maps/search/hotels+Mestia",
         linkLabel: N.mestia,
+      },
+      {
+        name: fmt("סיור במסטיה – מגדלים ומוזיאון", "Mestia walking tour", "მესტიის სვლა"),
+        description: `הליכה במרכז ${N.mestia.split(" · ")[0]}: מגדלי Svanetian (מגדלי הגנה מימי הביניים), כנסייה, מוזיאון ההיסטורי של סוואנטי (שעות: בדרך כלל 10:00–18:00, לבדוק). נוף ל-Ushba ו-Tetnuldi.`,
+        link: "https://www.google.com/maps/search/Svaneti+Museum+Mestia",
+        linkLabel: fmt("מוזיאון סוואנטי", "Svaneti Museum", "სვანეთის მუზეუმი"),
+      },
+      {
+        name: fmt("ארוחת ערב – Laila / Samushao", "Dinner in Mestia", "ვახშამი მესტიაში"),
+        description:
+          "ארוחת ערב במסעדה Laila (kubdari – מאפה בשר סוואנטי, tashmijabi) או Samushao Marani (יין מקומי + מנות גיאורגיות). לשבת מוקדם – עמוס בערב. סיום יום רגוע – מחר Ushguli!",
+        link: "https://www.google.com/maps/search/Laila+Restaurant+Mestia",
+        linkLabel: "Laila Restaurant",
       },
     ],
     hotels: [
@@ -520,7 +600,7 @@ const DAYS = [
         nights: 2,
         note: "בסיס לימים 7–8",
         link: "https://www.google.com/maps/search/hotels+Mestia",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Mestia%2C_Georgia.jpg/640px-Mestia%2C_Georgia.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Mestia%2C_evening.jpg/960px-Mestia%2C_evening.jpg",
       },
     ],
     mapPoints: [
@@ -564,7 +644,7 @@ const DAYS = [
         area: N.mestia,
         nights: 1,
         link: "https://www.google.com/maps/search/hotels+Mestia",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Ushguli_village.jpg/640px-Ushguli_village.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ushguli%2C_lonely_tower.jpg/960px-Ushguli%2C_lonely_tower.jpg",
       },
     ],
     mapPoints: [
@@ -609,7 +689,7 @@ const DAYS = [
         nights: 2,
         note: "בקתת עץ / גסטהאוס – 2 לילות (ימים 9–10)",
         link: "https://www.google.com/maps/search/cabin+guesthouse+Mazeri+Georgia",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ushba.jpg/640px-Ushba.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ushba.jpg/960px-Ushba.jpg",
       },
     ],
     mapPoints: [
@@ -649,7 +729,7 @@ const DAYS = [
         nights: 1,
         note: "לילה שני בבקתה",
         link: "https://www.google.com/maps/search/guesthouse+Mazeri+Georgia",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ushba.jpg/640px-Ushba.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ushba.jpg/960px-Ushba.jpg",
       },
     ],
     mapPoints: [
@@ -693,7 +773,7 @@ const DAYS = [
         area: fmt("חוף אנאקליה", "Anaklia Beach", "ანაკლიის პლაჟი"),
         nights: 1,
         link: "https://www.google.com/maps/search/hotels+Anaklia",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Anaklia_pier.jpg/640px-Anaklia_pier.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Anaklia_pier.jpg/960px-Anaklia_pier.jpg",
       },
     ],
     mapPoints: [
@@ -737,7 +817,7 @@ const DAYS = [
         cuisine: "גיאורגית – חינקלי",
         note: "ארוחת סיום חגיגית",
         link: "https://www.google.com/maps/search/khinkali+Batumi+old+town",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Khinkali_Georgian_dumplings.jpg/640px-Khinkali_Georgian_dumplings.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tbilisi%2C_Khachapuri_and_khinkali%2C_Georgian_traditional_food%2C_Georgia.jpg/960px-Tbilisi%2C_Khachapuri_and_khinkali%2C_Georgian_traditional_food%2C_Georgia.jpg",
       },
     ],
     hotels: [
@@ -746,7 +826,7 @@ const DAYS = [
         area: fmt("באטומי – לילה אחרון", "Batumi – last night", "ბათუმი – ბოლო ღამე"),
         nights: 1,
         link: "https://www.google.com/maps/search/hotels+Batumi+center",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Batumi_skyline.jpg/640px-Batumi_skyline.jpg",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Shipwreck_Batumi_Georgia_R_Bartz.jpg/960px-Shipwreck_Batumi_Georgia_R_Bartz.jpg",
       },
     ],
     mapPoints: [

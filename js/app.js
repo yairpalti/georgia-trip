@@ -6,7 +6,7 @@ function renderPlaceCards(items, type) {
         .map(
           (item) => `
         <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="place-card">
-          ${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy">` : ""}
+          ${item.image ? `<img src="${resolveImageUrl(item.image)}" alt="${item.name}" loading="lazy" referrerpolicy="no-referrer">` : ""}
           <div class="place-card-body">
             <h3>${item.name}</h3>
             ${item.cuisine ? `<p>${item.cuisine}</p>` : ""}
@@ -28,7 +28,7 @@ function renderActivities(activities) {
     .map(
       (a) => `
     <article class="activity-item${a.image ? " has-image" : ""}">
-      ${a.image ? `<img class="activity-img" src="${a.image}" alt="" loading="lazy">` : ""}
+      ${a.image ? `<img class="activity-img" src="${resolveImageUrl(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
       <div class="activity-body">
         <div class="activity-header">
           <h3>${a.name}</h3>
@@ -68,14 +68,34 @@ function renderDayTips(tips) {
 function renderAlternatives(alts) {
   if (!alts || !alts.length) return "";
   return `
-    <div class="card">
+    <div class="card alt-options-card">
       <h2>🔄 תוכניות חלופיות</h2>
       ${alts
         .map(
           (a) => `
-        <div class="alt-plan">
-          <h4>${a.name}</h4>
-          <p>${a.description}</p>
+        <div class="alt-plan${a.recommended ? " alt-plan-recommended" : ""}">
+          ${a.image ? `<img class="alt-plan-img" src="${resolveImageUrl(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
+          <div class="alt-plan-body">
+            <h4>${a.name}</h4>
+            ${a.driving ? `<p class="alt-driving">🚗 ${a.driving}</p>` : ""}
+            <p>${a.description}</p>
+            ${a.overnight ? `<p class="alt-overnight">🏨 לינה: ${a.overnight}</p>` : ""}
+            ${
+              a.tips?.length
+                ? `<ul class="alt-tips">${a.tips.map((t) => `<li>${t}</li>`).join("")}</ul>`
+                : ""
+            }
+            ${
+              a.activities?.length
+                ? `<div class="alt-activities"><h5>📋 לוח זמנים מפורט</h5>${renderActivities(a.activities)}</div>`
+                : ""
+            }
+            ${
+              a.link
+                ? `<a href="${a.link}" target="_blank" rel="noopener noreferrer" class="external-link">${a.linkLabel || "אתר / הזמנה"}</a>`
+                : ""
+            }
+          </div>
         </div>
       `
         )
@@ -88,6 +108,13 @@ function getDayById(id) {
   return DAYS.find((d) => d.id === id);
 }
 
+function resolveImageUrl(url) {
+  if (!url || typeof url !== "string") return url;
+  const m = url.match(/^IMG\.(\w+)$/);
+  if (m && typeof IMG !== "undefined" && IMG[m[1]]) return IMG[m[1]];
+  return url;
+}
+
 function getStoriesForDay(dayId) {
   if (typeof TRAVELER_STORIES === "undefined") return null;
   return TRAVELER_STORIES[dayId] || null;
@@ -96,6 +123,13 @@ function getStoriesForDay(dayId) {
 function getStoryCount(dayId) {
   const data = getStoriesForDay(dayId);
   return data?.stories?.length || 0;
+}
+
+function renderStorySource(story) {
+  const src = story.source;
+  if (!src?.url) return "";
+  const label = src.label || src.name || src.url;
+  return `<span class="story-source"><a href="${src.url}" target="_blank" rel="noopener noreferrer" class="external-link">🔗 מקור: ${label}</a></span>`;
 }
 
 function renderStoryLinks(links) {
@@ -120,7 +154,7 @@ function renderStoryGallery(gallery) {
         .map(
           (item) => `
         <figure class="story-gallery-item">
-          <img src="${item.src}" alt="${item.caption || ""}" loading="lazy">
+          <img src="${resolveImageUrl(item.src)}" alt="${item.caption || ""}" loading="lazy" referrerpolicy="no-referrer">
           ${item.caption ? `<figcaption>${item.caption}</figcaption>` : ""}
         </figure>
       `
@@ -140,10 +174,11 @@ function renderStoryFrame(story, index) {
           <div class="story-meta">
             ${story.author ? `<span>✍️ ${story.author}</span>` : ""}
             ${story.date ? `<span>📅 ${story.date}</span>` : ""}
+            ${renderStorySource(story)}
           </div>
         </div>
       </header>
-      ${story.image ? `<img class="story-hero-img" src="${story.image}" alt="" loading="lazy">` : ""}
+      ${story.image ? `<img class="story-hero-img" src="${resolveImageUrl(story.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
       <div class="story-body">
         ${(story.paragraphs || []).map((p) => `<p>${p}</p>`).join("")}
         ${renderStoryLinks(story.links)}
@@ -187,6 +222,11 @@ function renderStoriesPage(dayId) {
 
     <div class="container stories-page">
       ${data?.pageIntro ? `<p class="stories-intro">${data.pageIntro}</p>` : ""}
+      ${
+        data?.pageSource?.url
+          ? `<p class="stories-page-source"><a href="${data.pageSource.url}" target="_blank" rel="noopener noreferrer" class="external-link">🔗 מקור: ${data.pageSource.label || data.pageSource.url}</a></p>`
+          : ""
+      }
       <div class="stories-list">${storiesHtml}</div>
     </div>
 
@@ -211,14 +251,26 @@ function enrichDay(day) {
   const e = DAY_ENRICHMENT[day.id];
   if (!e) return day;
 
+  const actDetails = typeof ACTIVITY_DETAILS !== "undefined" ? ACTIVITY_DETAILS[day.id] : null;
   const activities = (day.activities || []).map((a, i) => ({
     ...a,
+    ...(actDetails?.[i] || {}),
     ...(e.activityExtras?.[i] || {}),
   }));
   if (e.extraActivities?.length) activities.push(...e.extraActivities);
 
   const restaurants = [...(day.restaurants || []), ...(e.extraRestaurants || [])];
   const hotels = [...(day.hotels || []), ...(e.extraHotels || [])];
+
+  const alternatives = (day.alternatives || []).map((alt, i) => {
+    const altExtra =
+      e.alternativeExtras?.[i] ||
+      e.alternativeExtras?.[String(i)] ||
+      (typeof ALTERNATIVE_ENRICHMENT !== "undefined" && ALTERNATIVE_ENRICHMENT[day.id]?.[i]) ||
+      (typeof ALTERNATIVE_ENRICHMENT !== "undefined" && ALTERNATIVE_ENRICHMENT[day.id]?.[String(i)]) ||
+      {};
+    return { ...alt, ...altExtra };
+  });
 
   return {
     ...day,
@@ -228,7 +280,22 @@ function enrichDay(day) {
     activities,
     restaurants,
     hotels,
+    alternatives,
   };
+}
+
+function renderDayNav(dayId, { top = false } = {}) {
+  const prev =
+    dayId > 1
+      ? `<a href="day.html?id=${dayId - 1}">← יום ${dayId - 1}</a>`
+      : "<span></span>";
+  const next =
+    dayId < 13
+      ? `<a href="day.html?id=${dayId + 1}">יום ${dayId + 1} →</a>`
+      : "<span></span>";
+  const center = `<a href="index.html">כל הימים</a>`;
+  const cls = top ? "day-nav day-nav-top" : "container day-nav";
+  return `<nav class="${cls}" aria-label="ניווט בין ימים">${prev}${center}${next}</nav>`;
 }
 
 function renderDayPage(dayId) {
@@ -241,13 +308,14 @@ function renderDayPage(dayId) {
 
   document.title = `יום ${day.id} – ${day.title} | ${TRIP_META.title}`;
   const heroStyle = day.heroImage
-    ? ` style="background-image: linear-gradient(to bottom, rgba(90,31,45,0.75), rgba(45,90,61,0.85)), url('${day.heroImage}')"`
+    ? ` style="background-image: linear-gradient(to bottom, rgba(90,31,45,0.75), rgba(45,90,61,0.85)), url('${resolveImageUrl(day.heroImage)}')"`
     : "";
 
   document.getElementById("day-content").innerHTML = `
     <section class="day-hero"${heroStyle}>
       <div class="day-hero-inner container">
         <div class="breadcrumb"><a href="index.html">דף הבית</a> / יום ${day.id}</div>
+        ${renderDayNav(dayId, { top: true })}
         <h1>${day.emoji} יום ${day.id}: ${day.title}</h1>
         <div class="day-meta-row">
           <span>📅 ${day.date} (${day.weekday})</span>
@@ -329,19 +397,7 @@ function renderDayPage(dayId) {
       </aside>
     </div>
 
-    <div class="container day-nav">
-      ${
-        dayId > 1
-          ? `<a href="day.html?id=${dayId - 1}">← יום ${dayId - 1}</a>`
-          : "<span></span>"
-      }
-      <a href="index.html">כל הימים</a>
-      ${
-        dayId < 13
-          ? `<a href="day.html?id=${dayId + 1}">יום ${dayId + 1} →</a>`
-          : "<span></span>"
-      }
-    </div>
+    ${renderDayNav(dayId)}
   `;
 
   if (day.mapPoints && day.mapPoints.length) {
@@ -379,4 +435,229 @@ function renderDaysGrid() {
   `;
     }
   ).join("");
+}
+
+function renderExtremeDetail(activity, categories) {
+  if (!activity) {
+    return `<div class="extreme-detail extreme-detail-empty"><p>לחצו על נקודה במפה או על כרטיס פעילות לפרטים מלאים.</p></div>`;
+  }
+  const cat = categories[activity.category];
+  const img = activity.image ? resolveImageUrl(activity.image) : "";
+  const days =
+    activity.relatedDays?.length > 0
+      ? activity.relatedDays.map((d) => `<a href="day.html?id=${d}">יום ${d}</a>`).join(" · ")
+      : "—";
+
+  return `
+    <article class="extreme-detail" id="extreme-detail-panel">
+      ${img ? `<img src="${img}" alt="" class="extreme-detail-img" loading="lazy" referrerpolicy="no-referrer">` : ""}
+      <div class="extreme-detail-body">
+        <span class="extreme-detail-cat" style="--cat-color:${cat.color}">${cat.icon} ${cat.label}</span>
+        <h2>${activity.name}</h2>
+        <dl class="extreme-detail-meta">
+          <div><dt>אזור</dt><dd>${activity.region}</dd></div>
+          <div><dt>רמת קושי</dt><dd>${activity.difficulty}</dd></div>
+          <div><dt>עונה</dt><dd>${activity.season}</dd></div>
+          <div><dt>משך</dt><dd>${activity.duration}</dd></div>
+          <div><dt>ימים בתוכנית</dt><dd>${days}</dd></div>
+          <div><dt>על המסלול</dt><dd>${activity.onRoute ? "✅ כן" : "➖ מחוץ למסלול"}</dd></div>
+        </dl>
+        <p class="extreme-detail-desc">${activity.description}</p>
+        ${
+          activity.website
+            ? `<a href="${activity.website}" target="_blank" rel="noopener noreferrer" class="btn btn-primary extreme-detail-link">🔗 ${activity.websiteLabel || "אתר / הזמנה"}</a>`
+            : ""
+        }
+      </div>
+    </article>
+  `;
+}
+
+function renderExtremePage() {
+  const root = document.getElementById("extreme-content");
+  if (!root || typeof EXTREME_ACTIVITIES === "undefined") return;
+
+  const categories = EXTREME_CATEGORIES;
+  let selectedId = null;
+  let mapApi = null;
+  const activeCats = new Set(Object.keys(categories));
+
+  const grouped = {};
+  Object.keys(categories).forEach((k) => {
+    grouped[k] = [];
+  });
+  EXTREME_ACTIVITIES.forEach((a) => {
+    if (grouped[a.category]) grouped[a.category].push(a);
+  });
+
+  root.innerHTML = `
+    <section class="day-hero extreme-hero">
+      <div class="day-hero-inner container">
+        <div class="breadcrumb"><a href="index.html">דף הבית</a> / אקסטרים</div>
+        <h1>🧗 פעילויות אקסטרים</h1>
+        <p style="opacity:0.9;margin:0">רפטינג, קניונינג, Via Ferrata, כדורים פורחים, Paragliding ועוד – ליד מסלול הטיול</p>
+      </div>
+    </section>
+    <main class="container extreme-page">
+      <section class="section">
+        <h2 class="section-title">🗺 מפה – מסלול + אטרקציות</h2>
+        <p class="extreme-map-intro">קווי המסלול הצבעוניים (מקווקווים) = ימי הטיול. הנקודות הצבעוניות = פעילויות אקסטרים לפי סוג.</p>
+        <div class="extreme-filters" id="extreme-filters">
+          ${Object.entries(categories)
+            .map(
+              ([key, cat]) => `
+            <button type="button" class="extreme-filter-btn active" data-cat="${key}" style="--cat-color:${cat.color}">
+              ${cat.icon} ${cat.label}
+            </button>
+          `
+            )
+            .join("")}
+          <button type="button" class="extreme-filter-btn extreme-filter-route" data-cat="route-only">
+            🛣 רק על המסלול
+          </button>
+        </div>
+        <div class="extreme-map-layout">
+          <div class="extreme-map-wrap map-section">
+            <div id="extreme-map"></div>
+            <div class="map-legend extreme-map-legend" id="extreme-map-legend"></div>
+          </div>
+          <div id="extreme-detail-slot">${renderExtremeDetail(null, categories)}</div>
+        </div>
+      </section>
+      <section class="section">
+        <h2 class="section-title">📋 כל הפעילויות</h2>
+        ${Object.entries(categories)
+          .filter(([key]) => grouped[key]?.length)
+          .map(
+            ([key, cat]) => `
+          <div class="extreme-category-block" data-category="${key}">
+            <h3 class="extreme-category-title" style="--cat-color:${cat.color}">${cat.icon} ${cat.label}</h3>
+            <div class="extreme-cards">
+              ${grouped[key]
+                .map(
+                  (a) => `
+                <button type="button" class="extreme-card" data-id="${a.id}" style="--cat-color:${cat.color}">
+                  <span class="extreme-card-cat">${cat.label}</span>
+                  <strong>${a.name}</strong>
+                  <span class="extreme-card-region">${a.region}</span>
+                  ${a.onRoute ? '<span class="extreme-card-badge">על המסלול</span>' : ""}
+                </button>
+              `
+                )
+                .join("")}
+            </div>
+          </div>
+        `
+          )
+          .join("")}
+      </section>
+    </main>
+  `;
+
+  function getVisibleActivities() {
+    return EXTREME_ACTIVITIES.filter((a) => activeCats.has(a.category));
+  }
+
+  function selectActivity(activity) {
+    selectedId = activity?.id || null;
+    document.getElementById("extreme-detail-slot").innerHTML = renderExtremeDetail(activity, categories);
+    if (mapApi && selectedId) mapApi.highlight(selectedId);
+    document.querySelectorAll(".extreme-card").forEach((el) => {
+      el.classList.toggle("selected", el.dataset.id === selectedId);
+    });
+    if (activity) {
+      document.getElementById("extreme-detail-slot").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+
+  function refreshMapMarkers() {
+    const visible = getVisibleActivities().map((a) => a.id);
+    if (mapApi) mapApi.setVisible(visible);
+  }
+
+  document.getElementById("extreme-filters").addEventListener("click", (e) => {
+    const btn = e.target.closest(".extreme-filter-btn");
+    if (!btn) return;
+
+    if (btn.dataset.cat === "route-only") {
+      const routeIds = EXTREME_ACTIVITIES.filter((a) => a.onRoute).map((a) => a.id);
+      activeCats.clear();
+      EXTREME_ACTIVITIES.forEach((a) => {
+        if (a.onRoute) activeCats.add(a.category);
+      });
+      document.querySelectorAll(".extreme-filter-btn[data-cat]").forEach((b) => {
+        if (b.dataset.cat === "route-only") return;
+        b.classList.toggle("active", activeCats.has(b.dataset.cat));
+      });
+      if (mapApi) mapApi.setVisible(routeIds);
+      document.querySelectorAll(".extreme-category-block").forEach((block) => {
+        block.querySelectorAll(".extreme-card").forEach((card) => {
+          const act = EXTREME_ACTIVITIES.find((a) => a.id === card.dataset.id);
+          card.style.display = act?.onRoute ? "" : "none";
+        });
+      });
+      return;
+    }
+
+    btn.classList.toggle("active");
+    const cat = btn.dataset.cat;
+    if (btn.classList.contains("active")) activeCats.add(cat);
+    else activeCats.delete(cat);
+
+    document.querySelectorAll(".extreme-card").forEach((card) => {
+      card.style.display = "";
+    });
+    document.querySelectorAll(".extreme-category-block").forEach((block) => {
+      block.style.display = activeCats.has(block.dataset.category) ? "" : "none";
+    });
+    refreshMapMarkers();
+  });
+
+  root.addEventListener("click", (e) => {
+    const card = e.target.closest(".extreme-card");
+    if (!card) return;
+    const activity = EXTREME_ACTIVITIES.find((a) => a.id === card.dataset.id);
+    if (activity) selectActivity(activity);
+  });
+
+  const legend = document.getElementById("extreme-map-legend");
+  if (legend) {
+    legend.innerHTML = `
+      <div class="extreme-legend-section">
+        <strong>מסלול הטיול</strong>
+        <div class="map-legend-grid">
+          ${ROUTE_SEGMENTS.map(
+            (s) => `
+            <a href="day.html?id=${s.day}" class="legend-day-item">
+              <span class="legend-day-line" style="background:${DAY_COLORS[s.day]};opacity:0.5"></span>
+              <span class="legend-day-text"><strong>יום ${s.day}</strong><span>${s.distanceKm} km</span></span>
+            </a>
+          `
+          ).join("")}
+        </div>
+      </div>
+      <div class="extreme-legend-section">
+        <strong>סוגי פעילות</strong>
+        <div class="extreme-legend-cats">
+          ${Object.entries(categories)
+            .map(
+              ([key, cat]) => `
+            <span><span class="extreme-legend-dot" style="background:${cat.color}">${cat.icon}</span> ${cat.label}</span>
+          `
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  setTimeout(() => {
+    mapApi = initExtremeMap("extreme-map", {
+      activities: EXTREME_ACTIVITIES,
+      categories,
+      segments: ROUTE_SEGMENTS,
+      dayColors: DAY_COLORS,
+      onSelect: selectActivity,
+    });
+  }, 50);
 }
