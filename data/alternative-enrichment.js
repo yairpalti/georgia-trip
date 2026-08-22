@@ -1,12 +1,13 @@
-/** תוכניות חלופיות מפורטות – במיוחד אופציה ב' בימים 3–4 */
+/** תוכניות חלופיות מפורטות – ימים 3–4 (רכב עצמי, לינה בצ'יאתורה) */
 const ALTERNATIVE_ENRICHMENT = {
   3: {
     0: {
-      driving: "כ-130 ק\"מ מעגל · 4 עצירות · ~2 ש' נסיעה",
+      driving: "כ-130 ק\"מ · רכב עצמי · לינה בצ'יאתורה",
       description:
-        "התכנון המקורי – יום תרבות ו-Urbex מלא. מתאים למי שרוצה לראות את צ'יאתורה האגדית, לאכול אצל Lia, ולסיים במנזר מגווימבי. נסיעה ארוכה יותר אבל מגוון מקסימלי.",
+        "אופציה א' – יום תרבות ו-Urbex ברכב שלכם. קצחי → צ'יאתורה → Lia → מגווימבי → לינה בצ'יאתורה (בלי חזרה לקוטאיסי).",
       image: "IMG.chiatura",
       tips: [
+        "check-out קוטאיסי בבוקר",
         "Lunch at Lia – WhatsApp מראש חובה",
         "רכבל Sanatorium – לבדוק שעות פעילות",
         "להתחיל ב-08:30–09:00",
@@ -41,45 +42,54 @@ const ALTERNATIVE_ENRICHMENT = {
         },
         {
           name: N.mgvimevi,
-          timeOfDay: "15:00–16:00",
+          timeOfDay: "15:00–16:30",
           duration: "45 דק'",
-          description: "מנזר חצוב בסלע, חזרה לקוטאיסי.",
+          description: "מנזר חצוב בסלע. המשך קצר למלון בצ'יאתורה.",
           link: "https://www.google.com/maps/search/Mgvimevi+Convent",
           linkLabel: N.mgvimevi,
           image: "IMG.mgvimevi",
         },
+        {
+          name: fmt("לינה – אזור צ'יאתורה", "Overnight – Chiatura area", "ჭიათურა"),
+          timeOfDay: "17:00–",
+          duration: "ערב",
+          description: "check-in, ארוחת ערב מקומית, מנוחה – מחר יציאה לראצ'ה.",
+          link: "https://www.google.com/maps/search/hotels+Chiatura+Georgia",
+          linkLabel: N.chiatura,
+          image: "IMG.chiatura",
+        },
       ],
     },
     1: {
-      driving: "כ-180 ק\"מ · יום מלא · חזרה ~19:00–20:00 לקוטאיסי",
+      driving: "כ-110 ק\"מ ל-Sveri + ~30 דק' לצ'יאתורה · רכב עצמי",
       description:
-        "אופציה ב' – יום אקסטרים עם Rafting in Kutaisi. Via Ferrata הראשון בקווקז בכפר Sveri (אזור צ'יאתורה). כולל: הסעה, הדרכה, ארוחה, טיפוס 2–2.5 ש', שחייה בנהר Sadzaliskevi, BBQ. אופציונלי: גיחה קצרה לקצחי בחזרה.",
+        "אופציה ב' – Via Ferrata ב-Sveri Adventure Camp. ברכב שלכם (~2 ש' מקוטאיסי), מפגש עם Rafting in Kutaisi במקום (₾200 – ללא הסעה). שחייה, BBQ. ערב: לינה בצ'יאתורה.",
       image: "IMG.rafting",
-      link: "https://www.raftinginkutaisi.com/",
-      linkLabel: "Rafting in Kutaisi – אתר רשמי",
+      link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
+      linkLabel: "Rafting in Kutaisi – Via Ferrata",
       tips: [
-        "אופציה ב' – Via Ferrata (₾200) · raftinginkutaisi.com · +995 595 41 15 47",
-        "בגד סport מתחת לציוד, נעליים סגורות",
-        "לא מתאים לפחד גובה קיצוני",
-        "בדרך לSveri – עצירה לצילום קצחי מהכביש",
+        "Via Ferrata (₾200) · +995 595 41 15 47 · ללא הסעה הלוך-חזור",
+        "בגד ספורט, נעליים סגורות",
+        "עצירה בקצחי בדרך (~15 דק')",
+        "Sveri → מלון בצ'יאתורה ~30 דק'",
       ],
       activities: [
         {
-          name: fmt("איסוף והסעה ל-Sveri", "Transfer to Sveri", "Sveri"),
-          timeOfDay: "09:00–11:00",
-          duration: "2 ש' נסיעה",
+          name: fmt("נסיעה ל-Sveri (רכב עצמי)", "Drive to Sveri – own car", "Sveri"),
+          timeOfDay: "08:00–10:00",
+          duration: "~2 ש'",
           description:
-            "יציאה מקוטאיסי (או מהמלון). 110 ק\"מ / ~2 ש' לכפר Sveri. בדרך: עמוד קצחי – עצירת צילום 15 דק'.",
+            "check-out מקוטאיסי. 110 ק\"מ / ~2 ש' ל-Sveri Adventure Camp. עצירה בקצחי.",
           link: "https://www.google.com/maps/search/Sveri+Georgia",
           linkLabel: "Sveri – מפה",
           image: "IMG.katskhi",
         },
         {
           name: "Via Ferrata – Sveri Adventure Camp",
-          timeOfDay: "11:30–14:00",
+          timeOfDay: "10:30–14:00",
           duration: "2–2.5 ש'",
           description:
-            "הדרכה על רתמות וcarabiners, הליכה 20 דק' לנקודת הטיפוס. טיפוס על סולמות ברזל בבקעה – 2–2.5 ש' עם מדריך. מעבר במערות קצרות בסלע.",
+            "הדרכה, טיפוס 2–2.5 ש' עם מדריך. 20 דק' הליכה מהמחנה. מעבר במערות קצרות.",
           link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
           linkLabel: "Via Ferrata – פרטים",
           image: "IMG.rafting",
@@ -88,51 +98,50 @@ const ALTERNATIVE_ENRICHMENT = {
           name: fmt("שחייה + BBQ", "River pool & picnic", "ცურვა და BBQ"),
           timeOfDay: "14:00–16:00",
           duration: "1.5–2 ש'",
-          description:
-            "שחייה בבריכת נהר Sadzaliskevi (מפלים!). ארוחת BBQ: jonjoli, ekala, גבינה אימרתית, khachapuri, limonada ביתית.",
+          description: "בריכת נהר Sadzaliskevi. BBQ אימerתי (jonjoli, khachapuri).",
           image: "IMG.supra",
         },
         {
-          name: fmt("גיחה לקצחי (אופציונלי)", "Katskhi stop (optional)", "კაცხი"),
-          timeOfDay: "16:30–17:15",
-          duration: "45 דק'",
-          description: "אם נשאר זמן בחזרה – עצירה נוספת לצילום עמוד קצחי.",
-          link: "https://www.google.com/maps/search/Katskhi+Pillar",
-          linkLabel: N.katskhiPillar,
-          image: "IMG.katskhi",
-        },
-        {
-          name: fmt("חזרה לקוטאיסי", "Return to Kutaisi", "ქუთაისი"),
-          timeOfDay: "17:15–19:00",
-          duration: "1.5–2 ש'",
-          description: "הסעה חזרה למלון. ארוחת ערב בקוטאיסי (Palaty / Sapere).",
-          link: "https://www.google.com/maps/search/hotels+Kutaisi",
-          linkLabel: N.kutaisi,
-          image: "IMG.kutaisi",
+          name: fmt("נסיעה ללינה בצ'יאתורה", "Drive to Chiatura hotel", "ჭიათურა"),
+          timeOfDay: "16:30–17:30",
+          duration: "~30 דק'",
+          description: "Sveri → מלון באזור צ'יאתורה. מוכנים ליום 4 – יציאה לראצ'ה.",
+          link: "https://www.google.com/maps/search/hotels+Chiatura+Georgia",
+          linkLabel: N.chiatura,
+          image: "IMG.chiatura",
         },
       ],
     },
   },
   4: {
     0: {
-      driving: "כ-100 ק\"מ · רפטינג + ראצ'ה · ~2 ש' נסיעה",
+      driving: "כ-90 ק\"מ · מצ'יאתורה לראצ'ה · ~1.5–2 ש'",
       description:
-        "התכנון המקורי – יום משפחתי-נופי. רפטינג רגוע (2–3), עלייה לראצ'ה, תצפית במאגר שאורי, יין Khvanchkara. פחות מאתגר, יותר נוף ותרבות.",
+        "אופציה א' – יציאה מצ'יאתורה (קרוב יותר לרפטינג!). רפטינג רגוע (2–3), שאורי, יין Khvanchkara. לינה באמברולאורי.",
       image: "IMG.racha",
-      tips: ["רפטינג – Rafting in Kutaisi (₾150)", "יין – לא לנהוג אחרי", "כבישים מפותלים"],
+      tips: ["רפטינג – ₾150 · לציין יציאה מצ'יאתורה", "יין – לא לנהוג אחרי", "כבישים מפותלים"],
       activities: [
         {
+          name: fmt("נסיעה לנקודת הרפטינג", "Drive to rafting", "rafting"),
+          timeOfDay: "08:00–09:30",
+          duration: "~1–1.5 ש'",
+          description: "~88 ק\"מ / 1–1.5 ש' מצ'יאתורה ל-Alpana / Rioni.",
+          link: "https://www.google.com/maps/search/Alpana+Georgia",
+          linkLabel: N.rioniRiver,
+          image: "IMG.racha",
+        },
+        {
           name: fmt("רפטינג על הריוני", "Rioni rafting", "rafting"),
-          timeOfDay: "09:00–12:00",
+          timeOfDay: "09:30–13:00",
           duration: "2.5–3 ש'",
-          description: "23 ק\"מ, רמה 2–3, ציוד מלא. ₾150 · מדריך IRF.",
+          description: "23 ק\"מ, רמה 2–3, ציוד Neoprene. ₾150 · מדריך IRF.",
           link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
           linkLabel: "Rafting in Kutaisi",
           image: "IMG.rafting",
         },
         {
           name: N.shaoriReservoir,
-          timeOfDay: "13:30–14:30",
+          timeOfDay: "14:00–15:00",
           duration: "45 דק'",
           description: "תצפית על האגם הירוק.",
           link: "https://www.google.com/maps/search/Shaori+Reservoir",
@@ -141,7 +150,7 @@ const ALTERNATIVE_ENRICHMENT = {
         },
         {
           name: N.khvanchkaraWinery,
-          timeOfDay: "15:00–17:00",
+          timeOfDay: "15:30–17:00",
           duration: "1.5 ש'",
           description: "טעימות יין, לינה באמברולאורי.",
           link: "https://www.google.com/maps/search/Khvanchkara+Winery",
@@ -151,35 +160,32 @@ const ALTERNATIVE_ENRICHMENT = {
       ],
     },
     1: {
-      driving: "יום מלא · ~12–14 ש' · אמברולאורי בערב",
+      driving: "יום מלא · יציאה מצ'יאתורה · אמברולאורי בערב",
       description:
-        "אופציה ב' – יום אקסטרים כפול! Rafting in Kutaisi מארגנים: בוקר – רפטינג על הריוני (23 ק\"מ), אחר הצהריים – קניונינg בנהר Shareula (ראצ'ה): מפלים, קפיצות למים, ירידות בחבל. יום ארוך ומאתגר – לחובבי אדרנalin.",
+        "אופציה ב' – יום כפול: רפטינג בוקר + קניונינג Shareula. יוצאים מאזור צ'יאתורה – פחות נסיעה מאשר מקוטאיסי.",
       image: "IMG.rafting",
       link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
       linkLabel: "Rafting in Kutaisi – Canyoning Shareula",
       tips: [
-        "להזמין יום מלא מראש – raftinginkutaisi.com · ₾150 רפטינג + ₾200 קניונינג",
+        "יום מלא – ₾150 רפטינג + ₾200 קניונינג",
         "בגדים להחלפה + נעליים סגורות",
-        "רמה בינונית–גבוהה – לא לילדים קטנים",
-        "מגיעים לאמברולאורי בערב – לינה מוכנה מראש",
+        "לתאם נקודת מפגש מצ'יאתורה",
       ],
       activities: [
         {
           name: fmt("רפטינג – נהר הריוני", "Rioni River rafting", "rafting"),
           timeOfDay: "08:00–12:00",
           duration: "3–4 ש'",
-          description:
-            "יציאה מקוטאיסי / נקודת מפגש. נסיעה לראצ'ה, ירידה 23 ק\"מ על הריוני – רapids, ציוד neoprene מלא. הפסקה לארוחה.",
+          description: "יציאה מצ'יאתורה. ירידה 23 ק\"מ – rapids, ציוד neoprene.",
           link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
           linkLabel: "Rioni rafting",
           image: "IMG.rafting",
         },
         {
-          name: fmt("קניונינg – Shareula", "Shareula canyoning", "Shareula"),
+          name: fmt("קניונינג – Shareula", "Shareula canyoning", "Shareula"),
           timeOfDay: "13:00–17:00",
           duration: "3–4 ש'",
-          description:
-            "הליכה בקניון נהר שאראולה. מפלים, בריכות טורקיז, קפיצות למים (אופציונלי), rappelling בחבל. מדריך + ציוד מלא.",
+          description: "מפלים, בריכות, קפיצות למים, rappelling. מדריך + ציוד.",
           link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
           linkLabel: N.shareulaRiver,
           image: "IMG.racha",
@@ -188,7 +194,7 @@ const ALTERNATIVE_ENRICHMENT = {
           name: fmt("הגעה לאמברולאורי", "Arrival Ambrolauri", "ამბროლauri"),
           timeOfDay: "18:00–19:00",
           duration: "1 ש'",
-          description: "נסיעה ללינה. ארוחת ערב, מנוחה – מחר צקאלטובו ופרומתאוס.",
+          description: "נסיעה ללינה. ארוחת ערב, מנוחה.",
           link: "https://www.google.com/maps/search/hotels+Ambrolauri",
           linkLabel: N.ambrolauri,
           image: "IMG.racha",
@@ -197,3 +203,5 @@ const ALTERNATIVE_ENRICHMENT = {
     },
   },
 };
+
+if (typeof module !== "undefined") module.exports = { ALTERNATIVE_ENRICHMENT };

@@ -304,3 +304,60 @@ function initDayMap(containerId, points) {
   map.fitBounds(latLngs, { padding: [30, 30] });
   return map;
 }
+
+const DRONE_MARKER_COLOR = "#6c5ce7";
+
+function createDroneIcon(selected) {
+  const ring = selected ? `box-shadow:0 0 0 3px #fff,0 0 0 5px ${DRONE_MARKER_COLOR};` : "";
+  return L.divIcon({
+    className: "drone-marker-wrap",
+    html: `<div class="drone-marker${selected ? " drone-marker-selected" : ""}" style="background:${DRONE_MARKER_COLOR};${ring}">🚁</div>`,
+    iconSize: [34, 34],
+    iconAnchor: [17, 17],
+  });
+}
+
+function initDroneSpotsMap(containerId, spots, onSelect) {
+  if (!spots?.length) return null;
+
+  const map = L.map(containerId, { scrollWheelZoom: true });
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: "abcd",
+    maxZoom: 19,
+  }).addTo(map);
+
+  const bounds = [];
+  const markerById = {};
+
+  spots.forEach((spot) => {
+    const latlng = [spot.lat, spot.lng];
+    bounds.push(latlng);
+    const marker = L.marker(latlng, { icon: createDroneIcon(false) }).addTo(map);
+    marker.on("click", () => onSelect(spot));
+    marker.bindTooltip(spot.name, {
+      permanent: false,
+      direction: "top",
+      offset: [0, -18],
+      className: "drone-tooltip",
+    });
+    markerById[spot.id] = marker;
+  });
+
+  if (bounds.length > 1) {
+    L.polyline(bounds, { color: DRONE_MARKER_COLOR, weight: 2, opacity: 0.45, dashArray: "6 6" }).addTo(map);
+  }
+
+  map.fitBounds(bounds, { padding: [40, 40] });
+
+  return {
+    map,
+    highlight(id) {
+      Object.entries(markerById).forEach(([sid, marker]) => {
+        const selected = sid === id;
+        marker.setIcon(createDroneIcon(selected));
+        if (selected) map.panTo(marker.getLatLng(), { animate: true });
+      });
+    },
+  };
+}

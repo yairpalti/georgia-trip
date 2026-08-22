@@ -96,7 +96,7 @@ const ACTIVITY_DETAILS = {
     },
     {
       description:
-        "סיום ב-15:00 – מנזר מגווימבי, חצוב בסלע (~20 ק\"מ / 30 דק' מ-Lia). הליכה קצרה מהחניה, כניסה חינam. חזרה לקוטאיסי – 20 ק\"מ, 30 דק'. סה\"כ ~130 ק\"מ נסיעה ביום.",
+        "סיום ב-15:00 – מנזר מגווימבי, חצוב בסלע (~20 ק\"מ / 30 דק' מ-Lia). לינה באזור צ'יאתורה – בלי חזרה לקוטאיסי.",
       image: "IMG.mgvimevi",
       link: "https://www.google.com/maps/search/Mgvimevi+Convent",
       linkLabel: N.mgvimevi,
@@ -105,7 +105,7 @@ const ACTIVITY_DETAILS = {
   4: [
     {
       description:
-        "יציאה מקוטאיסי ~08:30. נסיעה ~70 ק\"מ / 1.5 ש' לנקודת רפטינג על הריוני (ראצ'ה, ליד Khvanchkara) עם Rafting in Kutaisi. ירידה 23 ק\"מ, 2.5–3 ש' על המים – רמה 2–3, ₾150, מדריך IRF. ציוד מלא מהמפעיל. להביא בגד להחלפה.",
+        "יציאה מאזור צ'יאתורה ~08:00. ~88 ק\"מ / 1–1.5 ש' לנקודת רפטינג (Alpana) – קרוב יותר מאשר מקוטאיסי. רפטינג 23 ק\"מ, רמה 2–3, ₾150, IRF. ציוד מלא מהמפעיל.",
       image: "IMG.rafting",
       link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
       linkLabel: "Rafting in Kutaisi – ₾150",

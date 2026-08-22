@@ -22,11 +22,11 @@ const EXTREME_ACTIVITIES = [
     region: "אימרתי / צ'יאתורה",
     difficulty: "בינוני",
     season: "אפריל–אוקטובר",
-    duration: "יום מלא מקוטאיסי",
+    duration: "יום מלא · רכב עצמי · לינה בצ'יאתורה",
     relatedDays: [3],
     onRoute: true,
     description:
-      "Via Ferrata הראשון בקווקז – טיפוס על סולמות ברזל עם רתמות בבקעה מדהימה ליד כפר Sveri. כולל הדרכה, ארוחה, שחייה בבריכת נהר Sadzaliskevi ו-picnic. ₾200. בדרך – עמוד קצחי. אופציה ב' ביום 3 שלנו.",
+      "Via Ferrata הראשון בקווקז – Sveri Adventure Camp. ברכב שלכם (~2 ש' מקוטאיסי), מפגש עם Rafting in Kutaisi במקום (₾200, ללא הסעה). שחייה, BBQ. ערב: לינה בצ'יאתורה (~30 דק'). יום 4 – המשך לראצ'ה.",
     website: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
     websiteLabel: "Rafting in Kutaisi – Via Ferrata (₾200)",
     price: "₾200",

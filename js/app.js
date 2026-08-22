@@ -638,6 +638,137 @@ function enrichDay(day) {
   };
 }
 
+function renderDroneSpotGallery(spot) {
+  const items = spot.gallery?.length ? spot.gallery : [];
+  if (!items.length) return "";
+  return `<div class="guide-gallery">${items
+    .map(
+      (item) => `
+    <figure class="guide-gallery-item">
+      ${renderImg(item.src, "guide-gallery-img", item.caption || "")}
+      ${item.caption ? `<figcaption>${item.caption}</figcaption>` : ""}
+    </figure>`
+    )
+    .join("")}</div>`;
+}
+
+function renderDroneSpotDetail(spot) {
+  if (!spot) {
+    return `<div class="drone-detail-empty"><p>לחצו על נקודה במפה או ברשימה</p></div>`;
+  }
+  return `
+    ${renderImg(spot.image, "drone-detail-img", spot.name)}
+    <div class="drone-detail-body">
+      <h3>${spot.name}</h3>
+      <p>${spot.description}</p>
+      ${
+        spot.tips?.length
+          ? `<ul class="drone-tips">${spot.tips.map((t) => `<li>${t}</li>`).join("")}</ul>`
+          : ""
+      }
+      ${renderDroneSpotGallery(spot)}
+      ${
+        spot.link
+          ? `<p class="drone-detail-link"><a href="${spot.link}" target="_blank" rel="noopener noreferrer" class="external-link">${spot.linkLabel || "מפה"}</a></p>`
+          : ""
+      }
+    </div>`;
+}
+
+function renderDroneSpotsSection(dayId) {
+  if (typeof DRONE_SPOTS === "undefined") return "";
+  const data = DRONE_SPOTS[dayId];
+  if (!data?.spots?.length) return "";
+
+  const drones = typeof LOGISTICS !== "undefined" ? LOGISTICS.drones : null;
+  const legalLinks = drones?.links
+    ?.map(
+      (l) =>
+        `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a>`
+    )
+    .join(" · ");
+
+  return `
+    <div class="card drone-spots-card">
+      <h2>🚁 רחפן – נקודות צילום מומלצות</h2>
+      ${data.intro ? `<p class="drone-intro">${data.intro}</p>` : ""}
+      ${
+        drones
+          ? `<p class="drone-legal-note">⚠️ ${drones.summary}${legalLinks ? ` · ${legalLinks}` : ""} · <a href="logistics.html#drones" class="external-link">כללי רחפן</a></p>`
+          : ""
+      }
+      <div class="drone-map-layout">
+        <div class="drone-map-wrap">
+          <div id="drone-map-${dayId}" class="drone-map"></div>
+          <div class="drone-spot-chips" id="drone-chips-${dayId}">
+            ${data.spots
+              .map(
+                (s, i) =>
+                  `<button type="button" class="drone-spot-chip${i === 0 ? " active" : ""}" data-spot-id="${s.id}">${s.name}</button>`
+              )
+              .join("")}
+          </div>
+        </div>
+        <div class="drone-detail" id="drone-detail-${dayId}">
+          ${renderDroneSpotDetail(data.spots[0])}
+        </div>
+      </div>
+      <div class="drone-spots-grid">
+        ${data.spots
+          .map(
+            (s) => `
+          <button type="button" class="drone-spot-card" data-spot-id="${s.id}">
+            ${renderImg(s.image, "drone-spot-card-img", s.name)}
+            <div class="drone-spot-card-body">
+              <strong>${s.name}</strong>
+              <p>${s.description}</p>
+            </div>
+          </button>`
+          )
+          .join("")}
+      </div>
+    </div>`;
+}
+
+function initDroneSpotsSection(dayId) {
+  const data = typeof DRONE_SPOTS !== "undefined" ? DRONE_SPOTS[dayId] : null;
+  if (!data?.spots?.length) return;
+
+  const detailEl = document.getElementById(`drone-detail-${dayId}`);
+  const chipsEl = document.getElementById(`drone-chips-${dayId}`);
+  const cards = document.querySelectorAll(`.drone-spots-card .drone-spot-card[data-spot-id]`);
+
+  let ctrl = null;
+
+  const selectSpot = (spot) => {
+    if (!spot || !detailEl) return;
+    detailEl.innerHTML = renderDroneSpotDetail(spot);
+    chipsEl?.querySelectorAll(".drone-spot-chip").forEach((chip) => {
+      chip.classList.toggle("active", chip.dataset.spotId === spot.id);
+    });
+    cards.forEach((card) => {
+      card.classList.toggle("active", card.dataset.spotId === spot.id);
+    });
+    ctrl?.highlight(spot.id);
+  };
+
+  ctrl = initDroneSpotsMap(`drone-map-${dayId}`, data.spots, selectSpot);
+
+  chipsEl?.querySelectorAll(".drone-spot-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const spot = data.spots.find((s) => s.id === chip.dataset.spotId);
+      selectSpot(spot);
+    });
+  });
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      const spot = data.spots.find((s) => s.id === card.dataset.spotId);
+      selectSpot(spot);
+    });
+  });
+}
+
 function renderDayNav(dayId, { top = false } = {}) {
   const prev =
     dayId > 1
@@ -728,6 +859,8 @@ function renderDayPage(dayId) {
               : "<p class='empty-section'>לינה לא רלוונטית (יום נסיעה / המראה).</p>"
           }
         </div>
+
+        ${renderDroneSpotsSection(dayId)}
       </main>
 
       <aside>
@@ -763,6 +896,9 @@ function renderDayPage(dayId) {
 
   if (day.mapPoints && day.mapPoints.length) {
     setTimeout(() => initDayMap("day-map", day.mapPoints), 100);
+  }
+  if (typeof DRONE_SPOTS !== "undefined" && DRONE_SPOTS[dayId]?.spots?.length) {
+    setTimeout(() => initDroneSpotsSection(dayId), 150);
   }
 }
 
