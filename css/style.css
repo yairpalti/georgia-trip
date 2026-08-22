@@ -109,7 +109,7 @@ img {
 /* Hero */
 .hero {
   background: linear-gradient(180deg, rgba(90, 31, 45, 0.85) 0%, rgba(45, 90, 61, 0.75) 100%),
-    url("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Mestia%2C_Georgia.jpg/1280px-Mestia%2C_Georgia.jpg")
+    url("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Mestia%2C_evening.jpg/960px-Mestia%2C_evening.jpg")
       center / cover;
   color: var(--white);
   padding: 4rem 2rem;
@@ -367,6 +367,13 @@ img {
   transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
+}
+
+.day-card-thumb {
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--forest-light);
 }
 
 .day-card:hover {

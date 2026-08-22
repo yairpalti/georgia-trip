@@ -6,7 +6,7 @@ function renderPlaceCards(items, type) {
         .map(
           (item) => `
         <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="place-card">
-          ${item.image ? `<img src="${resolveImageUrl(item.image)}" alt="${item.name}" loading="lazy" referrerpolicy="no-referrer">` : ""}
+          ${renderImg(item.image, "", item.name, "supra")}
           <div class="place-card-body">
             <h3>${item.name}</h3>
             ${item.cuisine ? `<p>${item.cuisine}</p>` : ""}
@@ -27,8 +27,8 @@ function renderActivities(activities) {
   return `<div class="activities-list">${activities
     .map(
       (a) => `
-    <article class="activity-item${a.image ? " has-image" : ""}">
-      ${a.image ? `<img class="activity-img" src="${resolveImageUrl(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
+    <article class="activity-item has-image">
+      ${renderImg(a.image, "activity-img", a.name || "")}
       <div class="activity-body">
         <div class="activity-header">
           <h3>${a.name}</h3>
@@ -74,7 +74,7 @@ function renderAlternatives(alts) {
         .map(
           (a) => `
         <div class="alt-plan${a.recommended ? " alt-plan-recommended" : ""}">
-          ${a.image ? `<img class="alt-plan-img" src="${resolveImageUrl(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
+          ${renderImg(a.image, "alt-plan-img", "", "mestia")}
           <div class="alt-plan-body">
             <h4>${a.name}</h4>
             ${a.driving ? `<p class="alt-driving">🚗 ${a.driving}</p>` : ""}
@@ -113,6 +113,17 @@ function resolveImageUrl(url) {
   const m = url.match(/^IMG\.(\w+)$/);
   if (m && typeof IMG !== "undefined" && IMG[m[1]]) return IMG[m[1]];
   return url;
+}
+
+function renderImg(src, className, alt = "", fallbackKey = "mestia") {
+  const url = resolveImageUrl(src);
+  const fallback = typeof IMG !== "undefined" ? IMG[fallbackKey] : "";
+  const resolved = url || fallback;
+  if (!resolved) return "";
+  const onerr =
+    fallback && resolved !== fallback ? ` onerror="this.onerror=null;this.src='${fallback}'"` : "";
+  const cls = className ? ` class="${className}"` : "";
+  return `<img${cls} src="${resolved}" alt="${alt}" loading="lazy" referrerpolicy="no-referrer"${onerr}>`;
 }
 
 function getStoriesForDay(dayId) {
@@ -154,7 +165,7 @@ function renderStoryGallery(gallery) {
         .map(
           (item) => `
         <figure class="story-gallery-item">
-          <img src="${resolveImageUrl(item.src)}" alt="${item.caption || ""}" loading="lazy" referrerpolicy="no-referrer">
+          <img src="${resolveImageUrl(item.src)}" alt="${item.caption || ""}" loading="lazy" referrerpolicy="no-referrer"${typeof IMG !== "undefined" ? ` onerror="this.onerror=null;this.src='${IMG.mestia}'"` : ""}>
           ${item.caption ? `<figcaption>${item.caption}</figcaption>` : ""}
         </figure>
       `
@@ -178,7 +189,7 @@ function renderStoryFrame(story, index) {
           </div>
         </div>
       </header>
-      ${story.image ? `<img class="story-hero-img" src="${resolveImageUrl(story.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ""}
+      ${story.image ? renderImg(story.image, "story-hero-img") : ""}
       <div class="story-body">
         ${(story.paragraphs || []).map((p) => `<p>${p}</p>`).join("")}
         ${renderStoryLinks(story.links)}
@@ -414,6 +425,7 @@ function renderDaysGrid() {
       const d = enrichDay(day);
       return `
     <article class="day-card">
+      ${d.heroImage ? `<div class="day-card-thumb" style="background-image:url('${resolveImageUrl(d.heroImage)}')"></div>` : ""}
       <div class="day-card-header">
         <div class="day-card-num">${d.emoji} יום ${d.id} · ${d.date} (${d.weekday})</div>
         <h3 class="day-card-title">${d.title}</h3>
@@ -442,7 +454,6 @@ function renderExtremeDetail(activity, categories) {
     return `<div class="extreme-detail extreme-detail-empty"><p>לחצו על נקודה במפה או על כרטיס פעילות לפרטים מלאים.</p></div>`;
   }
   const cat = categories[activity.category];
-  const img = activity.image ? resolveImageUrl(activity.image) : "";
   const days =
     activity.relatedDays?.length > 0
       ? activity.relatedDays.map((d) => `<a href="day.html?id=${d}">יום ${d}</a>`).join(" · ")
@@ -450,7 +461,7 @@ function renderExtremeDetail(activity, categories) {
 
   return `
     <article class="extreme-detail" id="extreme-detail-panel">
-      ${img ? `<img src="${img}" alt="" class="extreme-detail-img" loading="lazy" referrerpolicy="no-referrer">` : ""}
+      ${activity.image ? renderImg(activity.image, "extreme-detail-img") : ""}
       <div class="extreme-detail-body">
         <span class="extreme-detail-cat" style="--cat-color:${cat.color}">${cat.icon} ${cat.label}</span>
         <h2>${activity.name}</h2>
