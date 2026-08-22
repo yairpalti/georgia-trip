@@ -1183,6 +1183,31 @@ img {
   margin-top: 1rem;
 }
 
+.day-map-legend {
+  margin-top: 0.65rem;
+}
+
+.day-map-legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.day-map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.day-map-legend-line {
+  display: inline-block;
+  width: 22px;
+  border-top: 3px dashed;
+  flex-shrink: 0;
+}
+
 /* Footer */
 .site-footer {
   background: var(--wine-dark);
@@ -1924,10 +1949,25 @@ img {
 
 .drone-map-legend {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
   font-size: 0.82rem;
   color: var(--text-muted);
   margin-bottom: 0.75rem;
+}
+
+.drone-legend-line {
+  display: inline-block;
+  width: 20px;
+  border-top: 3px solid;
+  margin-left: 0.35rem;
+  vertical-align: middle;
+}
+
+.drone-legend-note {
+  width: 100%;
+  font-size: 0.78rem;
+  opacity: 0.85;
 }
 
 .drone-legend-dot {

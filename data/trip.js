@@ -392,9 +392,36 @@ const DAYS = [
       },
     ],
     mapPoints: [
+      { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
       { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
       { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+      { name: N.mgvimevi, lat: 42.2694, lng: 43.0456 },
       { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
+    ],
+    mapRoutes: [
+      {
+        label: "אופציה א' – קצחי, צ'יאתורה, מגווימבי",
+        color: "#7b2d3e",
+        dashed: true,
+        points: [
+          { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
+          { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
+          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.mgvimevi, lat: 42.2694, lng: 43.0456 },
+          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+        ],
+      },
+      {
+        label: "אופציה ב' – Via Ferrata ב-Sveri",
+        color: "#2d5a3d",
+        dashed: true,
+        points: [
+          { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
+          { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
+          { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
+          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+        ],
+      },
     ],
   },
   {
@@ -493,8 +520,37 @@ const DAYS = [
       },
     ],
     mapPoints: [
-      { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
+      { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+      { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
       { name: N.shaoriReservoir, lat: 42.5833, lng: 43.0833 },
+      { name: N.khvanchkaraWinery, lat: 42.55, lng: 43.1 },
+      { name: N.shareulaRiver, lat: 42.545, lng: 43.135 },
+      { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
+    ],
+    mapRoutes: [
+      {
+        label: "אופציה א' – רפטינג, שאורי ויין",
+        color: "#7b2d3e",
+        dashed: true,
+        points: [
+          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
+          { name: N.shaoriReservoir, lat: 42.5833, lng: 43.0833 },
+          { name: N.khvanchkaraWinery, lat: 42.55, lng: 43.1 },
+          { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
+        ],
+      },
+      {
+        label: "אופציה ב' – רפטינג + Shareula",
+        color: "#2d5a3d",
+        dashed: true,
+        points: [
+          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
+          { name: N.shareulaRiver, lat: 42.545, lng: 43.135 },
+          { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
+        ],
+      },
     ],
   },
   {

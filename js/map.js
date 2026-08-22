@@ -278,8 +278,10 @@ function renderMapLegend(segments, dayColors) {
   `;
 }
 
-function initDayMap(containerId, points) {
-  if (!points || !points.length) return null;
+function initDayMap(containerId, options) {
+  const routes = Array.isArray(options) ? [{ points: options }] : options?.routes || [];
+  const overnightName = options?.overnight || null;
+  if (!routes.length) return null;
 
   const map = L.map(containerId);
   L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
@@ -288,20 +290,66 @@ function initDayMap(containerId, points) {
     maxZoom: 19,
   }).addTo(map);
 
-  const latLngs = [];
-  points.forEach((p) => {
-    const latlng = [p.lat, p.lng];
-    latLngs.push(latlng);
-    L.marker(latlng)
+  const routeColors = ["#7b2d3e", "#2d5a3d", "#c47b2b", "#2980b9"];
+  const multi = routes.length > 1;
+  const bounds = [];
+  const seen = new Set();
+
+  routes.forEach((route, idx) => {
+    const points = route.points || [];
+    if (!points.length) return;
+    const color = route.color || routeColors[idx % routeColors.length];
+    const path = points.map((p) => [p.lat, p.lng]);
+    path.forEach((ll) => bounds.push(ll));
+
+    const dashed = multi || route.dashed;
+    L.polyline(path, {
+      color,
+      weight: multi ? 4 : 3,
+      opacity: 0.9,
+      dashArray: dashed ? "8 6" : null,
+      lineJoin: "round",
+    })
       .addTo(map)
-      .bindPopup(`<strong>${enPlace(p.name)}</strong>`);
+      .bindTooltip(route.label || `מסלול ${idx + 1}`, { sticky: true });
+
+    points.forEach((p) => {
+      const key = `${p.lat.toFixed(4)},${p.lng.toFixed(4)}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      const isOvernight =
+        overnightName &&
+        (p.name === overnightName || String(p.name).includes(String(overnightName).split(" · ")[0]));
+      const marker = isOvernight
+        ? L.marker([p.lat, p.lng], { icon: createOvernightIcon() })
+        : L.marker([p.lat, p.lng], { icon: createPlaceIcon(color) });
+      marker.addTo(map).bindPopup(`<strong>${enPlace(p.name)}</strong>`);
+    });
   });
 
-  if (latLngs.length > 1) {
-    L.polyline(latLngs, { color: "#7b2d3e", weight: 3 }).addTo(map);
+  if (bounds.length) {
+    map.fitBounds(bounds, { padding: [30, 30] });
   }
 
-  map.fitBounds(latLngs, { padding: [30, 30] });
+  const legendEl = document.getElementById("day-map-legend");
+  if (legendEl) {
+    if (multi) {
+      legendEl.innerHTML = `
+        <div class="day-map-legend-items">
+          ${routes
+            .map((r, i) => {
+              const color = r.color || routeColors[i % routeColors.length];
+              return `<span class="day-map-legend-item"><span class="day-map-legend-line" style="border-color:${color}"></span>${r.label || `אופציה ${i + 1}`}</span>`;
+            })
+            .join("")}
+        </div>`;
+      legendEl.hidden = false;
+    } else {
+      legendEl.innerHTML = "";
+      legendEl.hidden = true;
+    }
+  }
+
   return map;
 }
 
@@ -319,7 +367,11 @@ function createDroneIcon(selected, kind = "destination") {
   });
 }
 
-function initDroneSpotsMap(containerId, spots, onSelect) {
+function initDroneSpotsMap(containerId, options, onSelectMaybe) {
+  const spots = Array.isArray(options) ? options : options?.spots || [];
+  const onSelect = typeof onSelectMaybe === "function" ? onSelectMaybe : options?.onSelect;
+  const dayRoutes = Array.isArray(options) ? [] : options?.dayRoutes || [];
+  const overnightName = Array.isArray(options) ? null : options?.overnight || null;
   if (!spots?.length) return null;
 
   const map = L.map(containerId, { scrollWheelZoom: true });
@@ -331,14 +383,52 @@ function initDroneSpotsMap(containerId, spots, onSelect) {
 
   const bounds = [];
   const markerById = {};
+  const routeColors = ["#7b2d3e", "#2d5a3d", "#c47b2b", "#2980b9"];
+  const placeSeen = new Set();
+
+  dayRoutes.forEach((route, idx) => {
+    const points = route.points || [];
+    if (!points.length) return;
+    const color = route.color || routeColors[idx % routeColors.length];
+    const path = points.map((p) => [p.lat, p.lng]);
+    path.forEach((ll) => bounds.push(ll));
+    const multi = dayRoutes.length > 1;
+    const dashed = multi || route.dashed;
+
+    L.polyline(path, {
+      color,
+      weight: multi ? 4 : 3,
+      opacity: 0.75,
+      dashArray: dashed ? "8 6" : null,
+      lineJoin: "round",
+    })
+      .addTo(map)
+      .bindTooltip(route.label || "מסלול היום", { sticky: true });
+
+    points.forEach((p) => {
+      const key = `${Number(p.lat).toFixed(4)},${Number(p.lng).toFixed(4)}`;
+      if (placeSeen.has(key)) return;
+      placeSeen.add(key);
+      const isOvernight =
+        overnightName &&
+        (p.name === overnightName ||
+          String(p.name).includes(String(overnightName).split(" · ")[0]));
+      const marker = isOvernight
+        ? L.marker([p.lat, p.lng], { icon: createOvernightIcon() })
+        : L.marker([p.lat, p.lng], { icon: createPlaceIcon(color) });
+      marker
+        .addTo(map)
+        .bindPopup(`<strong>${enPlace(p.name)}</strong><br><small>מקום בטיול</small>`);
+    });
+  });
 
   spots.forEach((spot) => {
     const kind = spot.kind || "destination";
     const latlng = [spot.lat, spot.lng];
     bounds.push(latlng);
     const marker = L.marker(latlng, { icon: createDroneIcon(false, kind) }).addTo(map);
-    marker.on("click", () => onSelect(spot));
-    const tipPrefix = kind === "enRoute" ? "🛣 " : "";
+    marker.on("click", () => onSelect?.(spot));
+    const tipPrefix = kind === "enRoute" ? "🛣 " : "🚁 ";
     marker.bindTooltip(tipPrefix + spot.name, {
       permanent: false,
       direction: "top",
@@ -348,11 +438,9 @@ function initDroneSpotsMap(containerId, spots, onSelect) {
     markerById[spot.id] = { marker, kind };
   });
 
-  if (bounds.length > 1) {
-    L.polyline(bounds, { color: "#888", weight: 2, opacity: 0.35, dashArray: "6 6" }).addTo(map);
+  if (bounds.length) {
+    map.fitBounds(bounds, { padding: [40, 40] });
   }
-
-  map.fitBounds(bounds, { padding: [40, 40] });
 
   return {
     map,

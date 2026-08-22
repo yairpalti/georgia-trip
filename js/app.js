@@ -745,6 +745,10 @@ function renderDroneSpotsSection(dayId) {
   const data = DRONE_SPOTS[dayId];
   if (!data?.spots?.length) return "";
 
+  const day = typeof getDayById === "function" ? enrichDay(getDayById(dayId)) : null;
+  const dayRoutes = day ? getDayMapRoutes(day) : [];
+  const multiRoutes = dayRoutes.length > 1;
+
   const drones = typeof LOGISTICS !== "undefined" ? LOGISTICS.drones : null;
   const legalLinks = drones?.links
     ?.map(
@@ -752,6 +756,15 @@ function renderDroneSpotsSection(dayId) {
         `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a>`
     )
     .join(" · ");
+
+  const routeLegend = dayRoutes.length
+    ? dayRoutes
+        .map((r, i) => {
+          const color = r.color || ["#7b2d3e", "#2d5a3d", "#c47b2b", "#2980b9"][i % 4];
+          return `<span><span class="drone-legend-line" style="border-color:${color}"></span> ${r.label || "מסלול היום"}</span>`;
+        })
+        .join("")
+    : `<span><span class="drone-legend-line" style="border-color:#7b2d3e"></span> מסלול היום</span>`;
 
   return `
     <div class="card drone-spots-card">
@@ -763,8 +776,10 @@ function renderDroneSpotsSection(dayId) {
           : ""
       }
       <div class="drone-map-legend">
-        <span><span class="drone-legend-dot destination"></span> יעד</span>
-        <span><span class="drone-legend-dot en-route"></span> עצירה בדרך</span>
+        ${routeLegend}
+        <span><span class="drone-legend-dot destination"></span> נקודת רחפן</span>
+        <span><span class="drone-legend-dot en-route"></span> רחפן – עצירה בדרך</span>
+        ${multiRoutes ? `<span class="drone-legend-note">קו מקווקו = אופציות מסלול</span>` : ""}
       </div>
       <div class="drone-map-layout">
         <div class="drone-map-wrap">
@@ -785,6 +800,9 @@ function initDroneSpotsSection(dayId) {
   const data = typeof DRONE_SPOTS !== "undefined" ? DRONE_SPOTS[dayId] : null;
   if (!data?.spots?.length) return;
 
+  const day = enrichDay(getDayById(dayId));
+  const dayRoutes = day ? getDayMapRoutes(day) : [];
+
   const detailEl = document.getElementById(`drone-detail-${dayId}`);
   const chipsEl = document.getElementById(`drone-chips-${dayId}`);
   const cards = document.querySelectorAll(`.drone-spots-card .drone-spot-card[data-spot-id]`);
@@ -803,7 +821,12 @@ function initDroneSpotsSection(dayId) {
     ctrl?.highlight(spot.id);
   };
 
-  ctrl = initDroneSpotsMap(`drone-map-${dayId}`, data.spots, selectSpot);
+  ctrl = initDroneSpotsMap(`drone-map-${dayId}`, {
+    spots: data.spots,
+    dayRoutes,
+    overnight: day?.overnight,
+    onSelect: selectSpot,
+  });
 
   chipsEl?.querySelectorAll(".drone-spot-chip").forEach((chip) => {
     chip.addEventListener("click", () => {
@@ -832,6 +855,45 @@ function renderDayNav(dayId, { top = false } = {}) {
   const center = `<a href="index.html">כל הימים</a>`;
   const cls = top ? "day-nav day-nav-top" : "container day-nav";
   return `<nav class="${cls}" aria-label="ניווט בין ימים">${prev}${center}${next}</nav>`;
+}
+
+function getDayMapRoutes(day) {
+  if (day?.mapRoutes?.length) {
+    return day.mapRoutes.map((r) => ({
+      ...r,
+      dashed: r.dashed ?? day.mapRoutes.length > 1,
+    }));
+  }
+
+  const seg =
+    typeof ROUTE_SEGMENTS !== "undefined"
+      ? ROUTE_SEGMENTS.find((s) => s.day === day.id)
+      : null;
+
+  if (seg) {
+    const points = [
+      { name: seg.from.name, lat: seg.from.lat, lng: seg.from.lng },
+      ...(seg.waypoints || []).map((wp) => ({
+        name: wp.name,
+        lat: wp.lat,
+        lng: wp.lng,
+      })),
+    ];
+    const sameEnd =
+      seg.loop && seg.from.lat === seg.to.lat && seg.from.lng === seg.to.lng;
+    if (!sameEnd) {
+      points.push({ name: seg.to.name, lat: seg.to.lat, lng: seg.to.lng });
+    } else if (seg.waypoints?.length) {
+      points.push({ name: seg.from.name, lat: seg.from.lat, lng: seg.from.lng });
+    }
+    return [{ label: `יום ${day.id}`, points, dashed: false }];
+  }
+
+  if (day?.mapPoints?.length) {
+    return [{ label: `יום ${day.id}`, points: day.mapPoints, dashed: false }];
+  }
+
+  return [];
 }
 
 function renderDayPage(dayId) {
@@ -923,6 +985,7 @@ function renderDayPage(dayId) {
           <div class="info-row"><span>נהיגה</span><span>${day.driving}</span></div>
           <div class="info-row"><span>לינה</span><span>${day.overnight}</span></div>
           <div id="day-map"></div>
+          <div id="day-map-legend" class="day-map-legend" hidden></div>
           <p style="margin-top:1rem;font-size:0.85rem">
             <a href="${TRIP_META.globalMapUrl}" target="_blank" rel="noopener noreferrer" class="external-link">
               מפת Google המלאה
@@ -945,8 +1008,16 @@ function renderDayPage(dayId) {
     ${renderDayNav(dayId)}
   `;
 
-  if (day.mapPoints && day.mapPoints.length) {
-    setTimeout(() => initDayMap("day-map", day.mapPoints), 100);
+  const dayRoutes = getDayMapRoutes(day);
+  if (dayRoutes.length) {
+    setTimeout(
+      () =>
+        initDayMap("day-map", {
+          routes: dayRoutes,
+          overnight: day.overnight,
+        }),
+      100
+    );
   }
   if (typeof DRONE_SPOTS !== "undefined" && DRONE_SPOTS[dayId]?.spots?.length) {
     setTimeout(() => initDroneSpotsSection(dayId), 150);
