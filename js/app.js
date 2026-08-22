@@ -233,13 +233,13 @@ function renderStoriesPage(dayId) {
     <div class="container day-nav">
       ${
         dayId > 1
-          ? `<a href="stories.html?id=${dayId - 1}">← סיפורים יום ${dayId - 1}</a>`
+          ? `<a href="stories.html?id=${dayId - 1}">סיפורים יום ${dayId - 1} →</a>`
           : "<span></span>"
       }
       <a href="day.html?id=${dayId}">תוכנית היום</a>
       ${
         dayId < 13
-          ? `<a href="stories.html?id=${dayId + 1}">סיפורים יום ${dayId + 1} →</a>`
+          ? `<a href="stories.html?id=${dayId + 1}">← סיפורים יום ${dayId + 1}</a>`
           : "<span></span>"
       }
     </div>
@@ -287,11 +287,11 @@ function enrichDay(day) {
 function renderDayNav(dayId, { top = false } = {}) {
   const prev =
     dayId > 1
-      ? `<a href="day.html?id=${dayId - 1}">← יום ${dayId - 1}</a>`
+      ? `<a href="day.html?id=${dayId - 1}">יום ${dayId - 1} →</a>`
       : "<span></span>";
   const next =
     dayId < 13
-      ? `<a href="day.html?id=${dayId + 1}">יום ${dayId + 1} →</a>`
+      ? `<a href="day.html?id=${dayId + 1}">← יום ${dayId + 1}</a>`
       : "<span></span>";
   const center = `<a href="index.html">כל הימים</a>`;
   const cls = top ? "day-nav day-nav-top" : "container day-nav";
