@@ -58,10 +58,10 @@ const ACTIVITY_DETAILS = {
   4: [
     {
       description:
-        "יציאה מקוטאיסי ~08:30. נסיעה ~70 ק\"מ / 1.5 ש' לנקודת רפטינג על הריוני (ראצ'ה, ליד Khvanchkara). ירידה 23 ק\"מ, 2.5–3 ש' על המים – רמה 2–3, משפחתי. ציוד מלא מהמפעיל. להביא בגד להחלפה.",
+        "יציאה מקוטאיסי ~08:30. נסיעה ~70 ק\"מ / 1.5 ש' לנקודת רפטינג על הריוני (ראצ'ה, ליד Khvanchkara) עם Rafting in Kutaisi. ירידה 23 ק\"מ, 2.5–3 ש' על המים – רמה 2–3, ₾150, מדריך IRF. ציוד מלא מהמפעיל. להביא בגד להחלפה.",
       image: "IMG.rafting",
       link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
-      linkLabel: "Rafting in Kutaisi – הזמנה",
+      linkLabel: "Rafting in Kutaisi – ₾150",
     },
     {
       description:

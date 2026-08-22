@@ -813,6 +813,43 @@ img {
   font-size: 0.95rem;
 }
 
+.operator-card {
+  border-right: 4px solid var(--forest);
+}
+
+.operator-contact,
+.operator-tours ul {
+  margin: 0 0 1rem;
+  padding-right: 1.25rem;
+}
+
+.operator-contact li,
+.operator-tours li {
+  margin-bottom: 0.5rem;
+}
+
+.operator-tour-note {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.operator-home-btn {
+  margin-top: 0.5rem;
+}
+
+.operator-tours-table small {
+  color: var(--text-muted);
+}
+
+.extreme-detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
 .flight-card {
   display: grid;
   grid-template-columns: 1fr auto 1fr;

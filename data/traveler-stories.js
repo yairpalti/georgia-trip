@@ -80,7 +80,8 @@ const TRAVELER_STORIES = {
         ],
         links: [
           { label: N.khvanchkaraWinery, url: "https://www.google.com/maps/search/Khvanchkara+Winery" },
-          { label: N.rioniRiver + " – rafting", url: "https://www.google.com/maps/search/Rioni+River+rafting" },
+          { label: N.raftingInKutaisi + " – Rioni", url: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/" },
+          { label: N.raftingInKutaisi + " – אתר", url: "https://www.raftinginkutaisi.com/" },
         ],
       },
     ],

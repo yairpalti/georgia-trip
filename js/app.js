@@ -55,6 +55,35 @@ function renderActivities(activities) {
     .join("")}</div>`;
 }
 
+function renderRaftingKutaisiCard(dayId) {
+  if (typeof RAFTING_KUTAISI === "undefined" || !RAFTING_KUTAISI.relatedDays.includes(dayId)) return "";
+  const op = RAFTING_KUTAISI;
+  const dayTours = op.tours.filter((t) => t.relatedDays.includes(dayId));
+  return `
+    <div class="card operator-card">
+      <h2>🛶 ${op.name}</h2>
+      <p>${op.summary}</p>
+      <ul class="operator-contact">
+        <li><a href="${op.home}" target="_blank" rel="noopener noreferrer" class="external-link">🌐 raftinginkutaisi.com</a></li>
+        <li><a href="${op.contact.whatsapp}" target="_blank" rel="noopener noreferrer" class="external-link">📱 WhatsApp ${op.contact.phone}</a></li>
+        <li><a href="${op.contact.emailLink}" class="external-link">✉️ ${op.contact.email}</a></li>
+        <li><a href="${op.contact.maps}" target="_blank" rel="noopener noreferrer" class="external-link">📍 ${op.contact.address}</a></li>
+      </ul>
+      ${
+        dayTours.length
+          ? `<div class="operator-tours"><h3>סיורים רלוונטיים ליום זה</h3><ul>${dayTours
+              .map(
+                (t) =>
+                  `<li><a href="${t.url}" target="_blank" rel="noopener noreferrer" class="external-link">${t.name}${t.price ? ` – ${t.price}` : ""}</a><span class="operator-tour-note">${t.note}</span></li>`
+              )
+              .join("")}</ul></div>`
+          : ""
+      }
+      <a href="${op.home}" target="_blank" rel="noopener noreferrer" class="btn btn-primary operator-home-btn">הזמנה באתר Rafting in Kutaisi</a>
+    </div>
+  `;
+}
+
 function renderDayTips(tips) {
   if (!tips || !tips.length) return "";
   return `
@@ -358,6 +387,8 @@ function renderDayPage(dayId) {
           ${renderActivities(day.activities)}
         </div>
 
+        ${renderRaftingKutaisiCard(dayId)}
+
         ${renderDayTips(day.tips)}
 
         ${renderAlternatives(day.alternatives)}
@@ -470,13 +501,17 @@ function renderExtremeDetail(activity, categories) {
           <div><dt>רמת קושי</dt><dd>${activity.difficulty}</dd></div>
           <div><dt>עונה</dt><dd>${activity.season}</dd></div>
           <div><dt>משך</dt><dd>${activity.duration}</dd></div>
+          ${activity.price ? `<div><dt>מחיר</dt><dd>${activity.price}</dd></div>` : ""}
           <div><dt>ימים בתוכנית</dt><dd>${days}</dd></div>
           <div><dt>על המסלול</dt><dd>${activity.onRoute ? "✅ כן" : "➖ מחוץ למסלול"}</dd></div>
         </dl>
         <p class="extreme-detail-desc">${activity.description}</p>
         ${
           activity.website
-            ? `<a href="${activity.website}" target="_blank" rel="noopener noreferrer" class="btn btn-primary extreme-detail-link">🔗 ${activity.websiteLabel || "אתר / הזמנה"}</a>`
+            ? `<div class="extreme-detail-links">
+                <a href="${activity.website}" target="_blank" rel="noopener noreferrer" class="btn btn-primary extreme-detail-link">🔗 ${activity.websiteLabel || "אתר / הזמנה"}</a>
+                ${activity.operatorHome ? `<a href="${activity.operatorHome}" target="_blank" rel="noopener noreferrer" class="btn btn-outline extreme-detail-link">🌐 Rafting in Kutaisi</a>` : ""}
+              </div>`
             : ""
         }
       </div>
@@ -507,6 +542,7 @@ function renderExtremePage() {
         <div class="breadcrumb"><a href="index.html">דף הבית</a> / אקסטרים</div>
         <h1>🧗 פעילויות אקסטרים</h1>
         <p style="opacity:0.9;margin:0">רפטינג, קניונינג, Via Ferrata, כדורים פורחים, Paragliding ועוד – ליד מסלול הטיול</p>
+        <p style="margin:0.75rem 0 0"><a href="https://www.raftinginkutaisi.com/" target="_blank" rel="noopener noreferrer" class="external-link" style="color:var(--gold-light)">🛶 Rafting in Kutaisi – ספק מומלץ לימים 3–4 (Via Ferrata, Rioni, Shareula)</a></p>
       </div>
     </section>
     <main class="container extreme-page">

@@ -47,6 +47,8 @@
         <div id="drone-container"></div>
       </div>
 
+      <div class="logistics-card" style="grid-column: 1 / -1" id="adventure-container"></div>
+
       <div class="logistics-card">
         <h2>🎒 מה לקחת</h2>
         <ul id="packing-list"></ul>
@@ -74,8 +76,42 @@
   </footer>
 
   <script src="js/places.js"></script>
+  <script src="data/rafting-kutaisi.js"></script>
   <script src="data/trip.js"></script>
   <script>
+    function renderAdventureOperator(op) {
+      return `
+        <h2>🛶 ${op.name} – הזמנת אקסטרים</h2>
+        <p>${op.summary}</p>
+        <p><em>${op.tagline}</em></p>
+        <ul>
+          ${op.tips.map((t) => `<li>${t}</li>`).join("")}
+        </ul>
+        <ul class="link-list">
+          <li><a href="${op.home}" target="_blank" rel="noopener noreferrer" class="external-link">🌐 raftinginkutaisi.com</a></li>
+          <li><a href="${op.contact.whatsapp}" target="_blank" rel="noopener noreferrer" class="external-link">📱 WhatsApp ${op.contact.phone}</a></li>
+          <li><a href="${op.contact.emailLink}" class="external-link">✉️ ${op.contact.email}</a></li>
+          <li><a href="${op.contact.maps}" target="_blank" rel="noopener noreferrer" class="external-link">📍 ${op.contact.address}</a></li>
+        </ul>
+        <table class="accommodation-table operator-tours-table">
+          <thead><tr><th>סיור</th><th>מחיר</th><th>ימים בתוכנית</th><th>קישור</th></tr></thead>
+          <tbody>
+            ${op.tours
+              .map(
+                (t) => `
+              <tr>
+                <td>${t.name}<br><small>${t.note}</small></td>
+                <td>${t.price || "—"}</td>
+                <td>${t.relatedDays.map((d) => `יום ${d}`).join(", ")}</td>
+                <td><a href="${t.url}" target="_blank" rel="noopener noreferrer" class="external-link">פרטים</a></td>
+              </tr>`
+              )
+              .join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       const { outbound, return: ret } = TRIP_META.flights;
 
@@ -131,6 +167,10 @@
           ${drone.links.map((l) => `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`).join("")}
         </ul>
       `;
+
+      if (typeof RAFTING_KUTAISI !== "undefined") {
+        document.getElementById("adventure-container").innerHTML = renderAdventureOperator(RAFTING_KUTAISI);
+      }
 
       document.getElementById("packing-list").innerHTML = LOGISTICS.packing
         .map((p) => `<li>${p}</li>`)

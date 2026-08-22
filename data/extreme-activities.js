@@ -26,9 +26,11 @@ const EXTREME_ACTIVITIES = [
     relatedDays: [3],
     onRoute: true,
     description:
-      "Via Ferrata הראשון בקווקז – טיפוס על סולמות ברזל עם רתמות בבקעה מדהימה ליד כפר Sveri. כולל הדרכה, ארוחה, שחייה בבריכת נהר Sadzaliskevi ו-picnic. בדרך – עמוד קצחי. אופציה ב' ביום 3 שלנו.",
+      "Via Ferrata הראשון בקווקז – טיפוס על סולמות ברזל עם רתמות בבקעה מדהימה ליד כפר Sveri. כולל הדרכה, ארוחה, שחייה בבריכת נהר Sadzaliskevi ו-picnic. ₾200. בדרך – עמוד קצחי. אופציה ב' ביום 3 שלנו.",
     website: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
-    websiteLabel: "Rafting in Kutaisi",
+    websiteLabel: "Rafting in Kutaisi – Via Ferrata (₾200)",
+    price: "₾200",
+    operatorHome: "https://www.raftinginkutaisi.com/",
     image: "IMG.rafting",
   },
   {
@@ -44,9 +46,11 @@ const EXTREME_ACTIVITIES = [
     relatedDays: [4],
     onRoute: true,
     description:
-      "ירידה של כ-23 ק\"מ על הריוני – מהפעילויות הפופולריות ביותר. ציוד מלא (חליפון, קסדה). מתאים לתכנון המקורי של יום 4. נקודת התחלה ליד כפר Khvanchkara.",
+      "ירידה של כ-23 ק\"מ על הריוני – מהפעילויות הפופולריות ביותר. ציוד מלא (חליפון, קסדה). ₾150 · מדריך IRF. מתאים לתכנון המקורי של יום 4. נקודת התחלה ליד כפר Khvanchkara.",
     website: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
-    websiteLabel: "Rafting in Kutaisi",
+    websiteLabel: "Rafting in Kutaisi – Rioni (₾150)",
+    price: "₾150",
+    operatorHome: "https://www.raftinginkutaisi.com/",
     image: "IMG.rafting",
   },
   {
@@ -61,9 +65,11 @@ const EXTREME_ACTIVITIES = [
     duration: "יום מלא",
     relatedDays: [4],
     onRoute: true,
-    description: "קטע מאתגר יותר על הריוני – לחובבי אדרנלין. דורש עבודת צוות טובה; ניסיון קודם מומלץ.",
+    description: "קטע מאתגר יותר על הריוני – לחובבי אדרנלין. ₾200. דורש עבודת צוות טובה; ניסיון קודם מומלץ.",
     website: "https://www.raftinginkutaisi.com/trip/extreme-rafting-georgia-rioni-racha-lechkhumi/",
-    websiteLabel: "Rafting in Kutaisi",
+    websiteLabel: "Rafting in Kutaisi – Extreme (₾200)",
+    price: "₾200",
+    operatorHome: "https://www.raftinginkutaisi.com/",
     image: "IMG.rafting",
   },
   {
@@ -79,9 +85,11 @@ const EXTREME_ACTIVITIES = [
     relatedDays: [4],
     onRoute: true,
     description:
-      "הליכה בקניון עם מפלים, קפיצות למים וירידות בחבל. אופציה ב' ביום 4 – יום כפול עם רפטינג + קניונינג עם Rafting in Kutaisi.",
+      "הליכה בקניון עם מפלים, קפיצות למים וירידות בחבל. ₾200. אופציה ב' ביום 4 – יום כפול עם רפטינג + קניונינג עם Rafting in Kutaisi.",
     website: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
-    websiteLabel: "Rafting in Kutaisi",
+    websiteLabel: "Rafting in Kutaisi – Shareula (₾200)",
+    price: "₾200",
+    operatorHome: "https://www.raftinginkutaisi.com/",
     image: "IMG.rafting",
   },
   {

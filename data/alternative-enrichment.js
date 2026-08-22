@@ -55,10 +55,10 @@ const ALTERNATIVE_ENRICHMENT = {
       description:
         "אופציה ב' – יום אקסטרים עם Rafting in Kutaisi. Via Ferrata הראשון בקווקז בכפר Sveri (אזור צ'יאתורה). כולל: הסעה, הדרכה, ארוחה, טיפוס 2–2.5 ש', שחייה בנהר Sadzaliskevi, BBQ. אופציונלי: גיחה קצרה לקצחי בחזרה.",
       image: "IMG.rafting",
-      link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
-      linkLabel: "Rafting in Kutaisi – Via Ferrata",
+      link: "https://www.raftinginkutaisi.com/",
+      linkLabel: "Rafting in Kutaisi – אתר רשמי",
       tips: [
-        "להזמין מראש – +995 595 41 15 47 (WhatsApp/Viber)",
+        "אופציה ב' – Via Ferrata (₾200) · raftinginkutaisi.com · +995 595 41 15 47",
         "בגד סport מתחת לציוד, נעליים סגורות",
         "לא מתאים לפחד גובה קיצוני",
         "בדרך לSveri – עצירה לצילום קצחי מהכביש",
@@ -119,13 +119,13 @@ const ALTERNATIVE_ENRICHMENT = {
       description:
         "התכנון המקורי – יום משפחתי-נופי. רפטינג רגוע (2–3), עלייה לראצ'ה, תצפית במאגר שאורי, יין Khvanchkara. פחות מאתגר, יותר נוף ותרבות.",
       image: "IMG.racha",
-      tips: ["רפטינג – להזמין מראש", "יין – לא לנהוג אחרי", "כבישים מפותלים"],
+      tips: ["רפטינג – Rafting in Kutaisi (₾150)", "יין – לא לנהוג אחרי", "כבישים מפותלים"],
       activities: [
         {
           name: fmt("רפטינג על הריוני", "Rioni rafting", "rafting"),
           timeOfDay: "09:00–12:00",
           duration: "2.5–3 ש'",
-          description: "23 ק\"מ, רמה 2–3, ציוד מלא.",
+          description: "23 ק\"מ, רמה 2–3, ציוד מלא. ₾150 · מדריך IRF.",
           link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
           linkLabel: "Rafting in Kutaisi",
           image: "IMG.rafting",
@@ -158,7 +158,7 @@ const ALTERNATIVE_ENRICHMENT = {
       link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
       linkLabel: "Rafting in Kutaisi – Canyoning Shareula",
       tips: [
-        "להזמין יום מלא מראש – raftinginkutaisi.com",
+        "להזמין יום מלא מראש – raftinginkutaisi.com · ₾150 רפטינג + ₾200 קניונינג",
         "בגדים להחלפה + נעליים סגורות",
         "רמה בינונית–גבוהה – לא לילדים קטנים",
         "מגיעים לאמברולאורי בערב – לינה מוכנה מראש",

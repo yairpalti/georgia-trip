@@ -344,10 +344,11 @@ const DAYS = [
       {
         name: "🧗 אופציה ב' – Via Ferrata באימרתי (Rafting in Kutaisi)",
         description:
-          "מוותרים על הנסיעה הארוכה לצ'יאתורה. בבוקר – חיבור ל-Rafting in Kutaisi לפעילות טיפוס Via Ferrata באזור אימרתי. אחרי האקסטרים – גיחה קצרה לעמוד קצחי (אם נשאר זמן).",
+          "מוותרים על הנסיעה הארוכה לצ'יאתורה. יום מלא עם Rafting in Kutaisi: Via Ferrata הראשון בקווקז בכפר Sveri (₾200), כולל הסעה, הדרכה, ארוחה, שחייה בנהר ו-BBQ. אופציונלי: גיחה לקצחי בחזרה.",
         overnight: fmt("מרכז קוטאיסי", "Kutaisi Center", "ქუთაისის ცენტრი"),
-        link: "https://www.google.com/maps/search/Rafting+in+Kutaisi",
-        linkLabel: N.raftingInKutaisi,
+        link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
+        linkLabel: N.raftingInKutaisi + " – Via Ferrata",
+        image: "IMG.rafting",
       },
     ],
     restaurants: [
@@ -389,9 +390,9 @@ const DAYS = [
       {
         name: fmt("רפטינג על נהר הריוני", "Rioni River Rafting", "rafting მდ. რიონზე"),
         description:
-          "רפטינג רגוע ומשפחתי – רמה 2–3 על נהר הריוני (Rioni River). חלק מהתכנון המקורי וגם מקדים את אופציה ב'.",
-        link: "https://www.google.com/maps/search/Rioni+River+rafting",
-        linkLabel: N.rioniRiver,
+          "רפטינג רגוע ומשפחתי – רמה 2–3 על נהר הריוני (Rioni River). ~23 ק\"מ, 2.5–3 ש' – עם Rafting in Kutaisi (מדריך IRF). חלק מהתכנון המקורי וגם מקדים את אופציה ב'.",
+        link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
+        linkLabel: N.raftingInKutaisi + " – Rioni",
       },
       {
         name: N.shaoriReservoir,
@@ -410,17 +411,21 @@ const DAYS = [
       {
         name: "📋 התכנון המקורי – רפטינג, ראצ'ה ויין",
         description:
-          "עוזבים את קוטאיסי לרפטינג רגוע (רמה 2–3) על הריוני, מטפסים לראצ'ה, עוצרים במאגר שאורי ומבקרים ביקב באמברולאורי.",
+          "עוזבים את קוטאיסי לרפטינג רגוע (רמה 2–3) על הריוני עם Rafting in Kutaisi (₾150), מטפסים לראצ'ה, עוצרים במאגר שאורי ומבקרים ביקב באמברולאורי.",
         overnight: N.ambrolauri,
         recommended: true,
+        link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
+        linkLabel: N.raftingInKutaisi + " – Rioni",
+        image: "IMG.rafting",
       },
       {
         name: "🛶 אופציה ב' – רפטינג + קניונינג (Rafting in Kutaisi)",
         description:
-          "יום אקסטרים כפול עם Rafting in Kutaisi: מתחילים ברפטינג על הריוני, וממשיכים לפעילות קניונינג מאתגרת בנהר שאראולה (Shareula) שבחבל ראצ'ה. בסיום – הגעה לאמברולאורי.",
+          "יום אקסטרים כפול עם Rafting in Kutaisi: בוקר – רפטינג על הריוני (₾150), אחר הצהריים – קניונינג בנהר Shareula (₾200): מפלים, קפיצות למים, ירידות בחבל. בסיום – הגעה לאמברולאורי.",
         overnight: N.ambrolauri,
-        link: "https://www.google.com/maps/search/Rafting+in+Kutaisi",
-        linkLabel: N.raftingInKutaisi,
+        link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
+        linkLabel: N.raftingInKutaisi + " – Shareula",
+        image: "IMG.rafting",
       },
     ],
     restaurants: [
