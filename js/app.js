@@ -88,6 +88,124 @@ function getDayById(id) {
   return DAYS.find((d) => d.id === id);
 }
 
+function getStoriesForDay(dayId) {
+  if (typeof TRAVELER_STORIES === "undefined") return null;
+  return TRAVELER_STORIES[dayId] || null;
+}
+
+function getStoryCount(dayId) {
+  const data = getStoriesForDay(dayId);
+  return data?.stories?.length || 0;
+}
+
+function renderStoryLinks(links) {
+  if (!links?.length) return "";
+  return `
+    <ul class="story-links">
+      ${links
+        .map(
+          (link) =>
+            `<li><a href="${link.url}" target="_blank" rel="noopener noreferrer" class="external-link">${link.label}</a></li>`
+        )
+        .join("")}
+    </ul>
+  `;
+}
+
+function renderStoryGallery(gallery) {
+  if (!gallery?.length) return "";
+  return `
+    <div class="story-gallery">
+      ${gallery
+        .map(
+          (item) => `
+        <figure class="story-gallery-item">
+          <img src="${item.src}" alt="${item.caption || ""}" loading="lazy">
+          ${item.caption ? `<figcaption>${item.caption}</figcaption>` : ""}
+        </figure>
+      `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function renderStoryFrame(story, index) {
+  return `
+    <article class="story-frame">
+      <header class="story-frame-header">
+        <span class="story-frame-num">${index + 1}</span>
+        <div>
+          <h2>${story.title}</h2>
+          <div class="story-meta">
+            ${story.author ? `<span>✍️ ${story.author}</span>` : ""}
+            ${story.date ? `<span>📅 ${story.date}</span>` : ""}
+          </div>
+        </div>
+      </header>
+      ${story.image ? `<img class="story-hero-img" src="${story.image}" alt="" loading="lazy">` : ""}
+      <div class="story-body">
+        ${(story.paragraphs || []).map((p) => `<p>${p}</p>`).join("")}
+        ${renderStoryLinks(story.links)}
+        ${renderStoryGallery(story.gallery)}
+      </div>
+    </article>
+  `;
+}
+
+function renderStoriesPage(dayId) {
+  const day = enrichDay(getDayById(dayId));
+  const data = getStoriesForDay(dayId);
+  const el = document.getElementById("stories-content");
+
+  if (!el) return;
+
+  if (!day) {
+    el.innerHTML = "<p>היום לא נמצא. <a href='index.html'>חזרה לדף הבית</a></p>";
+    return;
+  }
+
+  document.title = `סיפורי מטיילים – יום ${day.id} | ${TRIP_META.title}`;
+
+  const storiesHtml =
+    data?.stories?.length > 0
+      ? data.stories.map((story, i) => renderStoryFrame(story, i)).join("")
+      : `<div class="card empty-stories"><p>עדיין אין סיפורים ליום זה – בקרוב.</p></div>`;
+
+  el.innerHTML = `
+    <section class="day-hero stories-hero">
+      <div class="day-hero-inner container">
+        <div class="breadcrumb">
+          <a href="index.html">דף הבית</a> /
+          <a href="day.html?id=${day.id}">יום ${day.id}</a> /
+          סיפורי מטיילים
+        </div>
+        <h1>📖 סיפורי מטיילים – יום ${day.id}</h1>
+        <p class="stories-hero-subtitle">${day.emoji} ${day.title} · ${day.date}</p>
+      </div>
+    </section>
+
+    <div class="container stories-page">
+      ${data?.pageIntro ? `<p class="stories-intro">${data.pageIntro}</p>` : ""}
+      <div class="stories-list">${storiesHtml}</div>
+    </div>
+
+    <div class="container day-nav">
+      ${
+        dayId > 1
+          ? `<a href="stories.html?id=${dayId - 1}">← סיפורים יום ${dayId - 1}</a>`
+          : "<span></span>"
+      }
+      <a href="day.html?id=${dayId}">תוכנית היום</a>
+      ${
+        dayId < 13
+          ? `<a href="stories.html?id=${dayId + 1}">סיפורים יום ${dayId + 1} →</a>`
+          : "<span></span>"
+      }
+    </div>
+  `;
+}
+
 function enrichDay(day) {
   if (!day || typeof DAY_ENRICHMENT === "undefined") return day;
   const e = DAY_ENRICHMENT[day.id];
@@ -141,6 +259,20 @@ function renderDayPage(dayId) {
 
     <div class="container content-grid">
       <main>
+        ${
+          getStoryCount(dayId) > 0
+            ? `
+        <a href="stories.html?id=${dayId}" class="stories-banner card">
+          <span class="stories-banner-icon">📖</span>
+          <div>
+            <strong>סיפורי מטיילים</strong>
+            <p>${getStoryCount(dayId)} סיפורים מהשטח – המלצות, תמונות ולינקים</p>
+          </div>
+          <span class="stories-banner-arrow">←</span>
+        </a>`
+            : ""
+        }
+
         <div class="card">
           <h2>📋 תוכנית היום</h2>
           <p class="day-summary">${day.summary}</p>
@@ -184,6 +316,16 @@ function renderDayPage(dayId) {
             </a>
           </p>
         </div>
+        ${
+          getStoryCount(dayId) > 0
+            ? `
+        <div class="card sidebar-card stories-sidebar">
+          <h2>📖 סיפורי מטיילים</h2>
+          <p>${getStoryCount(dayId)} סיפורים עם תמונות, לינקים וטיפים מהשטח</p>
+          <a href="stories.html?id=${dayId}" class="btn btn-outline stories-sidebar-btn">לסיפורים ←</a>
+        </div>`
+            : ""
+        }
       </aside>
     </div>
 
@@ -224,7 +366,14 @@ function renderDaysGrid() {
         <div class="day-card-meta">${d.theme} · ${d.driving}</div>
         <p class="day-card-summary">${d.summary}</p>
         <div class="day-card-overnight">🏨 ${d.overnight}</div>
-        <a href="day.html?id=${d.id}" class="day-card-link">פרטים מלאים ←</a>
+        <div class="day-card-links">
+          <a href="day.html?id=${d.id}" class="day-card-link">פרטים מלאים ←</a>
+          ${
+            getStoryCount(d.id) > 0
+              ? `<a href="stories.html?id=${d.id}" class="day-card-link day-card-stories">📖 סיפורי מטיילים</a>`
+              : ""
+          }
+        </div>
       </div>
     </article>
   `;

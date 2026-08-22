@@ -834,3 +834,207 @@ img {
 .place-card-body h3 {
   font-family: "Rubik", "Noto Sans Georgian", sans-serif;
 }
+
+/* Traveler stories */
+.stories-hero {
+  min-height: 180px;
+}
+
+.stories-hero-subtitle {
+  margin: 0.5rem 0 0;
+  opacity: 0.9;
+  font-size: 1.05rem;
+}
+
+.stories-page {
+  padding: 2rem 1.5rem 1rem;
+}
+
+.stories-intro {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  background: var(--white);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+  border-right: 4px solid var(--gold);
+}
+
+.stories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.story-frame {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--cream-dark);
+}
+
+.story-frame-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.story-frame-num {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--wine), var(--forest));
+  color: var(--white);
+  font-weight: 700;
+  border-radius: 50%;
+  font-size: 0.95rem;
+}
+
+.story-frame-header h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  color: var(--wine-dark);
+}
+
+.story-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.story-hero-img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  margin-top: 1rem;
+}
+
+.story-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.story-body p {
+  margin: 0 0 0.85rem;
+  line-height: 1.75;
+}
+
+.story-body p:last-of-type {
+  margin-bottom: 0;
+}
+
+.story-links {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.story-links a {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.story-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.story-gallery-item {
+  margin: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.story-gallery-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.story-gallery-item figcaption {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.stories-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  border-right: 4px solid var(--gold);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stories-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  color: inherit;
+}
+
+.stories-banner-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.stories-banner strong {
+  display: block;
+  color: var(--wine-dark);
+  margin-bottom: 0.25rem;
+}
+
+.stories-banner p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.stories-banner-arrow {
+  margin-right: auto;
+  font-weight: 700;
+  color: var(--wine);
+}
+
+.stories-sidebar p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.stories-sidebar-btn {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.day-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: auto;
+}
+
+.day-card-stories {
+  color: var(--forest);
+}
+
+.empty-stories {
+  text-align: center;
+  color: var(--text-muted);
+}
