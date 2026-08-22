@@ -128,14 +128,14 @@ const ACTIVITY_DETAILS = {
   5: [
     {
       description:
-        "יציאה מאמברולאורי. נסיעה ~100 ק\"מ / 2 ש' לצקאלטובו – עיירת סנטורiumים סובייטיים נטושים. Urbex: בניינים עם עמודים, בריכות ריקות, graffitי. הליכה 2–3 ש' בין מתחמים. זהירות: מבנים לא יציבים, לא להיכנס לבד.",
+        "יציאה מאמברולאורי. נסיעה ~100 ק\"מ / 2 ש' לצקאלטובו – עיירת סנטוריומים סובייטיים נטושים. Urbex: בניינים עם עמודים, בריכות ריקות. הליכה 2–3 ש' בין מתחמים. זהירות: מבנים לא יציבים.",
       image: "IMG.tskaltubo",
       link: "https://www.google.com/maps/search/Tskaltubo+sanatorium",
       linkLabel: N.tskaltubo,
     },
     {
       description:
-        "המשך 10 ק\"מ / 15 דק' למערת פרומתאוס – מערה תת-קרקעית מוארת, ~1.6 ק\"מ מסלול (שעה–שעה ווחצi). stalactites, אגם, סירת gondola. ~14°C – סווטר חובה. כרטיסיםים online בעונה.",
+        "המשך 10 ק\"מ / 15 דק' למערת פרומתאוס – מערה תת-קרקעית מוארת, ~1.6 ק\"מ מסלול. ~14°C – סווטר חובה. לינה באזור צקאלטובו או ממשיכים ל-Okatse (~30–40 דק') – לא לזוגדידי.",
       image: "IMG.prometheus",
       link: "https://www.google.com/maps/search/Prometheus+Cave+Georgia",
       linkLabel: N.prometheusCave,
@@ -144,21 +144,21 @@ const ACTIVITY_DETAILS = {
   6: [
     {
       description:
-        "בוקר – קניון אוקאצה. נסיעה מזוגדידi/מרטווילi ~40 ק\"מ. מסלול מדרגות + גשר תלוי 780 מ' – 700 מ' מעל הקניון! הליכה 1.5–2 ש' H/R. לא לפחד גובה.",
+        "בוקר – קניון אוקאצה. יוצאים מלינת יום 5 (צקאלטובו ~30–40 דק' / או ישירות מ-Okatse). מסלול מדרגות + גשר תלוי 780 מ'. הליכה 1.5–2 ש' H/R. לא לפחד גובה.",
       image: "IMG.okatse",
       link: "https://www.google.com/maps/search/Okatse+Canyon",
       linkLabel: N.okatseCanyon,
     },
     {
       description:
-        "צהריים – קניון מרטווילi, 15 ק\"מ מOkatse. שייט סירות 30–45 דק' במים טורקיז בין צוקים. כרטיסיםים בכניסה, עמוס 12:00–15:00.",
+        "צהריים – קניון מרטווילי, ~15 ק\"מ מ-Okatse. שייט סירות 30–45 דק' במים טורקיז בין צוקים. כרטיסים בכניסה, עמוס 12:00–15:00.",
       image: "IMG.martvili",
       link: "https://www.google.com/maps/search/Martvili+Canyon",
       linkLabel: N.martviliCanyon,
     },
     {
       description:
-        "אחר הצהריים – מעיינות חמים נוקאלאקבi. נסיעה ~20 ק\"מ, הליכה 10 דק' לבריכות טבעיות ביער. בגד ים, מגבת. רחצה 1–2 ש'. חזרה לזוגדידi ללינה.",
+        "אחר הצהריים – מעיינות חמים נוקאלאקווי. נסיעה ~20 ק\"מ, הליכה 10 דק' לבריכות טבעיות. בגד ים, מגבת. אחר כך נסיעה לזוגדידי ללינה (יציאה לסוואנטי מחר).",
       image: "IMG.nokalakevi",
       link: "https://www.google.com/maps/search/Nokalakevi+Hot+Springs",
       linkLabel: N.nokalakeviHotSprings,

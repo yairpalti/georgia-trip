@@ -235,11 +235,11 @@ const DAY_ENRICHMENT = {
   5: {
     heroImage: "IMG.prometheus",
     summary:
-      "יום Urbex וגיאולוגיה. בוקר: סיור בסנטוריומים הסובייטיים הנטושים של צקאלטובו. אחר הצהריים: מערת פרומתאוס – מערה תת-קרקעית מוארת עם stalactites מרהיבים. לינה בזוגדידי או מרטווילי (מומלץ – קרוב לקניונים).",
+      "יום Urbex וגיאולוגיה: צקאלטובו + מערת פרומתאוס. לינה באזור – צקאלטובו/פרומתאוס או ליד Okatse – בלי לנסוע לזוגדידי ולחזור מזרחה ביום 6.",
     tips: [
       "צקאלטובו – לא תמיד בטוח להיכנס לבניינים נטושים",
       "מערת פרומתאוס – סווטר, כ-14°C בפנים",
-      "לינה במרטווילי חוסכת נסיעה בוקר ליום 6",
+      "לינה: צקאלטובו (א') או Okatse (ב') – לא זוגדידי",
       "להזמין כרטיסים למערה מראש בעונה",
     ],
     activityExtras: [
@@ -265,35 +265,35 @@ const DAY_ENRICHMENT = {
         link: "https://www.google.com/maps/search/restaurant+Prometheus+Cave+Georgia",
         image: "IMG.prometheus",
       },
-      {
-        name: fmt("Martvili Local Restaurant", "Martvili Restaurant", "მარტვილი"),
-        cuisine: "גיאורגית · Samegrelo",
-        area: N.martvili,
-        note: "אם לנים במרטווילי – ארוחת ערב",
-        link: "https://www.google.com/maps/search/restaurant+Martvili",
-        image: "IMG.martvili",
-      },
     ],
     extraHotels: [
       {
-        name: fmt("Guesthouse Martvili", "Guesthouse Martvili", "მარტვილი"),
-        area: N.martvili,
-        nights: 2,
-        note: "מומלץ – קרוב לקניונים (ימים 5–6)",
-        link: "https://www.google.com/maps/search/guesthouse+Martvili",
-        image: "IMG.martvili",
+        name: fmt("Hotel / guesthouse צקאלטובו", "Hotel near Tskaltubo", "ცხალტუბო"),
+        area: N.tskaltubo,
+        nights: 1,
+        note: "אופציה א'",
+        link: "https://www.google.com/maps/search/hotels+Tskaltubo",
+        image: "IMG.tskaltubo",
+      },
+      {
+        name: fmt("Guesthouse ליד Okatse", "Guesthouse near Okatse", "ოკაცე"),
+        area: N.okatseCanyon,
+        nights: 1,
+        note: "אופציה ב' · בוקר בקניון",
+        link: "https://www.google.com/maps/search/guesthouse+Okatse+Canyon",
+        image: "IMG.okatse",
       },
     ],
   },
   6: {
     heroImage: "IMG.martvili",
     summary:
-      "יום טבע אקסטרים. שלושה אתרים: קניון אוקאצה עם גשר תלוי, קניון מרטווילי בשייט סירות, ומעיינות חמים פראיים בנוקאלאקבי – רחצה בטבע אחרי יום הליכות.",
+      "יוצאים מלינת יום 5 (צקאלטובו או Okatse) מערבה: אוקאצה → מרטווילי → נוקאלאקווי. לינה בזוגדידי – בסיס ליציאה לסוואנטי ביום 7.",
     tips: [
-      "להתחיל באוקאצה – פחות עמוס בבוקר",
+      "אם לנו ב-Okatse – מתחילים בקניון בבוקר",
+      "אם לנו בצקאלטובו – ~30–40 דק' ל-Okatse",
       "בגד ים / מגבת למעיינות",
-      "שייט מרטווילי – כרטיסים, עמוס בעונה",
-      "נעליים עם grip לגשרים",
+      "ערב: check-in בזוגדידי + דלק מלא ליום 7",
     ],
     activityExtras: [
       {
@@ -321,6 +321,16 @@ const DAY_ENRICHMENT = {
         note: "מנות Samegrelo מסורתיות",
         link: "https://www.google.com/maps/search/restaurant+Martvili+canyon",
         image: "IMG.martvili",
+      },
+    ],
+    extraHotels: [
+      {
+        name: fmt("Hotel Zugdidi", "Hotel Zugdidi", "ზუგდიდი"),
+        area: N.zugdidi,
+        nights: 1,
+        note: "לילה לפני סוואנטי",
+        link: "https://www.google.com/maps/search/hotels+Zugdidi",
+        image: "IMG.zugdidi",
       },
     ],
   },
