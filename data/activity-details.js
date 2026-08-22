@@ -19,10 +19,57 @@ const ACTIVITY_DETAILS = {
   2: [
     {
       description:
-        "יציאה מבאטומי ב-08:00. נסיעה ~80 ק\"מ / 1.5 ש' דרומה-מזרחה לפארק מטיראלה – יער גשם עבות (אחד הגשומים בגיאורגיה). פעילויות: מסלול הליכה 1–2 ש' לבריכה טבעית, zipline (להזמין מראש), השכרת באגי. נעליים waterproof, מעיל גשם. אחרי הצהריים: המשך ~90 ק\"מ / 2 ש' לקוטאיסי – שני העיר השנייה בגודלה.",
+        "יציאה מבאטומי ב-08:00. נסיעה ~80 ק\"מ / 1.5 ש' ל-Chakvistavi. מסלול Tsablnari (7 ק\"מ, קל): כרמלית ₾2 → zipline ₾15 (~220 מ') → Rope Park ₾15–20 → מפל Tsablnari / אגם. יער Colchic – מעיל גשם חובה!",
       image: "IMG.mtirala",
-      link: "https://www.google.com/maps/search/Mtirala+National+Park",
-      linkLabel: N.mtirala,
+      tips: [
+        "Mapy.cz offline – קליטה חלקית",
+        "zipline & Rope Park: מאי–אוקטובר",
+        "בגד ים לשחייה באגם",
+      ],
+      links: [
+        {
+          label: fmt("Zipline & מחירים – APA", "Zipline & prices – APA", "APA"),
+          url: "https://apa.gov.ge/en/eco-tourism/servisebi-da-tarifebi/mtiralas-erovnuli-parki",
+        },
+        {
+          label: fmt("מסלול Tsablnari – APA", "Tsablnari Trail – APA", "APA"),
+          url: "https://apa.gov.ge/en/eco-tourism/Trails/mtiralas-erovnuli-parkis-turistuli-bilikebi-satesto/1-wablnaris-biliki",
+        },
+        {
+          label: fmt("Mapy.cz – מפת טיול רגלי", "Mapy.cz – hiking map", "Mapy.cz"),
+          url: "https://mapy.cz/turisticka?x=41.9840000&y=41.8820000&z=15&source=czpub&id=ostredni",
+        },
+        { label: "Visit Adjara – Mtirala", url: "https://visitajara.com/en/sights/77" },
+      ],
+      gallery: [
+        { src: "IMG.mtirala", caption: fmt("יער גשם Mtirala", "Mtirala rainforest", "მტირალა") },
+        { src: "IMG.mtiralaWaterfall", caption: fmt("מפל Tsablnari", "Tsablnari waterfall", "წაბლნარის ჩანჩქერი") },
+        { src: "IMG.mtiralaForest", caption: fmt("שביל ביער", "Forest trail", "ტყის ბილიკი") },
+      ],
+    },
+    {
+      description:
+        "אחר הצהריים: ~90 ק\"מ / 2 ש' לקוטאיסי. ערב: גשר הלב, גשר הזכוכית, Bagrati Cathedral (UNESCO), מזרקת Colchis. בסיס ל-2 לילות.",
+      image: "IMG.kutaisiBagrati",
+      tips: ["SIAM Thai ליד גשר הלב – הפסקה מהגיאורגית", "חניה במרכז – בדרך כלל קלה"],
+      links: [
+        {
+          label: fmt("Mapy.cz – סיור ערב", "Mapy.cz – evening walk", "Mapy.cz"),
+          url: "https://mapy.cz/turisticka?x=42.6946000&y=42.2679000&z=15",
+        },
+        {
+          label: fmt("Bagrati Cathedral", "Bagrati Cathedral", "ბაგრატი"),
+          url: "https://www.google.com/maps/search/Bagrati+Cathedral+Kutaisi",
+        },
+        {
+          label: fmt("גשר הלב", "White Bridge", "თეთრი ხიდი"),
+          url: "https://www.google.com/maps/search/Kutaisi+White+Bridge",
+        },
+      ],
+      gallery: [
+        { src: "IMG.kutaisiBagrati", caption: fmt("Bagrati Cathedral", "Bagrati Cathedral", "ბაგრატი") },
+        { src: "IMG.kutaisi", caption: fmt("מרכז קוטאיסי", "Kutaisi center", "ქუთაისი") },
+      ],
     },
   ],
   3: [

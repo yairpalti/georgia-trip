@@ -251,13 +251,28 @@ const DAYS = [
     theme: "יער גשם ואדרנלין",
     overnight: fmt("מרכז קוטאיסי", "Kutaisi Center", "ქუთაისის ცენტრი"),
     driving: "כ-3.5 שעות (170 ק\"מ)",
-    summary: "יער הגשם מטיראלה – zipline, באגים – והמשך מזרחה לקוטאיסי.",
+    summary:
+      "בוקר: יער הגשם מטיראלה – מסלול Tsablnari, zipline ו-Rope Park. אחר הצהריים: נסיעה לקוטאיסי וערב ראשון בעיר.",
     activities: [
       {
         name: N.mtirala,
-        description: "יער גשם עבות. מסלול הליכה לבריכה טבעית, zipline והשכרת באגים.",
-        link: "https://www.google.com/maps/search/Mtirala+National+Park",
-        linkLabel: N.mtirala,
+        timeOfDay: "08:00–13:00",
+        duration: "3–5 שעות",
+        description:
+          "יער גשם Colchic UNESCO – אחד הגשומים בגיאורגיה. מסלול Tsablnari (7 ק\"מ): כרמלית על הנהר, zipline (₾15), מפל 15 מ', אגם לשחייה, Rope Park. מרכז מבקרים: Chakvistavi.",
+        link: "https://apa.gov.ge/en/eco-tourism/servisebi-da-tarifebi/mtiralas-erovnuli-parki",
+        linkLabel: fmt("APA – פארק מטיראלה", "APA – Mtirala National Park", "APA"),
+        image: "IMG.mtirala",
+      },
+      {
+        name: fmt("נסיעה לקוטאיסי + ערב בעיר", "Drive to Kutaisi & evening walk", "ქუთაისი"),
+        timeOfDay: "14:00–21:00",
+        duration: "~2 ש' נסיעה + 2–3 ש' בעיר",
+        description:
+          "המשך ~90 ק\"מ ממטיראלה. check-in, הליכה: גשר הלב, גשר הזכוכית, Bagrati (UNESCO), מזרקת Colchis. ארוחת ערב – Palaty / SIAM Thai.",
+        link: "https://www.google.com/maps/search/Kutaisi+White+Bridge",
+        linkLabel: N.kutaisi,
+        image: "IMG.kutaisiBagrati",
       },
     ],
     alternatives: [

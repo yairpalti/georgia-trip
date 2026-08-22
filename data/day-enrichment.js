@@ -75,19 +75,29 @@ const DAY_ENRICHMENT = {
   2: {
     heroImage: "IMG.mtirala",
     summary:
-      "יום מלא של טבע ואדרנלין. יציאה מוקדמת מבאטומי, עצירה ביער הגשם מטיראלה – zipline, באגים ומסלולי הליכה. אחר הצהריים המשך נסיעה מזרחה לקוטאיסי, עיר היסטורית ושער לעבר אזורי ההרים.",
+      "יום מלא של טבע ואדרנלין. בוקר: יער הגשם מטיראלה – מסלול Tsablnari (7 ק\"מ), zipline (₾15), Rope Park, מפל ואגם. אחר הצהריים: נסיעה לקוטאיסי – גשר הלב, Bagrati, מזרקת Colchis.",
     tips: [
       "לצאת מוקדם (8:00) – מטיראלה + נסיעה ארוכה",
-      "מעיל גשם ונעלי hiking – יער גשום באמת",
-      "zipline – להזמין מראש בעונה",
+      "מעיל גשם ונעלי hiking waterproof – יער גשום באמת",
+      "Mapy.cz offline – מפת טיול רגלי ביער",
+      "zipline & Rope Park – מאי–אוקטובר, מזומן ₾15–20",
       "למלא דלק לפני יציאה מבאטומי",
     ],
     activityExtras: [
       {
-        timeOfDay: "09:00–13:00",
-        duration: "3–4 שעות",
-        tips: ["כרטיס ל-zipline – לבדוק שעות פתיחה", "נעליים שעולות במים לבריכה הטבעית"],
+        timeOfDay: "08:00–13:00",
+        duration: "3–5 שעות",
+        tips: [
+          "כרמלית ₾2 · zipline ₾15 · Rope Park ₾15–20",
+          "בגד ים לשחייה באגם / מתחת למפל",
+        ],
         image: "IMG.mtirala",
+      },
+      {
+        timeOfDay: "14:00–21:00",
+        duration: "~2 ש' נסיעה + 2–3 ש' בעיר",
+        tips: ["SIAM Thai ליד גשר הלב", "Bagrati – נוף לילה מומלץ"],
+        image: "IMG.kutaisiBagrati",
       },
     ],
     extraActivities: [
@@ -116,6 +126,14 @@ const DAY_ENRICHMENT = {
         area: N.kutaisi,
         note: "אווירה נעימה, מתאים לערב ראשון בעיר",
         link: "https://www.google.com/maps/search/Sapere+Kutaisi",
+        image: "IMG.kutaisi",
+      },
+      {
+        name: N.siamThai,
+        cuisine: fmt("תאילנדית אותנטית · בוקר 08:00–12:00 · Thai 12:00–23:00", "Authentic Thai · breakfast 8–12 · Thai food 12–23", "თაილანდური"),
+        area: fmt("ליד גשר הלב, קוטאיסי", "Near White Bridge, Kutaisi", "თეთრი ხიდი"),
+        note: "TOP 10 Restaurant Guru 2025 · שפים מתאילנד · siami.ge · +995 591 27 48 74",
+        link: "https://siami.ge/",
         image: "IMG.kutaisi",
       },
     ],
@@ -169,6 +187,14 @@ const DAY_ENRICHMENT = {
         note: "אם חוזרים מוקדם – ארוחת ערב בעיר",
         link: "https://www.google.com/maps/search/Palaty+Kutaisi",
         image: "IMG.khinkali",
+      },
+      {
+        name: N.siamThai,
+        cuisine: fmt("תאילנדית · Thai 12:00–23:00", "Thai cuisine · lunch & dinner from 12:00", "თაილანდური"),
+        area: fmt("3 Ioseb Grishashvili St · ליד גשר הלב", "3 Ioseb Grishashvili St · near White Bridge", "თეთრი ხიდი"),
+        note: "הפסקה מהגיאורגית – pad thai, tom yum · facebook.com/siamkutaisi",
+        link: "https://www.facebook.com/siamkutaisi",
+        image: "IMG.kutaisi",
       },
     ],
     extraHotels: [

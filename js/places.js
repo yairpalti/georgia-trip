@@ -56,6 +56,7 @@ const N = {
   khvanchkaraWinery: fmt("יקב Khvanchkara", "Khvanchkara Winery", "ხვანჭკრის მარანი"),
   naberauliWines: fmt("יקב Naberauli", "Naberauli Wines", "ნაბერაულის მარანი"),
   raftingInKutaisi: fmt("Rafting in Kutaisi", "Rafting in Kutaisi", "Rafting in Kutaisi"),
+  siamThai: fmt("SIAM Thai Restaurant", "SIAM Thai Restaurant @ Kutaisi", "SIAM Thai Restaurant"),
   shareulaRiver: fmt("נהר שאראולה", "Shareula River", "შარაულა"),
 
   tbilisi: fmt("טביליסי", "Tbilisi", "თბილისი"),

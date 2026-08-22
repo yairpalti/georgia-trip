@@ -22,6 +22,22 @@ function renderPlaceCards(items, type) {
   `;
 }
 
+function renderActivityGallery(gallery) {
+  if (!gallery?.length) return "";
+  return `
+    <div class="activity-gallery">
+      ${gallery
+        .map(
+          (item) => `
+        <figure class="activity-gallery-item">
+          ${renderImg(item.src, "activity-gallery-img", item.caption || "")}
+          ${item.caption ? `<figcaption>${item.caption}</figcaption>` : ""}
+        </figure>`
+        )
+        .join("")}
+    </div>`;
+}
+
 function renderActivities(activities) {
   if (!activities || !activities.length) return "<p>אין פעילויות מתוכננות.</p>";
   return `<div class="activities-list">${activities
@@ -44,10 +60,18 @@ function renderActivities(activities) {
             : ""
         }
         ${
-          a.link
-            ? `<a href="${a.link}" target="_blank" rel="noopener noreferrer" class="external-link">${a.linkLabel || "פתיחה במפה / מידע נוסף"}</a>`
-            : ""
+          a.links?.length
+            ? `<ul class="activity-links">${a.links
+                .map(
+                  (l) =>
+                    `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`
+                )
+                .join("")}</ul>`
+            : a.link
+              ? `<a href="${a.link}" target="_blank" rel="noopener noreferrer" class="external-link">${a.linkLabel || "פתיחה במפה / מידע נוסף"}</a>`
+              : ""
         }
+        ${renderActivityGallery(a.gallery)}
       </div>
     </article>
   `
@@ -135,6 +159,95 @@ function renderAlternatives(alts) {
 
 function getDayById(id) {
   return DAYS.find((d) => d.id === id);
+}
+
+const TRIP_YEAR = 2026;
+
+function shortPlaceName(name) {
+  if (!name || name === "—") return "";
+  return name.split(" · ")[0].trim();
+}
+
+function addDayToTripDate(dateStr) {
+  const [d, m] = dateStr.split(".").map(Number);
+  const date = new Date(TRIP_YEAR, m - 1, d + 1);
+  return `${date.getDate()}.${date.getMonth() + 1}`;
+}
+
+function getWeatherLocationForDay(dayId) {
+  const seg = ROUTE_SEGMENTS.find((s) => s.day === dayId);
+  if (seg?.to) return { name: seg.to.name, lat: seg.to.lat, lng: seg.to.lng };
+
+  const day = getDayById(dayId);
+  if (day?.mapPoints?.length) {
+    const p = day.mapPoints[day.mapPoints.length - 1];
+    return { name: p.name, lat: p.lat, lng: p.lng };
+  }
+
+  if (dayId === 13) {
+    return { name: N.batumiAirport, lat: 41.6103, lng: 41.5997 };
+  }
+  return null;
+}
+
+function getTomorrowWeatherLocation(dayId) {
+  if (getDayById(dayId + 1)) return getWeatherLocationForDay(dayId + 1);
+  if (dayId === 13) return { name: N.telAviv, lat: 32.0853, lng: 34.7818 };
+  return null;
+}
+
+function buildWeatherUrl(lat, lng) {
+  return `https://www.meteoblue.com/he/weather/week/index?lat=${lat}&lon=${lng}`;
+}
+
+function renderDayWeatherCard(dayId, { inSidebar = true } = {}) {
+  const day = getDayById(dayId);
+  if (!day) return "";
+
+  const todayLoc = getWeatherLocationForDay(dayId);
+  const tomorrowDate = addDayToTripDate(day.date);
+  const tomorrowLoc = getTomorrowWeatherLocation(dayId);
+
+  const items = [];
+  if (todayLoc) {
+    items.push({
+      date: day.date,
+      weekday: day.weekday,
+      place: shortPlaceName(todayLoc.name),
+      url: buildWeatherUrl(todayLoc.lat, todayLoc.lng),
+      note: "היום בטיול",
+    });
+  }
+  if (tomorrowLoc) {
+    const nextDay = getDayById(dayId + 1);
+    items.push({
+      date: tomorrowDate,
+      weekday: nextDay?.weekday || "",
+      place: shortPlaceName(tomorrowLoc.name),
+      url: buildWeatherUrl(tomorrowLoc.lat, tomorrowLoc.lng),
+      note: dayId === 13 ? "יום הנחיתה בישראל" : "מחר בטיול",
+    });
+  }
+
+  if (!items.length) return "";
+
+  return `
+    <div class="card weather-card${inSidebar ? " sidebar-card" : ""}">
+      <h2>🌤 מזג אוויר</h2>
+      <ul class="weather-links">
+        ${items
+          .map(
+            (item) => `
+          <li>
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="external-link weather-link">
+              ${item.date}${item.weekday ? ` (${item.weekday})` : ""} · ${item.place}
+            </a>
+            <span class="weather-link-note">${item.note}</span>
+          </li>`
+          )
+          .join("")}
+      </ul>
+    </div>`;
 }
 
 function resolveImageUrl(url) {
@@ -234,6 +347,172 @@ function renderStorySections(sections) {
     .join("");
 }
 
+function renderCulinaryLinkList(items) {
+  if (!items?.length) return "";
+  return `<ul class="culinary-link-list">${items
+    .map(
+      (item) => `
+    <li>
+      <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="external-link">📘 ${item.label}</a>
+      ${item.note ? `<span class="culinary-link-note">${item.note}</span>` : ""}
+    </li>`
+    )
+    .join("")}</ul>`;
+}
+
+function renderCulinaryLinksCard(dayId) {
+  if (typeof CULINARY_LINKS === "undefined") return "";
+  const dayLinks = CULINARY_LINKS.byDay?.[dayId];
+  if (!dayLinks) return "";
+  const workshops = dayLinks.workshops || [];
+  const wineries = dayLinks.wineries || [];
+  if (!workshops.length && !wineries.length) return "";
+
+  const net = CULINARY_LINKS.network;
+  return `
+    <div class="card operator-card culinary-card">
+      <h2>🍳🍷 סדנאות בישול ויקבים</h2>
+      <p class="culinary-network-note">
+        <a href="${net.url}" target="_blank" rel="noopener noreferrer" class="external-link">${net.label}</a>
+        – ${net.note}
+        ${net.phone ? `<br>📱 ${net.phone}` : ""}
+      </p>
+      ${
+        workshops.length
+          ? `<div class="culinary-group"><h3>👨‍🍳 סדנאות בישול</h3>${renderCulinaryLinkList(workshops)}</div>`
+          : ""
+      }
+      ${
+        wineries.length
+          ? `<div class="culinary-group"><h3>🍷 יקבים וטעימות</h3>${renderCulinaryLinkList(wineries)}</div>`
+          : ""
+      }
+    </div>
+  `;
+}
+
+function renderMtiralaKutaisiCard(dayId) {
+  if (typeof MTIRALA_KUTAISI === "undefined" || !MTIRALA_KUTAISI.relatedDays.includes(dayId)) return "";
+  const { mtirala: m, kutaisi: k } = MTIRALA_KUTAISI;
+
+  const renderGuideGallery = (items) =>
+    items?.length
+      ? `<div class="guide-gallery">${items
+          .map(
+            (item) => `
+          <figure class="guide-gallery-item">
+            ${renderImg(item.src, "guide-gallery-img", item.caption || "")}
+            ${item.caption ? `<figcaption>${item.caption}</figcaption>` : ""}
+          </figure>`
+          )
+          .join("")}</div>`
+      : "";
+
+  return `
+    <div class="card operator-card guide-card">
+      <h2>🌲 ${m.name}</h2>
+      <p class="guide-tagline">${m.tagline}</p>
+      <p>${m.summary}</p>
+      <ul class="operator-contact">
+        <li>📍 ${m.visitorCenter}</li>
+        <li>🕐 ${m.hours}</li>
+        <li>📅 ${m.season}</li>
+        <li>🎫 ${m.entrance}</li>
+        <li><a href="${m.contact.phoneLink}" class="external-link">📱 ${m.contact.phone}</a></li>
+      </ul>
+
+      <div class="guide-section">
+        <h3>🚗 הגעה</h3>
+        <ul class="guide-list">${m.gettingThere.map((t) => `<li>${t}</li>`).join("")}</ul>
+      </div>
+
+      <div class="guide-section">
+        <h3>🥾 מסלולי הליכה</h3>
+        ${m.trails
+          .map(
+            (t) => `
+          <div class="guide-trail">
+            <h4>${t.name}</h4>
+            <p class="guide-trail-meta">${t.length} · ${t.duration} · ${t.difficulty} · ${t.elevation}${t.season ? ` · ${t.season}` : ""}</p>
+            <p>${t.description}</p>
+            ${
+              t.links?.length
+                ? `<ul class="guide-link-list">${t.links
+                    .map(
+                      (l) =>
+                        `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`
+                    )
+                    .join("")}</ul>`
+                : ""
+            }
+          </div>`
+          )
+          .join("")}
+      </div>
+
+      <div class="guide-section">
+        <h3>🎢 Zipline & Rope Park</h3>
+        <ul class="guide-adventure-list">${m.adventures
+          .map(
+            (a) =>
+              `<li><a href="${a.url}" target="_blank" rel="noopener noreferrer" class="external-link"><strong>${a.name}</strong> – ${a.price}</a><span class="operator-tour-note">${a.note}</span></li>`
+          )
+          .join("")}</ul>
+      </div>
+
+      <div class="guide-section">
+        <h3>🔗 לינקים שימושיים</h3>
+        <ul class="guide-link-list">${m.links
+          .map(
+            (l) =>
+              `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`
+          )
+          .join("")}</ul>
+      </div>
+
+      ${renderGuideGallery(m.gallery)}
+
+      <div class="guide-section">
+        <h3>💡 טיפים – מטיראלה</h3>
+        <ul class="guide-list">${m.tips.map((t) => `<li>${t}</li>`).join("")}</ul>
+      </div>
+
+      <hr class="guide-divider" />
+
+      <h2>🏛 ${k.name}</h2>
+      <p class="guide-tagline">${k.tagline}</p>
+      <p>${k.summary}</p>
+
+      <div class="guide-section">
+        <h3>📍 נקודות עניין – ערב בקוטאיסי</h3>
+        <ul class="guide-adventure-list">${k.sights
+          .map(
+            (s) =>
+              `<li><a href="${s.url}" target="_blank" rel="noopener noreferrer" class="external-link"><strong>${s.name}</strong></a><span class="operator-tour-note">${s.note}</span></li>`
+          )
+          .join("")}</ul>
+      </div>
+
+      <div class="guide-section">
+        <h3>🔗 לינקים – קוטאיסי</h3>
+        <ul class="guide-link-list">${k.links
+          .map(
+            (l) =>
+              `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`
+          )
+          .join("")}</ul>
+      </div>
+
+      ${renderGuideGallery(k.gallery)}
+
+      <div class="guide-section">
+        <h3>💡 טיפים – קוטאיסי</h3>
+        <ul class="guide-list">${k.tips.map((t) => `<li>${t}</li>`).join("")}</ul>
+      </div>
+    </div>
+  `;
+}
+
 function renderStoryFrame(story, index) {
   return `
     <article class="story-frame">
@@ -290,6 +569,10 @@ function renderStoriesPage(dayId) {
         <p class="stories-hero-subtitle">${day.emoji} ${day.title} · ${day.date}</p>
       </div>
     </section>
+
+    <div class="container stories-weather-wrap">
+      ${renderDayWeatherCard(dayId, { inSidebar: false })}
+    </div>
 
     <div class="container stories-page">
       ${data?.pageIntro ? `<p class="stories-intro">${data.pageIntro}</p>` : ""}
@@ -418,7 +701,11 @@ function renderDayPage(dayId) {
           ${renderActivities(day.activities)}
         </div>
 
+        ${renderMtiralaKutaisiCard(dayId)}
+
         ${renderRaftingKutaisiCard(dayId)}
+
+        ${renderCulinaryLinksCard(dayId)}
 
         ${renderDayTips(day.tips)}
 
@@ -444,6 +731,7 @@ function renderDayPage(dayId) {
       </main>
 
       <aside>
+        ${renderDayWeatherCard(dayId)}
         <div class="card sidebar-card">
           <h2>פרטים</h2>
           <div class="info-row"><span>תאריך</span><span>${day.date}</span></div>

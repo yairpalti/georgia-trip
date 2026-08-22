@@ -843,6 +843,180 @@ img {
   color: var(--text-muted);
 }
 
+.culinary-card {
+  border-right-color: var(--wine);
+}
+
+.culinary-network-note {
+  margin: 0 0 1rem;
+  line-height: 1.55;
+}
+
+.culinary-group {
+  margin-top: 1rem;
+}
+
+.culinary-group h3 {
+  font-size: 1rem;
+  color: var(--wine-dark);
+  margin: 0 0 0.5rem;
+}
+
+.culinary-link-list {
+  margin: 0;
+  padding-right: 1.25rem;
+}
+
+.culinary-link-list li {
+  margin-bottom: 0.65rem;
+}
+
+.culinary-link-note {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.guide-card {
+  border-right-color: var(--forest);
+}
+
+.guide-tagline {
+  font-size: 1rem;
+  color: var(--wine);
+  font-weight: 600;
+  margin: -0.25rem 0 0.75rem;
+}
+
+.guide-section {
+  margin-top: 1.25rem;
+}
+
+.guide-section h3 {
+  font-size: 1rem;
+  color: var(--wine-dark);
+  margin: 0 0 0.5rem;
+}
+
+.guide-section h4 {
+  font-size: 0.95rem;
+  color: var(--forest);
+  margin: 0 0 0.35rem;
+}
+
+.guide-list,
+.guide-link-list,
+.guide-adventure-list {
+  margin: 0;
+  padding-right: 1.25rem;
+}
+
+.guide-list li,
+.guide-link-list li,
+.guide-adventure-list li {
+  margin-bottom: 0.5rem;
+}
+
+.guide-trail {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.guide-trail:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.guide-trail-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 0.35rem;
+}
+
+.guide-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+.guide-gallery,
+.activity-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.guide-gallery-item,
+.activity-gallery-item {
+  margin: 0;
+}
+
+.guide-gallery-img,
+.activity-gallery-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.guide-gallery-item figcaption,
+.activity-gallery-item figcaption {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  text-align: center;
+}
+
+.activity-links {
+  margin: 0.5rem 0 0;
+  padding-right: 1.25rem;
+}
+
+.activity-links li {
+  margin-bottom: 0.35rem;
+}
+
+.weather-card {
+  border-right-color: #3498db;
+}
+
+.weather-links {
+  margin: 0;
+  padding-right: 1.25rem;
+  list-style: none;
+}
+
+.weather-links li {
+  margin-bottom: 0.85rem;
+}
+
+.weather-links li:last-child {
+  margin-bottom: 0;
+}
+
+.weather-link {
+  font-weight: 600;
+}
+
+.weather-link-note {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.stories-weather-wrap {
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.stories-weather-wrap .weather-card {
+  margin-bottom: 0;
+}
+
 .extreme-detail-links {
   display: flex;
   flex-wrap: wrap;
