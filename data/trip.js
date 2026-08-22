@@ -909,6 +909,45 @@ const DAYS = [
 ];
 
 const LOGISTICS = {
+  tasks: [
+    {
+      id: "car-rental",
+      label: fmt("השכרת רכב", "Car rental", "ავტომობილის ქირა"),
+      note: fmt("SUV · איסוף BUS 23.9 · החזרה 5.10 · ביטוח מלא", "SUV · pick-up BUS Sep 23 · return Oct 5 · full insurance", "SUV · BUS · CDW"),
+      link: "#rental",
+      linkLabel: fmt("פרטי רכב שכור", "Rental details", "ქირავნობა"),
+    },
+    {
+      id: "hotels",
+      label: fmt("מלונות", "Hotels", "სასტუმროები"),
+      note: fmt("12 לילות · ראו טבלת לינות למטה", "12 nights · see accommodation table below", "12 ღამე"),
+      link: "#accommodation",
+      linkLabel: fmt("סיכום לינות", "Accommodation summary", "განთავსება"),
+    },
+    {
+      id: "drone-license",
+      label: fmt("רישיון וביטוח רחפן", "Drone registration & insurance", "UAS რეგისტრაცია"),
+      note: fmt("רישום GCAA + ביטוח צד ג' לרחפן", "GCAA registration + third-party drone insurance", "GCAA + დაზღვევა"),
+      link: "#drones",
+      linkLabel: fmt("כללי רחפן", "Drone rules", "UAS"),
+    },
+    {
+      id: "travel-insurance",
+      label: fmt("ביטוח נסיעות", "Travel insurance", "სამოგზაურო დაზღვევა"),
+      note: fmt(
+        "כיסוי רפואי, ביטול, ציוד – לוודא כולל נהיגה בחו\"ל ופעילות אקסטרים",
+        "Medical, cancellation, gear – confirm driving abroad & adventure cover",
+        "დაზღვევა + ექსტremi"
+      ),
+    },
+    {
+      id: "extra-luggage",
+      label: fmt("הוספת מזוודות", "Extra baggage", "დამატებითი ბagage"),
+      note: fmt("LY386/387 · לבדוק מול El Al לפני check-in", "LY386/387 · confirm with El Al before check-in", "El Al LY386/387"),
+      link: "#flights",
+      linkLabel: fmt("פרטי טיסות", "Flight details", "რეისები"),
+    },
+  ],
   rentalCars: [
     {
       name: fmt("איסוף והחזרה בשדה התעופה באטומי", "Pick-up & drop-off at Batumi Airport", "აღება და დაბრუნება ბათუმის აეროპორტში"),
@@ -952,10 +991,14 @@ const LOGISTICS = {
     ],
   },
   packing: [
+    "דרכונים – בתוקף לכל הטיול (+ צילום/עותק דיגיטלי)",
     "בגדים לשכבות – בוקר קר בהרים, צהריים חמים",
     fmt("נעלי hiking לטרקים (צ'לאדי, שדוגרה)", "Hiking boots (Chalaadi, Shdugra)", "ლაშქრობის ფეხსacmebi"),
     fmt("מעיל גשם – מטיראלה וסוואנטי", "Rain jacket – Mtirala & Svaneti", "საწუმიმარი – მთირალა და სვანეთი"),
     fmt("בגד ים – אנאקליה, אורקי", "Swimsuit – Anaklia, Ureki", "საცულაური – ანაკლია, ურეკი"),
+    "קרם הגנה – שמש חזקה בהרים ובחוף",
+    "שקית waterproof גדולה – תיק / בגדים במטיראלה, טרקים וגשם",
+    "שקית waterproof לטלפון – רפטינג, קניונים, מטיראלה",
     "מטען לרכב / adapter (שקע אירופאי Type C/F)",
     "SIM מקומי או eSIM – Magti, Cellfie",
   ],

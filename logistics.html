@@ -31,13 +31,19 @@
   </section>
 
   <main class="container section">
-    <div class="card" style="margin-bottom:2rem">
+    <div class="card logistics-tasks-card" style="margin-bottom:2rem">
+      <h2>✅ משימות לפני הטיול</h2>
+      <p class="logistics-tasks-intro">לסמן כשהושלם – נשמר בדפדפן</p>
+      <ul id="tasks-list" class="logistics-tasks-list"></ul>
+    </div>
+
+    <div class="card" style="margin-bottom:2rem" id="flights">
       <h2>✈️ טיסות</h2>
       <div id="flights-container"></div>
     </div>
 
     <div class="logistics-grid">
-      <div class="logistics-card">
+      <div class="logistics-card" id="rental">
         <h2>🚗 רכב שכור</h2>
         <div id="rental-container"></div>
       </div>
@@ -59,7 +65,7 @@
         <ul id="emergency-list"></ul>
       </div>
 
-      <div class="logistics-card" style="grid-column: 1 / -1">
+      <div class="logistics-card" style="grid-column: 1 / -1" id="accommodation">
         <h2>🏨 סיכום לינות להזמנות</h2>
         <table class="accommodation-table">
           <thead>
@@ -113,6 +119,56 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      const TASKS_STORAGE_KEY = "georgia-trip-logistics-tasks";
+
+      function getTaskState() {
+        try {
+          return JSON.parse(localStorage.getItem(TASKS_STORAGE_KEY) || "{}");
+        } catch {
+          return {};
+        }
+      }
+
+      function setTaskDone(id, done) {
+        const state = getTaskState();
+        state[id] = done;
+        localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function renderTasks() {
+        const list = document.getElementById("tasks-list");
+        if (!list || !LOGISTICS.tasks) return;
+        const state = getTaskState();
+        list.innerHTML = LOGISTICS.tasks
+          .map(
+            (task) => `
+          <li class="logistics-task${state[task.id] ? " logistics-task-done" : ""}">
+            <label class="logistics-task-label">
+              <input type="checkbox" class="logistics-task-checkbox" data-task-id="${task.id}"${state[task.id] ? " checked" : ""}>
+              <span class="logistics-task-text">
+                <strong>${task.label}</strong>
+                ${task.note ? `<span class="logistics-task-note">${task.note}</span>` : ""}
+              </span>
+            </label>
+            ${
+              task.link
+                ? `<a href="${task.link}" class="logistics-task-link external-link">${task.linkLabel || "פרטים"}</a>`
+                : ""
+            }
+          </li>`
+          )
+          .join("");
+
+        list.querySelectorAll(".logistics-task-checkbox").forEach((input) => {
+          input.addEventListener("change", () => {
+            setTaskDone(input.dataset.taskId, input.checked);
+            input.closest(".logistics-task")?.classList.toggle("logistics-task-done", input.checked);
+          });
+        });
+      }
+
+      renderTasks();
+
       const { outbound, return: ret } = TRIP_META.flights;
 
       document.getElementById("flights-container").innerHTML = `
