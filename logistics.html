@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>לוגיסטיקה | טיול משפחתי לגיאורגיה</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">🇬🇪 גיאורגיה 2026</a>
+      <nav class="site-nav">
+        <a href="index.html">תוכנית</a>
+        <a href="logistics.html" class="active">לוגיסטיקה</a>
+        <a href="https://maps.app.goo.gl/7n7fm83nZTDq31La7" target="_blank" rel="noopener noreferrer">מפת Google</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="day-hero">
+    <div class="day-hero-inner container">
+      <div class="breadcrumb"><a href="index.html">דף הבית</a> / לוגיסטיקה</div>
+      <h1>✈️ לוגיסטיקה ומידע שימושי</h1>
+      <p style="opacity:0.9;margin:0">טיסות, רכב שכור, רחפנים, ציוד וחירום</p>
+    </div>
+  </section>
+
+  <main class="container section">
+    <div class="card" style="margin-bottom:2rem">
+      <h2>✈️ טיסות</h2>
+      <div id="flights-container"></div>
+    </div>
+
+    <div class="logistics-grid">
+      <div class="logistics-card">
+        <h2>🚗 רכב שכור</h2>
+        <div id="rental-container"></div>
+      </div>
+
+      <div class="logistics-card">
+        <h2>🛸 רחפנים (Drone)</h2>
+        <div id="drone-container"></div>
+      </div>
+
+      <div class="logistics-card">
+        <h2>🎒 מה לקחת</h2>
+        <ul id="packing-list"></ul>
+      </div>
+
+      <div class="logistics-card">
+        <h2>🆘 חירום</h2>
+        <ul id="emergency-list"></ul>
+      </div>
+
+      <div class="logistics-card" style="grid-column: 1 / -1">
+        <h2>🏨 סיכום לינות להזמנות</h2>
+        <table class="accommodation-table">
+          <thead>
+            <tr><th>אזור</th><th>לילות</th><th>הערות</th></tr>
+          </thead>
+          <tbody id="accommodation-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>טיול משפחתי לגיאורגיה · ספטמבר–אוקטובר 2026</p>
+  </footer>
+
+  <script src="js/places.js"></script>
+  <script src="data/trip.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { outbound, return: ret } = TRIP_META.flights;
+
+      document.getElementById("flights-container").innerHTML = `
+        <div class="flight-card">
+          <div>
+            <div class="flight-time">${outbound.depart}</div>
+            <div class="flight-city">${outbound.from}</div>
+            <div class="flight-details">${outbound.date} (${outbound.day}) · ${outbound.flight}</div>
+          </div>
+          <div class="flight-arrow">✈️</div>
+          <div style="text-align:left">
+            <div class="flight-time">${outbound.arrive}</div>
+            <div class="flight-city">${outbound.to}</div>
+            <div class="flight-details">${outbound.airline}</div>
+          </div>
+        </div>
+        <div class="flight-card">
+          <div>
+            <div class="flight-time">${ret.depart}</div>
+            <div class="flight-city">${ret.from}</div>
+            <div class="flight-details">${ret.date} (${ret.day}) · ${ret.flight}</div>
+          </div>
+          <div class="flight-arrow">✈️</div>
+          <div style="text-align:left">
+            <div class="flight-time">${ret.arrive}</div>
+            <div class="flight-city">${ret.to}</div>
+            <div class="flight-details">${ret.airline}</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("rental-container").innerHTML = LOGISTICS.rentalCars
+        .map(
+          (r) => `
+        <h3 style="font-size:1rem;margin:1rem 0 0.5rem">${r.name}</h3>
+        <p style="font-size:0.95rem;color:var(--text-muted)">${r.details}</p>
+        <ul>${r.tips.map((t) => `<li>${t}</li>`).join("")}</ul>
+        ${
+          r.links
+            ? `<ul class="link-list">${r.links.map((l) => `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`).join("")}</ul>`
+            : ""
+        }
+      `
+        )
+        .join("");
+
+      const drone = LOGISTICS.drones;
+      document.getElementById("drone-container").innerHTML = `
+        <p>${drone.summary}</p>
+        <ul>${drone.rules.map((r) => `<li>${r}</li>`).join("")}</ul>
+        <ul class="link-list">
+          ${drone.links.map((l) => `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`).join("")}
+        </ul>
+      `;
+
+      document.getElementById("packing-list").innerHTML = LOGISTICS.packing
+        .map((p) => `<li>${p}</li>`)
+        .join("");
+
+      document.getElementById("emergency-list").innerHTML = LOGISTICS.emergency
+        .map((e) => `<li><strong>${e.label}:</strong> ${e.value}</li>`)
+        .join("");
+
+      document.getElementById("accommodation-body").innerHTML = LOGISTICS.accommodationSummary
+        .map(
+          (row) => `
+        <tr>
+          <td>${row.place}</td>
+          <td>${row.nights}</td>
+          <td>${row.note}</td>
+        </tr>
+      `
+        )
+        .join("");
+    });
+  </script>
+</body>
+</html>

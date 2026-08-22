@@ -1,0 +1,205 @@
+function renderPlaceCards(items, type) {
+  if (!items || !items.length) return "";
+  return `
+    <div class="place-grid">
+      ${items
+        .map(
+          (item) => `
+        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="place-card">
+          ${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy">` : ""}
+          <div class="place-card-body">
+            <h3>${item.name}</h3>
+            ${item.cuisine ? `<p>${item.cuisine}</p>` : ""}
+            ${item.area ? `<p>${item.area}</p>` : ""}
+            ${item.note ? `<p>${item.note}</p>` : ""}
+            <span class="external-link">פתיחה במפה</span>
+          </div>
+        </a>
+      `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function renderActivities(activities) {
+  if (!activities || !activities.length) return "<p>אין פעילויות מתוכננות.</p>";
+  return `<div class="activities-list">${activities
+    .map(
+      (a) => `
+    <article class="activity-item${a.image ? " has-image" : ""}">
+      ${a.image ? `<img class="activity-img" src="${a.image}" alt="" loading="lazy">` : ""}
+      <div class="activity-body">
+        <div class="activity-header">
+          <h3>${a.name}</h3>
+          <div class="activity-badges">
+            ${a.timeOfDay ? `<span class="badge badge-time">${a.timeOfDay}</span>` : ""}
+            ${a.duration ? `<span class="badge badge-duration">⏱ ${a.duration}</span>` : ""}
+          </div>
+        </div>
+        <p>${a.description}</p>
+        ${
+          a.tips && a.tips.length
+            ? `<ul class="activity-tips">${a.tips.map((t) => `<li>${t}</li>`).join("")}</ul>`
+            : ""
+        }
+        ${
+          a.link
+            ? `<a href="${a.link}" target="_blank" rel="noopener noreferrer" class="external-link">${a.linkLabel || "פתיחה במפה / מידע נוסף"}</a>`
+            : ""
+        }
+      </div>
+    </article>
+  `
+    )
+    .join("")}</div>`;
+}
+
+function renderDayTips(tips) {
+  if (!tips || !tips.length) return "";
+  return `
+    <div class="card tips-card">
+      <h2>💡 טיפים ליום</h2>
+      <ul class="day-tips">${tips.map((t) => `<li>${t}</li>`).join("")}</ul>
+    </div>
+  `;
+}
+
+function renderAlternatives(alts) {
+  if (!alts || !alts.length) return "";
+  return `
+    <div class="card">
+      <h2>🔄 תוכניות חלופיות</h2>
+      ${alts
+        .map(
+          (a) => `
+        <div class="alt-plan">
+          <h4>${a.name}</h4>
+          <p>${a.description}</p>
+        </div>
+      `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function getDayById(id) {
+  return DAYS.find((d) => d.id === id);
+}
+
+function renderDayPage(dayId) {
+  const day = getDayById(dayId);
+  if (!day) {
+    document.getElementById("day-content").innerHTML =
+      "<p>היום לא נמצא. <a href='index.html'>חזרה לדף הבית</a></p>";
+    return;
+  }
+
+  document.title = `יום ${day.id} – ${day.title} | ${TRIP_META.title}`;
+  const heroStyle = day.heroImage
+    ? ` style="background-image: linear-gradient(to bottom, rgba(90,31,45,0.75), rgba(45,90,61,0.85)), url('${day.heroImage}')"`
+    : "";
+
+  document.getElementById("day-content").innerHTML = `
+    <section class="day-hero"${heroStyle}>
+      <div class="day-hero-inner container">
+        <div class="breadcrumb"><a href="index.html">דף הבית</a> / יום ${day.id}</div>
+        <h1>${day.emoji} יום ${day.id}: ${day.title}</h1>
+        <div class="day-meta-row">
+          <span>📅 ${day.date} (${day.weekday})</span>
+          <span>🚗 ${day.driving}</span>
+          <span>🏨 ${day.overnight}</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="container content-grid">
+      <main>
+        <div class="card">
+          <h2>📋 תוכנית היום</h2>
+          <p class="day-summary">${day.summary}</p>
+          ${renderActivities(day.activities)}
+        </div>
+
+        ${renderDayTips(day.tips)}
+
+        ${renderAlternatives(day.alternatives)}
+
+        <div class="card">
+          <h2>🍽 מסעדות מומלצות</h2>
+          ${
+            day.restaurants && day.restaurants.length
+              ? renderPlaceCards(day.restaurants)
+              : "<p class='empty-section'>אין המלצות ספציפיות ליום זה – שאלו את המארח/ת או חפשו באזור הלינה.</p>"
+          }
+        </div>
+
+        <div class="card">
+          <h2>🏨 לינה</h2>
+          ${
+            day.hotels && day.hotels.length
+              ? renderPlaceCards(day.hotels)
+              : "<p class='empty-section'>לינה לא רלוונטית (יום נסיעה / המראה).</p>"
+          }
+        </div>
+      </main>
+
+      <aside>
+        <div class="card sidebar-card">
+          <h2>פרטים</h2>
+          <div class="info-row"><span>תאריך</span><span>${day.date}</span></div>
+          <div class="info-row"><span>נושא</span><span>${day.theme}</span></div>
+          <div class="info-row"><span>נהיגה</span><span>${day.driving}</span></div>
+          <div class="info-row"><span>לינה</span><span>${day.overnight}</span></div>
+          <div id="day-map"></div>
+          <p style="margin-top:1rem;font-size:0.85rem">
+            <a href="${TRIP_META.globalMapUrl}" target="_blank" rel="noopener noreferrer" class="external-link">
+              מפת Google המלאה
+            </a>
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="container day-nav">
+      ${
+        dayId > 1
+          ? `<a href="day.html?id=${dayId - 1}">← יום ${dayId - 1}</a>`
+          : "<span></span>"
+      }
+      <a href="index.html">כל הימים</a>
+      ${
+        dayId < 13
+          ? `<a href="day.html?id=${dayId + 1}">יום ${dayId + 1} →</a>`
+          : "<span></span>"
+      }
+    </div>
+  `;
+
+  if (day.mapPoints && day.mapPoints.length) {
+    setTimeout(() => initDayMap("day-map", day.mapPoints), 100);
+  }
+}
+
+function renderDaysGrid() {
+  const grid = document.getElementById("days-grid");
+  if (!grid) return;
+
+  grid.innerHTML = DAYS.map(
+    (day) => `
+    <article class="day-card">
+      <div class="day-card-header">
+        <div class="day-card-num">${day.emoji} יום ${day.id} · ${day.date} (${day.weekday})</div>
+        <h3 class="day-card-title">${day.title}</h3>
+      </div>
+      <div class="day-card-body">
+        <div class="day-card-meta">${day.theme} · ${day.driving}</div>
+        <p class="day-card-summary">${day.summary}</p>
+        <div class="day-card-overnight">🏨 ${day.overnight}</div>
+        <a href="day.html?id=${day.id}" class="day-card-link">פרטים מלאים ←</a>
+      </div>
+    </article>
+  `
+  ).join("");
+}
