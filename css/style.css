@@ -1376,6 +1376,156 @@ img {
   padding-bottom: 3rem;
 }
 
+.extreme-rafting-guide {
+  padding-top: 1.5rem;
+}
+
+.extreme-season-guide {
+  padding-top: 1.5rem;
+}
+
+.extreme-season-card {
+  border-right-color: var(--gold);
+}
+
+.extreme-season-card .section-title {
+  margin-top: 0;
+}
+
+.extreme-season-intro {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+  font-size: 1.02rem;
+}
+
+.extreme-season-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.extreme-season-block {
+  padding: 1rem 1.1rem;
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  border-right: 3px solid var(--border);
+}
+
+.extreme-season-block h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  color: var(--wine-dark);
+}
+
+.extreme-season-days {
+  margin: 0 0 0.65rem;
+  font-size: 0.85rem;
+}
+
+.extreme-season-days a {
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.extreme-season-block p {
+  margin: 0 0 0.55rem;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+.extreme-season-block p:last-of-type {
+  margin-bottom: 0;
+}
+
+.extreme-season-tips {
+  margin-top: 0.75rem !important;
+}
+
+.extreme-rafting-card {
+  border-right-color: #2980b9;
+}
+
+.extreme-rafting-card .section-title {
+  margin-top: 0;
+}
+
+.extreme-rafting-companies {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.extreme-rafting-company {
+  padding: 1rem 1.1rem;
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  border-right: 3px solid var(--border);
+}
+
+.extreme-rafting-company-featured {
+  border-right-color: #2980b9;
+  background: linear-gradient(to left, rgba(41, 128, 185, 0.06), var(--cream));
+}
+
+.extreme-rafting-company h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: var(--wine-dark);
+}
+
+.extreme-rafting-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #2980b9;
+  background: rgba(41, 128, 185, 0.12);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.extreme-rafting-company p {
+  margin: 0 0 0.65rem;
+  line-height: 1.55;
+}
+
+.extreme-rafting-link-list {
+  margin: 0;
+  padding-right: 1.25rem;
+}
+
+.extreme-rafting-link-list li {
+  margin-bottom: 0.5rem;
+}
+
+.extreme-rafting-link-note {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.extreme-rafting-coldgear {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.extreme-rafting-coldgear h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: var(--wine-dark);
+}
+
+.extreme-rafting-verify {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  background: rgba(41, 128, 185, 0.08);
+  border-radius: var(--radius-sm);
+  line-height: 1.55;
+}
+
 .extreme-map-intro {
   color: var(--text-muted);
   margin: -0.5rem 0 1rem;

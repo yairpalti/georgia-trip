@@ -838,6 +838,83 @@ function renderExtremeDetail(activity, categories) {
   `;
 }
 
+function renderKutaisiRaftingGuide() {
+  if (typeof KUTAISI_RAFTING_GUIDE === "undefined") return "";
+  const g = KUTAISI_RAFTING_GUIDE;
+
+  return `
+    <section class="section extreme-rafting-guide">
+      <div class="card operator-card extreme-rafting-card">
+        <h2 class="section-title">🛶 ${g.title}</h2>
+        <p>${g.intro}</p>
+
+        <div class="extreme-rafting-companies">
+          ${g.companies
+            .map(
+              (c) => `
+            <article class="extreme-rafting-company${c.featured ? " extreme-rafting-company-featured" : ""}">
+              <h3>${c.name}${c.featured ? ' <span class="extreme-rafting-badge">מומלץ במסלול</span>' : ""}</h3>
+              <p>${c.description}</p>
+              <ul class="extreme-rafting-link-list">
+                ${(c.links || [])
+                  .map(
+                    (l) => `
+                  <li>
+                    <a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a>
+                    ${l.note ? `<span class="extreme-rafting-link-note">${l.note}</span>` : ""}
+                  </li>`
+                  )
+                  .join("")}
+              </ul>
+            </article>`
+            )
+            .join("")}
+        </div>
+
+        <div class="extreme-rafting-coldgear">
+          <h3>${g.coldGear.title}</h3>
+          <p>${g.coldGear.summary}</p>
+          <ul class="guide-list">${g.coldGear.items.map((item) => `<li>${item}</li>`).join("")}</ul>
+          <p class="extreme-rafting-verify"><strong>וידוא מראש:</strong> ${g.coldGear.verifyTip}</p>
+        </div>
+      </div>
+    </section>`;
+}
+
+function renderExtremeSeasonGuide() {
+  if (typeof EXTREME_SEASON_GUIDE === "undefined") return "";
+  const g = EXTREME_SEASON_GUIDE;
+
+  return `
+    <section class="section extreme-season-guide">
+      <div class="card operator-card extreme-season-card">
+        <h2 class="section-title">🍂 ${g.title}</h2>
+        <p class="extreme-season-intro">${g.intro}</p>
+        <div class="extreme-season-grid">
+          ${g.sections
+            .map(
+              (s) => `
+            <article class="extreme-season-block">
+              <h3>${s.icon} ${s.title}</h3>
+              ${
+                s.relatedDays?.length
+                  ? `<p class="extreme-season-days">${s.relatedDays.map((d) => `<a href="day.html?id=${d}">יום ${d}</a>`).join(" · ")}</p>`
+                  : ""
+              }
+              ${s.paragraphs.map((p) => `<p>${p}</p>`).join("")}
+              ${
+                s.tips?.length
+                  ? `<ul class="guide-list extreme-season-tips">${s.tips.map((t) => `<li>${t}</li>`).join("")}</ul>`
+                  : ""
+              }
+            </article>`
+            )
+            .join("")}
+        </div>
+      </div>
+    </section>`;
+}
+
 function renderExtremePage() {
   const root = document.getElementById("extreme-content");
   if (!root || typeof EXTREME_ACTIVITIES === "undefined") return;
@@ -865,6 +942,8 @@ function renderExtremePage() {
       </div>
     </section>
     <main class="container extreme-page">
+      ${renderExtremeSeasonGuide()}
+      ${renderKutaisiRaftingGuide()}
       <section class="section">
         <h2 class="section-title">🗺 מפה – מסלול + אטרקציות</h2>
         <p class="extreme-map-intro">קווי המסלול הצבעוניים (מקווקווים) = ימי הטיול. הנקודות הצבעוניות = פעילויות אקסטרים לפי סוג.</p>
