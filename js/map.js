@@ -10,6 +10,28 @@ function enPlace(name) {
   return parts.length >= 2 ? parts[1] : name;
 }
 
+/** Matches overnight labels like "אמברולאורי / Adventure Camping" to map points */
+function isOvernightPlace(place, overnightName) {
+  if (!overnightName || !place) return false;
+  if (place.overnight === true) return true;
+  const placeName = typeof place === "string" ? place : place.name;
+  if (!placeName) return false;
+  if (placeName === overnightName) return true;
+
+  const placeTokens = String(placeName)
+    .split(/\s*[·|/]\s*/)
+    .map((s) => s.trim().toLowerCase())
+    .filter((s) => s.length >= 3);
+  const overnightTokens = String(overnightName)
+    .split(/\s*[·|/]\s*/)
+    .map((s) => s.trim().toLowerCase())
+    .filter((s) => s.length >= 3);
+
+  return placeTokens.some((pt) =>
+    overnightTokens.some((ot) => ot === pt || ot.includes(pt) || pt.includes(ot))
+  );
+}
+
 function segmentPath(segment) {
   const path = [[segment.from.lat, segment.from.lng]];
   (segment.waypoints || []).forEach((wp) => path.push([wp.lat, wp.lng]));
@@ -65,9 +87,9 @@ function createSegmentBadge(text, color) {
 function createOvernightIcon() {
   return L.divIcon({
     className: "overnight-marker-wrap",
-    html: '<div class="overnight-marker">🏨</div>',
-    iconSize: [28, 28],
-    iconAnchor: [14, 14],
+    html: '<div class="overnight-marker" title="לינה" aria-label="לינה"><span class="overnight-marker-icon">🏨</span></div>',
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
   });
 }
 
@@ -356,13 +378,17 @@ function initDayMap(containerId, options) {
       const key = `${p.lat.toFixed(4)},${p.lng.toFixed(4)}`;
       if (seen.has(key)) return;
       seen.add(key);
-      const isOvernight =
-        overnightName &&
-        (p.name === overnightName || String(p.name).includes(String(overnightName).split(" · ")[0]));
+      const isOvernight = isOvernightPlace(p, overnightName);
       const marker = isOvernight
         ? L.marker([p.lat, p.lng], { icon: createOvernightIcon() })
         : L.marker([p.lat, p.lng], { icon: createPlaceIcon(color) });
-      marker.addTo(map).bindPopup(`<strong>${enPlace(p.name)}</strong>`);
+      marker
+        .addTo(map)
+        .bindPopup(
+          isOvernight
+            ? `<strong>🏨 ${enPlace(p.name)}</strong><br><small>לינה</small>`
+            : `<strong>${enPlace(p.name)}</strong>`
+        );
     });
   });
 
@@ -450,16 +476,17 @@ function initDroneSpotsMap(containerId, options, onSelectMaybe) {
       const key = `${Number(p.lat).toFixed(4)},${Number(p.lng).toFixed(4)}`;
       if (placeSeen.has(key)) return;
       placeSeen.add(key);
-      const isOvernight =
-        overnightName &&
-        (p.name === overnightName ||
-          String(p.name).includes(String(overnightName).split(" · ")[0]));
+      const isOvernight = isOvernightPlace(p, overnightName);
       const marker = isOvernight
         ? L.marker([p.lat, p.lng], { icon: createOvernightIcon() })
         : L.marker([p.lat, p.lng], { icon: createPlaceIcon(color) });
       marker
         .addTo(map)
-        .bindPopup(`<strong>${enPlace(p.name)}</strong><br><small>מקום בטיול</small>`);
+        .bindPopup(
+          isOvernight
+            ? `<strong>🏨 ${enPlace(p.name)}</strong><br><small>לינה</small>`
+            : `<strong>${enPlace(p.name)}</strong><br><small>מקום בטיול</small>`
+        );
     });
   });
 

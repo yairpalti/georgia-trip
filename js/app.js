@@ -83,6 +83,8 @@ function renderRaftingKutaisiCard(dayId) {
   if (typeof RAFTING_KUTAISI === "undefined" || !RAFTING_KUTAISI.relatedDays.includes(dayId)) return "";
   const op = RAFTING_KUTAISI;
   const dayTours = op.tours.filter((t) => t.relatedDays.includes(dayId));
+  const camp = op.camping;
+  const showCamp = camp && camp.relatedDays.includes(dayId);
   return `
     <div class="card operator-card">
       <h2>🛶 ${op.name}</h2>
@@ -93,6 +95,25 @@ function renderRaftingKutaisiCard(dayId) {
         <li><a href="${op.contact.emailLink}" class="external-link">✉️ ${op.contact.email}</a></li>
         <li><a href="${op.contact.maps}" target="_blank" rel="noopener noreferrer" class="external-link">📍 ${op.contact.address}</a></li>
       </ul>
+      ${
+        showCamp
+          ? `<div class="operator-camping">
+              <h3>🏕️ ${camp.name}</h3>
+              <p>${camp.summary}</p>
+              <p class="operator-tour-note">${camp.scheduleHint}</p>
+              <p>${camp.restaurant}</p>
+              <ul class="operator-lodging">${camp.lodging
+                .map((l) => `<li><strong>${l.name}</strong> – ${l.price}<span class="operator-tour-note">${l.note}</span></li>`)
+                .join("")}</ul>
+              <ul class="link-list">${camp.links
+                .map(
+                  (l) =>
+                    `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`
+                )
+                .join("")}</ul>
+            </div>`
+          : ""
+      }
       ${
         dayTours.length
           ? `<div class="operator-tours"><h3>סיורים רלוונטיים ליום זה</h3><ul>${dayTours
@@ -389,6 +410,96 @@ function renderCulinaryLinksCard(dayId) {
       }
     </div>
   `;
+}
+
+function renderHikingTrailsCard(dayId) {
+  if (typeof HIKING_TRAILS === "undefined") return "";
+  const data = HIKING_TRAILS[dayId];
+  if (!data?.trails?.length) return "";
+
+  const trailsHtml = data.trails
+    .map((t) => {
+      const mapyOpen =
+        t.mapy && typeof mapyUrl === "function"
+          ? mapyUrl(t.mapy.lng, t.mapy.lat, t.mapy.zoom || 14)
+          : t.mapy
+            ? `https://mapy.cz/turisticka?x=${t.mapy.lng}&y=${t.mapy.lat}&z=${t.mapy.zoom || 14}`
+            : null;
+      const mapyFrame =
+        t.mapy && typeof mapyEmbed === "function"
+          ? mapyEmbed(t.mapy.lng, t.mapy.lat, t.mapy.zoom || 14)
+          : t.mapy
+            ? `https://frame.mapy.cz/turisticka?x=${t.mapy.lng}&y=${t.mapy.lat}&z=${t.mapy.zoom || 14}`
+            : null;
+
+      return `
+      <article class="hiking-trail">
+        ${t.image ? renderImg(t.image, "hiking-trail-img", t.name) : ""}
+        <div class="hiking-trail-body">
+          <h3>🥾 ${t.name}</h3>
+          <ul class="hiking-meta">
+            <li><strong>אורך:</strong> ${t.length}</li>
+            <li><strong>משך:</strong> ${t.duration}</li>
+            <li><strong>קושי:</strong> ${t.difficulty}</li>
+            ${t.elevation ? `<li><strong>גובה / עלייה:</strong> ${t.elevation}</li>` : ""}
+            ${t.type ? `<li><strong>סוג:</strong> ${t.type}</li>` : ""}
+            ${t.start ? `<li><strong>התחלה:</strong> ${t.start}</li>` : ""}
+          </ul>
+          <p>${t.description}</p>
+          ${
+            t.tips?.length
+              ? `<div class="hiking-block"><h4>טיפים</h4><ul>${t.tips.map((x) => `<li>${x}</li>`).join("")}</ul></div>`
+              : ""
+          }
+          ${
+            t.gear?.length
+              ? `<div class="hiking-block"><h4>ציוד</h4><p class="hiking-gear">${t.gear.join(" · ")}</p></div>`
+              : ""
+          }
+          ${
+            mapyFrame
+              ? `<div class="hiking-mapy">
+                  <div class="hiking-mapy-header">
+                    <strong>🗺 ${t.mapy.label || "Mapy.cz"}</strong>
+                    ${
+                      mapyOpen
+                        ? `<a href="${mapyOpen}" target="_blank" rel="noopener noreferrer" class="external-link">פתיחה ב-Mapy.cz</a>`
+                        : ""
+                    }
+                  </div>
+                  <iframe
+                    class="hiking-mapy-frame"
+                    title="${t.mapy.label || "Mapy.cz"}"
+                    src="${mapyFrame}"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen
+                  ></iframe>
+                  <p class="hiking-mapy-note">שכבת turistická · מומלץ גם להוריד offline באפליקציית Mapy.cz</p>
+                </div>`
+              : ""
+          }
+          ${
+            t.links?.length
+              ? `<ul class="guide-link-list">${t.links
+                  .map(
+                    (l) =>
+                      `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`
+                  )
+                  .join("")}</ul>`
+              : ""
+          }
+        </div>
+      </article>`;
+    })
+    .join("");
+
+  return `
+    <div class="card hiking-trails-card">
+      <h2>🥾 מסלולים רגליים</h2>
+      ${data.intro ? `<p class="hiking-intro">${data.intro}</p>` : ""}
+      ${trailsHtml}
+    </div>`;
 }
 
 function renderMtiralaKutaisiCard(dayId) {
@@ -946,6 +1057,8 @@ function renderDayPage(dayId) {
         </div>
 
         ${renderMtiralaKutaisiCard(dayId)}
+
+        ${renderHikingTrailsCard(dayId)}
 
         ${renderRaftingKutaisiCard(dayId)}
 

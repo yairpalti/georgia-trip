@@ -193,25 +193,39 @@ const DAY_ENRICHMENT = {
   4: {
     heroImage: "IMG.racha",
     summary:
-      "יום 4 (26.9): יציאה מאזור צ'יאתורה לראצ'ה. אופציה א': רפטינג → שאורי → יקב. אופציה ב': רפטינג + קניונינג Shareula. לינה: אמברולאורי.",
+      "יום 4 (26.9): יציאה מצ'יאתורה לראצ'ה. אופציה א': רפטינג → שאורי → יקב → אמברולאורי. אופציה ב': רפטינג + Shareula. אופציה ג': Adventure Camping – check-in 12:00, רפטינג, לינה במחנה (קוטג' ₾250 או אוהלים).",
     tips: [
-      "יוצאים מצ'יאתורה – ~1–1.5 ש' לרפטינג (vs 2 ש' מקוטאיסי)",
-      "רפטינג – Rafting in Kutaisi (₾150) · לציין נקודת מפגש",
-      "אופציה ב' – רפטינג + Shareula (₾200) – לתאם מראש",
-      "ראצ'ה – כבישים מפותלים",
-      "יין – לא לנהוג אחרי!",
+      "אופציה ג' מומלצת לאקסטרים: Adventure Camping · WhatsApp +995 595 41 15 47",
+      "check-in במחנה 12:00 · הכנה לרפטינג 12:30",
+      "רפטינג: 14 ק\"מ · II–III · 2ש'20 · ₾150 · Neoprene 5mm מהמפעיל",
+      "קוטג': ₾250 לחדר עם 2 מיטות זוגיות · מסעדה במקום",
+      "אופציות א'/ב' – לינה באמברולאורי · יין לא לנהוג אחרי!",
     ],
     activityExtras: [
       {
-        timeOfDay: "09:00–12:00",
-        duration: "2–3 שעות",
-        tips: ["להביא בגד ים / להחליף", "שקית waterproof לטלפון"],
+        timeOfDay: "עד 12:00",
+        duration: "נסיעה / check-in",
+        tips: ["אופציה ג': הגעה למחנה לפני 12:00"],
+        image: "IMG.racha",
+      },
+      {
+        timeOfDay: "12:30–15:00",
+        duration: "2 ש' 20 דק'",
+        tips: ["בגד ים / להחליף", "שקית waterproof לטלפון", "קבוצה – עד 6 בסירה"],
         image: "IMG.rafting",
       },
-      { timeOfDay: "13:30–14:30", duration: "45 דק'", image: "IMG.racha" },
-      { timeOfDay: "15:00–17:00", duration: "1.5 שעות", image: "IMG.wine" },
+      { timeOfDay: "אחה\"צ", duration: "45 דק'", image: "IMG.racha" },
+      { timeOfDay: "אחה\"צ", duration: "1–1.5 ש'", image: "IMG.wine" },
     ],
     extraRestaurants: [
+      {
+        name: fmt("מסעדה – Adventure Camping", "Restaurant – Adventure Camping", "რესტორანი"),
+        cuisine: "ארוחות במחנה · אופציה ג'",
+        area: N.adventureCamping,
+        note: "אין צורך לצאת מהמחנה",
+        link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
+        image: "IMG.supra",
+      },
       {
         name: fmt("Racha Tavern", "Racha Tavern", "რაჭული საცხობი"),
         cuisine: "מטבח ראצ'ה · lobio, khachapuri",
@@ -223,10 +237,18 @@ const DAY_ENRICHMENT = {
     ],
     extraHotels: [
       {
+        name: N.adventureCamping,
+        area: N.racha,
+        nights: 1,
+        note: "אופציה ג' · קוטג' ₾250 / אוהלים · +995 595 41 15 47",
+        link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
+        image: "IMG.racha",
+      },
+      {
         name: fmt("Guesthouse Racha", "Guesthouse in Racha", "სასტუმრო რაჭა"),
         area: `${N.ambrolauri}, ${N.racha}`,
         nights: 1,
-        note: "גסטהאוס כפרי – חוויה אותנטית",
+        note: "אופציות א'/ב' – גסטהאוס כפרי",
         link: "https://www.google.com/maps/search/guesthouse+Ambrolauri+Racha",
         image: "IMG.racha",
       },
@@ -235,14 +257,20 @@ const DAY_ENRICHMENT = {
   5: {
     heroImage: "IMG.prometheus",
     summary:
-      "יום Urbex וגיאולוגיה: צקאלטובו + מערת פרומתאוס. לינה באזור – צקאלטובו/פרומתאוס או ליד Okatse – בלי לנסוע לזוגדידי ולחזור מזרחה ביום 6.",
+      "אם לנו ב-Adventure Camping: בוקר קניונינג פרטי, אחר כך צקאלטובו + פרומתאוס. אחרת: מאמברולאורי ישירות. לינה: צקאלטובו או Okatse – לא זוגדידי.",
     tips: [
+      "אופציה ג': קניונינג פרטי ליד המחנה – סניקרס חובה",
       "צקאלטובו – לא תמיד בטוח להיכנס לבניינים נטושים",
       "מערת פרומתאוס – סווטר, כ-14°C בפנים",
       "לינה: צקאלטובו (א') או Okatse (ב') – לא זוגדידי",
-      "להזמין כרטיסים למערה מראש בעונה",
     ],
     activityExtras: [
+      {
+        timeOfDay: "בוקר",
+        duration: "חצי יום",
+        tips: ["רק אם לנו במחנה", "סניקרס", "סיור פרטי"],
+        image: "IMG.rafting",
+      },
       {
         timeOfDay: "09:00–12:00",
         duration: "2–3 שעות",

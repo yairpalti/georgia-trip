@@ -87,6 +87,7 @@
   <script src="data/trip.js"></script>
   <script>
     function renderAdventureOperator(op) {
+      const camp = op.camping;
       return `
         <h2>🛶 ${op.name} – הזמנת אקסטרים</h2>
         <p>${op.summary}</p>
@@ -100,6 +101,16 @@
           <li><a href="${op.contact.emailLink}" class="external-link">✉️ ${op.contact.email}</a></li>
           <li><a href="${op.contact.maps}" target="_blank" rel="noopener noreferrer" class="external-link">📍 ${op.contact.address}</a></li>
         </ul>
+        ${
+          camp
+            ? `<h3>🏕️ ${camp.name}</h3>
+               <p>${camp.summary}</p>
+               <p>${camp.scheduleHint}</p>
+               <p>${camp.restaurant}</p>
+               <ul>${camp.lodging.map((l) => `<li><strong>${l.name}</strong> – ${l.price} · ${l.note}</li>`).join("")}</ul>
+               <ul class="link-list">${camp.links.map((l) => `<li><a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a></li>`).join("")}</ul>`
+            : ""
+        }
         <table class="accommodation-table operator-tours-table">
           <thead><tr><th>סיור</th><th>מחיר</th><th>ימים בתוכנית</th><th>קישור</th></tr></thead>
           <tbody>

@@ -105,21 +105,28 @@ const ACTIVITY_DETAILS = {
   4: [
     {
       description:
-        "יציאה מאזור צ'יאתורה ~08:00. ~88 ק\"מ / 1–1.5 ש' לנקודת רפטינג (Alpana) – קרוב יותר מאשר מקוטאיסי. רפטינג 23 ק\"מ, רמה 2–3, ₾150, IRF. ציוד מלא מהמפעיל.",
+        "יציאה מצ'יאתורה. אופציה ג': הגעה ל-Adventure Camping עד 12:00 (הכנה לרפטינג 12:30). אופציות א'/ב': נסיעה ישירה לנקודת רפטינג (~1–1.5 ש').",
+      image: "IMG.racha",
+      link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
+      linkLabel: N.adventureCamping,
+    },
+    {
+      description:
+        "רפטינג Rioni: 14 ק\"מ, רמה II–III, 2ש'20 על המים, ₾150. הסעה מהמחנה לנקודת היציאה ובחזרה, מדריך IRF, Neoprene 5mm. סיור קבוצתי – עד 6 + מדריך בסירה.",
       image: "IMG.rafting",
       link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
       linkLabel: "Rafting in Kutaisi – ₾150",
     },
     {
       description:
-        "אחרי רפטינג – עלייה לראצ'ה. עצירה במאגר שאורי (Shaori) – תצפית על אגם ירוק מוקף יער, 10–15 דק' צילום. נסיעה ~30 ק\"מ / 40 דק' לאמברולאורי.",
+        "אחרי רפטינג (אופציה א') – עצירה במאגר שאורי – תצפית, 10–15 דק' צילום. נסיעה לאמברולאורי.",
       image: "IMG.racha",
       link: "https://www.google.com/maps/search/Shaori+Reservoir",
       linkLabel: N.shaoriReservoir,
     },
     {
       description:
-        "ביקור ביקב Khvanchkara – יין חצי-מתוק אדום מפורסם. טעימות 30–60 דק'. לא לנהוג אחרי! לינה באמברולאורי.",
+        "ביקור ביקב Khvanchkara (אופציה א') – יין חצי-מתוק. לא לנהוג אחרי! אופציה ג': ערב במחנה – מסעדה + לינה בקוטג' (₾250) או אוהלים.",
       image: "IMG.wine",
       link: "https://www.google.com/maps/search/Khvanchkara+Winery",
       linkLabel: N.khvanchkaraWinery,
@@ -128,14 +135,21 @@ const ACTIVITY_DETAILS = {
   5: [
     {
       description:
-        "יציאה מאמברולאורי. נסיעה ~100 ק\"מ / 2 ש' לצקאלטובו – עיירת סנטוריומים סובייטיים נטושים. Urbex: בניינים עם עמודים, בריכות ריקות. הליכה 2–3 ש' בין מתחמים. זהירות: מבנים לא יציבים.",
+        "אם לנו ב-Adventure Camping: בוקר קניונינג פרטי ליד המחנה – צוקים, בריכות, חבלים. סניקרס חובה; שאר הציוד במקום. WhatsApp +995 595 41 15 47.",
+      image: "IMG.rafting",
+      link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
+      linkLabel: N.raftingInKutaisi + " – Canyoning",
+    },
+    {
+      description:
+        "יציאה מהמחנה או מאמברולאורי לצקאלטובו – עיירת סנטוריומים סובייטיים נטושים. Urbex 2–3 ש'. זהירות: מבנים לא יציבים.",
       image: "IMG.tskaltubo",
       link: "https://www.google.com/maps/search/Tskaltubo+sanatorium",
       linkLabel: N.tskaltubo,
     },
     {
       description:
-        "המשך 10 ק\"מ / 15 דק' למערת פרומתאוס – מערה תת-קרקעית מוארת, ~1.6 ק\"מ מסלול. ~14°C – סווטר חובה. לינה באזור צקאלטובו או ממשיכים ל-Okatse (~30–40 דק') – לא לזוגדידי.",
+        "המשך למערת פרומתאוס – ~1.6 ק\"מ מסלול, ~14°C – סווטר חובה. לינה באזור צקאלטובו או ממשיכים ל-Okatse – לא לזוגדידי.",
       image: "IMG.prometheus",
       link: "https://www.google.com/maps/search/Prometheus+Cave+Georgia",
       linkLabel: N.prometheusCave,

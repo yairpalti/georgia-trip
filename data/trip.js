@@ -30,7 +30,7 @@ const TRIP_META = {
 const ROUTE_COORDS = [
   { name: N.batumi, lat: 41.6168, lng: 41.6367, day: 1 },
   { name: N.kutaisi, lat: 42.2679, lng: 42.6946, day: 2 },
-  { name: N.ambrolauri, lat: 42.5211, lng: 43.1622, day: 4 },
+  { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484, day: 4 },
   { name: N.tskaltubo, lat: 42.3417, lng: 42.5986, day: 5 },
   { name: N.zugdidi, lat: 42.5088, lng: 41.8709, day: 6 },
   { name: N.mestia, lat: 43.0458, lng: 42.7289, day: 7 },
@@ -91,24 +91,23 @@ const ROUTE_SEGMENTS = [
   {
     day: 4,
     from: { name: N.chiatura, lat: 42.2989, lng: 43.289 },
-    to: { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
+    to: { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
     waypoints: [
       { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
-      { name: N.shaoriReservoir, lat: 42.5833, lng: 43.0833 },
     ],
-    places: [N.rioniRiver, N.shaoriReservoir, N.khvanchkaraWinery],
+    places: [N.rioniRiver, N.adventureCamping, N.shaoriReservoir, N.khvanchkaraWinery],
     distanceKm: 90,
     duration: "1.5–2h",
-    overnight: N.ambrolauri,
+    overnight: fmt("אמברולאורי / Adventure Camping", "Ambrolauri / Adventure Camping", "ამბროლაური / Adventure Camping"),
   },
   {
     day: 5,
-    from: { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
+    from: { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
     to: { name: N.tskaltubo, lat: 42.3417, lng: 42.5986 },
     waypoints: [{ name: N.prometheusCave, lat: 42.3708, lng: 42.5989 }],
-    places: [N.tskaltubo, N.prometheusCave],
-    distanceKm: 100,
-    duration: "2h",
+    places: [N.adventureCamping, N.tskaltubo, N.prometheusCave],
+    distanceKm: 80,
+    duration: "1.5–2h",
     overnight: N.tskaltubo,
   },
   {
@@ -429,45 +428,45 @@ const DAYS = [
     title: fmt("רפטינג וחבל ראצ'ה", "Rafting & Racha", "rafting და რაჭა"),
     emoji: "🛶",
     theme: fmt("מצ'יאתורה לראצ'ה – נהר, יין ונוף", "Chiatura to Racha – river, wine & views", "რიონი, რაჭა"),
-    overnight: N.ambrolauri,
+    overnight: fmt("אמברולאורי / Adventure Camping", "Ambrolauri / Adventure Camping", "ამბროლაური / Adventure Camping"),
     driving: "כ-90 ק\"מ · ~1.5–2 ש' מאזור צ'יאתורה",
     summary:
-      "יום 4: יציאה מאזור צ'יאתורה (קרוב יותר לראצ'ה!). אופציה א': רפטינג → שאורי → יקב. אופציה ב': רפטינג + קניונינג Shareula. לינה: אמברולאורי.",
+      "יום 4: יציאה מאזור צ'יאתורה לראצ'ה. אופציה א': רפטינג → שאורי → יקב → אמברולאורי. אופציה ב': רפטינג + קניונינג Shareula. אופציה ג' (מומלץ לאקסטרים): check-in ב-Adventure Camping → רפטינג מהמחנה → לינה בקוטג'/אוהל · יום 5 בוקר קניונינג.",
     activities: [
       {
-        name: fmt("נסיעה לנקודת הרפטינג", "Drive to rafting put-in", "rafting"),
-        timeOfDay: "08:00–09:30",
+        name: fmt("נסיעה לנקודת הרפטינג / Adventure Camping", "Drive to rafting / Adventure Camping", "rafting"),
+        timeOfDay: "08:00–12:00",
         duration: "~1–1.5 ש'",
         description:
-          "יציאה מהמלון בצ'יאתורה. ~88 ק\"מ / 1–1.5 ש' ל-Alpana / Rioni – קרוב משמעותית מאשר מקוטאיסי.",
-        link: "https://www.google.com/maps/search/Alpana+Georgia+Rioni",
-        linkLabel: N.rioniRiver,
+          "יציאה מצ'יאתורה. אופציה ג': check-in ב-Adventure Camping ב־12:00 (הכנה לרפטינג 12:30). אופציות א'/ב': נסיעה ישירה לנקודת רפטינג.",
+        link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
+        linkLabel: N.adventureCamping,
         image: "IMG.racha",
       },
       {
         name: fmt("רפטינג על נהר הריוני", "Rioni River Rafting", "rafting მდ. რიონზე"),
-        timeOfDay: "09:30–13:00",
-        duration: "2.5–3 ש'",
+        timeOfDay: "12:30–15:00",
+        duration: "2 ש' 20 דק' על המים",
         description:
-          "רפטינג משפחתי – רמה 2–3, ~23 ק\"מ עם Rafting in Kutaisi (₾150). לציין בהזמנה: יוצאים מאזור צ'יאתורה.",
+          "Racha-Lechkhumi · 14 ק\"מ · רמה II–III · ₾150 לאדם. כולל הסעה מהמחנה לנקודת היציאה ובחזרה, מדריך IRF, ציוד Neoprene 5mm מלא. סיור קבוצתי – עד 6 + מדריך בסירה.",
         link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
         linkLabel: N.raftingInKutaisi + " – Rioni",
         image: "IMG.rafting",
       },
       {
         name: N.shaoriReservoir,
-        timeOfDay: "14:00–15:00",
+        timeOfDay: "אחה\"צ (אופציה א')",
         duration: "45 דק'",
-        description: "תצפית במאגר שאורי – בדרך לאמברולאורי.",
+        description: "תצפית במאגר שאורי – בדרך לאמברולאורי (אופציה א').",
         link: "https://www.google.com/maps/search/Shaori+Reservoir",
         linkLabel: N.shaoriReservoir,
         image: "IMG.racha",
       },
       {
         name: N.khvanchkaraWinery,
-        timeOfDay: "15:30–17:00",
+        timeOfDay: "אחה\"צ (אופציה א')",
         duration: "1–1.5 ש'",
-        description: "טעימות Khvanchkara. לא לנהוג אחרי! check-in באמברולאורי.",
+        description: "טעימות Khvanchkara. לא לנהוג אחרי! check-in באמברולאורי (אופציה א').",
         link: "https://www.google.com/maps/search/Khvanchkara+Winery",
         linkLabel: N.khvanchkaraWinery,
         image: "IMG.wine",
@@ -475,29 +474,50 @@ const DAYS = [
     ],
     alternatives: [
       {
-        name: "📋 אופציה א' – רפטינג, שאורי ויין",
+        name: "📋 אופציה א' – רפטינג, שאורי ויין → אמברולאורי",
         description:
-          "מצ'יאתורה לרפטינג (₾150), מאגר שאורי ויקב Khvanchkara. יום נופי-משפחתי.",
+          "מצ'יאתורה לרפטינג (₾150), מאגר שאורי ויקב Khvanchkara. לינה באמברולאורי.",
         overnight: N.ambrolauri,
-        recommended: true,
         link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
         linkLabel: N.raftingInKutaisi + " – Rioni",
         image: "IMG.rafting",
       },
       {
-        name: "🛶 אופציה ב' – רפטינג + קניונינג Shareula",
+        name: "🛶 אופציה ב' – רפטינג + קניונינג Shareula → אמברולאורי",
         description:
-          "יום כפול: רפטינג בוקר + קניונינג Shareula (₾200). פחות נסיעה מאשר יציאה מקוטאיסי.",
+          "יום כפול: רפטינג בוקר + קניונינג Shareula (₾200). לינה באמברולאורי.",
         overnight: N.ambrolauri,
         link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
         linkLabel: N.raftingInKutaisi + " – Shareula",
         image: "IMG.rafting",
       },
+      {
+        name: "🏕️ אופציה ג' – Adventure Camping (רפטינג + לינה במחנה)",
+        description:
+          "check-in 12:00 במחנה של Rafting in Kutaisi → 12:30 הכנה לרפטינג על הריוני (14 ק\"מ, II–III, ₾150). מסעדה במקום. לינה בקוטג' (₾250 לחדר עם 2 מיטות זוגיות) או באוהלים. בוקר יום 5: קניונינג פרטי ליד המחנה.",
+        overnight: N.adventureCamping,
+        recommended: true,
+        link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
+        linkLabel: N.adventureCamping + " – Google Maps",
+        image: "IMG.rafting",
+        tips: [
+          "WhatsApp: +995 595 41 15 47",
+          "ציוד רפטינג מלא (Neoprene 5mm) מהמפעיל",
+          "לקניונינג ביום 5 – להביא סניקרס",
+        ],
+      },
     ],
     restaurants: [
       {
+        name: fmt("מסעדה ב-Adventure Camping", "Restaurant at Adventure Camping", "რესტორანი"),
+        cuisine: fmt("מסעדה במחנה – בלי לצאת לארוחות", "On-site restaurant", "ბანაკში"),
+        note: "אופציה ג'",
+        link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
+        image: "IMG.supra",
+      },
+      {
         name: N.khvanchkaraWinery,
-        cuisine: fmt("יקב – יין חצי מתוק", "Semi-sweet wine tasting", "ნახ. ღვინის დეგustatsia"),
+        cuisine: fmt("יקב – יין חצי מתוק", "Semi-sweet wine tasting", "ღვინის დეგustatsia"),
         link: "https://www.google.com/maps/search/Khvanchkara+Winery",
         image: "IMG.wine",
       },
@@ -510,9 +530,18 @@ const DAYS = [
     ],
     hotels: [
       {
+        name: N.adventureCamping,
+        area: `${N.racha} · Rafting in Kutaisi`,
+        nights: 1,
+        note: "אופציה ג' · קוטג' ₾250/חדר (2 מיטות זוגיות) או אוהלים · מסעדה במקום",
+        link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
+        image: "IMG.racha",
+      },
+      {
         name: fmt("אמברולאורי / ראצ'ה", "Ambrolauri / Racha", "ამბროლაური / რაჭა"),
         area: `${N.ambrolauri}, ${N.racha}`,
         nights: 1,
+        note: "אופציות א'/ב'",
         link: "https://www.google.com/maps/search/hotels+Ambrolauri",
         image: "IMG.racha",
       },
@@ -520,10 +549,11 @@ const DAYS = [
     mapPoints: [
       { name: N.chiatura, lat: 42.2989, lng: 43.289 },
       { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
+      { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484, overnight: true },
       { name: N.shaoriReservoir, lat: 42.5833, lng: 43.0833 },
       { name: N.khvanchkaraWinery, lat: 42.55, lng: 43.1 },
       { name: N.shareulaRiver, lat: 42.545, lng: 43.135 },
-      { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
+      { name: N.ambrolauri, lat: 42.5211, lng: 43.1622, overnight: true },
     ],
     mapRoutes: [
       {
@@ -549,6 +579,17 @@ const DAYS = [
           { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
         ],
       },
+      {
+        label: "אופציה ג' – Adventure Camping",
+        color: "#1a5276",
+        dashed: true,
+        points: [
+          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
+          { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
+          { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
+        ],
+      },
     ],
   },
   {
@@ -561,8 +602,18 @@ const DAYS = [
     overnight: fmt("צקאלטובו / אזור Okatse", "Tskaltubo / Okatse area", "ცხალტუბო / ოკაცე"),
     driving: "כ-100 ק\"מ · לינה במזרח (בלי זוגדידי)",
     summary:
-      "צקאלטובו + מערת פרומתאוס. לינה באזור – צקאלטובו/פרומתאוס או ליד Okatse Canyon – כדי לא לנסוע מערבה לזוגדידי ולחזור מזרחה ביום 6.",
+      "אם לנו ב-Adventure Camping: בוקר קניונינג פרטי ליד המחנה, אחר כך צקאלטובו + פרומתאוס. אחרת: יציאה מאמברולאורי לצקאלטובו + מערה. לינה: צקאלטובו/פרומתאוס או Okatse – בלי זוגדידי.",
     activities: [
+      {
+        name: fmt("קניונינג ליד Adventure Camping (אופציה ג')", "Canyoning near Adventure Camping", "canyoning"),
+        timeOfDay: "בוקר",
+        duration: "חצי יום",
+        description:
+          "אם לנו במחנה בלילה הקודם: קניונינג פרטי ליד המחנה – צוקים, בריכות, חבלים ליד מפלים. להביא סניקרס; שאר הציוד במקום. WhatsApp: +995 595 41 15 47.",
+        link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
+        linkLabel: N.raftingInKutaisi + " – Canyoning",
+        image: "IMG.rafting",
+      },
       {
         name: N.tskaltubo,
         description: "סיור בסנטוריומים סובייטיים נטושים – Urbex.",
@@ -578,17 +629,31 @@ const DAYS = [
     ],
     alternatives: [
       {
+        name: "🏕️ אופציה ג' – בוקר קניונינג במחנה → צקאלטובו",
+        description:
+          "אחרי לינה ב-Adventure Camping: קניונינג פרטי בבוקר, אחר כך נסיעה לצקאלטובו + פרומתאוס. לינה באזור צקאלטובו או Okatse.",
+        overnight: fmt("אזור צקאלטובו / Okatse", "Tskaltubo / Okatse area", "ცხალტუბო / ოკაცე"),
+        recommended: true,
+        link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
+        linkLabel: N.raftingInKutaisi + " – Canyoning",
+        image: "IMG.rafting",
+        tips: [
+          "סניקרס חובה לקניונינג",
+          "סיור פרטי לכם",
+          "מסעדה במחנה לפני היציאה",
+        ],
+      },
+      {
         name: "📋 אופציה א' – לינה באזור צקאלטובו / פרומתאוס",
         description:
-          "אחרי המערה – check-in ליד צקאלטובו או המערה. בוקר יום 6: נסיעה קצרה (~30–40 דק') ל-Okatse.",
+          "יציאה מאמברולאורי (או אחרי קניונינג). אחרי המערה – check-in ליד צקאלטובו. בוקר יום 6: ~30–40 דק' ל-Okatse.",
         overnight: fmt("אזור צקאלטובו", "Tskaltubo area", "ცხალტუბო"),
-        recommended: true,
         image: "IMG.tskaltubo",
       },
       {
         name: "🏞 אופציה ב' – לינה באזור Okatse Canyon",
         description:
-          "אחרי פרומתאוס ממשיכים ~30–40 דק' מערבה ללינה ליד Okatse. בוקר יום 6 מתחיל ישר בקניון – בלי נסיעה מיותרת.",
+          "אחרי פרומתאוס ממשיכים ~30–40 דק' מערבה ללינה ליד Okatse. בוקר יום 6 מתחיל ישר בקניון.",
         overnight: fmt("אזור Okatse Canyon", "Okatse Canyon area", "ოკაცე"),
         image: "IMG.okatse",
       },
@@ -612,6 +677,7 @@ const DAYS = [
       },
     ],
     mapPoints: [
+      { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
       { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
       { name: N.tskaltubo, lat: 42.3417, lng: 42.5986 },
       { name: N.prometheusCave, lat: 42.3708, lng: 42.5989 },
@@ -619,7 +685,18 @@ const DAYS = [
     ],
     mapRoutes: [
       {
-        label: "אופציה א' – לינה בצקאלטובו",
+        label: "אופציה ג' – מקמפינג לצקאלטובו",
+        color: "#1a5276",
+        dashed: true,
+        points: [
+          { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
+          { name: N.tskaltubo, lat: 42.3417, lng: 42.5986 },
+          { name: N.prometheusCave, lat: 42.3708, lng: 42.5989 },
+          { name: N.tskaltubo, lat: 42.3417, lng: 42.5986 },
+        ],
+      },
+      {
+        label: "אופציה א' – מאמברולאורי לצקאלטובו",
         color: "#7b2d3e",
         dashed: true,
         points: [
@@ -1113,7 +1190,11 @@ const LOGISTICS = {
     { place: N.batumi, nights: 2, note: "לילה ראשון + אחרון" },
     { place: N.kutaisi, nights: 1, note: "יום 2" },
     { place: N.chiatura, nights: 1, note: "יום 3 – אזור צ'יאתורה" },
-    { place: `${N.ambrolauri}, ${N.racha}`, nights: 1, note: "ראצ'ה" },
+    {
+      place: `${N.ambrolauri} / ${N.adventureCamping}`,
+      nights: 1,
+      note: "יום 4 – אמברולאורי או Adventure Camping (רפטינג + קניונינג)",
+    },
     { place: `${N.tskaltubo} / ${N.okatseCanyon}`, nights: 1, note: "יום 5 – בלי חזרה לזוגדידי" },
     { place: N.zugdidi, nights: 1, note: "יום 6 – לפני סוואנטי" },
     { place: `${N.mestia}, ${N.svaneti}`, nights: 2, note: "ימים 7–8" },
