@@ -43,6 +43,12 @@ function pathMidpoint(path) {
   return path[Math.floor(path.length / 2)];
 }
 
+function dayDateLabel(dayId) {
+  const day = (typeof DAYS !== "undefined" ? DAYS : []).find((d) => d.id === dayId);
+  if (!day) return "";
+  return day.weekday ? `${day.date} (${day.weekday})` : day.date;
+}
+
 function segmentLabel(segment) {
   return `Day ${segment.day} · ${segment.distanceKm} km · ${segment.duration}`;
 }
@@ -72,6 +78,33 @@ function createPlaceIcon(color) {
     iconSize: [12, 12],
     iconAnchor: [6, 6],
   });
+}
+
+/**
+ * זום מרוסן בגלגלת: הדפדפן שולח "קליק" אחד של גלגלת ככמה אירועי wheel רצופים,
+ * ו-Leaflet הופך כל אחד מהם לקפיצת זום – ולכן קליק אחד קופץ 2–3 רמות.
+ * כאן כל רצף כזה שווה בדיוק רמת זום אחת.
+ */
+function tameWheelZoom(map) {
+  const ZOOM_THROTTLE_MS = 150;
+  map.scrollWheelZoom.disable();
+
+  let lastZoomAt = 0;
+  map.getContainer().addEventListener(
+    "wheel",
+    (event) => {
+      event.preventDefault();
+      const now = Date.now();
+      if (now - lastZoomAt < ZOOM_THROTTLE_MS) return;
+      lastZoomAt = now;
+
+      const direction = event.deltaY < 0 ? 1 : -1;
+      map.setZoomAround(map.mouseEventToContainerPoint(event), map.getZoom() + direction);
+    },
+    { passive: false }
+  );
+
+  return map;
 }
 
 function initRouteMap(containerId, segments, dayColors) {
@@ -158,6 +191,8 @@ function initRouteMap(containerId, segments, dayColors) {
   }
 
   renderMapLegend(segments, dayColors);
+  tameWheelZoom(map);
+  attachPoiLayer(map);
   return map;
 }
 
@@ -223,6 +258,9 @@ function initExtremeMap(containerId, options) {
     map.fitBounds(bounds, { padding: [48, 48] });
   }
 
+  tameWheelZoom(map);
+  attachPoiLayer(map);
+
   return {
     map,
     markerById,
@@ -254,11 +292,12 @@ function renderMapLegend(segments, dayColors) {
       ${segments
         .map(
           (s) => `
-        <a href="day.html?id=${s.day}" class="legend-day-item">
+        <a href="day.html?id=${s.day}" class="legend-day-item" style="--day-color:${dayColors[s.day]}">
           <span class="legend-day-line" style="background:${dayColors[s.day]}"></span>
           <span class="legend-day-text">
             <strong>יום ${s.day}</strong>
-            <span>${s.distanceKm} km · ${s.duration}</span>
+            <span class="legend-day-date">📅 ${dayDateLabel(s.day)}</span>
+            <span class="legend-day-stat" dir="ltr">${s.distanceKm} km · ${s.duration}</span>
             <span class="legend-overnight">🏨 ${hePlace(s.overnight)}</span>
           </span>
         </a>
@@ -350,6 +389,8 @@ function initDayMap(containerId, options) {
     }
   }
 
+  tameWheelZoom(map);
+  attachPoiLayer(map, { dayId: options?.dayId || null });
   return map;
 }
 
@@ -441,6 +482,8 @@ function initDroneSpotsMap(containerId, options, onSelectMaybe) {
   if (bounds.length) {
     map.fitBounds(bounds, { padding: [40, 40] });
   }
+
+  tameWheelZoom(map);
 
   return {
     map,

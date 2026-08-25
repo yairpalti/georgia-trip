@@ -130,7 +130,7 @@ function renderAlternatives(alts) {
           ${renderImg(a.image, "alt-plan-img", "", "mestia")}
           <div class="alt-plan-body">
             <h4>${a.name}</h4>
-            ${a.driving ? `<p class="alt-driving">🚗 ${a.driving}</p>` : ""}
+            ${a.driving ? `<p class="alt-driving">🚗 <span class="ltr-num">${a.driving}</span></p>` : ""}
             <p>${a.description}</p>
             ${a.overnight ? `<p class="alt-overnight">🏨 לינה: ${a.overnight}</p>` : ""}
             ${
@@ -917,7 +917,7 @@ function renderDayPage(dayId) {
         <h1>${day.emoji} יום ${day.id}: ${day.title}</h1>
         <div class="day-meta-row">
           <span>📅 ${day.date} (${day.weekday})</span>
-          <span>🚗 ${day.driving}</span>
+          <span>🚗 <span class="ltr-num">${day.driving}</span></span>
           <span>🏨 ${day.overnight}</span>
         </div>
       </div>
@@ -982,7 +982,7 @@ function renderDayPage(dayId) {
           <h2>פרטים</h2>
           <div class="info-row"><span>תאריך</span><span>${day.date}</span></div>
           <div class="info-row"><span>נושא</span><span>${day.theme}</span></div>
-          <div class="info-row"><span>נהיגה</span><span>${day.driving}</span></div>
+          <div class="info-row"><span>נהיגה</span><span class="ltr-num">${day.driving}</span></div>
           <div class="info-row"><span>לינה</span><span>${day.overnight}</span></div>
           <div id="day-map"></div>
           <div id="day-map-legend" class="day-map-legend" hidden></div>
@@ -1015,6 +1015,7 @@ function renderDayPage(dayId) {
         initDayMap("day-map", {
           routes: dayRoutes,
           overnight: day.overnight,
+          dayId,
         }),
       100
     );
@@ -1039,7 +1040,7 @@ function renderDaysGrid() {
         <h3 class="day-card-title"><a href="day.html?id=${d.id}" class="day-card-title-link">${d.title}</a></h3>
       </div>
       <div class="day-card-body">
-        <div class="day-card-meta">${d.theme} · ${d.driving}</div>
+        <div class="day-card-meta">${d.theme} · <span class="ltr-num">${d.driving}</span></div>
         <p class="day-card-summary">${d.summary}</p>
         <div class="day-card-overnight">🏨 ${d.overnight}</div>
         <div class="day-card-links">
@@ -1331,9 +1332,9 @@ function renderExtremePage() {
         <div class="map-legend-grid">
           ${ROUTE_SEGMENTS.map(
             (s) => `
-            <a href="day.html?id=${s.day}" class="legend-day-item">
-              <span class="legend-day-line" style="background:${DAY_COLORS[s.day]};opacity:0.5"></span>
-              <span class="legend-day-text"><strong>יום ${s.day}</strong><span>${s.distanceKm} km</span></span>
+            <a href="day.html?id=${s.day}" class="legend-day-item" style="--day-color:${DAY_COLORS[s.day]}">
+              <span class="legend-day-line" style="background:${DAY_COLORS[s.day]}"></span>
+              <span class="legend-day-text"><strong>יום ${s.day}</strong><span class="legend-day-date">📅 ${getDayById(s.day)?.date || ""}</span><span class="legend-day-stat" dir="ltr">${s.distanceKm} km</span></span>
             </a>
           `
           ).join("")}
