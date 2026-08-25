@@ -103,13 +103,16 @@ function createPlaceIcon(color) {
 }
 
 /**
- * זום מרוסן בגלגלת: הדפדפן שולח "קליק" אחד של גלגלת ככמה אירועי wheel רצופים,
- * ו-Leaflet הופך כל אחד מהם לקפיצת זום – ולכן קליק אחד קופץ 2–3 רמות.
- * כאן כל רצף כזה שווה בדיוק רמת זום אחת.
+ * זום עדין בגלגלת: הדפדפן שולח "קליק" אחד של גלגלת ככמה אירועי wheel רצופים,
+ * ו-Leaflet הופך כל אחד מהם לקפיצת זום שלמה – ולכן קליק אחד קופץ 2–3 רמות.
+ * כאן כל רצף כזה שווה רבע רמת זום בלבד.
  */
 function tameWheelZoom(map) {
-  const ZOOM_THROTTLE_MS = 150;
+  const ZOOM_STEP = 0.25;
+  const ZOOM_THROTTLE_MS = 100;
   map.scrollWheelZoom.disable();
+  /* zoomSnap חייב להיות קטן או שווה לצעד, אחרת Leaflet מעגל בחזרה לרמה שלמה */
+  map.options.zoomSnap = ZOOM_STEP;
 
   let lastZoomAt = 0;
   map.getContainer().addEventListener(
@@ -121,7 +124,10 @@ function tameWheelZoom(map) {
       lastZoomAt = now;
 
       const direction = event.deltaY < 0 ? 1 : -1;
-      map.setZoomAround(map.mouseEventToContainerPoint(event), map.getZoom() + direction);
+      map.setZoomAround(
+        map.mouseEventToContainerPoint(event),
+        map.getZoom() + direction * ZOOM_STEP
+      );
     },
     { passive: false }
   );

@@ -168,8 +168,10 @@ function createPoiPreviewIcon() {
   });
 }
 
-function googleMapsUrl(lat, lng) {
-  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+/* לינק לדף המקום ב-Google (עם ביקורות ותמונות) ולא רק לנקודת ציון */
+function googleMapsUrl(lat, lng, name) {
+  const query = name ? encodeURIComponent(name) : `${lat},${lng}`;
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
 function poiEl(tag, className, text) {
@@ -209,7 +211,7 @@ function buildPoiPopup(poi) {
 
   const actions = poiEl("div", "poi-popup-actions");
   const link = poiEl("a", "poi-popup-link", "פתיחה ב-Google Maps");
-  link.href = googleMapsUrl(poi.lat, poi.lng);
+  link.href = googleMapsUrl(poi.lat, poi.lng, poi.name);
   link.target = "_blank";
   link.rel = "noopener noreferrer";
   actions.appendChild(link);

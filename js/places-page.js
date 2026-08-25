@@ -235,6 +235,20 @@ function userPlaces() {
 
 /* ---------- תצוגה ---------- */
 
+/*
+ * cid הוא מזהה המקום של Google עצמו – לינק כזה נפתח בדף המקום המלא
+ * (ביקורות, תמונות, שעות). בלעדיו נחפש לפי שם, ורק כמוצא אחרון לפי קואורדינטות.
+ */
+function placeMapsUrl(place) {
+  if (place.cid) return `https://www.google.com/maps?cid=${place.cid}`;
+  const name = place.en || place.he;
+  if (name) {
+    const query = [name, place.area].filter(Boolean).join(", ");
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  }
+  return googleMapsUrl(place.lat, place.lng);
+}
+
 function placeCategory(place) {
   return PLACE_CATEGORIES[place.category] || PLACE_CATEGORIES.custom;
 }
@@ -393,7 +407,7 @@ function buildPlacePopup(place, notes, onNoteChange) {
 
   const actions = poiEl("div", "poi-popup-actions");
   const maps = poiEl("a", "poi-popup-link", "פתיחה ב-Google Maps");
-  maps.href = googleMapsUrl(place.lat, place.lng);
+  maps.href = placeMapsUrl(place);
   maps.target = "_blank";
   maps.rel = "noopener noreferrer";
   actions.appendChild(maps);

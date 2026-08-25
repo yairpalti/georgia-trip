@@ -378,6 +378,15 @@ img {
   font-family: var(--font);
 }
 
+/*
+ * Leaflet ממקם tooltips ב-transform בלבד, בלי left. בעמוד RTL נקודת ההתחלה של
+ * האלמנט היא הקצה הימני, ולכן כל תווית "נתלית" שמאלה ברוחב שלה. נעיגן שמאלה כמו הסמנים.
+ */
+.leaflet-tooltip {
+  left: 0;
+  right: auto;
+}
+
 
 /* Day cards grid */
 .days-grid {

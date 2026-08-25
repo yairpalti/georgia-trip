@@ -1,0 +1,224 @@
+{
+ "Chateau Dio": {
+  "id": "chateau-dio",
+  "he": "יקב שאטו דיו",
+  "category": "wine",
+  "area": "ראצ'ה · אמברולאורי"
+ },
+ "Chateau Mephis Kalaki": {
+  "id": "chateau-mephis",
+  "he": "יקב שאטו מפיס",
+  "category": "wine",
+  "area": "קרתלי"
+ },
+ "ბულანჟერია ელლე - ELLE Boulangerie": {
+  "id": "elle-boulangerie",
+  "he": "מאפיית ELLE",
+  "category": "food",
+  "area": "קוטאיסי"
+ },
+ "Green Bazaar": {
+  "id": "green-bazaar",
+  "he": "השוק הירוק",
+  "category": "food",
+  "area": "קוטאיסי"
+ },
+ "ბუფეტი „როცა გშია“ • Buffet Rotsa Gshia": {
+  "id": "buffet-rotsa-gshia",
+  "he": "בופה Rotsa Gshia",
+  "category": "food",
+  "area": "קוטאיסי"
+ },
+ "Gala Restaurant Kutaisi": {
+  "id": "gala-restaurant",
+  "he": "מסעדת Gala",
+  "category": "food",
+  "area": "קוטאיסי"
+ },
+ "Newport Hotel Kutaisi": {
+  "id": "newport-hotel",
+  "he": "מלון Newport",
+  "category": "lodging",
+  "area": "קוטאיסי"
+ },
+ "Hillside Kazbegi": {
+  "id": "hillside-kazbegi",
+  "he": "Hillside Kazbegi",
+  "category": "lodging",
+  "area": "קזבגי"
+ },
+ "Rioni River": {
+  "id": "rioni-river",
+  "he": "נהר הריוני",
+  "category": "nature",
+  "area": "ראצ'ה"
+ },
+ "Rafting in Kutaisi": {
+  "id": "rafting-kutaisi",
+  "he": "רפטינג בקוטאיסי",
+  "category": "activity",
+  "area": "קוטאיסי"
+ },
+ "Sulfur Spring Nokalakevi": {
+  "id": "nokalakevi-springs",
+  "he": "מעיינות גופרית נוקאלאקווי",
+  "category": "nature",
+  "area": "סמגרלו"
+ },
+ "Katskhi Pillar": {
+  "id": "katskhi-pillar",
+  "he": "עמוד קצחי",
+  "category": "attraction",
+  "area": "אימרתי"
+ },
+ "Chiatura": {
+  "id": "chiatura",
+  "he": "צ'יאתורה",
+  "category": "town",
+  "area": "אימרתי"
+ },
+ "Kutaisi": {
+  "id": "kutaisi",
+  "he": "קוטאיסי",
+  "category": "town",
+  "area": "אימרתי"
+ },
+ "Vani": {
+  "id": "vani",
+  "he": "ואני",
+  "category": "attraction",
+  "area": "אימרתי"
+ },
+ "Shaori Reservoir": {
+  "id": "shaori-reservoir",
+  "he": "מאגר שאורי",
+  "category": "nature",
+  "area": "ראצ'ה"
+ },
+ "Ambrolauri": {
+  "id": "ambrolauri",
+  "he": "אמברולאורי",
+  "category": "town",
+  "area": "ראצ'ה"
+ },
+ "Mtirala National Park": {
+  "id": "mtirala",
+  "he": "פארק לאומי מטיראלה",
+  "category": "nature",
+  "area": "אג'ריה"
+ },
+ "Batumi": {
+  "id": "batumi",
+  "he": "באטומי",
+  "category": "town",
+  "area": "אג'ריה"
+ },
+ "Zugdidi": {
+  "id": "zugdidi",
+  "he": "זוגדידי",
+  "category": "town",
+  "area": "סמגרלו"
+ },
+ "Shkhara Glacier": {
+  "id": "shkhara-glacier",
+  "he": "קרחון שחארה",
+  "category": "nature",
+  "area": "סוואנטי"
+ },
+ "Ushguli": {
+  "id": "ushguli",
+  "he": "אושגולי",
+  "category": "attraction",
+  "area": "סוואנטי"
+ },
+ "Mestia": {
+  "id": "mestia",
+  "he": "מסטיה",
+  "category": "town",
+  "area": "סוואנטי"
+ },
+ "Inguri Dam": {
+  "id": "enguri-dam",
+  "he": "סכר אנגורי",
+  "category": "attraction",
+  "area": "סמגרלו"
+ },
+ "Martvili Canyon": {
+  "id": "martvili-canyon",
+  "he": "קניון מרטווילי",
+  "category": "nature",
+  "area": "סמגרלו"
+ },
+ "Okatse Canyon Visitor Center": {
+  "id": "okatse-canyon",
+  "he": "קניון אוקאצה",
+  "category": "nature",
+  "area": "אימרתי"
+ },
+ "Borjomi": {
+  "id": "borjomi",
+  "he": "בורג'ומי",
+  "category": "town",
+  "area": "סמצחה־ג'וואחתי"
+ },
+ "Uplistsikhe": {
+  "id": "uplistsikhe",
+  "he": "אופליסציחה",
+  "category": "attraction",
+  "area": "קרתלי"
+ },
+ "Gergeti Trinity Church": {
+  "id": "gergeti",
+  "he": "כנסיית גרגטי",
+  "category": "attraction",
+  "area": "קזבגי"
+ },
+ "Stepantsminda": {
+  "id": "stepantsminda",
+  "he": "סטפנצמינדה",
+  "category": "town",
+  "area": "קזבגי"
+ },
+ "Gudauri": {
+  "id": "gudauri",
+  "he": "גודאורי",
+  "category": "town",
+  "area": "קזבגי"
+ },
+ "Zhinvali Reservoir": {
+  "id": "zhinvali",
+  "he": "מאגר ז'ינוואלי",
+  "category": "nature",
+  "area": "קרתלי"
+ },
+ "Ananuri Fortress Complex": {
+  "id": "ananuri-fortress",
+  "he": "מצודת אנאנורי",
+  "category": "attraction",
+  "area": "קרתלי"
+ },
+ "Ananuri": {
+  "id": "ananuri",
+  "he": "אנאנורי",
+  "category": "attraction",
+  "area": "קרתלי"
+ },
+ "Mtskheta": {
+  "id": "mtskheta",
+  "he": "מצחתא",
+  "category": "town",
+  "area": "קרתלי"
+ },
+ "Tbilisi International Airport": {
+  "id": "tbilisi-airport",
+  "he": "שדה התעופה טביליסי",
+  "category": "transport",
+  "area": "טביליסי"
+ },
+ "Adventure Camping": {
+  "id": "adventure-camping",
+  "he": "קמפינג Adventure",
+  "category": "lodging",
+  "area": "אימרתי · טקיבולי"
+ }
+}
