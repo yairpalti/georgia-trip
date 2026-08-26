@@ -1,0 +1,74 @@
+# Rebuilds data/places.js from the trip's Google Maps saved list once a day, so
+# places added in Google Maps reach the site without a manual run of
+# tools/refresh-places.py. Hebrew names and categories still come from
+# tools/places-meta.json - places missing there land as category "custom" and
+# are listed in the run summary.
+name: Refresh places
+
+on:
+  schedule:
+    # 03:17 UTC daily (06:17 Israel time). GitHub may delay scheduled runs.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-places
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Count the places we have now
+        id: before
+        run: echo "count=$(grep -c '^  { id' data/places.js)" >> "$GITHUB_OUTPUT"
+
+      # The script only uses the standard library, so there is nothing to install.
+      # It exits non-zero if Google returns no places, leaving data/places.js untouched.
+      - name: Rebuild data/places.js
+        run: python tools/refresh-places.py | tee "$RUNNER_TEMP/refresh.log"
+
+      # Google's saved-list endpoint is undocumented and can answer with a partial
+      # list. A big drop is more likely a bad answer than a real deletion, so stop
+      # instead of committing places away.
+      - name: Refuse a suspicious drop in places
+        run: |
+          before='${{ steps.before.outputs.count }}'
+          after=$(grep -c '^  { id' data/places.js)
+          echo "Places: $before -> $after" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$after" -lt "$((before - 2))" ]; then
+            git checkout -- data/places.js
+            echo "::error::Kept the old list: $before -> $after places. Run tools/refresh-places.py locally to confirm the removals."
+            exit 1
+          fi
+
+      - name: Commit if the list changed
+        run: |
+          if git diff --quiet -- data/places.js; then
+            echo "No change in data/places.js" >> "$GITHUB_STEP_SUMMARY"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/places.js
+            git commit -m "Refresh places from the Google Maps list"
+            git push
+            echo "Committed an updated data/places.js" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Show the script output
+        if: always()
+        run: |
+          {
+            echo '```'
+            cat "$RUNNER_TEMP/refresh.log" 2>/dev/null || echo "(the script produced no output)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
