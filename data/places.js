@@ -56,5 +56,4 @@ const TRIP_PLACES = [
   { id: "zhinvali", he: "מאגר ז'ינוואלי", en: "Zhinvali Reservoir", category: "nature", area: "קרתלי", lat: 42.152324, lng: 44.768064, cid: "18303764692758935855" },
   { id: "ananuri-fortress", he: "מצודת אנאנורי", en: "Ananuri Fortress Complex", category: "attraction", area: "קרתלי", lat: 42.163816, lng: 44.70299, cid: "16064550412089135502" },
   { id: "mtskheta", he: "מצחתא", en: "Mtskheta", category: "town", area: "קרתלי", lat: 41.845425, lng: 44.720274, cid: "8623923602034509506" },
-  { id: "tbilisi-airport", he: "שדה התעופה טביליסי", en: "Tbilisi International Airport", category: "transport", area: "טביליסי", lat: 41.669539, lng: 44.964644, cid: "14751131839375526849" },
 ];
