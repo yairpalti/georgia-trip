@@ -593,6 +593,10 @@ function buildShareText({ added, notes, videos }) {
   return lines.join("\n");
 }
 
+function shareCountLabel(total) {
+  return total === 1 ? "תוספת אחת" : `${total} תוספות`;
+}
+
 function shareMailtoUrl(body) {
   const subject = `subject=${encodeURIComponent(SHARE_SUBJECT)}`;
   const query = body ? `${subject}&body=${encodeURIComponent(body)}` : subject;
@@ -998,7 +1002,7 @@ function initPlacesPage() {
     const { total } = collectUserAdditions(state.places);
     shareBtn.disabled = total === 0;
     shareBtn.title = total
-      ? `${total} תוספות מהדפדפן הזה יישלחו ל-${SHARE_EMAIL}`
+      ? `${shareCountLabel(total)} מהדפדפן הזה יישלחו ל-${SHARE_EMAIL}`
       : "אין עדיין תוספות לשליחה";
   }
 
@@ -1023,8 +1027,8 @@ function initPlacesPage() {
       window.location.href = shareMailtoUrl("");
       setShareStatus(
         copied
-          ? `הרשימה ארוכה מדי בשביל מייל אוטומטי, לכן נפתח מייל ריק ל-${SHARE_EMAIL} – והטקסט הועתק, מדביקים בגוף המייל.`
-          : `הרשימה ארוכה מדי בשביל מייל אוטומטי. נפתח מייל ריק ל-${SHARE_EMAIL} – מעתיקים לתוכו את התוספות מהעמוד.`,
+          ? "הרשימה ארוכה למייל אוטומטי – נפתח מייל ריק, מדביקים מהלוח."
+          : "הרשימה ארוכה למייל אוטומטי – נפתח מייל ריק, מעתיקים לתוכו את התוספות.",
         "warn"
       );
       return;
@@ -1032,7 +1036,7 @@ function initPlacesPage() {
 
     window.location.href = mailto;
     setShareStatus(
-      `נפתח מייל ל-${SHARE_EMAIL} עם ${additions.total} תוספות${copied ? " (הטקסט גם הועתק, למקרה שצריך להדביק)" : ""}. השליחה עצמה נעשית מתוכנת המייל.`,
+      `✉️ נפתח מייל ליאיר עם ${shareCountLabel(additions.total)}${copied ? " · גם הועתק ללוח" : ""}.`,
       "ok"
     );
   }

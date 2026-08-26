@@ -2730,7 +2730,6 @@ img {
   font-size: 0.85rem;
   line-height: 1.5;
   color: var(--text-muted);
-  max-width: 75ch;
 }
 
 .places-share-status.is-ok {
