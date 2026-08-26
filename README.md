@@ -49,7 +49,9 @@ Pins more than **40 km** from the itinerary — the Kazbegi/Tbilisi cluster, Bor
 
 The import is **one-way**. Google has no public API for writing to a saved list, so places added on the website cannot be pushed back into Google Maps.
 
-To pull in pins added in Google Maps since the last import:
+Pins added in Google Maps arrive on their own: `.github/workflows/refresh-places.yml` runs the import every day at 03:17 UTC and commits `data/places.js` when the list changed. If more than two places disappear at once — more likely a partial answer from Google's undocumented endpoint than a real deletion — the run keeps the old file and fails instead.
+
+To pull them in right away, or after editing the Hebrew metadata:
 
 ```bash
 python tools/refresh-places.py
