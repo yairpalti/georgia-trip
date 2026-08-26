@@ -2754,6 +2754,117 @@ img {
   font-weight: 500;
 }
 
+.measure-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  background: var(--white);
+  border: 2px solid var(--wine);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.measure-line {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+}
+
+.measure-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.measure-result {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.measure-time {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--wine);
+}
+
+.measure-distance {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.measure-loading,
+.measure-note,
+.measure-error {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.measure-error {
+  color: #c0392b;
+}
+
+.measure-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+.measure-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.measure-btn {
+  border: 1px solid var(--cream-dark);
+  border-radius: 999px;
+  background: var(--cream);
+  cursor: pointer;
+  padding: 0.25rem 0.7rem;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  transition: background 0.15s, color 0.15s;
+}
+
+.measure-btn:hover {
+  background: var(--wine);
+  border-color: var(--wine);
+  color: var(--white);
+}
+
+.measure-btn.is-active {
+  background: var(--wine);
+  border-color: var(--wine);
+  color: var(--white);
+}
+
+.measure-buttons {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.place-chip-offroute {
+  border-style: dashed;
+  border-color: var(--text-muted) !important;
+}
+
+.places-item-far {
+  font-size: 0.72rem;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  background: var(--cream-dark);
+  color: var(--text-muted);
+}
+
 .places-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);

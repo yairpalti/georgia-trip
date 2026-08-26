@@ -114,6 +114,47 @@ function distanceKm(a, b) {
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
+/* מעבר לטווח הזה מהמסלול – מקום נחשב "רחוק", ומוסתר כברירת מחדל */
+const OFF_ROUTE_KM = 40;
+
+/* היטל מקומי שטוח – מדויק לחלוטין בסדרי הגודל של גיאורגיה */
+function flatXY(point) {
+  const R = 6371;
+  const rad = (deg) => (deg * Math.PI) / 180;
+  return { x: rad(point.lng) * Math.cos(rad(42.4)) * R, y: rad(point.lat) * R };
+}
+
+function distanceToSegmentKm(point, a, b) {
+  const P = flatXY(point);
+  const A = flatXY(a);
+  const B = flatXY(b);
+  const dx = B.x - A.x;
+  const dy = B.y - A.y;
+  const len2 = dx * dx + dy * dy;
+  let t = len2 ? ((P.x - A.x) * dx + (P.y - A.y) * dy) / len2 : 0;
+  t = Math.max(0, Math.min(1, t));
+  return Math.hypot(P.x - (A.x + t * dx), P.y - (A.y + t * dy));
+}
+
+function distanceToRouteKm(point) {
+  if (typeof ROUTE_SEGMENTS === "undefined") return 0;
+  let best = Infinity;
+  ROUTE_SEGMENTS.forEach((segment) => {
+    const path = [segment.from, ...(segment.waypoints || []), segment.to];
+    for (let i = 1; i < path.length; i++) {
+      best = Math.min(best, distanceToSegmentKm(point, path[i - 1], path[i]));
+    }
+  });
+  return best === Infinity ? 0 : best;
+}
+
+function markOffRoute(place) {
+  /* מקומות שאנחנו הוספנו נשארים תמיד – לא רוצים שייעלמו אחרי ההוספה */
+  place.routeKm = distanceToRouteKm(place);
+  place.offRoute = place.source !== "user" && place.routeKm > OFF_ROUTE_KM;
+  return place;
+}
+
 function findNearby(list, point, maxKm) {
   let best = null;
   let bestDist = maxKm;
@@ -215,11 +256,11 @@ function collectTripPlaces() {
     });
   }
 
-  return places;
+  return places.map(markOffRoute);
 }
 
 function userPlaces() {
-  return loadPois().map((poi) => ({
+  return loadPois().map((poi) => markOffRoute({
     id: poi.id,
     he: poi.name,
     en: "",
@@ -231,6 +272,44 @@ function userPlaces() {
     source: "user",
     note: poi.note || "",
   }));
+}
+
+/* ---------- זמן נסיעה בין שתי נקודות ---------- */
+
+const OSRM_URL = "https://router.project-osrm.org/route/v1/driving";
+
+function formatDuration(seconds) {
+  const total = Math.round(seconds / 60);
+  const hours = Math.floor(total / 60);
+  const minutes = total % 60;
+  if (!hours) return `${minutes} דק'`;
+  return minutes ? `${hours} ש' ${minutes} דק'` : `${hours} ש'`;
+}
+
+function formatDistance(km) {
+  return km < 10 ? `${km.toFixed(1)} ק"מ` : `${Math.round(km)} ק"מ`;
+}
+
+/** מבקש מסלול נהיגה אמיתי מ-OSRM; אם השירות לא זמין – מרחק אווירי בלבד */
+async function fetchDrivingRoute(from, to, signal) {
+  const coords = `${from.lng},${from.lat};${to.lng},${to.lat}`;
+  const res = await fetch(`${OSRM_URL}/${coords}?overview=full&geometries=geojson`, { signal });
+  if (!res.ok) throw new Error(`Router returned ${res.status}`);
+  const data = await res.json();
+  const route = data.routes?.[0];
+  if (!route) throw new Error("No route found");
+  return {
+    km: route.distance / 1000,
+    seconds: route.duration,
+    path: (route.geometry?.coordinates || []).map(([lng, lat]) => [lat, lng]),
+  };
+}
+
+function directionsUrl(from, to) {
+  return (
+    "https://www.google.com/maps/dir/?api=1" +
+    `&origin=${from.lat},${from.lng}&destination=${to.lat},${to.lng}&travelmode=driving`
+  );
 }
 
 /* ---------- תצוגה ---------- */
@@ -353,7 +432,7 @@ function buildVideoSection(place, onChange) {
   return section;
 }
 
-function buildPlacePopup(place, notes, onNoteChange) {
+function buildPlacePopup(place, notes, onNoteChange, measure) {
   const cat = placeCategory(place);
   const wrap = poiEl("div", "poi-popup place-popup");
   stopKeyPropagation(wrap);
@@ -404,6 +483,24 @@ function buildPlacePopup(place, notes, onNoteChange) {
   wrap.appendChild(note);
 
   wrap.appendChild(buildVideoSection(place, onNoteChange));
+
+  if (measure) {
+    const row = poiEl("div", "measure-buttons");
+    const isFrom = measure.from()?.id === place.id;
+    const isTo = measure.to()?.id === place.id;
+
+    const from = poiEl("button", "measure-btn" + (isFrom ? " is-active" : ""), isFrom ? "📏 מוצא ✓" : "📏 מכאן");
+    from.type = "button";
+    from.addEventListener("click", () => measure.setFrom(place));
+    row.appendChild(from);
+
+    const to = poiEl("button", "measure-btn" + (isTo ? " is-active" : ""), isTo ? "📏 יעד ✓" : "📏 לכאן");
+    to.type = "button";
+    to.addEventListener("click", () => measure.setTo(place));
+    row.appendChild(to);
+
+    wrap.appendChild(row);
+  }
 
   const actions = poiEl("div", "poi-popup-actions");
   const maps = poiEl("a", "poi-popup-link", "פתיחה ב-Google Maps");
@@ -462,8 +559,13 @@ function initPlacesPage() {
   const poiApi = attachPoiLayer(map);
   tameWheelZoom(map);
 
+  const measurePanel = document.getElementById("measure-panel");
+  const measureLayer = L.layerGroup().addTo(map);
+  const measure = { from: null, to: null, controller: null, cache: {} };
+
   const state = {
     query: "",
+    showOffRoute: false,
     active: new Set(Object.keys(PLACE_CATEGORIES)),
     selectedId: null,
     places: [],
@@ -471,9 +573,13 @@ function initPlacesPage() {
     notes: loadPlaceNotes(),
   };
 
+  function inScope(place) {
+    return state.showOffRoute || !place.offRoute;
+  }
+
   function visiblePlaces() {
     return state.places.filter(
-      (p) => state.active.has(p.category) && placeMatchesQuery(p, state.query)
+      (p) => inScope(p) && state.active.has(p.category) && placeMatchesQuery(p, state.query)
     );
   }
 
@@ -503,7 +609,7 @@ function initPlacesPage() {
         const marker = poiApi.markerById[place.id];
         if (!marker) return;
         marker.setIcon(createCategoryIcon(place, place.id === state.selectedId));
-        marker.bindPopup(() => buildPlacePopup(place, state.notes, onNoteSaved));
+        marker.bindPopup(() => buildPlacePopup(place, state.notes, onNoteSaved, measureApi));
         if (visibleIds.has(place.id)) poiApi.layer.addLayer(marker);
         else poiApi.layer.removeLayer(marker);
         return;
@@ -513,7 +619,7 @@ function initPlacesPage() {
       const marker = L.marker([place.lat, place.lng], {
         icon: createCategoryIcon(place, place.id === state.selectedId),
       })
-        .bindPopup(() => buildPlacePopup(place, state.notes, onNoteSaved))
+        .bindPopup(() => buildPlacePopup(place, state.notes, onNoteSaved, measureApi))
         .bindTooltip(`${placeCategory(place).icon} ${place.he || place.en}`, {
           direction: "top",
           offset: [0, -16],
@@ -530,10 +636,148 @@ function initPlacesPage() {
     renderList();
   }
 
+  function measurePoint(place) {
+    return { id: place.id, name: place.he || place.en, lat: place.lat, lng: place.lng };
+  }
+
+  function renderMeasurePanel(status) {
+    if (!measurePanel) return;
+    measurePanel.innerHTML = "";
+
+    if (!measure.from && !measure.to) {
+      measurePanel.hidden = true;
+      return;
+    }
+    measurePanel.hidden = false;
+
+    const line = poiEl("div", "measure-line");
+    line.appendChild(poiEl("span", "measure-label", "מ־"));
+    line.appendChild(poiEl("strong", null, measure.from?.name || "בחרו נקודת מוצא"));
+    line.appendChild(poiEl("span", "measure-label", "אל־"));
+    line.appendChild(poiEl("strong", null, measure.to?.name || "בחרו יעד"));
+    measurePanel.appendChild(line);
+
+    const result = poiEl("div", "measure-result");
+    if (status.loading) result.appendChild(poiEl("span", "measure-loading", "מחשב מסלול…"));
+    else if (status.error) result.appendChild(poiEl("span", "measure-error", status.error));
+    else if (status.data) {
+      result.appendChild(
+        poiEl("span", "measure-time", `🚗 ${formatDuration(status.data.seconds)}`)
+      );
+      result.appendChild(poiEl("span", "measure-distance", formatDistance(status.data.km)));
+      if (status.data.straightLine) {
+        result.appendChild(poiEl("span", "measure-note", "קו אווירי – שירות הניווט לא זמין"));
+      }
+    } else {
+      result.appendChild(poiEl("span", "measure-note", 'בחרו "לכאן" במקום נוסף'));
+    }
+    measurePanel.appendChild(result);
+
+    const actions = poiEl("div", "measure-actions");
+    if (measure.from && measure.to) {
+      const dir = poiEl("a", "measure-link", "ניווט ב-Google Maps");
+      dir.href = directionsUrl(measure.from, measure.to);
+      dir.target = "_blank";
+      dir.rel = "noopener noreferrer";
+      actions.appendChild(dir);
+
+      const swap = poiEl("button", "measure-btn", "⇄ החלפת כיוון");
+      swap.type = "button";
+      swap.addEventListener("click", () => {
+        const from = measure.from;
+        measure.from = measure.to;
+        measure.to = from;
+        runMeasure();
+      });
+      actions.appendChild(swap);
+    }
+    const clear = poiEl("button", "measure-btn", "✕ ניקוי");
+    clear.type = "button";
+    clear.addEventListener("click", () => {
+      measure.from = null;
+      measure.to = null;
+      measureLayer.clearLayers();
+      renderMeasurePanel({});
+      map.closePopup();
+    });
+    actions.appendChild(clear);
+    measurePanel.appendChild(actions);
+  }
+
+  async function runMeasure() {
+    measureLayer.clearLayers();
+    if (measure.controller) measure.controller.abort();
+
+    if (!measure.from || !measure.to) {
+      renderMeasurePanel({});
+      map.closePopup();
+      return;
+    }
+
+    const key = `${measure.from.lat},${measure.from.lng}->${measure.to.lat},${measure.to.lng}`;
+    const drawRoute = (data) => {
+      if (data.path?.length) {
+        L.polyline(data.path, { color: "#7b2d3e", weight: 5, opacity: 0.9 }).addTo(measureLayer);
+      }
+      L.polyline([[measure.from.lat, measure.from.lng], [measure.to.lat, measure.to.lng]], {
+        color: "#7b2d3e",
+        weight: 2,
+        opacity: data.path?.length ? 0 : 0.7,
+        dashArray: "6 6",
+      }).addTo(measureLayer);
+      map.fitBounds(
+        data.path?.length
+          ? data.path
+          : [[measure.from.lat, measure.from.lng], [measure.to.lat, measure.to.lng]],
+        { padding: [60, 60] }
+      );
+    };
+
+    if (measure.cache[key]) {
+      renderMeasurePanel({ data: measure.cache[key] });
+      drawRoute(measure.cache[key]);
+      return;
+    }
+
+    renderMeasurePanel({ loading: true });
+    measure.controller = new AbortController();
+    try {
+      const data = await fetchDrivingRoute(measure.from, measure.to, measure.controller.signal);
+      measure.cache[key] = data;
+      renderMeasurePanel({ data });
+      drawRoute(data);
+    } catch (err) {
+      if (err.name === "AbortError") return;
+      console.warn("Routing failed", err);
+      /* גיבוי: מרחק אווירי והערכה גסה של 60 קמ"ש בכבישים הרריים */
+      const km = distanceKm(measure.from, measure.to);
+      const data = { km, seconds: (km / 60) * 3600, path: [], straightLine: true };
+      renderMeasurePanel({ data });
+      drawRoute(data);
+    }
+  }
+
+  const measureApi = {
+    from: () => measure.from,
+    to: () => measure.to,
+    setFrom(place) {
+      measure.from = measurePoint(place);
+      if (measure.to?.id === measure.from.id) measure.to = null;
+      runMeasure();
+      rebuildMarkers();
+    },
+    setTo(place) {
+      measure.to = measurePoint(place);
+      if (measure.from?.id === measure.to.id) measure.from = null;
+      runMeasure();
+      rebuildMarkers();
+    },
+  };
+
   function renderFilters() {
     filtersEl.innerHTML = "";
     const counts = {};
-    state.places.forEach((p) => {
+    state.places.filter(inScope).forEach((p) => {
       counts[p.category] = (counts[p.category] || 0) + 1;
     });
 
@@ -557,6 +801,25 @@ function initPlacesPage() {
       filtersEl.appendChild(chip);
     });
 
+    const offRouteCount = state.places.filter((p) => p.offRoute).length;
+    if (offRouteCount) {
+      const chip = poiEl("button", "place-chip place-chip-offroute");
+      chip.type = "button";
+      chip.classList.toggle("is-off", !state.showOffRoute);
+      chip.title = `מקומות במרחק של יותר מ-${OFF_ROUTE_KM} ק"מ מהמסלול שלנו`;
+      chip.appendChild(poiEl("span", "place-chip-icon", "🛣"));
+      chip.appendChild(
+        poiEl("span", null, `רחוקים מהמסלול (${offRouteCount})`)
+      );
+      chip.addEventListener("click", () => {
+        state.showOffRoute = !state.showOffRoute;
+        renderFilters();
+        rebuildMarkers();
+        renderList();
+      });
+      filtersEl.appendChild(chip);
+    }
+
     const all = poiEl("button", "place-chip place-chip-all");
     const everything = state.active.size === Object.keys(PLACE_CATEGORIES).length;
     all.type = "button";
@@ -577,7 +840,10 @@ function initPlacesPage() {
       return byCat !== 0 ? byCat : (a.he || a.en).localeCompare(b.he || b.en, "he");
     });
 
-    countEl.textContent = `${items.length} מתוך ${state.places.length} מקומות`;
+    const hidden = state.places.filter((p) => !inScope(p)).length;
+    countEl.textContent = hidden
+      ? `${items.length} מתוך ${state.places.length} מקומות · ${hidden} רחוקים מהמסלול ומוסתרים`
+      : `${items.length} מתוך ${state.places.length} מקומות`;
     listEl.innerHTML = "";
 
     if (!items.length) {
@@ -611,6 +877,11 @@ function initPlacesPage() {
       if (noteText) tags.appendChild(poiEl("span", "places-item-note", `💬 ${noteText}`));
       const videoCount = placeVideos(place).length;
       if (videoCount) tags.appendChild(poiEl("span", "places-item-video", `🎬 ${videoCount}`));
+      if (place.offRoute) {
+        tags.appendChild(
+          poiEl("span", "places-item-far", `🛣 ${Math.round(place.routeKm)} ק"מ מהמסלול`)
+        );
+      }
       if (tags.childNodes.length) button.appendChild(tags);
 
       button.addEventListener("click", () => select(place.id));
@@ -626,7 +897,7 @@ function initPlacesPage() {
     rebuildMarkers();
     renderList();
     if (!keepView) {
-      const pts = state.places.map((p) => [p.lat, p.lng]);
+      const pts = state.places.filter(inScope).map((p) => [p.lat, p.lng]);
       if (pts.length) map.fitBounds(pts, { padding: [40, 40] });
     }
   }

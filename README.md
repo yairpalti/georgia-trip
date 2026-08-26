@@ -35,6 +35,16 @@ Per place you can write a note and attach video links (TikTok, YouTube, Instagra
 
 Links open Google's own place page (reviews, photos, hours) via the `cid` place id imported with each pin — not a bare coordinate.
 
+### Travel time between two places
+
+Open any place and press **📏 מכאן**, then **📏 לכאן** on another — works for imported pins and for places you add yourself. A bar above the map shows driving time and distance, draws the road route, and links to Google Maps directions. Swap reverses the direction; results are cached per pair.
+
+Routing uses the public [OSRM](https://project-osrm.org/) demo server (no key, no quota promises). If it is unreachable the bar falls back to straight-line distance at an assumed 60 km/h and says so.
+
+### Places far from the route
+
+Pins more than **40 km** from the itinerary — the Kazbegi/Tbilisi cluster, Borjomi, and one balloon ride the data already marks as off-route — are hidden by default, so the map shows only what is near where the trip actually goes. The dashed **🛣 רחוקים מהמסלול** chip brings them back, and each one then shows its distance from the route. Distance is measured to the nearest point on the day-by-day route lines, not to a city centre. Places you add yourself are never hidden, however far away they are.
+
 ### Refreshing the list from Google Maps
 
 The import is **one-way**. Google has no public API for writing to a saved list, so places added on the website cannot be pushed back into Google Maps.
