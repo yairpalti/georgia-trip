@@ -2621,7 +2621,6 @@ img {
 /* All-places page */
 .places-intro {
   color: var(--text-muted);
-  max-width: 60ch;
   margin: -0.5rem 0 1.25rem;
 }
 
@@ -2634,7 +2633,6 @@ img {
   font-size: 0.85rem;
   line-height: 1.5;
   color: var(--text-muted);
-  max-width: 75ch;
 }
 
 .places-sync-note strong {
@@ -2709,6 +2707,48 @@ img {
 .places-add-btn:hover {
   background: var(--wine);
   color: var(--white);
+}
+
+.places-add-btn:disabled {
+  cursor: default;
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.places-add-btn:disabled:hover {
+  background: var(--white);
+  color: var(--wine);
+}
+
+.places-share-btn {
+  border-color: var(--gold);
+  color: #7a5f0a;
+}
+
+.places-share-btn:hover:not(:disabled) {
+  background: var(--gold);
+  color: var(--white);
+}
+
+.places-share-btn:disabled:hover {
+  background: var(--white);
+  color: #7a5f0a;
+}
+
+.places-share-status {
+  margin: -0.35rem 0 0.85rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 75ch;
+}
+
+.places-share-status.is-ok {
+  color: var(--text);
+}
+
+.places-share-status.is-warn {
+  color: var(--wine);
 }
 
 .places-filters {

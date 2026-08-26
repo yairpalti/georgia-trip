@@ -33,10 +33,9 @@
       </p>
 
       <p class="places-sync-note">
-        <strong>שימו לב:</strong> מקומות, הערות וסרטונים שמוסיפים כאן נשמרים בדפדפן שלכם בלבד –
-        הם <strong>לא</strong> נוספים לרשימת המקומות ב-Google Maps, ולא מופיעים אצל מי שפותח את
-        האתר במכשיר אחר. גם הכיוון ההפוך אינו אוטומטי: מקומות חדשים שמסמנים ב-Google Maps
-        נכנסים לעמוד הזה רק אחרי ריענון הרשימה בפקודה <code dir="ltr">python tools/refresh-places.py</code>
+        <strong>שימו לב:</strong> מקומות, הערות וסרטונים נשמרים בדפדפן שלכם בלבד –
+        לא ב-Google Maps ולא אצל מי שפותח את האתר במכשיר אחר. לשיתוף – <strong>✉️ שליחת התוספות ליאיר</strong>.
+        לעדכון הרשימה מ-Google Maps – <code dir="ltr">python tools/refresh-places.py</code>
       </p>
 
       <div class="places-toolbar">
@@ -46,7 +45,12 @@
                  placeholder="סינון לפי שם, אזור או תיאור…" aria-label="סינון המקומות ברשימה">
         </div>
         <button type="button" id="places-add" class="places-add-btn">➕ הוספת מקום חדש</button>
+        <button type="button" id="places-share" class="places-add-btn places-share-btn" disabled>
+          ✉️ שליחת התוספות ליאיר
+        </button>
       </div>
+
+      <p class="places-share-status" id="places-share-status" role="status" hidden></p>
 
       <div class="places-filters" id="places-filters"></div>
 

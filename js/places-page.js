@@ -526,6 +526,79 @@ function buildPlacePopup(place, notes, onNoteChange, measure) {
   return wrap;
 }
 
+/* ---------- שליחת התוספות במייל ---------- */
+
+const SHARE_EMAIL = "yairpalti@gmail.com";
+const SHARE_SUBJECT = "תוספות למקומות של הטיול בגיאורגיה";
+/*
+ * mailto ארוך נחתך אצל חלק מתוכנות המייל (בעיקר בווינדוס), ובעברית כל אות
+ * תופסת שישה תווים אחרי הקידוד – מעל האורך הזה עדיף מייל ריק והדבקה מהלוח.
+ */
+const SHARE_MAILTO_MAX = 5000;
+
+function shareName(place) {
+  return place.he || place.en || "מקום ללא שם";
+}
+
+/** כל מה שנוסף בדפדפן הזה: מקומות חדשים, הערות וסרטונים על מקומות קיימים */
+function collectUserAdditions(places) {
+  const byId = {};
+  places.forEach((place) => {
+    byId[place.id] = place;
+  });
+
+  const added = places.filter((place) => place.source === "user");
+
+  const savedNotes = loadPlaceNotes();
+  const notes = Object.keys(savedNotes)
+    .filter((id) => byId[id] && String(savedNotes[id]).trim())
+    .map((id) => ({ place: byId[id], text: String(savedNotes[id]).trim() }));
+
+  const savedVideos = loadAllPlaceVideos();
+  const videos = Object.keys(savedVideos)
+    .filter((id) => byId[id] && savedVideos[id]?.length)
+    .map((id) => ({ place: byId[id], urls: savedVideos[id].map((video) => video.url) }));
+
+  return { added, notes, videos, total: added.length + notes.length + videos.length };
+}
+
+function buildShareText({ added, notes, videos }) {
+  const lines = ["היי יאיר,", "", "אלה התוספות שלי לרשימת המקומות של הטיול:"];
+
+  if (added.length) {
+    lines.push("", `מקומות חדשים (${added.length}):`);
+    added.forEach((place) => {
+      lines.push(`• ${shareName(place)}`);
+      if (place.area) lines.push(`  ${place.area}`);
+      if (place.days?.length) lines.push(`  יום ${place.days.join(", ")}`);
+      if (place.note?.trim()) lines.push(`  הערה: ${place.note.trim()}`);
+      lines.push(`  ${googleMapsUrl(place.lat, place.lng, shareName(place))}`);
+    });
+  }
+
+  if (notes.length) {
+    lines.push("", `הערות על מקומות קיימים (${notes.length}):`);
+    notes.forEach(({ place, text }) => lines.push(`• ${shareName(place)}: ${text}`));
+  }
+
+  if (videos.length) {
+    lines.push("", `סרטונים (${videos.length}):`);
+    videos.forEach(({ place, urls }) => {
+      lines.push(`• ${shareName(place)}`);
+      urls.forEach((url) => lines.push(`  ${url}`));
+    });
+  }
+
+  lines.push("", "נשלח מעמוד המקומות של אתר הטיול.");
+  return lines.join("\n");
+}
+
+function shareMailtoUrl(body) {
+  const subject = `subject=${encodeURIComponent(SHARE_SUBJECT)}`;
+  const query = body ? `${subject}&body=${encodeURIComponent(body)}` : subject;
+  return `mailto:${SHARE_EMAIL}?${query}`;
+}
+
 function initPlacesPage() {
   const mapEl = document.getElementById("places-map");
   const listEl = document.getElementById("places-list");
@@ -634,6 +707,7 @@ function initPlacesPage() {
   function onNoteSaved() {
     state.notes = loadPlaceNotes();
     renderList();
+    refreshShareBtn();
   }
 
   function measurePoint(place) {
@@ -896,6 +970,7 @@ function initPlacesPage() {
     renderFilters();
     rebuildMarkers();
     renderList();
+    refreshShareBtn();
     if (!keepView) {
       const pts = state.places.filter(inScope).map((p) => [p.lat, p.lng]);
       if (pts.length) map.fitBounds(pts, { padding: [40, 40] });
@@ -907,6 +982,62 @@ function initPlacesPage() {
     rebuildMarkers();
     renderList();
   });
+
+  const shareBtn = document.getElementById("places-share");
+  const shareStatusEl = document.getElementById("places-share-status");
+
+  function setShareStatus(text, tone = "") {
+    if (!shareStatusEl) return;
+    shareStatusEl.textContent = text || "";
+    shareStatusEl.className = `places-share-status${tone ? ` is-${tone}` : ""}`;
+    shareStatusEl.hidden = !text;
+  }
+
+  function refreshShareBtn() {
+    if (!shareBtn) return;
+    const { total } = collectUserAdditions(state.places);
+    shareBtn.disabled = total === 0;
+    shareBtn.title = total
+      ? `${total} תוספות מהדפדפן הזה יישלחו ל-${SHARE_EMAIL}`
+      : "אין עדיין תוספות לשליחה";
+  }
+
+  async function shareAdditions() {
+    const additions = collectUserAdditions(state.places);
+    if (!additions.total) {
+      setShareStatus("עוד לא הוספתם מקומות, הערות או סרטונים בדפדפן הזה.", "warn");
+      return;
+    }
+
+    const text = buildShareText(additions);
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(text);
+      copied = true;
+    } catch (err) {
+      console.warn("Clipboard unavailable", err);
+    }
+
+    const mailto = shareMailtoUrl(text);
+    if (mailto.length > SHARE_MAILTO_MAX) {
+      window.location.href = shareMailtoUrl("");
+      setShareStatus(
+        copied
+          ? `הרשימה ארוכה מדי בשביל מייל אוטומטי, לכן נפתח מייל ריק ל-${SHARE_EMAIL} – והטקסט הועתק, מדביקים בגוף המייל.`
+          : `הרשימה ארוכה מדי בשביל מייל אוטומטי. נפתח מייל ריק ל-${SHARE_EMAIL} – מעתיקים לתוכו את התוספות מהעמוד.`,
+        "warn"
+      );
+      return;
+    }
+
+    window.location.href = mailto;
+    setShareStatus(
+      `נפתח מייל ל-${SHARE_EMAIL} עם ${additions.total} תוספות${copied ? " (הטקסט גם הועתק, למקרה שצריך להדביק)" : ""}. השליחה עצמה נעשית מתוכנת המייל.`,
+      "ok"
+    );
+  }
+
+  if (shareBtn) shareBtn.addEventListener("click", shareAdditions);
 
   const addBtn = document.getElementById("places-add");
   if (addBtn) {
