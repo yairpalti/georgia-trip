@@ -47,7 +47,7 @@ const EXTREME_ACTIVITIES = [
     relatedDays: [3],
     onRoute: true,
     description:
-      "Via Ferrata הראשון בקווקז – 230 מ', ~300 שלבים, עד 70 מ' גובה. שני מסלולים (קל ובינוני), שני מדריכים, מעבר במערות קצרות. 700 מ' הליכה מ-Sveri Adventure Camp. אחרי: בריכת נהר Sadzaliskevi. ערב: מלון בצ'יאתורה (Booking).",
+      "Via Ferrata הראשון בקווקז – 230 מ', ~300 שלבים, עד 70 מ' גובה. שני מסלולים (קל ובינוני), שני מדריכים, מעבר במערות קצרות. 700 מ' הליכה מ-Sveri Adventure Camp. אחרי: בריכת נהר Sadzaliskevi. ערב: Prime Heaven, צ'יאתורה.",
     website: "https://campingeorgia.ge/hiking/",
     websiteLabel: "Camp in Georgia – פרטי המסלול",
     price: "~€35 / ₾200 (Rafting in Kutaisi)",

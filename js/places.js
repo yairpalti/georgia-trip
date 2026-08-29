@@ -59,7 +59,7 @@ const N = {
   naberauliWines: fmt("יקב Naberauli", "Naberauli Wines", "ნაბერაულის მარანი"),
   raftingInKutaisi: fmt("Rafting in Kutaisi", "Rafting in Kutaisi", "Rafting in Kutaisi"),
   adventureCamping: fmt("Adventure Camping", "Adventure Camping (Rafting in Kutaisi)", "Adventure Camping"),
-  hotelChiatura: fmt("מלון בצ'יאתורה", "Hotel in Chiatura · Ilia Chavchavadze St.", "Hotel in Chiatura"),
+  primeHeaven: fmt("Prime Heaven", "Prime Heaven · Restaurant & Hotel", "Prime Heaven"),
   cottageMebirashi: fmt("Cottage Mebirashi", "Cottage Mebirashi", "Cottage Mebirashi"),
   whiteHotelGuesthouse: fmt("White Hotel Guesthouse", "White Hotel Guesthouse", "White Hotel Guesthouse"),
   mestiaAirbnb: fmt("Home in Mestia (Airbnb)", "Home in Mestia (Airbnb)", "Home in Mestia"),
@@ -83,5 +83,5 @@ const SVERI = {
   viaFerrata: { lat: 42.2422, lng: 43.2958 },
 };
 
-/** Chiatura – Hotel in Chiatura (Booking, רח' צ'אבצ'אvadze) */
-const CHIATURA_HOTEL = { lat: 42.290831, lng: 43.28909 };
+/** Prime Heaven – צ'יאתורה, רח' ჭავჭავაძე (Booking 25.9–26.9) */
+const PRIME_HEAVEN = { lat: 42.2893119, lng: 43.2880929 };

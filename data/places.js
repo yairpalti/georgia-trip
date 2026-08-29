@@ -21,7 +21,7 @@ const PLACE_CATEGORIES = {
 
 const TRIP_PLACES = [
   { id: "adventure-camping", he: "קמפינג Adventure", en: "Adventure Camping", category: "lodging", area: "אימרתי · טקיבולי", lat: 42.558234, lng: 42.851748, cid: "14158453649228106590" },
-  { id: "hotel-chiatura", he: "מלון בצ'יאתורה", en: "Hotel in Chiatura · Ilia Chavchavadze St.", category: "lodging", area: "צ'יאתורה · אימרתי", lat: 42.290831, lng: 43.28909, address: "ი. ჭავჭავაძის ქუჩა, 5500 Chiatʼura, Georgia", tip: "✅ Booking 25.9–26.9 · דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה" },
+  { id: "prime-heaven", he: "Prime Heaven", en: "Prime Heaven · Restaurant & Hotel", category: "lodging", area: "צ'יאתורה · אימרתי", lat: 42.2893119, lng: 43.2880929, address: "ი. ჭავჭავაძის ქუჩა, 5500 Chiatʼura, Georgia", tip: "✅ Booking 25.9–26.9 · דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה" },
   { id: "cottage-mebirashi", he: "Cottage Mebirashi", en: "Cottage Mebirashi", category: "lodging", area: "אמברולאורי · ראצ'ה", lat: 42.512732, lng: 43.144137, address: "Village Ukeshi, Racha, Ambrolauri 0417, גאורגיה" },
   { id: "white-hotel-guesthouse", he: "White Hotel Guesthouse", en: "White Hotel Guesthouse", category: "lodging", area: "זוגדידי", lat: 42.508974, lng: 41.870705, address: "Kostava Str. 70, Zugdidi 2100, גאורגיה", tip: "2 חדרים · 28.9–29.9" },
   { id: "mestia-airbnb", he: "Home in Mestia (Airbnb)", en: "Home in Mestia", category: "lodging", area: "מסטיה · סוואנטי", lat: 43.0432, lng: 42.719788, address: "21 Mestia, Samegrelo-Zemo Svaneti 3200, גאורגיה", tip: "29.9–1.10" },

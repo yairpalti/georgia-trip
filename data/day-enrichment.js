@@ -151,11 +151,11 @@ const DAY_ENRICHMENT = {
   3: {
     heroImage: "IMG.chiatura",
     summary:
-      "יום 3 (25.9) – ברכב עצמי. check-out מקוטאיסי בבוקר. אופציה א': קצחי, Urbex, Lia, מגווימבי → מלון בצ'יאתורה. אופציה ב': Via Ferrata ב-Sveri → מלון בצ'יאתורה.",
+      "יום 3 (25.9) – ברכב עצמי. check-out מקוטאיסי בבוקר. אופציה א': קצחי, Urbex, Lia, מגווימבי → Prime Heaven. אופציה ב': Via Ferrata ב-Sveri → Prime Heaven.",
     tips: [
       "check-out קוטאיסי בבוקר – כל הציוד ברכב",
       "Lunch at Lia – WhatsApp מראש! (אופציה א')",
-      "מלון בצ'יאתורה – check-in 25.9 מ-14:00 · check-out 26.9 עד 12:00",
+      "Prime Heaven – check-in 25.9 מ-14:00 · check-out 26.9 עד 12:00",
       "Booking: דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה",
       "Via Ferrata – Camp in Georgia ~€35 · +995 558 48 63 48",
       "או Rafting in Kutaisi – מפגש ב-Sveri: +995 595 41 15 47",
@@ -183,11 +183,11 @@ const DAY_ENRICHMENT = {
     ],
     extraHotels: [
       {
-        name: N.hotelChiatura,
+        name: N.primeHeaven,
         area: N.chiatura,
         nights: 1,
-        note: "✅ Booking 25.9–26.9 · check-in מ-14:00 · check-out עד 12:00 · דירוג 9.2 (Wonderful, 12 ביקורות) · מיקום 9.8 · WiFi · חניה · מסעדה · ი. ჭავჭავაძის ქუჩה",
-        link: "https://www.booking.com/hotel/ge/hotel-in-chiatura.html",
+        note: "✅ Booking 25.9–26.9 · Prime Heaven · check-in מ-14:00 · check-out עד 12:00 · דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה",
+        link: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A",
         image: "IMG.chiatura",
       },
     ],
