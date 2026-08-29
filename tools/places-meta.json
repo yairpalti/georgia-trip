@@ -71,6 +71,18 @@
   "category": "attraction",
   "area": "אימרתי"
  },
+ "Cottage Mebirashi": {
+  "id": "cottage-mebirashi",
+  "he": "Cottage Mebirashi",
+  "category": "lodging",
+  "area": "ראצ'ה"
+ },
+ "Eco-friendly Guesthouse Tea Gezruli": {
+  "id": "tea-gezruli",
+  "he": "Tea Gezruli Guesthouse",
+  "category": "lodging",
+  "area": "אימרתי · צ'יאתורה"
+ },
  "Chiatura": {
   "id": "chiatura",
   "he": "צ'יאתורה",

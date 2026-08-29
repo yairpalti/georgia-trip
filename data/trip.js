@@ -85,8 +85,9 @@ const ROUTE_SEGMENTS = [
       { name: N.chiatura, lat: 42.2989, lng: 43.289 },
       { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
       { name: N.sveriViaFerrata, lat: 42.352, lng: 43.268, optional: true },
+      { name: N.teaGezruli, lat: 42.288371, lng: 43.280149, optional: true },
     ],
-    places: [N.katskhiPillar, N.chiatura, N.lunchAtLia, N.mgvimevi, N.cottageMebirashi],
+    places: [N.katskhiPillar, N.chiatura, N.lunchAtLia, N.mgvimevi, N.cottageMebirashi, N.teaGezruli],
     distanceKm: 160,
     duration: "3–3.5h",
     overnight: N.cottageMebirashi,
@@ -350,7 +351,7 @@ const DAYS = [
         timeOfDay: "10:00–17:00",
         duration: "יום מלא",
         description:
-          "נסיעה ברכב ל-Sveri Adventure Camp (~110 ק\"מ / 2 ש' מקוטאיסי). Via Ferrata עם Rafting in Kutaisi במקום (₾200 – בלי הסעה). שחייה, BBQ. ערב: נסיעה ל-Cottage Mebirashi (~2 ש' מ-Sveri/צ'יאתורה).",
+          "נסיעה ברכב ל-Sveri Adventure Camp (~110 ק\"מ / 2 ש' מקוטאיסי). Via Ferrata עם Rafting in Kutaisi במקום (₾200 – בלי הסעה). שחייה, BBQ. ערב: לינה ב-Tea Gezruli (~30 דק' מ-Sveri) או נסיעה ל-Cottage Mebirashi (~2 ש').",
         link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
         linkLabel: N.raftingInKutaisi + " – Via Ferrata",
         image: "IMG.rafting",
@@ -368,11 +369,16 @@ const DAYS = [
       {
         name: "🧗 אופציה ב' – Via Ferrata ב-Sveri (רכב עצמי)",
         description:
-          "ברכב שלכם ל-Sveri. מפגש עם Rafting in Kutaisi – Via Ferrata, שחייה ו-BBQ. ערב: Cottage Mebirashi באמברולאורי. לתאם מראש: +995 595 41 15 47.",
-        overnight: N.cottageMebirashi,
+          "ברכב שלכם ל-Sveri. מפגש עם Rafting in Kutaisi – Via Ferrata, שחייה ו-BBQ. ערב: Tea Gezruli (קרוב ל-Sveri) או Cottage Mebirashi. לתאם מראש: +995 595 41 15 47.",
+        overnight: N.teaGezruli,
         link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
         linkLabel: N.raftingInKutaisi + " – Via Ferrata",
         image: "IMG.rafting",
+        tips: [
+          "לינה מומלצת: Tea Gezruli – ~30 דק' מ-Sveri",
+          "Booking: 25.9–26.9 · דירוג 9.4",
+          "1.3 ק\"מ הליכה מתחנת צ'יאתורה",
+        ],
       },
     ],
     restaurants: [
@@ -393,6 +399,14 @@ const DAYS = [
         link: "https://www.google.com/maps/search/Cottage+Mebirashi+Ambrolauri",
         image: "IMG.racha",
       },
+      {
+        name: N.teaGezruli,
+        area: `${N.chiatura} · 25 km`,
+        nights: 1,
+        note: "אופציה · אחרי Via Ferrata · דירוג 9.4 · 1.3 ק\"מ מתחנת צ'יאתורה",
+        link: "https://www.booking.com/hotel/ge/tea-gezruli-chiatura.en-gb.html",
+        image: "IMG.chiatura",
+      },
     ],
     mapPoints: [
       { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
@@ -401,6 +415,7 @@ const DAYS = [
       { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
       { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
       { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
+      { name: N.teaGezruli, lat: 42.288371, lng: 43.280149, optional: true },
     ],
     mapRoutes: [
       {
@@ -423,7 +438,7 @@ const DAYS = [
           { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
           { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
           { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
-          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
+          { name: N.teaGezruli, lat: 42.288371, lng: 43.280149, overnight: true },
         ],
       },
     ],

@@ -59,6 +59,7 @@ const N = {
   raftingInKutaisi: fmt("Rafting in Kutaisi", "Rafting in Kutaisi", "Rafting in Kutaisi"),
   adventureCamping: fmt("Adventure Camping", "Adventure Camping (Rafting in Kutaisi)", "Adventure Camping"),
   cottageMebirashi: fmt("Cottage Mebirashi", "Cottage Mebirashi", "Cottage Mebirashi"),
+  teaGezruli: fmt("Tea Gezruli Guesthouse", "Eco-friendly Guesthouse Tea Gezruli", "Tea Gezruli"),
   whiteHotelGuesthouse: fmt("White Hotel Guesthouse", "White Hotel Guesthouse", "White Hotel Guesthouse"),
   mestiaAirbnb: fmt("Home in Mestia (Airbnb)", "Home in Mestia (Airbnb)", "Home in Mestia"),
   satapliaReserve: fmt("שמורת סטאפליה", "Sataplia Nature Reserve", "სათაფლია"),

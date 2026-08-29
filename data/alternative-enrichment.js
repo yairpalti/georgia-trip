@@ -61,9 +61,9 @@ const ALTERNATIVE_ENRICHMENT = {
       ],
     },
     1: {
-      driving: "כ-110 ק\"מ ל-Sveri + ~30 דק' לצ'יאתורה · רכב עצמי",
+      driving: "כ-110 ק\"מ ל-Sveri + ~30 דק' ל-Tea Gezruli · רכב עצמי",
       description:
-        "אופציה ב' – Via Ferrata ב-Sveri Adventure Camp. ברכב שלכם (~2 ש' מקוטאיסי), מפגש עם Rafting in Kutaisi במקום (₾200 – ללא הסעה). שחייה, BBQ. ערב: לינה בצ'יאתורה.",
+        "אופציה ב' – Via Ferrata ב-Sveri Adventure Camp. ברכב שלכם (~2 ש' מקוטאיסי), מפגש עם Rafting in Kutaisi במקום (₾200 – ללא הסעה). שחייה, BBQ. ערב: לינה ב-Tea Gezruli – guesthouse אקולוגי, ~30 דק' מ-Sveri.",
       image: "IMG.rafting",
       link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
       linkLabel: "Rafting in Kutaisi – Via Ferrata",
@@ -71,7 +71,8 @@ const ALTERNATIVE_ENRICHMENT = {
         "Via Ferrata (₾200) · +995 595 41 15 47 · ללא הסעה הלוך-חזור",
         "בגד ספורט, נעליים סגורות",
         "עצירה בקצחי בדרך (~15 דק')",
-        "Sveri → מלון בצ'יאתורה ~30 דק'",
+        "Sveri → Tea Gezruli ~30 דק'",
+        "Booking: 25.9–26.9 · דירוג 9.4 · 1.3 ק\"מ מתחנת צ'יאתורה",
       ],
       activities: [
         {
@@ -102,12 +103,12 @@ const ALTERNATIVE_ENRICHMENT = {
           image: "IMG.supra",
         },
         {
-          name: fmt("נסיעה ללינה בצ'יאתורה", "Drive to Chiatura hotel", "ჭიათურა"),
+          name: N.teaGezruli,
           timeOfDay: "16:30–17:30",
           duration: "~30 דק'",
-          description: "Sveri → מלון באזור צ'יאתורה. מוכנים ליום 4 – יציאה לראצ'ה.",
-          link: "https://www.google.com/maps/search/hotels+Chiatura+Georgia",
-          linkLabel: N.chiatura,
+          description: "Sveri → Tea Gezruli Guesthouse (25 km from Chiatura). דירוג 9.4 · 1.3 ק\"מ הליכה מתחנת צ'יאתורה · גן, מרפסה, ארוחת בוקר. מוכנים ליום 4 – יציאה לראצ'ה.",
+          link: "https://www.booking.com/hotel/ge/tea-gezruli-chiatura.en-gb.html",
+          linkLabel: N.teaGezruli,
           image: "IMG.chiatura",
         },
       ],

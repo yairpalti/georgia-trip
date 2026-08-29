@@ -156,7 +156,7 @@ const DAY_ENRICHMENT = {
       "check-out קוטאיסי בבוקר – כל הציוד ברכב",
       "Lunch at Lia – WhatsApp מראש! (אופציה א')",
       "Via Ferrata – מפגש ב-Sveri, בלי הסעה: +995 595 41 15 47",
-      "Sveri → צ'יאתורה ~30 דק' ללינה",
+      "Sveri → Tea Gezruli ~30 דק' ללינה (אופציה Via Ferrata)",
       "רכבל Sanatorium – לבדוק שעות ובטיחות",
     ],
     activityExtras: [
@@ -187,6 +187,14 @@ const DAY_ENRICHMENT = {
         note: "✅ מאושר 25.9–26.9 · Village Ukeshi · $174",
         link: "https://www.google.com/maps/search/Cottage+Mebirashi+Ambrolauri",
         image: "IMG.racha",
+      },
+      {
+        name: N.teaGezruli,
+        area: `${N.chiatura} · Gezruli`,
+        nights: 1,
+        note: "אופציה · אחרי Via Ferrata · דירוג 9.4 · 1.3 ק\"מ מתחנת צ'יאתורה",
+        link: "https://www.booking.com/hotel/ge/tea-gezruli-chiatura.en-gb.html",
+        image: "IMG.chiatura",
       },
     ],
   },

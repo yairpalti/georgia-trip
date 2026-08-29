@@ -22,11 +22,11 @@ const EXTREME_ACTIVITIES = [
     region: "אימרתי / צ'יאתורה",
     difficulty: "בינוני",
     season: "אפריל–אוקטובר",
-    duration: "יום מלא · רכב עצמי · לינה בצ'יאתורה",
+    duration: "יום מלא · רכב עצמי · לינה ב-Tea Gezruli",
     relatedDays: [3],
     onRoute: true,
     description:
-      "Via Ferrata הראשון בקווקז – Sveri Adventure Camp. ברכב שלכם (~2 ש' מקוטאיסי), מפגש עם Rafting in Kutaisi במקום (₾200, ללא הסעה). שחייה, BBQ. ערב: לינה בצ'יאתורה (~30 דק'). יום 4 – המשך לראצ'ה.",
+      "Via Ferrata הראשון בקווקז – Sveri Adventure Camp. ברכב שלכם (~2 ש' מקוטאיסי), מפגש עם Rafting in Kutaisi במקום (₾200, ללא הסעה). שחייה, BBQ. ערב: Tea Gezruli Guesthouse (~30 דק' מ-Sveri). יום 4 – המשך לראצ'ה.",
     website: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
     websiteLabel: "Rafting in Kutaisi – Via Ferrata (₾200)",
     price: "₾200",
