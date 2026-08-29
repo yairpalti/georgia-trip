@@ -34,7 +34,9 @@ function isOvernightPlace(place, overnightName) {
 
 function segmentPath(segment) {
   const path = [[segment.from.lat, segment.from.lng]];
-  (segment.waypoints || []).forEach((wp) => path.push([wp.lat, wp.lng]));
+  (typeof routeWaypoints === "function" ? routeWaypoints(segment) : segment.waypoints || []).forEach(
+    (wp) => path.push([wp.lat, wp.lng])
+  );
   if (!segment.loop || segment.from.lat !== segment.to.lat || segment.from.lng !== segment.to.lng) {
     path.push([segment.to.lat, segment.to.lng]);
   } else if (segment.waypoints?.length) {
@@ -107,12 +109,126 @@ function createOvernightIcon() {
   });
 }
 
-function createPlaceIcon(color) {
+const EXTREME_LAYER_STORAGE_KEY = "georgia-trip-show-extreme";
+
+function getStoredExtremeVisible() {
+  try {
+    return localStorage.getItem(EXTREME_LAYER_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function storeExtremeVisible(visible) {
+  try {
+    localStorage.setItem(EXTREME_LAYER_STORAGE_KEY, visible ? "1" : "0");
+  } catch {
+    /* ignore */
+  }
+}
+
+function bindExtremeMeasurePopup(layer, activity, cat, measure, popupRegistry) {
+  const place = createMeasurePlace(activity, activity.name);
+  const build = () => {
+    const wrap = poiEl("div", "poi-popup");
+    if (typeof stopKeyPropagation === "function") stopKeyPropagation(wrap);
+    wrap.appendChild(poiEl("strong", null, activity.name));
+    wrap.appendChild(poiEl("div", "poi-popup-meta", `${cat.icon} ${cat.label}`));
+    if (typeof appendDistanceFromUser === "function") {
+      appendDistanceFromUser(wrap, activity.lat, activity.lng);
+    }
+    const link = poiEl("a", "external-link poi-popup-link", "פרטים בעמוד האקסטרים →");
+    link.href = "extreme.html";
+    wrap.appendChild(link);
+    if (measure) wrap.appendChild(buildMeasureButtons(place, measure));
+    return wrap;
+  };
+  layer.bindPopup(build);
+  popupRegistry?.push({ layer, build });
+}
+
+/**
+ * Extreme activity markers – shared by the extreme page and optional overlay on the main map.
+ */
+function attachExtremeLayer(map, options) {
+  const {
+    activities,
+    categories,
+    measure,
+    popupRegistry,
+    visible = false,
+    onSelect,
+    useLayerGroup = true,
+  } = options;
+
+  const layerGroup = useLayerGroup ? L.layerGroup() : null;
+  const markerById = {};
+
+  activities.forEach((activity) => {
+    const cat = categories[activity.category] || { color: "#666", icon: "📍" };
+    const latlng = [activity.lat, activity.lng];
+    const marker = L.marker(latlng, {
+      icon: createExtremeIcon(cat.color, cat.icon, false),
+    });
+
+    if (onSelect) marker.on("click", () => onSelect(activity));
+    bindExtremeMeasurePopup(marker, activity, cat, measure, popupRegistry);
+    marker.bindTooltip(activity.name, {
+      permanent: false,
+      direction: "top",
+      offset: [0, -18],
+      className: "extreme-tooltip",
+    });
+
+    if (layerGroup) layerGroup.addLayer(marker);
+    else marker.addTo(map);
+
+    markerById[activity.id] = { marker, activity, cat };
+  });
+
+  if (layerGroup && visible) layerGroup.addTo(map);
+
+  return {
+    layerGroup,
+    markerById,
+    setVisible(show) {
+      if (!layerGroup) return;
+      if (show) layerGroup.addTo(map);
+      else map.removeLayer(layerGroup);
+      storeExtremeVisible(show);
+    },
+    isVisible() {
+      return layerGroup ? map.hasLayer(layerGroup) : false;
+    },
+    onVisibilityChange: null,
+    setVisibleIds(ids) {
+      const visibleIds = new Set(ids);
+      Object.entries(markerById).forEach(([aid, { marker }]) => {
+        const show = visibleIds.has(aid);
+        if (layerGroup) {
+          if (show && !layerGroup.hasLayer(marker)) layerGroup.addLayer(marker);
+          if (!show && layerGroup.hasLayer(marker)) layerGroup.removeLayer(marker);
+        } else if (show) marker.addTo(map);
+        else map.removeLayer(marker);
+      });
+    },
+    highlight(id) {
+      Object.entries(markerById).forEach(([aid, { marker, cat }]) => {
+        const selected = aid === id;
+        marker.setIcon(createExtremeIcon(cat.color, cat.icon, selected));
+        if (selected) map.panTo(marker.getLatLng(), { animate: true });
+      });
+    },
+  };
+}
+
+function createPlaceIcon(color, optional) {
+  const optionalClass = optional ? " place-marker-optional" : "";
   return L.divIcon({
     className: "place-marker-wrap",
-    html: `<div class="place-marker" style="background:${color}"></div>`,
-    iconSize: [12, 12],
-    iconAnchor: [6, 6],
+    html: `<div class="place-marker${optionalClass}" style="background:${color}"></div>`,
+    iconSize: optional ? [14, 14] : [12, 12],
+    iconAnchor: optional ? [7, 7] : [6, 6],
   });
 }
 
@@ -273,7 +389,79 @@ async function drawRouteLines(map, lineLayer, segments, dayColors, mode, ui, but
   }
 }
 
-function initRouteMap(containerId, segments, dayColors) {
+function cloneSegmentsForMap(segments) {
+  return segments.map((s) => ({
+    ...s,
+    from: { ...s.from },
+    to: { ...s.to },
+    waypoints: (s.waypoints || []).map((wp) => ({ ...wp })),
+  }));
+}
+
+function collectSegmentPoints(segments) {
+  const points = [];
+  segments.forEach((seg) => {
+    [seg.from, seg.to, ...(seg.waypoints || [])].forEach((p) => {
+      if (p?.lat != null && p?.lng != null) points.push(p);
+    });
+  });
+  return points;
+}
+
+function distanceMeters(a, b) {
+  return L.latLng(a.lat, a.lng).distanceTo(L.latLng(b.lat, b.lng));
+}
+
+/** True when a map point is already covered by the route (within ~900 m). */
+function isNearRoutePoint(lat, lng, routePoints, thresholdM = 900) {
+  return routePoints.some((p) => distanceMeters({ lat, lng }, p) < thresholdM);
+}
+
+function nearestSegmentDay(lat, lng, segments) {
+  let bestDay = segments[0]?.day ?? 1;
+  let bestDist = Infinity;
+  segments.forEach((seg) => {
+    collectSegmentPoints([seg]).forEach((p) => {
+      const d = distanceMeters({ lat, lng }, p);
+      if (d < bestDist) {
+        bestDist = d;
+        bestDay = seg.day;
+      }
+    });
+  });
+  return bestDay;
+}
+
+/** Add extreme activities missing from route waypoints as optional markers (no route bend). */
+function mergeExtremeWaypoints(segments, activities) {
+  const merged = cloneSegmentsForMap(segments);
+  const routePoints = collectSegmentPoints(merged);
+
+  (activities || []).forEach((activity) => {
+    if (activity.lat == null || activity.lng == null) return;
+    if (isNearRoutePoint(activity.lat, activity.lng, routePoints)) return;
+
+    const day =
+      activity.relatedDays?.length > 0
+        ? activity.relatedDays[0]
+        : nearestSegmentDay(activity.lat, activity.lng, merged);
+    const seg = merged.find((s) => s.day === day);
+    if (!seg) return;
+
+    seg.waypoints.push({
+      name: activity.name,
+      lat: activity.lat,
+      lng: activity.lng,
+      optional: true,
+      extremeId: activity.id,
+    });
+    routePoints.push({ lat: activity.lat, lng: activity.lng });
+  });
+
+  return merged;
+}
+
+function initRouteMap(containerId, segments, dayColors, mapOptions = {}) {
   const map = L.map(containerId, { scrollWheelZoom: true }).setView([42.3, 42.5], 7);
 
   addBaseTiles(map);
@@ -284,26 +472,77 @@ function initRouteMap(containerId, segments, dayColors) {
   const measure = createMapMeasure(map, popupRegistry);
   const lineLayer = L.layerGroup().addTo(map);
 
-  segments.forEach((segment) => {
+  const activities = mapOptions.activities || [];
+  const categories = mapOptions.categories || null;
+  const segmentsToRender =
+    activities.length > 0 ? mergeExtremeWaypoints(segments, activities) : segments;
+  const routePointsAfterMerge = collectSegmentPoints(segmentsToRender);
+  const overlayActivities = activities.filter(
+    (a) => !isNearRoutePoint(a.lat, a.lng, routePointsAfterMerge)
+  );
+
+  let extremeApi = null;
+  if (overlayActivities.length && categories) {
+    extremeApi = attachExtremeLayer(map, {
+      activities: overlayActivities,
+      categories,
+      measure,
+      popupRegistry,
+      visible: getStoredExtremeVisible(),
+      useLayerGroup: true,
+    });
+  }
+
+  segmentsToRender.forEach((segment) => {
     const color = dayColors[segment.day] || "#666";
     const path = segmentPath(segment);
     path.forEach((pt) => allBounds.push(pt));
 
     (segment.waypoints || []).forEach((wp) => {
-      const marker = L.marker([wp.lat, wp.lng], { icon: createPlaceIcon(color) }).addTo(map);
-      bindTripMeasurePopup(
-        marker,
-        wp,
-        enPlace(wp.name),
-        `Day ${segment.day}`,
-        measure,
-        popupRegistry
-      );
-      marker.bindTooltip(enPlace(wp.name), {
+      if (wp.optional) allBounds.push([wp.lat, wp.lng]);
+      const tooltip = wp.extremeId
+        ? enPlace(wp.name)
+        : wp.optional
+          ? `${enPlace(wp.name)} · Option B`
+          : enPlace(wp.name);
+      const marker = L.marker([wp.lat, wp.lng], {
+        icon: createPlaceIcon(color, wp.optional),
+      }).addTo(map);
+      const popupSubtitle = wp.extremeId
+        ? `Day ${segment.day} · Extreme`
+        : wp.optional
+          ? `Day ${segment.day} · Option B`
+          : `Day ${segment.day}`;
+      if (wp.extremeId && categories) {
+        const activity = activities.find((a) => a.id === wp.extremeId);
+        const cat = activity ? categories[activity.category] : null;
+        if (activity && cat) {
+          bindExtremeMeasurePopup(marker, activity, cat, measure, popupRegistry);
+        } else {
+          bindTripMeasurePopup(
+            marker,
+            wp,
+            enPlace(wp.name),
+            popupSubtitle,
+            measure,
+            popupRegistry
+          );
+        }
+      } else {
+        bindTripMeasurePopup(
+          marker,
+          wp,
+          enPlace(wp.name),
+          popupSubtitle,
+          measure,
+          popupRegistry
+        );
+      }
+      marker.bindTooltip(tooltip, {
         permanent: true,
         direction: "top",
         className: "place-tooltip",
-        offset: [0, -6],
+        offset: [0, wp.optional ? -8 : -6],
       });
     });
 
@@ -361,11 +600,24 @@ function initRouteMap(containerId, segments, dayColors) {
     map.fitBounds(allBounds, { padding: [50, 50] });
   }
 
-  mountRouteModeBar(containerId, (mode, ui, buttons) => {
-    drawRouteLines(map, lineLayer, segments, dayColors, mode, ui, buttons);
-  });
+  if (extremeApi) {
+    extremeApi.onVisibilityChange = (show) => {
+      document.getElementById("map-legend-extreme")?.toggleAttribute("hidden", !show);
+    };
+  }
 
-  renderMapLegend(segments, dayColors);
+  mountRouteModeBar(
+    containerId,
+    (mode, ui, buttons) => {
+      drawRouteLines(map, lineLayer, segmentsToRender, dayColors, mode, ui, buttons);
+    },
+    extremeApi
+  );
+
+  renderMapLegend(segments, dayColors, {
+    extremeCategories: categories,
+    showExtremeLegend: extremeApi?.isVisible(),
+  });
   tameWheelZoom(map);
   const poiApi = attachPoiLayer(map, { measureApi: measure });
   measure?.onPopupRefresh?.(() => {
@@ -373,7 +625,7 @@ function initRouteMap(containerId, segments, dayColors) {
       if (marker.isPopupOpen()) marker.setPopupContent(buildPoiPopup(marker.poi, measure));
     });
   });
-  return map;
+  return { map, extremeApi };
 }
 
 function createExtremeIcon(color, icon, selected) {
@@ -408,33 +660,17 @@ function initExtremeMap(containerId, options) {
     });
   }
 
-  activities.forEach((activity) => {
-    const cat = categories[activity.category] || { color: "#666", icon: "📍" };
-    const latlng = [activity.lat, activity.lng];
-    bounds.push(latlng);
-
-    const marker = L.marker(latlng, {
-      icon: createExtremeIcon(cat.color, cat.icon, false),
-    }).addTo(map);
-
-    marker.on("click", () => onSelect(activity));
-    bindTripMeasurePopup(
-      marker,
-      { ...activity, id: activity.id },
-      activity.name,
-      cat.label || "פעילות",
-      measure,
-      popupRegistry
-    );
-    marker.bindTooltip(activity.name, {
-      permanent: false,
-      direction: "top",
-      offset: [0, -18],
-      className: "extreme-tooltip",
-    });
-
-    markerById[activity.id] = { marker, activity, cat };
+  const extremeLayer = attachExtremeLayer(map, {
+    activities,
+    categories,
+    measure,
+    popupRegistry,
+    visible: true,
+    onSelect,
+    useLayerGroup: false,
   });
+  Object.assign(markerById, extremeLayer.markerById);
+  activities.forEach((a) => bounds.push([a.lat, a.lng]));
 
   if (bounds.length) {
     map.fitBounds(bounds, { padding: [48, 48] });
@@ -451,28 +687,27 @@ function initExtremeMap(containerId, options) {
   return {
     map,
     markerById,
-    highlight(id) {
-      Object.entries(markerById).forEach(([aid, { marker, cat }]) => {
-        const selected = aid === id;
-        marker.setIcon(createExtremeIcon(cat.color, cat.icon, selected));
-        if (selected) {
-          map.panTo(marker.getLatLng(), { animate: true });
-        }
-      });
-    },
-    setVisible(ids) {
-      const visible = new Set(ids);
-      Object.entries(markerById).forEach(([aid, { marker }]) => {
-        if (visible.has(aid)) marker.addTo(map);
-        else map.removeLayer(marker);
-      });
-    },
+    highlight: (id) => extremeLayer.highlight(id),
+    setVisible: (ids) => extremeLayer.setVisibleIds(ids),
   };
 }
 
-function renderMapLegend(segments, dayColors) {
+function renderMapLegend(segments, dayColors, legendOptions = {}) {
   const legend = document.getElementById("map-legend");
   if (!legend) return;
+
+  const { extremeCategories, showExtremeLegend } = legendOptions;
+  const extremeLegendHtml = extremeCategories
+    ? `<div class="map-legend-extreme" id="map-legend-extreme"${showExtremeLegend ? "" : " hidden"}>
+        <span class="map-legend-extreme-title">🧗 אקסטרים:</span>
+        ${Object.entries(extremeCategories)
+          .map(
+            ([, cat]) =>
+              `<span class="map-legend-extreme-cat" style="--cat-color:${cat.color}">${cat.icon} ${cat.label}</span>`
+          )
+          .join("")}
+      </div>`
+    : "";
 
   legend.innerHTML = `
     <div class="map-legend-grid">
@@ -492,9 +727,12 @@ function renderMapLegend(segments, dayColors) {
         )
         .join("")}
     </div>
+    ${extremeLegendHtml}
     <div class="map-legend-notes">
       <span><span class="place-marker inline"></span> מקומות בדרך</span>
+      <span><span class="place-marker inline place-marker-optional"></span> אקסטרים / אופציות</span>
       <span>🏨 לינה</span>
+      ${extremeCategories ? "<span>🧗 «פעילויות אקסטרים» – שכבה נוספת לנקודות שלא על המסלול</span>" : ""}
       <span>📍 לחצו 📍 בפינת המפה למיקום שלכם + מרחק לנקודות</span>
       <span>📏 לחצו על נקודה → 📏 מכאן / 📏 לכאן לחישוב זמן ומרחק</span>
       <span>📐 / 🛣 החליפו בין קווים ישירים למסלול כביש מעל המפה</span>

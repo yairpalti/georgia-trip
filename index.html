@@ -76,6 +76,7 @@
   <script src="js/places.js"></script>
   <script src="data/images.js"></script>
   <script src="data/trip.js"></script>
+  <script src="data/extreme-activities.js"></script>
   <script src="data/day-enrichment.js"></script>
   <script src="data/activity-details.js"></script>
   <script src="data/alternative-enrichment.js"></script>
@@ -90,7 +91,10 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       renderDaysGrid();
-      initRouteMap("route-map", ROUTE_SEGMENTS, DAY_COLORS);
+      initRouteMap("route-map", ROUTE_SEGMENTS, DAY_COLORS, {
+        activities: typeof EXTREME_ACTIVITIES !== "undefined" ? EXTREME_ACTIVITIES : [],
+        categories: typeof EXTREME_CATEGORIES !== "undefined" ? EXTREME_CATEGORIES : null,
+      });
 
       const tbody = document.getElementById("accommodation-body");
       tbody.innerHTML = LOGISTICS.accommodationSummary

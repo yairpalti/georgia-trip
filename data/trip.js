@@ -84,6 +84,7 @@ const ROUTE_SEGMENTS = [
       { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
       { name: N.chiatura, lat: 42.2989, lng: 43.289 },
       { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
+      { name: N.sveriViaFerrata, lat: 42.352, lng: 43.268, optional: true },
     ],
     places: [N.katskhiPillar, N.chiatura, N.lunchAtLia, N.mgvimevi, N.cottageMebirashi],
     distanceKm: 160,

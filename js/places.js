@@ -27,6 +27,7 @@ const N = {
   katskhiPillar: fmt("עמוד קצחי", "Katskhi Pillar", "კაცხის სვეტი"),
   chiatura: fmt("צ'יאתורה", "Chiatura", "ჭიათურა"),
   mgvimevi: fmt("מנזר מגווימבי", "Mgvimevi Convent", "მღვიმევის მონასტერი"),
+  sveriViaFerrata: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "სვერი – Via Ferrata"),
 
   rioniRiver: fmt("נהר הריוני", "Rioni River", "რიონი"),
   shaoriReservoir: fmt("מאגר שאורי", "Shaori Reservoir", "შაორის ტბა"),

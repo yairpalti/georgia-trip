@@ -19,9 +19,13 @@ function storeRouteMode(mode) {
   }
 }
 
+function routeWaypoints(segment) {
+  return (segment.waypoints || []).filter((wp) => !wp.optional);
+}
+
 function segmentToPoints(segment) {
   const pts = [{ lat: segment.from.lat, lng: segment.from.lng }];
-  (segment.waypoints || []).forEach((wp) => pts.push({ lat: wp.lat, lng: wp.lng }));
+  routeWaypoints(segment).forEach((wp) => pts.push({ lat: wp.lat, lng: wp.lng }));
   const sameEnd =
     segment.loop &&
     segment.from.lat === segment.to.lat &&
@@ -132,9 +136,10 @@ function createRouteModeUi() {
 
 /**
  * Mount direct / roads toggle above a map container.
+ * @param {object|null} extremeApi – optional layer from attachExtremeLayer (main map)
  * @returns {{ getMode: Function } | null}
  */
-function mountRouteModeBar(mapContainerId, onModeChange) {
+function mountRouteModeBar(mapContainerId, onModeChange, extremeApi) {
   const mapEl = document.getElementById(mapContainerId);
   if (!mapEl?.parentNode) return null;
 
@@ -142,6 +147,14 @@ function mountRouteModeBar(mapContainerId, onModeChange) {
   if (existing?.classList?.contains("route-mode-bar")) {
     existing.remove();
   }
+
+  const showExtreme = extremeApi?.isVisible?.() ?? false;
+  const extremeHtml = extremeApi
+    ? `<span class="route-mode-divider" aria-hidden="true"></span>
+       <button type="button" class="route-mode-btn map-extreme-toggle${showExtreme ? " active" : ""}" aria-pressed="${showExtreme}">
+         🧗 פעילויות אקסטרים
+       </button>`
+    : "";
 
   const bar = document.createElement("div");
   bar.className = "route-mode-bar";
@@ -151,35 +164,47 @@ function mountRouteModeBar(mapContainerId, onModeChange) {
       <button type="button" class="route-mode-btn" data-mode="direct">📐 קווים ישירים</button>
       <button type="button" class="route-mode-btn" data-mode="roads">🛣 מסלול כביש</button>
     </div>
+    ${extremeHtml}
     <span class="route-mode-status" hidden></span>
   `;
   mapEl.parentNode.insertBefore(bar, mapEl);
 
   const ui = createRouteModeUi();
   ui.bindStatus(bar.querySelector(".route-mode-status"));
-  const buttons = bar.querySelectorAll(".route-mode-btn");
+  const routeButtons = bar.querySelectorAll(".route-mode-btn[data-mode]");
   let mode = getStoredRouteMode();
 
-  function syncButtons() {
-    buttons.forEach((btn) => {
+  function syncRouteButtons() {
+    routeButtons.forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.mode === mode);
     });
   }
 
-  syncButtons();
+  syncRouteButtons();
 
-  buttons.forEach((btn) => {
+  routeButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const next = btn.dataset.mode;
       if (next === mode) return;
       mode = next;
       storeRouteMode(mode);
-      syncButtons();
-      onModeChange(mode, ui, buttons);
+      syncRouteButtons();
+      onModeChange(mode, ui, routeButtons);
     });
   });
 
-  onModeChange(mode, ui, buttons);
+  const extremeBtn = bar.querySelector(".map-extreme-toggle");
+  if (extremeBtn && extremeApi) {
+    extremeBtn.addEventListener("click", () => {
+      const next = !extremeApi.isVisible();
+      extremeApi.setVisible(next);
+      extremeBtn.classList.toggle("active", next);
+      extremeBtn.setAttribute("aria-pressed", String(next));
+      extremeApi.onVisibilityChange?.(next);
+    });
+  }
+
+  onModeChange(mode, ui, routeButtons);
 
   return { getMode: () => mode };
 }

@@ -324,6 +324,55 @@ img {
   cursor: wait;
 }
 
+.route-mode-divider {
+  width: 1px;
+  height: 1.5rem;
+  background: color-mix(in srgb, var(--text-muted) 22%, transparent);
+  flex-shrink: 0;
+}
+
+.map-extreme-toggle.active {
+  background: color-mix(in srgb, var(--gold) 18%, var(--white));
+  color: var(--forest);
+}
+
+.map-legend-extreme {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  padding: 0.65rem 1rem;
+  margin-top: 0.5rem;
+  background: color-mix(in srgb, var(--cream-dark) 70%, var(--white));
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+}
+
+.map-legend-extreme[hidden] {
+  display: none !important;
+}
+
+.map-legend-extreme-title {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.map-legend-extreme-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--cat-color, #666) 12%, var(--white));
+  border: 1px solid color-mix(in srgb, var(--cat-color, #666) 35%, transparent);
+}
+
+.poi-popup-link {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+}
+
 .route-mode-status {
   font-size: 0.78rem;
   color: var(--text-muted);
@@ -559,12 +608,24 @@ img {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
+.place-marker-optional {
+  width: 12px;
+  height: 12px;
+  border-style: dashed;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.95), 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
 .place-marker.inline {
   display: inline-block;
   background: var(--forest);
   width: 10px;
   height: 10px;
   vertical-align: middle;
+}
+
+.place-marker.inline.place-marker-optional {
+  border-style: dashed;
+  background: var(--gold);
 }
 
 .place-tooltip {
@@ -3008,6 +3069,10 @@ img {
   box-shadow: var(--shadow);
   padding: 0.6rem 1rem;
   margin-bottom: 1.25rem;
+}
+
+.measure-panel[hidden] {
+  display: none !important;
 }
 
 .map-section > .measure-panel {
