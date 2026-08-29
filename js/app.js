@@ -1370,7 +1370,7 @@ function renderExtremePage() {
       ${renderKutaisiRaftingGuide()}
       <section class="section">
         <h2 class="section-title">🗺 מפה – מסלול + אטרקציות</h2>
-        <p class="extreme-map-intro">קווי המסלול הצבעוניים (מקווקווים) = ימי הטיול. הנקודות הצבעוניות = פעילויות אקסטרים לפי סוג.</p>
+        <p class="extreme-map-intro">קווי המסלול = ימי הטיול (📐 קווים ישירים / 🛣 כביש). הנקודות הצבעוניות = פעילויות אקסטרים. לחצו על נקודה → 📏 מכאן / 📏 לכאן.</p>
         <div class="extreme-filters" id="extreme-filters">
           ${Object.entries(categories)
             .map(

@@ -79,10 +79,11 @@ const ROUTE_SEGMENTS = [
   {
     day: 3,
     from: { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
-    to: { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+    to: { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
     waypoints: [
       { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
-      { name: N.mgvimevi, lat: 42.2694, lng: 43.0456 },
+      { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+      { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
     ],
     places: [N.katskhiPillar, N.chiatura, N.lunchAtLia, N.mgvimevi, N.cottageMebirashi],
     distanceKm: 160,
@@ -92,7 +93,7 @@ const ROUTE_SEGMENTS = [
   {
     day: 4,
     from: { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
-    to: { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
+    to: { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484, overnight: true },
     waypoints: [
       { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
     ],
@@ -393,7 +394,7 @@ const DAYS = [
       { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
       { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
       { name: N.chiatura, lat: 42.2989, lng: 43.289 },
-      { name: N.mgvimevi, lat: 42.2694, lng: 43.0456 },
+      { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
       { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
       { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
     ],
@@ -406,8 +407,8 @@ const DAYS = [
           { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
           { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
           { name: N.chiatura, lat: 42.2989, lng: 43.289 },
-          { name: N.mgvimevi, lat: 42.2694, lng: 43.0456 },
-          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
+          { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
+          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
         ],
       },
       {
@@ -418,7 +419,7 @@ const DAYS = [
           { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
           { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
           { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
-          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
+          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
         ],
       },
     ],

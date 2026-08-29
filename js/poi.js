@@ -186,11 +186,12 @@ function stopKeyPropagation(node) {
   L.DomEvent.on(node, "keydown keyup keypress", L.DomEvent.stopPropagation);
 }
 
-function buildPoiPopup(poi) {
+function buildPoiPopup(poi, measure) {
   const wrap = poiEl("div", "poi-popup");
   stopKeyPropagation(wrap);
   wrap.appendChild(poiEl("strong", null, poi.name));
   if (poi.address) wrap.appendChild(poiEl("div", "poi-popup-meta", poi.address));
+  if (typeof appendDistanceFromUser === "function") appendDistanceFromUser(wrap, poi.lat, poi.lng);
   if (poi.dayId) wrap.appendChild(poiEl("div", "poi-popup-day", `נוספה ממפת יום ${poi.dayId}`));
 
   const categorySelect = buildCategorySelect(poi.category || "custom", (value) =>
@@ -208,6 +209,8 @@ function buildPoiPopup(poi) {
     noteTimer = setTimeout(() => updatePoi(poi.id, { note: note.value }, { silent: true }), 500);
   });
   wrap.appendChild(note);
+
+  if (measure) wrap.appendChild(buildMeasureButtons(poi, measure));
 
   const actions = poiEl("div", "poi-popup-actions");
   const link = poiEl("a", "poi-popup-link", "פתיחה ב-Google Maps");
@@ -395,9 +398,15 @@ function createPoiControl(map, options) {
       listWrap.innerHTML = "";
       pois.forEach((poi) => {
         const item = poiEl("li", "poi-list-item");
-        const focus = poiEl("button", "poi-list-name", poi.name);
+        const focus = poiEl("button", "poi-list-name");
         focus.type = "button";
         focus.title = "מעבר לנקודה על המפה";
+        const dist =
+          typeof formatDistanceFromUser === "function"
+            ? formatDistanceFromUser(poi.lat, poi.lng)
+            : null;
+        focus.appendChild(poiEl("span", null, poi.name));
+        if (dist) focus.appendChild(poiEl("span", "poi-list-distance", dist));
         focus.addEventListener("click", () => {
           map.setView([poi.lat, poi.lng], Math.max(map.getZoom(), 13), { animate: true });
           options.openPoi?.(poi.id);
@@ -426,6 +435,12 @@ function createPoiControl(map, options) {
   return control;
 }
 
+function poiTooltipText(poi) {
+  const dist =
+    typeof formatDistanceFromUser === "function" ? formatDistanceFromUser(poi.lat, poi.lng) : null;
+  return dist ? `📌 ${poi.name} · ${dist}` : `📌 ${poi.name}`;
+}
+
 /**
  * מוסיף למפה חיפוש מקומות + שכבת נקודות העניין השמורות.
  * options: { dayId, position }
@@ -435,6 +450,24 @@ function attachPoiLayer(map, options = {}) {
 
   const layer = L.layerGroup().addTo(map);
   const markerById = {};
+
+  const userLoc =
+    options.userLocation !== false && typeof attachUserLocation === "function"
+      ? attachUserLocation(map, { position: options.locatePosition || "bottomright" })
+      : null;
+
+  const measure =
+    options.measureApi ??
+    (options.measure !== false && typeof attachRouteMeasure === "function"
+      ? attachRouteMeasure(map, {
+          panelEl: options.measurePanel || document.getElementById("poi-measure-panel"),
+          onChange: () => {
+            Object.values(markerById).forEach((marker) => {
+              if (marker.isPopupOpen()) marker.setPopupContent(buildPoiPopup(marker.poi, measure));
+            });
+          },
+        })
+      : null);
 
   const control = createPoiControl(map, {
     ...options,
@@ -447,12 +480,13 @@ function attachPoiLayer(map, options = {}) {
 
     loadPois().forEach((poi) => {
       const marker = L.marker([poi.lat, poi.lng], { icon: createPoiIcon(poi) })
-        .bindPopup(buildPoiPopup(poi))
-        .bindTooltip(`📌 ${poi.name}`, {
+        .bindPopup(() => buildPoiPopup(poi, measure))
+        .bindTooltip(() => poiTooltipText(poi), {
           direction: "top",
           offset: [0, -16],
           className: "poi-tooltip",
         });
+      marker.poi = poi;
       marker.addTo(layer);
       markerById[poi.id] = marker;
     });
@@ -461,11 +495,24 @@ function attachPoiLayer(map, options = {}) {
     control.clearPreview?.();
   }
 
+  const unsubscribeLoc =
+    typeof onUserLocationChange === "function"
+      ? onUserLocationChange(() => {
+          render();
+          Object.values(markerById).forEach((marker) => {
+            if (marker.isPopupOpen()) marker.setPopupContent(buildPoiPopup(marker.poi, measure));
+          });
+        })
+      : () => {};
+
   const unsubscribe = onPoiChange(render);
-  map.on("unload", unsubscribe);
+  map.on("unload", () => {
+    unsubscribe();
+    unsubscribeLoc();
+  });
   render();
 
-  return { layer, markerById, refresh: render };
+  return { layer, markerById, measure, userLoc, refresh: render };
 }
 
 /* סנכרון בין לשוניות פתוחות */

@@ -43,6 +43,20 @@ function segmentPath(segment) {
   return path;
 }
 
+/** Overnight marker: prefer explicit overnight coords, else match named point on segment */
+function overnightLatLng(segment) {
+  if (segment.overnightLat) {
+    return [segment.overnightLat, segment.overnightLng];
+  }
+  const candidates = [...(segment.waypoints || []), segment.to, segment.from];
+  for (const p of candidates) {
+    if (p?.overnight || isOvernightPlace(p, segment.overnight)) {
+      return [p.lat, p.lng];
+    }
+  }
+  return [segment.to.lat, segment.to.lng];
+}
+
 function pathMidpoint(path) {
   if (path.length < 2) return path[0];
   let total = 0;
@@ -148,6 +162,117 @@ function addBaseTiles(map) {
   }).addTo(map);
 }
 
+function createMeasurePlace(point, name) {
+  return {
+    id: point.id || `trip-${Number(point.lat).toFixed(4)},${Number(point.lng).toFixed(4)}`,
+    name: name || enPlace(point.name) || point.he || point.en || "נקודה",
+    lat: point.lat,
+    lng: point.lng,
+  };
+}
+
+function bindTripMeasurePopup(layer, point, title, subtitle, measure, popupRegistry) {
+  const place = createMeasurePlace(point, title);
+  const build = () => {
+    const wrap = poiEl("div", "poi-popup");
+    if (typeof stopKeyPropagation === "function") stopKeyPropagation(wrap);
+    wrap.appendChild(poiEl("strong", null, title));
+    if (subtitle) wrap.appendChild(poiEl("div", "poi-popup-meta", subtitle));
+    if (typeof appendDistanceFromUser === "function") appendDistanceFromUser(wrap, point.lat, point.lng);
+    if (measure) wrap.appendChild(buildMeasureButtons(place, measure));
+    return wrap;
+  };
+  layer.bindPopup(build);
+  popupRegistry?.push({ layer, build });
+}
+
+function createMapMeasure(map, popupRegistry, panelId = "poi-measure-panel") {
+  if (typeof attachRouteMeasure !== "function") return null;
+  let extraOnChange = () => {};
+  const measure = attachRouteMeasure(map, {
+    panelEl: document.getElementById(panelId),
+    onChange: () => {
+      popupRegistry.forEach(({ layer, build }) => {
+        if (layer.isPopupOpen()) layer.setPopupContent(build());
+      });
+      extraOnChange();
+    },
+  });
+  measure.onPopupRefresh = (fn) => {
+    extraOnChange = fn;
+  };
+
+  if (typeof onUserLocationChange === "function") {
+    onUserLocationChange(() => {
+      popupRegistry.forEach(({ layer, build }) => {
+        if (layer.isPopupOpen()) layer.setPopupContent(build());
+      });
+      extraOnChange();
+    });
+  }
+
+  return measure;
+}
+
+async function drawRouteLines(map, lineLayer, segments, dayColors, mode, ui, buttons) {
+  lineLayer.clearLayers();
+  let fallbackCount = 0;
+
+  if (mode === "roads") {
+    ui.setLoading(true);
+    ui.setButtonsDisabled(true, buttons);
+  } else {
+    ui.setHint("");
+  }
+
+  const items = segments.map((segment) => ({
+    segment,
+    color: dayColors[segment.day] || "#666",
+    points:
+      typeof segmentToPoints === "function"
+        ? segmentToPoints(segment)
+        : segmentPath(segment).map(([lat, lng]) => ({ lat, lng })),
+  }));
+
+  const resolvedPaths =
+    mode === "roads"
+      ? await Promise.all(items.map((item) => resolvePathLatLngs(item.points, "roads")))
+      : items.map((item) => ({ path: directPathLatLngs(item.points), usedFallback: false }));
+
+  items.forEach((item, i) => {
+    const { path, usedFallback } = resolvedPaths[i];
+    if (usedFallback) fallbackCount += 1;
+
+    const label = segmentLabel(item.segment);
+
+    L.polyline(path, {
+      color: item.color,
+      weight: 5,
+      opacity: mode === "roads" ? 0.85 : 0.75,
+      dashArray: mode === "direct" ? "10 8" : null,
+      lineJoin: "round",
+    })
+      .addTo(lineLayer)
+      .bindTooltip(label, { sticky: true, className: "segment-tooltip" });
+
+    const mid = pathMidpoint(path);
+    L.marker(mid, {
+      icon: createSegmentBadge(label, item.color),
+      interactive: false,
+    }).addTo(lineLayer);
+  });
+
+  if (mode === "roads") {
+    ui.setLoading(false);
+    ui.setButtonsDisabled(false, buttons);
+    if (fallbackCount) {
+      ui.setHint(`${fallbackCount} מקטעים ללא כביש – מוצגים כקווים ישירים`);
+    } else {
+      ui.setHint("מסלולי כביש · OSRM / OpenStreetMap");
+    }
+  }
+}
+
 function initRouteMap(containerId, segments, dayColors) {
   const map = L.map(containerId, { scrollWheelZoom: true }).setView([42.3, 42.5], 7);
 
@@ -155,70 +280,80 @@ function initRouteMap(containerId, segments, dayColors) {
 
   const allBounds = [];
   const overnightSeen = new Set();
+  const popupRegistry = [];
+  const measure = createMapMeasure(map, popupRegistry);
+  const lineLayer = L.layerGroup().addTo(map);
 
   segments.forEach((segment) => {
     const color = dayColors[segment.day] || "#666";
     const path = segmentPath(segment);
-
-    L.polyline(path, {
-      color,
-      weight: 5,
-      opacity: 0.85,
-      lineJoin: "round",
-    })
-      .addTo(map)
-      .bindTooltip(segmentLabel(segment), { sticky: true, className: "segment-tooltip" });
-
     path.forEach((pt) => allBounds.push(pt));
 
-    const mid = pathMidpoint(path);
-    L.marker(mid, {
-      icon: createSegmentBadge(segmentLabel(segment), color),
-      interactive: false,
-    }).addTo(map);
-
     (segment.waypoints || []).forEach((wp) => {
-      L.marker([wp.lat, wp.lng], { icon: createPlaceIcon(color) })
-        .addTo(map)
-        .bindPopup(`<strong>${enPlace(wp.name)}</strong><br>Day ${segment.day}`)
-        .bindTooltip(enPlace(wp.name), {
-          permanent: true,
-          direction: "top",
-          className: "place-tooltip",
-          offset: [0, -6],
-        });
+      const marker = L.marker([wp.lat, wp.lng], { icon: createPlaceIcon(color) }).addTo(map);
+      bindTripMeasurePopup(
+        marker,
+        wp,
+        enPlace(wp.name),
+        `Day ${segment.day}`,
+        measure,
+        popupRegistry
+      );
+      marker.bindTooltip(enPlace(wp.name), {
+        permanent: true,
+        direction: "top",
+        className: "place-tooltip",
+        offset: [0, -6],
+      });
     });
 
-    const overnightKey = `${segment.to.lat},${segment.to.lng}`;
+    const overnightKey = overnightLatLng(segment).join(",");
     if (segment.overnight && !overnightSeen.has(overnightKey)) {
       overnightSeen.add(overnightKey);
-      L.marker([segment.to.lat, segment.to.lng], { icon: createOvernightIcon() })
-        .addTo(map)
-        .bindPopup(
-          `<strong>🏨 ${enPlace(segment.overnight)}</strong><br>Overnight · Day ${segment.day}`
-        );
+      const [lat, lng] = overnightLatLng(segment);
+      const overnightMarker = L.marker([lat, lng], { icon: createOvernightIcon() }).addTo(map);
+      bindTripMeasurePopup(
+        overnightMarker,
+        { lat, lng, name: segment.overnight },
+        `🏨 ${enPlace(segment.overnight)}`,
+        `Overnight · Day ${segment.day}`,
+        measure,
+        popupRegistry
+      );
     }
 
-    L.circleMarker([segment.from.lat, segment.from.lng], {
+    const fromMarker = L.circleMarker([segment.from.lat, segment.from.lng], {
       radius: 7,
       fillColor: color,
       color: "#fff",
       weight: 2,
       fillOpacity: 1,
-    })
-      .addTo(map)
-      .bindPopup(`<strong>${enPlace(segment.from.name)}</strong><br>Day ${segment.day} start`);
+    }).addTo(map);
+    bindTripMeasurePopup(
+      fromMarker,
+      segment.from,
+      enPlace(segment.from.name),
+      `Day ${segment.day} start`,
+      measure,
+      popupRegistry
+    );
 
     if (!segment.loop) {
-      L.circleMarker([segment.to.lat, segment.to.lng], {
+      const toMarker = L.circleMarker([segment.to.lat, segment.to.lng], {
         radius: 7,
         fillColor: color,
         color: "#fff",
         weight: 2,
         fillOpacity: 1,
-      })
-        .addTo(map)
-        .bindPopup(`<strong>${enPlace(segment.to.name)}</strong><br>Day ${segment.day} end`);
+      }).addTo(map);
+      bindTripMeasurePopup(
+        toMarker,
+        segment.to,
+        enPlace(segment.to.name),
+        `Day ${segment.day} end`,
+        measure,
+        popupRegistry
+      );
     }
   });
 
@@ -226,9 +361,18 @@ function initRouteMap(containerId, segments, dayColors) {
     map.fitBounds(allBounds, { padding: [50, 50] });
   }
 
+  mountRouteModeBar(containerId, (mode, ui, buttons) => {
+    drawRouteLines(map, lineLayer, segments, dayColors, mode, ui, buttons);
+  });
+
   renderMapLegend(segments, dayColors);
   tameWheelZoom(map);
-  attachPoiLayer(map);
+  const poiApi = attachPoiLayer(map, { measureApi: measure });
+  measure?.onPopupRefresh?.(() => {
+    Object.values(poiApi.markerById).forEach((marker) => {
+      if (marker.isPopupOpen()) marker.setPopupContent(buildPoiPopup(marker.poi, measure));
+    });
+  });
   return map;
 }
 
@@ -251,19 +395,18 @@ function initExtremeMap(containerId, options) {
 
   const bounds = [];
   const markerById = {};
+  const popupRegistry = [];
+  const measure = createMapMeasure(map, popupRegistry);
+  const lineLayer = L.layerGroup().addTo(map);
 
-  segments.forEach((segment) => {
-    const color = dayColors[segment.day] || "#999";
-    const path = segmentPath(segment);
-    L.polyline(path, {
-      color,
-      weight: 4,
-      opacity: 0.35,
-      dashArray: "10 8",
-      lineJoin: "round",
-    }).addTo(map);
-    path.forEach((pt) => bounds.push(pt));
-  });
+  if (segments?.length && typeof mountRouteModeBar === "function") {
+    mountRouteModeBar(containerId, (mode, ui, buttons) => {
+      drawRouteLines(map, lineLayer, segments, dayColors, mode, ui, buttons);
+    });
+    segments.forEach((segment) => {
+      segmentPath(segment).forEach((pt) => bounds.push(pt));
+    });
+  }
 
   activities.forEach((activity) => {
     const cat = categories[activity.category] || { color: "#666", icon: "📍" };
@@ -275,6 +418,14 @@ function initExtremeMap(containerId, options) {
     }).addTo(map);
 
     marker.on("click", () => onSelect(activity));
+    bindTripMeasurePopup(
+      marker,
+      { ...activity, id: activity.id },
+      activity.name,
+      cat.label || "פעילות",
+      measure,
+      popupRegistry
+    );
     marker.bindTooltip(activity.name, {
       permanent: false,
       direction: "top",
@@ -290,7 +441,12 @@ function initExtremeMap(containerId, options) {
   }
 
   tameWheelZoom(map);
-  attachPoiLayer(map);
+  const poiApi = attachPoiLayer(map, { measureApi: measure });
+  measure?.onPopupRefresh?.(() => {
+    Object.values(poiApi.markerById).forEach((marker) => {
+      if (marker.isPopupOpen()) marker.setPopupContent(buildPoiPopup(marker.poi, measure));
+    });
+  });
 
   return {
     map,
@@ -339,6 +495,9 @@ function renderMapLegend(segments, dayColors) {
     <div class="map-legend-notes">
       <span><span class="place-marker inline"></span> מקומות בדרך</span>
       <span>🏨 לינה</span>
+      <span>📍 לחצו 📍 בפינת המפה למיקום שלכם + מרחק לנקודות</span>
+      <span>📏 לחצו על נקודה → 📏 מכאן / 📏 לכאן לחישוב זמן ומרחק</span>
+      <span>📐 / 🛣 החליפו בין קווים ישירים למסלול כביש מעל המפה</span>
       <span>
         <a href="${TRIP_META.globalMapUrl}" target="_blank" rel="noopener noreferrer" class="external-link">
           פתיחת מפת Google המלאה
@@ -346,6 +505,74 @@ function renderMapLegend(segments, dayColors) {
       </span>
     </div>
   `;
+}
+
+async function drawDayRouteLines(map, lineLayer, routes, routeColors, multi, mode, ui, buttons) {
+  lineLayer.clearLayers();
+  let fallbackCount = 0;
+
+  if (mode === "roads") {
+    ui.setLoading(true);
+    ui.setButtonsDisabled(true, buttons);
+  } else {
+    ui.setHint("");
+  }
+
+  const items = routes
+    .map((route, idx) => ({
+      route,
+      idx,
+      points: route.points || [],
+      color: route.color || routeColors[idx % routeColors.length],
+    }))
+    .filter((item) => item.points.length);
+
+  const resolvedPaths =
+    mode === "roads"
+      ? await Promise.all(items.map((item) => resolvePathLatLngs(item.points, "roads")))
+      : items.map((item) => ({
+          path: directPathLatLngs(item.points),
+          usedFallback: false,
+          distanceKm: directPointsDistanceKm(item.points),
+          durationSec: null,
+        }));
+
+  items.forEach((item, i) => {
+    const { path, usedFallback, distanceKm, durationSec } = resolvedPaths[i];
+    if (usedFallback) fallbackCount += 1;
+
+    const dashed = multi || item.route.dashed;
+    const label = formatRouteDistanceLabel(path, {
+      prefix: item.route.label || `מסלול ${item.idx + 1}`,
+      durationSec: mode === "roads" ? durationSec : null,
+    });
+
+    L.polyline(path, {
+      color: item.color,
+      weight: multi ? 4 : 3,
+      opacity: mode === "roads" ? 0.9 : 0.75,
+      dashArray: mode === "direct" || dashed ? "8 6" : null,
+      lineJoin: "round",
+    })
+      .addTo(lineLayer)
+      .bindTooltip(label, { sticky: true });
+
+    const mid = pathMidpoint(path);
+    L.marker(mid, {
+      icon: createSegmentBadge(label, item.color),
+      interactive: false,
+    }).addTo(lineLayer);
+  });
+
+  if (mode === "roads") {
+    ui.setLoading(false);
+    ui.setButtonsDisabled(false, buttons);
+    if (fallbackCount) {
+      ui.setHint(`${fallbackCount} מקטעים ללא כביש – מוצגים כקווים ישירים`);
+    } else {
+      ui.setHint("מסלולי כביש · OSRM");
+    }
+  }
 }
 
 function initDayMap(containerId, options) {
@@ -359,41 +586,44 @@ function initDayMap(containerId, options) {
   const routeColors = ["#7b2d3e", "#2d5a3d", "#c47b2b", "#2980b9"];
   const multi = routes.length > 1;
   const bounds = [];
-  const seen = new Set();
+  const seen = new Map();
+  const popupRegistry = [];
+  const measure = createMapMeasure(map, popupRegistry);
+  const lineLayer = L.layerGroup().addTo(map);
+
+  routes.forEach((route) => {
+    const points = route.points || [];
+    points.forEach((p) => bounds.push([p.lat, p.lng]));
+  });
+
+  mountRouteModeBar(containerId, (mode, ui, buttons) => {
+    drawDayRouteLines(map, lineLayer, routes, routeColors, multi, mode, ui, buttons);
+  });
 
   routes.forEach((route, idx) => {
     const points = route.points || [];
     if (!points.length) return;
     const color = route.color || routeColors[idx % routeColors.length];
-    const path = points.map((p) => [p.lat, p.lng]);
-    path.forEach((ll) => bounds.push(ll));
-
-    const dashed = multi || route.dashed;
-    L.polyline(path, {
-      color,
-      weight: multi ? 4 : 3,
-      opacity: 0.9,
-      dashArray: dashed ? "8 6" : null,
-      lineJoin: "round",
-    })
-      .addTo(map)
-      .bindTooltip(route.label || `מסלול ${idx + 1}`, { sticky: true });
 
     points.forEach((p) => {
       const key = `${p.lat.toFixed(4)},${p.lng.toFixed(4)}`;
-      if (seen.has(key)) return;
-      seen.add(key);
       const isOvernight = isOvernightPlace(p, overnightName);
+      const prev = seen.get(key);
+      if (prev && !(isOvernight && !prev.overnight)) return;
+      if (prev?.layer) map.removeLayer(prev.layer);
       const marker = isOvernight
         ? L.marker([p.lat, p.lng], { icon: createOvernightIcon() })
         : L.marker([p.lat, p.lng], { icon: createPlaceIcon(color) });
-      marker
-        .addTo(map)
-        .bindPopup(
-          isOvernight
-            ? `<strong>🏨 ${enPlace(p.name)}</strong><br><small>לינה</small>`
-            : `<strong>${enPlace(p.name)}</strong>`
-        );
+      marker.addTo(map);
+      bindTripMeasurePopup(
+        marker,
+        p,
+        isOvernight ? `🏨 ${enPlace(p.name)}` : enPlace(p.name),
+        isOvernight ? "לינה" : null,
+        measure,
+        popupRegistry
+      );
+      seen.set(key, { overnight: isOvernight, layer: marker });
     });
   });
 
@@ -421,7 +651,12 @@ function initDayMap(containerId, options) {
   }
 
   tameWheelZoom(map);
-  attachPoiLayer(map, { dayId: options?.dayId || null });
+  const poiApi = attachPoiLayer(map, { dayId: options?.dayId || null, measureApi: measure });
+  measure?.onPopupRefresh?.(() => {
+    Object.values(poiApi.markerById).forEach((marker) => {
+      if (marker.isPopupOpen()) marker.setPopupContent(buildPoiPopup(marker.poi, measure));
+    });
+  });
   return map;
 }
 
@@ -453,25 +688,23 @@ function initDroneSpotsMap(containerId, options, onSelectMaybe) {
   const markerById = {};
   const routeColors = ["#7b2d3e", "#2d5a3d", "#c47b2b", "#2980b9"];
   const placeSeen = new Set();
+  const popupRegistry = [];
+  const measure = createMapMeasure(map, popupRegistry);
+  const lineLayer = L.layerGroup().addTo(map);
+
+  if (dayRoutes.length && typeof mountRouteModeBar === "function") {
+    mountRouteModeBar(containerId, (mode, ui, buttons) => {
+      drawDayRouteLines(map, lineLayer, dayRoutes, routeColors, dayRoutes.length > 1, mode, ui, buttons);
+    });
+    dayRoutes.forEach((route) => {
+      (route.points || []).forEach((p) => bounds.push([p.lat, p.lng]));
+    });
+  }
 
   dayRoutes.forEach((route, idx) => {
     const points = route.points || [];
     if (!points.length) return;
     const color = route.color || routeColors[idx % routeColors.length];
-    const path = points.map((p) => [p.lat, p.lng]);
-    path.forEach((ll) => bounds.push(ll));
-    const multi = dayRoutes.length > 1;
-    const dashed = multi || route.dashed;
-
-    L.polyline(path, {
-      color,
-      weight: multi ? 4 : 3,
-      opacity: 0.75,
-      dashArray: dashed ? "8 6" : null,
-      lineJoin: "round",
-    })
-      .addTo(map)
-      .bindTooltip(route.label || "מסלול היום", { sticky: true });
 
     points.forEach((p) => {
       const key = `${Number(p.lat).toFixed(4)},${Number(p.lng).toFixed(4)}`;
@@ -481,13 +714,15 @@ function initDroneSpotsMap(containerId, options, onSelectMaybe) {
       const marker = isOvernight
         ? L.marker([p.lat, p.lng], { icon: createOvernightIcon() })
         : L.marker([p.lat, p.lng], { icon: createPlaceIcon(color) });
-      marker
-        .addTo(map)
-        .bindPopup(
-          isOvernight
-            ? `<strong>🏨 ${enPlace(p.name)}</strong><br><small>לינה</small>`
-            : `<strong>${enPlace(p.name)}</strong><br><small>מקום בטיול</small>`
-        );
+      marker.addTo(map);
+      bindTripMeasurePopup(
+        marker,
+        p,
+        isOvernight ? `🏨 ${enPlace(p.name)}` : enPlace(p.name),
+        isOvernight ? "לינה" : "מקום בטיול",
+        measure,
+        popupRegistry
+      );
     });
   });
 
@@ -497,6 +732,14 @@ function initDroneSpotsMap(containerId, options, onSelectMaybe) {
     bounds.push(latlng);
     const marker = L.marker(latlng, { icon: createDroneIcon(false, kind) }).addTo(map);
     marker.on("click", () => onSelect?.(spot));
+    bindTripMeasurePopup(
+      marker,
+      { ...spot, id: spot.id },
+      spot.name,
+      kind === "enRoute" ? "עצירה בדרך" : "נקודת רחפן",
+      measure,
+      popupRegistry
+    );
     const tipPrefix = kind === "enRoute" ? "🛣 " : "🚁 ";
     marker.bindTooltip(tipPrefix + spot.name, {
       permanent: false,
@@ -512,6 +755,12 @@ function initDroneSpotsMap(containerId, options, onSelectMaybe) {
   }
 
   tameWheelZoom(map);
+  const poiApi = attachPoiLayer(map, { measureApi: measure });
+  measure?.onPopupRefresh?.(() => {
+    Object.values(poiApi.markerById).forEach((marker) => {
+      if (marker.isPopupOpen()) marker.setPopupContent(buildPoiPopup(marker.poi, measure));
+    });
+  });
 
   return {
     map,

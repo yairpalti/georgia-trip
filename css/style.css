@@ -272,9 +272,156 @@ img {
   margin-bottom: 2rem;
 }
 
+.route-mode-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--cream-dark);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-muted) 15%, transparent);
+}
+
+.route-mode-label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.route-mode-toggle {
+  display: inline-flex;
+  gap: 0.35rem;
+  padding: 0.2rem;
+  background: var(--white);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text-muted) 18%, transparent);
+}
+
+.route-mode-btn {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, opacity 0.15s;
+}
+
+.route-mode-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.route-mode-btn.active {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.route-mode-btn:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.route-mode-status {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
 #route-map {
   height: 520px;
   width: 100%;
+}
+
+.user-locate-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: var(--white);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s, opacity 0.15s;
+}
+
+.user-locate-btn:hover {
+  background: color-mix(in srgb, #2563eb 10%, var(--white));
+}
+
+.user-locate-btn.is-active {
+  background: #2563eb;
+  color: var(--white);
+}
+
+.user-locate-btn.is-error {
+  background: #fee2e2;
+}
+
+.user-locate-btn.is-loading {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.user-location-wrap {
+  background: transparent !important;
+  border: none !important;
+}
+
+.user-location-dot {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #2563eb;
+  border: 3px solid var(--white);
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.user-location-pulse {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.25);
+  animation: user-location-pulse 2s ease-out infinite;
+}
+
+@keyframes user-location-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.poi-popup-distance,
+.places-item-distance {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.poi-popup-distance {
+  margin-top: 0.15rem;
+}
+
+.places-item-distance {
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.poi-list-distance {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #2563eb;
 }
 
 .map-legend {
@@ -379,6 +526,11 @@ img {
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   pointer-events: none;
+}
+
+.measure-route-label {
+  font-size: 12px;
+  padding: 3px 10px;
 }
 
 .overnight-marker {
@@ -2856,6 +3008,20 @@ img {
   box-shadow: var(--shadow);
   padding: 0.6rem 1rem;
   margin-bottom: 1.25rem;
+}
+
+.map-section > .measure-panel {
+  margin: 1rem 1rem 0;
+}
+
+.map-section > .route-mode-bar,
+.places-map-wrap > .route-mode-bar {
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.measure-panel-map {
+  margin: 0;
+  max-width: min(420px, calc(100vw - 80px));
 }
 
 .measure-line {
