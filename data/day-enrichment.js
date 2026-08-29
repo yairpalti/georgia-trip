@@ -151,12 +151,12 @@ const DAY_ENRICHMENT = {
   3: {
     heroImage: "IMG.chiatura",
     summary:
-      "יום 3 (25.9) – ברכב עצמי. check-out מקוטאיסי בבוקר. אופציה א': קצחי, Urbex, Lia, מגווימבי. אופציה ב': Via Ferrata ב-Sveri. לינה: אזור צ'יאתורה.",
+      "יום 3 (25.9) – ברכב עצמי. check-out מקוטאיסי בבוקר. אופציה א': קצחי, Urbex, Lia, מגווימבי → Mebirashi. אופציה ב': Via Ferrata ב-Sveri → Tea Gezruli בכפר Gezruli.",
     tips: [
       "check-out קוטאיסי בבוקר – כל הציוד ברכב",
       "Lunch at Lia – WhatsApp מראש! (אופציה א')",
       "Via Ferrata – מפגש ב-Sveri, בלי הסעה: +995 595 41 15 47",
-      "Sveri → Tea Gezruli ~30 דק' ללינה (אופציה Via Ferrata)",
+      "Sveri → Tea Gezruli (כפר Gezruli) ~45 דק' ללינה (אופציה Via Ferrata)",
       "רכבל Sanatorium – לבדוק שעות ובטיחות",
     ],
     activityExtras: [
@@ -190,10 +190,10 @@ const DAY_ENRICHMENT = {
       },
       {
         name: N.teaGezruli,
-        area: `${N.chiatura} · Gezruli`,
+        area: "כפר Gezruli · Likhi Range",
         nights: 1,
-        note: "אופציה · אחרי Via Ferrata · דירוג 9.4 · 1.3 ק\"מ מתחנת צ'יאתורה",
-        link: "https://www.booking.com/hotel/ge/tea-gezruli-chiatura.en-gb.html",
+        note: "אופציה · אחרי Via Ferrata · ~25 ק\"מ מעיר צ'יאתורה · Booking 25.9–26.9 · דירוג 9.4",
+        link: "https://maps.app.goo.gl/TPEcCxEHx7YhyRYN6",
         image: "IMG.chiatura",
       },
     ],

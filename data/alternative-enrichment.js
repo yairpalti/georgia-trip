@@ -61,9 +61,9 @@ const ALTERNATIVE_ENRICHMENT = {
       ],
     },
     1: {
-      driving: "כ-110 ק\"מ ל-Sveri + ~30 דק' ל-Tea Gezruli · רכב עצמי",
+      driving: "כ-110 ק\"מ ל-Sveri + ~45 דק' ל-Tea Gezruli (כפר Gezruli) · רכב עצמי",
       description:
-        "אופציה ב' – Via Ferrata ב-Sveri Adventure Camp. ברכב שלכם (~2 ש' מקוטאיסי), מפגש עם Rafting in Kutaisi במקום (₾200 – ללא הסעה). שחייה, BBQ. ערב: לינה ב-Tea Gezruli – guesthouse אקולוגי, ~30 דק' מ-Sveri.",
+        "אופציה ב' – Via Ferrata ב-Sveri Adventure Camp. ברכב שלכם (~2 ש' מקוטאיסי), מפגש עם Rafting in Kutaisi במקום (₾200 – ללא הסעה). שחייה, BBQ. ערב: לינה ב-Tea Gezruli – guesthouse בכפר Gezruli, ~45 דק' מ-Sveri (~25 ק\"מ מעיר צ'יאתורה).",
       image: "IMG.rafting",
       link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
       linkLabel: "Rafting in Kutaisi – Via Ferrata",
@@ -71,8 +71,8 @@ const ALTERNATIVE_ENRICHMENT = {
         "Via Ferrata (₾200) · +995 595 41 15 47 · ללא הסעה הלוך-חזור",
         "בגד ספורט, נעליים סגורות",
         "עצירה בקצחי בדרך (~15 דק')",
-        "Sveri → Tea Gezruli ~30 דק'",
-        "Booking: 25.9–26.9 · דירוג 9.4 · 1.3 ק\"מ מתחנת צ'יאתורה",
+        "Sveri → Tea Gezruli (כפר Gezruli) ~45 דק'",
+        "Booking: 25.9–26.9 · דירוג 9.4 · ~25 ק\"מ מעיר צ'יאתורה",
       ],
       activities: [
         {
@@ -105,9 +105,10 @@ const ALTERNATIVE_ENRICHMENT = {
         {
           name: N.teaGezruli,
           timeOfDay: "16:30–17:30",
-          duration: "~30 דק'",
-          description: "Sveri → Tea Gezruli Guesthouse (25 km from Chiatura). דירוג 9.4 · 1.3 ק\"מ הליכה מתחנת צ'יאתורה · גן, מרפסה, ארוחת בוקר. מוכנים ליום 4 – יציאה לראצ'ה.",
-          link: "https://www.booking.com/hotel/ge/tea-gezruli-chiatura.en-gb.html",
+          duration: "~45 דק'",
+          description:
+            "Sveri → Tea Gezruli Guesthouse בכפר Gezruli (מחוז צ'יאתורה, ~25 ק\"מ מעיר צ'יאתורה). דירוג 9.4 · גן, מרפסה, ארוחת בוקר · מטע תה. מוכנים ליום 4 – יציאה לראצ'ה.",
+          link: "https://maps.app.goo.gl/TPEcCxEHx7YhyRYN6",
           linkLabel: N.teaGezruli,
           image: "IMG.chiatura",
         },
