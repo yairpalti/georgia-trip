@@ -622,9 +622,19 @@ const DAYS = [
       },
       {
         name: N.prometheusCave,
-        description: "מערה מרהיבה ומוארת.",
+        description: "מערה ענקית ומרשימה – נטיפים, תצורות סלע, אגמים ושייט. ~14°C – סווטר חובה.",
         link: "https://www.google.com/maps/search/Prometheus+Cave+Georgia",
         linkLabel: N.prometheusCave,
+      },
+      {
+        name: N.satapliaReserve,
+        timeOfDay: "אופציונלי",
+        duration: "2–3 ש'",
+        description:
+          "שמורת טבע ליד קוטאיסי – יער, מערה, תצפיות ועקבות דינוזאורים – חובה למשפחות עם ילדים. מתאים באותו יום עם פרומתאוס אם יש זמן.",
+        link: "https://www.google.com/maps/search/Sataplia+Nature+Reserve+Kutaisi",
+        linkLabel: N.satapliaReserve,
+        image: "IMG.prometheus",
       },
     ],
     alternatives: [
@@ -681,6 +691,7 @@ const DAYS = [
       { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
       { name: N.tskaltubo, lat: 42.3417, lng: 42.5986 },
       { name: N.prometheusCave, lat: 42.3708, lng: 42.5989 },
+      { name: N.satapliaReserve, lat: 42.248, lng: 42.775 },
       { name: N.okatseCanyon, lat: 42.4167, lng: 42.5167 },
     ],
     mapRoutes: [
@@ -729,17 +740,18 @@ const DAYS = [
     overnight: N.zugdidi,
     driving: "כ-90 ק\"מ · מצקאלטובו/Okatse → זוגדידי",
     summary:
-      "יוצאים מלינת יום 5 (צקאלטובו או Okatse) – מערבה לקניונים בלי חזרה מזרחה. אוקאצה → מרטווילי → נוקאלאקווי. לינה בזוגדידי לקראת עלייה לסוואנטי.",
+      "יוצאים מלינת יום 5 – אוקאצה (גשרים תלויים) → מרטווילי (מים טורקיז, שייט) → נוקאלאקווי. אופציה: טיול ג'יפים עם Bacho Tsotsoria. לינה בזוגדידי.",
     activities: [
       {
         name: N.okatseCanyon,
-        description: "הליכה מאתגרת על גשרים תלויים. אם לנו ב-Okatse – מתחילים מהמלון.",
+        description:
+          "מסלול מיוחד עם שבילים תלויים מעל הקניון – נופים מרהיבים. אם לנו ב-Okatse – מתחילים מהמלון.",
         link: "https://www.google.com/maps/search/Okatse+Canyon",
         linkLabel: N.okatseCanyon,
       },
       {
         name: N.martviliCanyon,
-        description: "שייט בסירות גומי.",
+        description: "מים בצבע טורקיז, מפלים, טבע מדהים – שייט בסירות גומי.",
         link: "https://www.google.com/maps/search/Martvili+Canyon",
         linkLabel: N.martviliCanyon,
       },
@@ -748,6 +760,17 @@ const DAYS = [
         description: "טבילה במעיינות חמים פראיים. אחר כך – נסיעה לזוגדידי ללינה.",
         link: "https://www.google.com/maps/search/Nokalakevi+Hot+Springs",
         linkLabel: N.nokalakeviHotSprings,
+      },
+    ],
+    alternatives: [
+      {
+        name: "🚙 אופציה – טיול ג'יפים עם Bacho Tsotsoria",
+        description:
+          "מדריך מקומי עם ג'יפ למקומות מיוחדים בין מפלים, מים וטבע פראי – אחד הטיולים שהכי נהנו מהם באזור קוטאיסי. שילוב הרפתקה, ג'יפ ואדרנלין.",
+        link: "https://www.facebook.com/search/top?q=Bacho%20Tsotsoria",
+        linkLabel: N.bachoJeepTours + " – Facebook",
+        image: "IMG.martvili",
+        tips: ["לחפש Bacho Tsotsoria בפייסבוק", "מתאים למשפחות", "ראו גם לוגיסטיקה → נהגים ומדריכים"],
       },
     ],
     hotels: [
@@ -1020,7 +1043,7 @@ const DAYS = [
     theme: fmt("ספורט ימי ופארק שעשועים", "Water sports & amusement park", "წყლის სპორტი და პარკი"),
     overnight: N.batumi,
     driving: "כ-1.5 שעות (110 ק\"מ)",
-    summary: "אורקי/שקווטילי – ספורט ימי, ציצנאטלה, חינקלי בבאטומי.",
+    summary: "אורקי/שקווטילי – ספורט ימי, ציצנאטלה, מופע דולפינים, מנוחה ופינוקים בבאטומי.",
     activities: [
       {
         name: `${N.ureki} / ${N.shekvetili}`,
@@ -1033,6 +1056,14 @@ const DAYS = [
         description: "פארק שעשועים על החוף.",
         link: "https://www.google.com/maps/search/Tsitsinatela+amusement+park",
         linkLabel: N.tsitsinatela,
+      },
+      {
+        name: N.batumiDolphinarium,
+        description:
+          "מופע דולפינים מרהיב – להזמין מקומות מראש. אחרי ההרים והטרקים – יום מנוחה, בריכות וטיילת.",
+        link: "https://www.google.com/maps/search/Batumi+Dolphinarium",
+        linkLabel: N.batumiDolphinarium,
+        image: "IMG.batumi",
       },
       {
         name: N.batumiOldTown,
@@ -1185,6 +1216,31 @@ const LOGISTICS = {
     { label: fmt("חירום כללי", "Emergency", "გადაუდებელი"), value: "112" },
     { label: fmt("משטרה", "Police", "პოლიცია"), value: "112" },
     { label: fmt("שגרירות ישראל בטבילisi", "Israeli Embassy in Tbilisi", "იზრაელის ელჩობა ყბილისში"), value: "+995 32 291 3000" },
+  ],
+  privateDrivers: [
+    {
+      name: "Vakhtang (וואחו)",
+      phone: "+995 591 22 55 24",
+      whatsapp: "https://wa.me/995591225524",
+      viber: "viber://chat?number=%2B995591225524",
+      note: fmt(
+        "נהג פרטי מומלץ – נעים, סבלני, מקצועי. מכיר דרכים, מסעדות טובות. זמין ב-WhatsApp וב-Viber. (המלצה מטיול משפחתי – לופוטה עד באטומי)",
+        "Recommended private driver – patient, professional, knows roads & restaurants. WhatsApp & Viber.",
+        "რекომენდებული მძღოლი"
+      ),
+      region: fmt("מזרח גאורגיה / כבישים ארוכים", "Eastern Georgia / long transfers", "აღმოსავლეთი"),
+    },
+    {
+      name: fmt("Bacho Tsotsoria – טיולי ג'יפ", "Bacho Tsotsoria – jeep tours", "Bacho Tsotsoria"),
+      phone: null,
+      facebook: "https://www.facebook.com/search/top?q=Bacho%20Tsotsoria",
+      note: fmt(
+        "מדריך מקומי באזור קוטאיסי – ג'יפ בין מפלים, מים וטבע. אחד הטיולים שהכי נהנו מהם באזור. לחפש בפייסבוק.",
+        "Local guide near Kutaisi – jeep between waterfalls & wild nature. Search on Facebook.",
+        "ჯიპ-ტური კუთაისის რეგიონში"
+      ),
+      region: fmt(`אזור ${N.kutaisi.split(" · ")[0]}`, "Kutaisi / Imereti area", "იმერეთი"),
+    },
   ],
   accommodationSummary: [
     { place: N.batumi, nights: 2, note: "לילה ראשון + אחרון" },

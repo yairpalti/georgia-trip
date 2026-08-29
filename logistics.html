@@ -14,6 +14,7 @@
     <div class="header-inner">
       <a href="index.html" class="site-logo">🇬🇪 גיאורגיה 2026</a>
       <nav class="site-nav">
+        <a href="new.html">חדש</a>
         <a href="index.html">תוכנית</a>
         <a href="places.html">מקומות</a>
         <a href="extreme.html">אקסטרים</a>
@@ -52,6 +53,11 @@
       <div class="logistics-card" id="drones">
         <h2>🛸 רחפנים (Drone)</h2>
         <div id="drone-container"></div>
+      </div>
+
+      <div class="logistics-card" style="grid-column: 1 / -1" id="drivers">
+        <h2>🚐 נהגים ומדריכים מומלצים</h2>
+        <div id="drivers-container"></div>
       </div>
 
       <div class="logistics-card" style="grid-column: 1 / -1" id="adventure-container"></div>
@@ -238,6 +244,24 @@
 
       if (typeof RAFTING_KUTAISI !== "undefined") {
         document.getElementById("adventure-container").innerHTML = renderAdventureOperator(RAFTING_KUTAISI);
+      }
+
+      if (LOGISTICS.privateDrivers?.length) {
+        document.getElementById("drivers-container").innerHTML = LOGISTICS.privateDrivers
+          .map(
+            (d) => `
+          <article class="driver-card">
+            <h3>${d.name}${d.region ? ` <span class="driver-region">· ${d.region.split(" · ")[0]}</span>` : ""}</h3>
+            <p>${d.note}</p>
+            <ul class="link-list">
+              ${d.phone ? `<li>📞 ${d.phone}</li>` : ""}
+              ${d.whatsapp ? `<li><a href="${d.whatsapp}" target="_blank" rel="noopener noreferrer" class="external-link">WhatsApp</a></li>` : ""}
+              ${d.viber ? `<li><a href="${d.viber}" class="external-link">Viber</a></li>` : ""}
+              ${d.facebook ? `<li><a href="${d.facebook}" target="_blank" rel="noopener noreferrer" class="external-link">Facebook</a></li>` : ""}
+            </ul>
+          </article>`
+          )
+          .join("");
       }
 
       document.getElementById("packing-list").innerHTML = LOGISTICS.packing

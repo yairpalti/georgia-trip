@@ -106,6 +106,68 @@ img {
   color: var(--gold-light);
 }
 
+.new-page {
+  padding-bottom: 3rem;
+}
+
+.new-updates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.new-update-card h2 {
+  font-size: 1.15rem;
+  margin: 0.5rem 0;
+}
+
+.new-update-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.new-update-badge {
+  background: var(--forest);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+.new-update-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.new-update-links {
+  margin: 0.75rem 0 0;
+  padding-right: 1.25rem;
+}
+
+.new-update-links li {
+  margin-bottom: 0.35rem;
+}
+
+.driver-card {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.driver-card:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.driver-region {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
 /* Hero */
 .hero {
   background: linear-gradient(180deg, rgba(90, 31, 45, 0.85) 0%, rgba(45, 90, 61, 0.75) 100%),

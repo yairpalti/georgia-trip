@@ -1287,6 +1287,58 @@ function renderExtremeSeasonGuide() {
     </section>`;
 }
 
+function parseUpdateDate(dateStr) {
+  if (!dateStr) return 0;
+  const dmy = dateStr.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if (dmy) return new Date(+dmy[3], +dmy[2] - 1, +dmy[1]).getTime();
+  if (/אוגוסט\s*2026/.test(dateStr)) return new Date(2026, 7, 1).getTime();
+  return 0;
+}
+
+function renderNewPage() {
+  const root = document.getElementById("new-content");
+  if (!root || typeof SITE_UPDATES === "undefined") return;
+
+  const data = SITE_UPDATES;
+  const items = [...data.items].sort((a, b) => parseUpdateDate(b.date) - parseUpdateDate(a.date));
+  root.innerHTML = `
+    <section class="day-hero new-hero">
+      <div class="day-hero-inner container">
+        <div class="breadcrumb"><a href="index.html">דף הבית</a> / ${data.title}</div>
+        <h1>✨ ${data.title}</h1>
+        <p style="opacity:0.9;margin:0">${data.intro}</p>
+      </div>
+    </section>
+    <main class="container new-page">
+      <div class="new-updates-list">
+        ${items
+          .map(
+            (item) => `
+          <article class="card new-update-card" id="${item.id}">
+            <div class="new-update-meta">
+              <span class="new-update-badge">${item.badge}</span>
+              <time class="new-update-date">${item.date}</time>
+            </div>
+            <h2>${item.title}</h2>
+            <p>${item.summary}</p>
+            ${
+              item.links?.length
+                ? `<ul class="new-update-links">${item.links
+                    .map(
+                      (l) =>
+                        `<li><a href="${l.url}" class="external-link"${l.url.startsWith("http") ? ' target="_blank" rel="noopener noreferrer"' : ""}>${l.label}</a></li>`
+                    )
+                    .join("")}</ul>`
+                : ""
+            }
+          </article>`
+          )
+          .join("")}
+      </div>
+    </main>
+  `;
+}
+
 function renderExtremePage() {
   const root = document.getElementById("extreme-content");
   if (!root || typeof EXTREME_ACTIVITIES === "undefined") return;

@@ -21,8 +21,28 @@ const TRAVELER_STORIES = {
     ],
   },
   2: {
-    pageIntro: "קוטאיסי כבסיס – סיפורי הגעה, לינה וארוחות בוקר מפנקות.",
+    pageIntro: "קוטאיסי והאזור סביבה – קניונים, מערות, שמורות וטיולי ג'יפ. כולל סיפור משפחתי משבועיים.",
     stories: [
+      {
+        title: "האזור סביב קוטאיסי – פשוט מדהים",
+        author: "משפחה (3 ילדים) · טיול שבועיים",
+        date: "2026",
+        image: "IMG.kutaisi",
+        paragraphs: [
+          "קוטאיסי עצמה לא בהכרח המקום שהכי שבינו את ליבנו – אבל האזור שבסביבה פשוט מדהים!",
+          "יצאנו לקניון מרטווילי (מים טורקיז, מפלים, שייט), קניון אוקאצה (גשרים תלויים), שמורת סטאפליה (עקבות דינוזאורים – חובה עם ילדים!), ומערת פרומתאוס (נטיפים, אגמים, שייט).",
+          "אחד הטיולים שהכי נהנינו מהם: ג'יפ עם Bacho Tsotsoria – מדריך מקומי למקומות מיוחדים בין מפלים, מים וטבע פראי. שילוב מושלם של הרפתקה ואדרנלין – מומלץ בחום!",
+          "טיילנו עם שלושה ילדים – שילבנו הרפתקאות עם מנוחה ופינוקים, וזה עבד מצוין.",
+        ],
+        links: [
+          { label: N.martviliCanyon, url: "https://www.google.com/maps/search/Martvili+Canyon" },
+          { label: N.okatseCanyon, url: "https://www.google.com/maps/search/Okatse+Canyon" },
+          { label: N.satapliaReserve, url: "https://www.google.com/maps/search/Sataplia+Nature+Reserve" },
+          { label: N.prometheusCave, url: "https://www.google.com/maps/search/Prometheus+Cave+Georgia" },
+          { label: "Bacho Tsotsoria – Facebook", url: "https://www.facebook.com/search/top?q=Bacho%20Tsotsoria" },
+          { label: "חדש באתר – הסיפור המלא", url: "new.html#family-two-weeks" },
+        ],
+      },
       {
         title: "הגעה, נהג פרטי ומלון בקוטאיסי",
         author: "משפחה (6 נפשות)",
@@ -87,8 +107,24 @@ const TRAVELER_STORIES = {
     ],
   },
   5: {
-    pageIntro: "צקאלטובו, מערות – חוויות Urbex וטיפים לנסיעה.",
+    pageIntro: "צקאלטובו, מערות, סטאפליה – Urbex, דינוזאורים וטיפים לנסיעה.",
     stories: [
+      {
+        title: "פרומתאוס וסטאפליה – מערות ודינוזאורים",
+        author: "משפחה (3 ילדים)",
+        date: "2026",
+        image: "IMG.prometheus",
+        paragraphs: [
+          "מערת פרומתאוס – מערה ענקית ומרשימה: נטיפים, תצורות סלע, אגמים ושייט. ~14°C – סווטר חובה.",
+          "שמורת סטאפליה – יער, מערה, תצפיות ועקבות דינוזאורים שהילדים ממש אהבו.",
+          "שניהם באזור קוטאיסי – שווה לשלב באותו יום אם יש זמן (לפני או אחרי צקאלטובו).",
+        ],
+        links: [
+          { label: N.prometheusCave, url: "https://www.google.com/maps/search/Prometheus+Cave+Georgia" },
+          { label: N.satapliaReserve, url: "https://www.google.com/maps/search/Sataplia+Nature+Reserve" },
+          { label: N.tskaltubo, url: "https://www.google.com/maps/search/Tskaltubo+sanatorium" },
+        ],
+      },
       {
         title: "כבישים מאתגרים – מה לצפות",
         author: "מטיילים לסוואנטי",
@@ -106,8 +142,24 @@ const TRAVELER_STORIES = {
     ],
   },
   6: {
-    pageIntro: "קניונים ומפלי מרטווילי – כולל עדכון חשוב מהשטח.",
+    pageIntro: "קניונים ומפלי מרטווילי – המלצות משפחתיות + עדכון מהשטח.",
     stories: [
+      {
+        title: "קניונים באזור קוטאיסי – חוויה משפחתית",
+        author: "משפחה (3 ילדים)",
+        date: "2026",
+        image: "IMG.martvili",
+        paragraphs: [
+          "מרטווילי – מים בצבע טורקיז, מפלים, טבע מדהים ושייט בקניון. אחד האתרים היפים באזור.",
+          "אוקאצה – מסלול מיוחד עם שבילים תלויים מעל הקניון ונופים מרהיבים.",
+          "אופציה מומלצת: טיול ג'יפים עם Bacho Tsotsoria – לראות את הטבע בצורה קצת אחרת (Facebook).",
+        ],
+        links: [
+          { label: N.martviliCanyon, url: "https://www.google.com/maps/search/Martvili+Canyon" },
+          { label: N.okatseCanyon, url: "https://www.google.com/maps/search/Okatse+Canyon" },
+          { label: "Bacho Tsotsoria – Facebook", url: "https://www.facebook.com/search/top?q=Bacho%20Tsotsoria" },
+        ],
+      },
       {
         title: "עדכון ממפלי מרטווילי – אל תיפלו למלכודת",
         author: "משפחה (6 נפשות)",
@@ -347,8 +399,25 @@ const TRAVELER_STORIES = {
     ],
   },
   12: {
-    pageIntro: "חוף, כיף – אחרי ההרים.",
+    pageIntro: "חוף, כיף ופינוקים – אחרי ההרים.",
     stories: [
+      {
+        title: "באטומי – סיום מפנק אחרי ההרים",
+        author: "משפחה (3 ילדים)",
+        date: "2026",
+        image: "IMG.batumi",
+        paragraphs: [
+          "אחרי ההרים, הטיולים והנסיעות – הגענו לבאטומי לארבעה ימים של מנוחה: בריכות, טיילת, ים, אוכל טוב והמון פינוקים.",
+          "מופע הדולפינים – מרהיב! חובה להזמין מקומות מראש.",
+          "גם פארק מטיראלה (בדרך מ/לבאטומי), מרטווילי עם מעיינות – אבל בסוף הטיול היינו יותר באווירה של מנוחה במתקני המלון.",
+        ],
+        links: [
+          { label: N.batumiDolphinarium, url: "https://www.google.com/maps/search/Batumi+Dolphinarium" },
+          { label: N.batumiBoulevard, url: "https://www.google.com/maps/search/Batumi+Boulevard" },
+          { label: N.mtirala, url: "https://www.google.com/maps/search/Mtirala+National+Park" },
+          { label: "Vakhtang – נהג מומלץ", url: "logistics.html#drivers" },
+        ],
+      },
       {
         title: "מסטיה לים – שינוי קצר מושלם",
         author: "מטיילים",

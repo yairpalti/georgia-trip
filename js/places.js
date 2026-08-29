@@ -57,6 +57,9 @@ const N = {
   naberauliWines: fmt("יקב Naberauli", "Naberauli Wines", "ნაბერაულის მარანი"),
   raftingInKutaisi: fmt("Rafting in Kutaisi", "Rafting in Kutaisi", "Rafting in Kutaisi"),
   adventureCamping: fmt("Adventure Camping", "Adventure Camping (Rafting in Kutaisi)", "Adventure Camping"),
+  satapliaReserve: fmt("שמורת סטאפליה", "Sataplia Nature Reserve", "სათაფლია"),
+  batumiDolphinarium: fmt("דולפינריום באטומי", "Batumi Dolphinarium", "ბათუმის დელფინარიუმი"),
+  bachoJeepTours: fmt("Bacho Tsotsoria – טיולי ג'יפ", "Bacho Tsotsoria – jeep tours", "Bacho Tsotsoria"),
   siamThai: fmt("SIAM Thai Restaurant", "SIAM Thai Restaurant @ Kutaisi", "SIAM Thai Restaurant"),
   shareulaRiver: fmt("נהר שאראולה", "Shareula River", "შარაულა"),
 
