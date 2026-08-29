@@ -201,8 +201,8 @@ const EXTREME_ACTIVITIES = [
     id: "koruldi-jeep",
     name: "ג'יפ לאגמי קורולדי",
     category: "jeep",
-    lat: 43.05,
-    lng: 42.75,
+    lat: 43.086749,
+    lng: 42.70565,
     region: "סוואנטי – מעל מסטיה",
     difficulty: "בינוני (כביש עפר)",
     season: "יוני–אוקטובר",
@@ -210,10 +210,10 @@ const EXTREME_ACTIVITIES = [
     relatedDays: [7, 11],
     onRoute: true,
     description:
-      "עלייה בג'יפ 4×4 לאגמי קורולדי בגובה ~2,850 מ' – נוף ל-Ushba. אופציה ליום 7 (אם לא Via Ferrata) או בדרך ביום 11.",
-    website: "https://www.google.com/maps/search/Koruldi+Lakes",
+      "עלייה בג'יפ 4×4 לאגמי Koruldi בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi ו-Shkhara. לא נגיש ברכב רגיל. אופציה לערב יום 7 (אחרי הגעה למסטיה) או בבוקר יום 11 בירידה.",
+    website: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
     websiteLabel: "Koruldi Lakes – מפה",
-    image: "IMG.ushba",
+    image: "IMG.koruldi",
   },
   {
     id: "mestia-paragliding",
@@ -403,7 +403,7 @@ const EXTREME_ACTIVITIES = [
     relatedDays: [4],
     onRoute: true,
     description:
-      "רפטינג בינוני בקanyon Alpana על הריוני – יציאה מ-Kvishari (~26 ק\"מ מאמברולאורי), סיום במחנה Alpana. ₾100 · Rafting in Kutaisi.",
+      "רפטינג בינוני בקניון Alpana על הריוני – יציאה מ-Kvishari (~26 ק\"מ מאמברולאורי), סיום במחנה Alpana. ₾100 · Rafting in Kutaisi.",
     website: "https://www.raftinginkutaisi.com/trip/rafting-in-alpana-canyon/",
     websiteLabel: "Rafting in Kutaisi – Alpana (₾100)",
     price: "₾100",

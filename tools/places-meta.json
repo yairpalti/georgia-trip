@@ -137,6 +137,12 @@
   "category": "town",
   "area": "סוואנטי"
  },
+ "Koruldi Lakes": {
+  "id": "koruldi-lakes",
+  "he": "אגמי קורולדי",
+  "category": "nature",
+  "area": "סוואנטי"
+ },
  "Inguri Dam": {
   "id": "enguri-dam",
   "he": "סכר אנגורי",

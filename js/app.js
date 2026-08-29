@@ -1060,6 +1060,8 @@ function renderDayPage(dayId) {
 
         ${renderHikingTrailsCard(dayId)}
 
+        ${typeof renderMestiaVehicleGuideHtml === "function" && [7, 8, 9].includes(dayId) ? renderMestiaVehicleGuideHtml({ dayId }) : ""}
+
         ${renderRaftingKutaisiCard(dayId)}
 
         ${renderCulinaryLinksCard(dayId)}

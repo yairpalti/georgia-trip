@@ -237,9 +237,9 @@ const ACTIVITY_DETAILS = {
   11: [
     {
       description:
-        "08:00 – יציאה ממאזרi. ג'יפ/רכב ל-Koruldi Lakes (2,850 מ') – 1.5 ש' על כביש עפר. אגמים alpine, נוף 360° ל-Ushba. 45–60 דק' צילום. יורדים למסטיה, ממשיכים דרומה.",
+        "08:00 – יציאה ממאזרי. ג'יפ 4×4 ל-Koruldi Lakes (2,850 מ') – ~45 דק' על כביש עפר. אגמים alpine, נוף 360° ל-Ushba. 45–60 דק' צילום. לדלג אם ביקרתם בערב יום 7. ממשיכים דרומה.",
       image: "IMG.koruldi",
-      link: "https://www.google.com/maps/search/Koruldi+Lakes",
+      link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
       linkLabel: N.koruldiLakes,
     },
     {

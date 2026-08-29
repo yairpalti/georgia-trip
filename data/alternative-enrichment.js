@@ -293,6 +293,52 @@ const ALTERNATIVE_ENRICHMENT = {
       ],
     },
   },
+  7: {
+    0: {
+      driving: "חצי יום · ג'יפ 4×4 + נהג · ~10 ק\"מ ממסטיה",
+      description:
+        "אופציה לערב יום 7 – יום מנוחה קל לפני Ushguli. עלייה בג'יפ לאגמי Koruldi alpine בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi, Shkhara ועמק Enguri. לא נגיש ברכב השכור.",
+      image: "IMG.koruldi",
+      link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
+      linkLabel: N.koruldiLakes,
+      tips: [
+        "לתאם ג'יפ + נהג במסטיה – ~150–300 ₾ (Airbnb / מרכז העיירה)",
+        "אחרי check-in וסיור במסטיה – יציאה ~16:30",
+        "לבוש חם, כובע, מים – רוח בגובה",
+        "אם לא מספיקים – אפשר בבוקר יום 11 בירידה מההרים",
+      ],
+      activities: [
+        {
+          name: fmt("תיאום ג'יפ במסטיה", "Book jeep in Mestia", "ჯიპი მესტიაში"),
+          timeOfDay: "14:00–15:00",
+          duration: "15 דק'",
+          description: "ב-check-in או במרכז המידע – לקבוע שעת איסוף ומחיר. הנהג מחכה ומחזיר.",
+          link: "https://www.google.com/maps/search/Mestia+Georgia",
+          linkLabel: N.mestia,
+          image: "IMG.mestia",
+        },
+        {
+          name: N.koruldiLakes,
+          timeOfDay: "16:30–18:30",
+          duration: "2 שעות",
+          description:
+            "נסיעת ג'יפ ~45 דק' על כביש עפר. אגמים alpine, שלוליות מושלגות (לא אגמים ענקיים), נוף 360°. אפשר לרדת ברגל לבקתת קפה – קפה, עוגיות, מרק.",
+          link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
+          linkLabel: N.koruldiLakes,
+          image: "IMG.koruldi",
+        },
+        {
+          name: fmt("חזרה וארוחת ערב", "Return & dinner", "ვახშამი"),
+          timeOfDay: "19:00–21:00",
+          duration: "2 שעות",
+          description: "חזרה למסטיה. ארוחת ערב – Laila (kubdari) או Samushao Marani. מחר Ushguli!",
+          link: "https://www.google.com/maps/search/Laila+Restaurant+Mestia",
+          linkLabel: "Laila Restaurant",
+          image: "IMG.supra",
+        },
+      ],
+    },
+  },
 };
 
 if (typeof module !== "undefined") module.exports = { ALTERNATIVE_ENRICHMENT };

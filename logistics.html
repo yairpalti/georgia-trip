@@ -50,6 +50,11 @@
         <div id="rental-container"></div>
       </div>
 
+      <div class="logistics-card" style="grid-column: 1 / -1" id="mestia-vehicle">
+        <h2>🏔️ מסטיה: SUV מול ג'יפ 4×4</h2>
+        <div id="mestia-vehicle-container"></div>
+      </div>
+
       <div class="logistics-card" id="drones">
         <h2>🛸 רחפנים (Drone)</h2>
         <div id="drone-container"></div>
@@ -90,6 +95,7 @@
 
   <script src="js/places.js"></script>
   <script src="data/rafting-kutaisi.js"></script>
+  <script src="data/mestia-vehicle-guide.js"></script>
   <script src="data/trip.js"></script>
   <script>
     function renderAdventureOperator(op) {
@@ -232,6 +238,11 @@
       `
         )
         .join("");
+
+      const mestiaVehicleEl = document.getElementById("mestia-vehicle-container");
+      if (mestiaVehicleEl && typeof renderMestiaVehicleGuideHtml === "function") {
+        mestiaVehicleEl.innerHTML = renderMestiaVehicleGuideHtml();
+      }
 
       const drone = LOGISTICS.drones;
       document.getElementById("drone-container").innerHTML = `

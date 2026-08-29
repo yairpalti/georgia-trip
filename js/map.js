@@ -13,6 +13,7 @@ function enPlace(name) {
 /** Matches overnight labels like "אמברולאורי / Adventure Camping" to map points */
 function isOvernightPlace(place, overnightName) {
   if (!overnightName || !place) return false;
+  if (place.extremeId) return false;
   if (place.overnight === true) return true;
   const placeName = typeof place === "string" ? place : place.name;
   if (!placeName) return false;
@@ -50,8 +51,13 @@ function overnightLatLng(segment) {
   if (segment.overnightLat) {
     return [segment.overnightLat, segment.overnightLng];
   }
-  const candidates = [...(segment.waypoints || []), segment.to, segment.from];
-  for (const p of candidates) {
+  const endpoints = [segment.to, segment.from];
+  for (const p of endpoints) {
+    if (p?.overnight || isOvernightPlace(p, segment.overnight)) {
+      return [p.lat, p.lng];
+    }
+  }
+  for (const p of segment.waypoints || []) {
     if (p?.overnight || isOvernightPlace(p, segment.overnight)) {
       return [p.lat, p.lng];
     }

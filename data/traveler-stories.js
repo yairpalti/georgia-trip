@@ -216,7 +216,7 @@ const TRAVELER_STORIES = {
           "במסטיה: מונית (50 לארי) חוסכת 4 ק\"מ הליכה. למעלה – מיץ דובדבנים ממותק שווה.",
         ],
         links: [
-          { label: N.koruldiLakes, url: "https://www.google.com/maps/search/Koruldi+Lakes" },
+          { label: N.koruldiLakes, url: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z" },
           { label: "Hotel Posta Mestia", url: "https://www.google.com/maps/search/Hotel+Posta+Mestia" },
         ],
         gallery: [

@@ -131,7 +131,10 @@ const ROUTE_SEGMENTS = [
     day: 7,
     from: { name: N.whiteHotelGuesthouse, lat: 42.508974, lng: 41.870705 },
     to: { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788 },
-    waypoints: [{ name: N.enguriDam, lat: 42.7583, lng: 42.0333 }],
+    waypoints: [
+      { name: N.enguriDam, lat: 42.7583, lng: 42.0333 },
+      { name: N.koruldiLakes, lat: 43.086749, lng: 42.70565, optional: true },
+    ],
     places: [N.enguriDam],
     distanceKm: 140,
     duration: "3h",
@@ -174,7 +177,7 @@ const ROUTE_SEGMENTS = [
     from: { name: N.mazeri, lat: 43.0833, lng: 42.5167 },
     to: { name: N.anaklia, lat: 42.3917, lng: 41.5583 },
     waypoints: [
-      { name: N.koruldiLakes, lat: 43.05, lng: 42.75 },
+      { name: N.koruldiLakes, lat: 43.086749, lng: 42.70565, optional: true },
       { name: N.dadianiPalace, lat: 42.5233, lng: 41.8683 },
     ],
     places: [N.koruldiLakes, N.dadianiPalace],
@@ -795,7 +798,7 @@ const DAYS = [
     emoji: "🏔",
     theme: fmt("עלייה לסוואנטי", "Ascent to Svaneti", "სვანეთში"),
     overnight: N.mestiaAirbnb,
-    driving: "כ-4–5 שעות (140 ק\"מ) – כביש מפותל",
+    driving: "כ-4–5 שעות (140 ק\"מ) – SUV · כביש מפותל",
     summary: "עלייה לסוואנטי: נסיעה מזוגדידי דרך סכר אנגורי, הגעה למסטיה – בירת ההרים.",
     activities: [
       {
@@ -840,6 +843,22 @@ const DAYS = [
         linkLabel: "Laila Restaurant",
       },
     ],
+    alternatives: [
+      {
+        name: "🚙 אופציה – אגמי קורולדי (ג'יפ 4×4)",
+        description:
+          "יום מנוחה קל לפני Ushguli: עלייה בג'יפ לאגמים alpine בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi ו-Shkhara. לא נגיש ברכב רגיל. אפשר גם בבוקר יום 11 בירידה אם מדלגים.",
+        link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
+        linkLabel: N.koruldiLakes,
+        image: "IMG.koruldi",
+        tips: [
+          "ג'יפ + נהג – ~150–300 ₾ (לתאם במסטיה / Airbnb)",
+          "חצי יום – ערב אחרי check-in וסיור במסטיה",
+          "לבוש חם – רוח בגובה",
+          "אם לא מספיקים בערב 7 – אפשר בבוקר יום 11",
+        ],
+      },
+    ],
     hotels: [
       {
         name: N.mestiaAirbnb,
@@ -853,6 +872,27 @@ const DAYS = [
     mapPoints: [
       { name: N.enguriDam, lat: 42.7583, lng: 42.0333 },
       { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788, overnight: true },
+      { name: N.koruldiLakes, lat: 43.086749, lng: 42.70565 },
+    ],
+    mapRoutes: [
+      {
+        label: "יום 7 – עלייה למסטיה",
+        color: "#7b2d3e",
+        dashed: false,
+        points: [
+          { name: N.enguriDam, lat: 42.7583, lng: 42.0333 },
+          { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788, overnight: true },
+        ],
+      },
+      {
+        label: "אופציה – Koruldi Lakes (4×4)",
+        color: "#2980b9",
+        dashed: true,
+        points: [
+          { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788 },
+          { name: N.koruldiLakes, lat: 43.086749, lng: 42.70565 },
+        ],
+      },
     ],
   },
   {
@@ -863,7 +903,7 @@ const DAYS = [
     emoji: "🏔",
     theme: fmt("4x4 לכפר הגבוה באירופה", "4x4 to Europe's highest village", "4x4 უშგულში"),
     overnight: N.mestiaAirbnb,
-    driving: "כ-3.5 שעות שטח (90 ק\"מ הלוך-חזור)",
+    driving: "ג'יפ 4×4 · ~3.5 ש' (90 ק\"מ H/R) – הרכב חונה",
     summary: "ג'יפ 4x4 עם נהג לאושגולי, סוסים או הליכה לקרחון שחארה.",
     activities: [
       {
@@ -909,7 +949,7 @@ const DAYS = [
     emoji: "🏡",
     theme: fmt("טרק קליל ולינה בטבע", "Easy hike & nature stay", "მსუბუქი ლაშქრობა და ბუნებაში ღამე"),
     overnight: N.mazeriCabin,
-    driving: "כ-45 דק' נסיעה (25 ק\"מ) + הליכה 2–3 שעות",
+    driving: "SUV · 45 דק' למאזרי + טרק צ'לאדי",
     summary: "בוקר: check-out מ-Airbnb במסטיה (1.10) · טרק לקרחון צ'לאדי. אחר הצהריים: נסיעה למאזרי – בקתת עץ עם נוף לאושבה.",
     activities: [
       {
@@ -1000,8 +1040,9 @@ const DAYS = [
     activities: [
       {
         name: N.koruldiLakes,
-        description: "תצפית בוקר על אגמים alpines מעל ההרים.",
-        link: "https://www.google.com/maps/search/Koruldi+Lakes",
+        description:
+          "תצפית בוקר על אגמים alpine בגובה ~2,850 מ' – נוף ל-Ushba. ג'יפ 4×4 + נהג (~45 דק' ממסטיה). לדלג אם כבר ביקרתם בערב יום 7.",
+        link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
         linkLabel: N.koruldiLakes,
       },
       {
@@ -1027,7 +1068,7 @@ const DAYS = [
       },
     ],
     mapPoints: [
-      { name: N.koruldiLakes, lat: 43.05, lng: 42.75 },
+      { name: N.koruldiLakes, lat: 43.086749, lng: 42.70565 },
       { name: N.anaklia, lat: 42.3917, lng: 41.5583 },
     ],
   },
@@ -1125,6 +1166,13 @@ const LOGISTICS = {
       linkLabel: fmt("פרטי רכב שכור", "Rental details", "ქირავნობა"),
     },
     {
+      id: "mestia-jeep",
+      label: fmt("ג'יפ 4×4 – Ushguli (יום 8)", "4×4 jeep – Ushguli (day 8)", "ჯიპი – უშგული"),
+      note: fmt("להזמין ב-check-in מסטיה (יום 7) · ~150–200 ₾", "Book at Mestia check-in (day 7) · ~150–200 GEL", "~150–200 ₾"),
+      link: "#mestia-vehicle",
+      linkLabel: fmt("SUV מול ג'יפ – מסטיה", "SUV vs jeep – Mestia", "SUV vs jeep"),
+    },
+    {
       id: "hotels",
       label: fmt("מלונות", "Hotels", "სასტუმროები"),
       note: fmt("12 לילות · ראו טבלת לינות למטה (יום 5: צקאלטובו/Okatse)", "12 nights · see table (day 5: Tskaltubo/Okatse)", "12 ღამე"),
@@ -1158,12 +1206,13 @@ const LOGISTICS = {
   rentalCars: [
     {
       name: fmt("איסוף והחזרה בשדה התעופה באטומי", "Pick-up & drop-off at Batumi Airport", "აღება და დაბრუნება ბათუმის აეროპორტში"),
-      details: `מומלץ SUV – כבישים הרריים, שטח בדרך ל${N.ushguli.split(" · ")[0]}. איסוף ביום 1 (23.9) אחרי הנחיתה, החזרה ביום 13 (5.10) לפני ההמראה.`,
+      details: `מומלץ SUV – כבישים הרריים ומפותלים. לא 4×4: ל-Ushguli ו-Koruldi יש ג'יפ נפרד עם נהג (ימים 7–8). איסוף ביום 1 (23.9), החזרה ביום 13 (5.10).`,
       tips: [
         "להזמין מראש – עונת ספטמבר-אוקטובר",
         "ביטוח מלא (CDW) מומלץ מאוד",
         "רישיון נהיגה בינלאומי + רישיון ישראלי",
         "GPS / Waze – עובד מצוין בגיאורגיה",
+        "ראו גם: מסטיה – SUV מול ג'יפ (#mestia-vehicle)",
       ],
       links: [
         { label: "Rentalcars.com", url: "https://www.rentalcars.com/" },
