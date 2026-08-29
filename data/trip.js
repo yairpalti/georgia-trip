@@ -30,10 +30,11 @@ const TRIP_META = {
 const ROUTE_COORDS = [
   { name: N.batumi, lat: 41.6168, lng: 41.6367, day: 1 },
   { name: N.kutaisi, lat: 42.2679, lng: 42.6946, day: 2 },
+  { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, day: 3 },
   { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484, day: 4 },
   { name: N.tskaltubo, lat: 42.3417, lng: 42.5986, day: 5 },
-  { name: N.zugdidi, lat: 42.5088, lng: 41.8709, day: 6 },
-  { name: N.mestia, lat: 43.0458, lng: 42.7289, day: 7 },
+  { name: N.whiteHotelGuesthouse, lat: 42.508974, lng: 41.870705, day: 6 },
+  { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788, day: 7 },
   { name: N.anaklia, lat: 42.3917, lng: 41.5583, day: 11 },
   { name: N.batumi, lat: 41.6168, lng: 41.6367, day: 12 },
 ];
@@ -83,14 +84,14 @@ const ROUTE_SEGMENTS = [
       { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
       { name: N.mgvimevi, lat: 42.2694, lng: 43.0456 },
     ],
-    places: [N.katskhiPillar, N.chiatura, N.lunchAtLia, N.mgvimevi],
-    distanceKm: 130,
-    duration: "2h",
-    overnight: N.chiatura,
+    places: [N.katskhiPillar, N.chiatura, N.lunchAtLia, N.mgvimevi, N.cottageMebirashi],
+    distanceKm: 160,
+    duration: "3–3.5h",
+    overnight: N.cottageMebirashi,
   },
   {
     day: 4,
-    from: { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+    from: { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
     to: { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
     waypoints: [
       { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
@@ -98,7 +99,7 @@ const ROUTE_SEGMENTS = [
     places: [N.rioniRiver, N.adventureCamping, N.shaoriReservoir, N.khvanchkaraWinery],
     distanceKm: 90,
     duration: "1.5–2h",
-    overnight: fmt("אמברולאורי / Adventure Camping", "Ambrolauri / Adventure Camping", "ამბროლაური / Adventure Camping"),
+    overnight: N.adventureCamping,
   },
   {
     day: 5,
@@ -113,7 +114,7 @@ const ROUTE_SEGMENTS = [
   {
     day: 6,
     from: { name: N.tskaltubo, lat: 42.3417, lng: 42.5986 },
-    to: { name: N.zugdidi, lat: 42.5088, lng: 41.8709 },
+    to: { name: N.whiteHotelGuesthouse, lat: 42.508974, lng: 41.870705 },
     waypoints: [
       { name: N.okatseCanyon, lat: 42.4167, lng: 42.5167 },
       { name: N.martvili, lat: 42.4167, lng: 42.3667 },
@@ -122,32 +123,32 @@ const ROUTE_SEGMENTS = [
     places: [N.okatseCanyon, N.martviliCanyon, N.nokalakeviHotSprings],
     distanceKm: 90,
     duration: "2–2.5h",
-    overnight: N.zugdidi,
+    overnight: N.whiteHotelGuesthouse,
   },
   {
     day: 7,
-    from: { name: N.zugdidi, lat: 42.5088, lng: 41.8709 },
-    to: { name: N.mestia, lat: 43.0458, lng: 42.7289 },
+    from: { name: N.whiteHotelGuesthouse, lat: 42.508974, lng: 41.870705 },
+    to: { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788 },
     waypoints: [{ name: N.enguriDam, lat: 42.7583, lng: 42.0333 }],
     places: [N.enguriDam],
     distanceKm: 140,
     duration: "3h",
-    overnight: N.mestia,
+    overnight: N.mestiaAirbnb,
   },
   {
     day: 8,
-    from: { name: N.mestia, lat: 43.0458, lng: 42.7289 },
-    to: { name: N.mestia, lat: 43.0458, lng: 42.7289 },
+    from: { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788 },
+    to: { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788 },
     waypoints: [{ name: N.ushguli, lat: 42.9114, lng: 43.0136 }],
     places: [N.ushguli, N.shkharaGlacier],
     distanceKm: 90,
     duration: "3.5h",
-    overnight: N.mestia,
+    overnight: N.mestiaAirbnb,
     loop: true,
   },
   {
     day: 9,
-    from: { name: N.mestia, lat: 43.0458, lng: 42.7289 },
+    from: { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788 },
     to: { name: N.mazeri, lat: 43.0833, lng: 42.5167 },
     waypoints: [{ name: N.chalaadiGlacier, lat: 43.0667, lng: 42.6833 }],
     places: [N.chalaadiGlacier, N.mazeri, N.ushba],
@@ -314,10 +315,10 @@ const DAYS = [
     title: `${N.katskhiPillar.split(" · ")[0]} ו${N.chiatura.split(" · ")[0]}`,
     emoji: "🚠",
     theme: fmt("תרבות, מים ואקסטרים – ברכב עצמי", "Culture, water & adventure – own car", "კულტურა, წყალი და ექსტრემი"),
-    overnight: fmt("אזור צ'יאתורה", "Chiatura area", "ჭიათურა"),
-    driving: "כ-130 ק\"מ · רכב עצמי · לינה בצ'יאתורה",
+    overnight: N.cottageMebirashi,
+    driving: "כ-160 ק\"מ · רכב עצמי · לינה ב-Cottage Mebirashi, אמברולאורי",
     summary:
-      "יום 3 ברכב שלכם – check-out מקוטאיסי בבוקר. אופציה א': קצחי, Urbex בצ'יאתורה, Lia, מגווימבי. אופציה ב': Via Ferrata ב-Sveri (מפגש במקום). שתיהן – לינה באזור צ'יאתורה.",
+      "יום 3 ברכב שלכם – check-out מקוטאיסי בבוקר. קצחי, צ'יאתורה, Lia, מגווימבי (או Via Ferrata ב-Sveri) – ואז נסיעה ערב (~1.5–2 ש') ל-Cottage Mebirashi (check-in 25.9).",
     activities: [
       {
         name: N.katskhiPillar,
@@ -334,7 +335,7 @@ const DAYS = [
         timeOfDay: "10:30–17:00",
         duration: "יום מלא",
         description:
-          "Urbex ורכבל Sanatorium · ארוחה אצל Lia (WhatsApp מראש!) · מנזר מגווימבי. לינה במלון באזור צ'יאתורה – בלי חזרה לקוטאיסי.",
+          "Urbex ורכבל Sanatorium · ארוחה אצל Lia (WhatsApp מראש!) · מנזר מגווימבי. ערב: נסיעה ל-Cottage Mebirashi באמברולאורי (הזמנה 25.9–26.9).",
         link: "https://www.google.com/maps/search/Chiatura+Georgia",
         linkLabel: N.chiatura,
         image: "IMG.chiatura",
@@ -344,7 +345,7 @@ const DAYS = [
         timeOfDay: "10:00–17:00",
         duration: "יום מלא",
         description:
-          "נסיעה ברכב ל-Sveri Adventure Camp (~110 ק\"מ / 2 ש' מקוטאיסי). Via Ferrata עם Rafting in Kutaisi במקום (₾200 – בלי הסעה). שחייה, BBQ. לינה בצ'יאתורה (~30 דק' מ-Sveri).",
+          "נסיעה ברכב ל-Sveri Adventure Camp (~110 ק\"מ / 2 ש' מקוטאיסי). Via Ferrata עם Rafting in Kutaisi במקום (₾200 – בלי הסעה). שחייה, BBQ. ערב: נסיעה ל-Cottage Mebirashi (~2 ש' מ-Sveri/צ'יאתורה).",
         link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
         linkLabel: N.raftingInKutaisi + " – Via Ferrata",
         image: "IMG.rafting",
@@ -354,16 +355,16 @@ const DAYS = [
       {
         name: "📋 אופציה א' – קצחי, צ'יאתורה, Lia ומגווימבי",
         description:
-          "יום תרבות ו-Urbex ברכב עצמי: קצחי → צ'יאתורה → Lia → מגווימבי → לינה בצ'יאתורה.",
-        overnight: fmt("אזור צ'יאתורה", "Chiatura area", "ჭიათურა"),
+          "יום תרבות ו-Urbex ברכב עצמי: קצחי → צ'יאתורה → Lia → מגווימבי → ערב: Cottage Mebirashi, אמברולאורי.",
+        overnight: N.cottageMebirashi,
         recommended: true,
         image: "IMG.chiatura",
       },
       {
         name: "🧗 אופציה ב' – Via Ferrata ב-Sveri (רכב עצמי)",
         description:
-          "ברכב שלכם ל-Sveri. מפגש עם Rafting in Kutaisi – Via Ferrata, שחייה ו-BBQ. ערב: מלון בצ'יאתורה. לתאם מראש: +995 595 41 15 47.",
-        overnight: fmt("אזור צ'יאתורה", "Chiatura area", "ჭიათურა"),
+          "ברכב שלכם ל-Sveri. מפגש עם Rafting in Kutaisi – Via Ferrata, שחייה ו-BBQ. ערב: Cottage Mebirashi באמברולאורי. לתאם מראש: +995 595 41 15 47.",
+        overnight: N.cottageMebirashi,
         link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
         linkLabel: N.raftingInKutaisi + " – Via Ferrata",
         image: "IMG.rafting",
@@ -380,12 +381,12 @@ const DAYS = [
     ],
     hotels: [
       {
-        name: fmt("לינה באזור צ'יאתורה", "Stay near Chiatura", "ჭიათურა"),
-        area: N.chiatura,
+        name: N.cottageMebirashi,
+        area: `${N.ambrolauri}, ${N.racha}`,
         nights: 1,
-        note: "check-out קוטאיסי בבוקר · Sveri ~30 דק' · חניה במלון",
-        link: "https://www.google.com/maps/search/hotels+Chiatura+Georgia",
-        image: "IMG.chiatura",
+        note: "✅ מאושר · 25.9–26.9 · Village Ukeshi · $174 · ביטול חינם",
+        link: "https://www.google.com/maps/search/Cottage+Mebirashi+Ambrolauri",
+        image: "IMG.racha",
       },
     ],
     mapPoints: [
@@ -394,6 +395,7 @@ const DAYS = [
       { name: N.chiatura, lat: 42.2989, lng: 43.289 },
       { name: N.mgvimevi, lat: 42.2694, lng: 43.0456 },
       { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
+      { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
     ],
     mapRoutes: [
       {
@@ -405,7 +407,7 @@ const DAYS = [
           { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
           { name: N.chiatura, lat: 42.2989, lng: 43.289 },
           { name: N.mgvimevi, lat: 42.2694, lng: 43.0456 },
-          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
         ],
       },
       {
@@ -416,7 +418,7 @@ const DAYS = [
           { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
           { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
           { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
-          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
         ],
       },
     ],
@@ -427,18 +429,18 @@ const DAYS = [
     weekday: "שבת",
     title: fmt("רפטינג וחבל ראצ'ה", "Rafting & Racha", "rafting და რაჭა"),
     emoji: "🛶",
-    theme: fmt("מצ'יאתורה לראצ'ה – נהר, יין ונוף", "Chiatura to Racha – river, wine & views", "რიონი, რაჭა"),
-    overnight: fmt("אמברולאורי / Adventure Camping", "Ambrolauri / Adventure Camping", "ამბროლაური / Adventure Camping"),
-    driving: "כ-90 ק\"מ · ~1.5–2 ש' מאזור צ'יאתורה",
+    theme: fmt("Mebirashi לראצ'ה – נהר, יין ונוף", "Mebirashi to Racha – river, wine & views", "Mebirashi, რაჭა"),
+    overnight: N.adventureCamping,
+    driving: "כ-90 ק\"מ · ~1.5–2 ש' מ-Cottage Mebirashi",
     summary:
-      "יום 4: יציאה מאזור צ'יאתורה לראצ'ה. אופציה א': רפטינג → שאורי → יקב → אמברולאורי. אופציה ב': רפטינג + קניונינג Shareula. אופציה ג' (מומלץ לאקסטרים): check-in ב-Adventure Camping → רפטינג מהמחנה → לינה בקוטג'/אוהל · יום 5 בוקר קניונינג.",
+      "יום 4: check-out מ-Cottage Mebirashi (26.9) → רפטינג וראצ'ה. אופציה א': רפטינג → שאורי → יקב. אופציה ב': רפטינג + Shareula. אופציה ג' (מומלץ): Adventure Camping – check-in 12:00, רפטינג, לינה בקוטג' · יום 5 בוקר קניונינג.",
     activities: [
       {
         name: fmt("נסיעה לנקודת הרפטינג / Adventure Camping", "Drive to rafting / Adventure Camping", "rafting"),
         timeOfDay: "08:00–12:00",
         duration: "~1–1.5 ש'",
         description:
-          "יציאה מצ'יאתורה. אופציה ג': check-in ב-Adventure Camping ב־12:00 (הכנה לרפטינג 12:30). אופציות א'/ב': נסיעה ישירה לנקודת רפטינג.",
+          "check-out מ-Cottage Mebirashi בבוקר. אופציה ג': check-in ב-Adventure Camping ב־12:00 (הכנה לרפטינג 12:30). אופציות א'/ב': נסיעה ישירה לנקודת רפטינג.",
         link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
         linkLabel: N.adventureCamping,
         image: "IMG.racha",
@@ -476,8 +478,8 @@ const DAYS = [
       {
         name: "📋 אופציה א' – רפטינג, שאורי ויין → אמברולאורי",
         description:
-          "מצ'יאתורה לרפטינג (₾150), מאגר שאורי ויקב Khvanchkara. לינה באמברולאורי.",
-        overnight: N.ambrolauri,
+          "מ-Cottage Mebirashi לרפטינג (₾150), מאגר שאורי ויקב Khvanchkara. לינה ב-Adventure Camping.",
+        overnight: N.adventureCamping,
         link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
         linkLabel: N.raftingInKutaisi + " – Rioni",
         image: "IMG.rafting",
@@ -485,7 +487,7 @@ const DAYS = [
       {
         name: "🛶 אופציה ב' – רפטינג + קניונינג Shareula → אמברולאורי",
         description:
-          "יום כפול: רפטינג בוקר + קניונינג Shareula (₾200). לינה באמברולאורי.",
+          "יום כפול: רפטינג בוקר + קניונינג Shareula (₾200). לינה ב-Adventure Camping.",
         overnight: N.ambrolauri,
         link: "https://www.raftinginkutaisi.com/trip/canyoning-on-the-shareula-river/",
         linkLabel: N.raftingInKutaisi + " – Shareula",
@@ -537,23 +539,15 @@ const DAYS = [
         link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
         image: "IMG.racha",
       },
-      {
-        name: fmt("אמברולאורי / ראצ'ה", "Ambrolauri / Racha", "ამბროლაური / რაჭა"),
-        area: `${N.ambrolauri}, ${N.racha}`,
-        nights: 1,
-        note: "אופציות א'/ב'",
-        link: "https://www.google.com/maps/search/hotels+Ambrolauri",
-        image: "IMG.racha",
-      },
+
     ],
     mapPoints: [
-      { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+      { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
       { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
       { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484, overnight: true },
       { name: N.shaoriReservoir, lat: 42.5833, lng: 43.0833 },
       { name: N.khvanchkaraWinery, lat: 42.55, lng: 43.1 },
       { name: N.shareulaRiver, lat: 42.545, lng: 43.135 },
-      { name: N.ambrolauri, lat: 42.5211, lng: 43.1622, overnight: true },
     ],
     mapRoutes: [
       {
@@ -561,7 +555,7 @@ const DAYS = [
         color: "#7b2d3e",
         dashed: true,
         points: [
-          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
           { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
           { name: N.shaoriReservoir, lat: 42.5833, lng: 43.0833 },
           { name: N.khvanchkaraWinery, lat: 42.55, lng: 43.1 },
@@ -573,7 +567,7 @@ const DAYS = [
         color: "#2d5a3d",
         dashed: true,
         points: [
-          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
           { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
           { name: N.shareulaRiver, lat: 42.545, lng: 43.135 },
           { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
@@ -584,7 +578,7 @@ const DAYS = [
         color: "#1a5276",
         dashed: true,
         points: [
-          { name: N.chiatura, lat: 42.2989, lng: 43.289 },
+          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
           { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
           { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
           { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
@@ -737,7 +731,7 @@ const DAYS = [
     title: fmt("קניונים ומעיינות חמים", "Canyons & Hot Springs", "კანიონები და ცხელი წყლები"),
     emoji: "🛶",
     theme: `${N.okatseCanyon.split(" · ")[0]}, ${N.martvili.split(" · ")[0]}, ${N.nokalakeviHotSprings.split(" · ")[0]}`,
-    overnight: N.zugdidi,
+    overnight: N.whiteHotelGuesthouse,
     driving: "כ-90 ק\"מ · מצקאלטובו/Okatse → זוגדידי",
     summary:
       "יוצאים מלינת יום 5 – אוקאצה (גשרים תלויים) → מרטווילי (מים טורקיז, שייט) → נוקאלאקווי. אופציה: טיול ג'יפים עם Bacho Tsotsoria. לינה בזוגדידי.",
@@ -775,11 +769,11 @@ const DAYS = [
     ],
     hotels: [
       {
-        name: N.zugdidi,
+        name: N.whiteHotelGuesthouse,
         area: N.zugdidi,
         nights: 1,
-        note: "לילה אחד · יציאה לסוואנטי בבוקר יום 7",
-        link: "https://www.google.com/maps/search/hotels+Zugdidi",
+        note: "✅ מאושר · 28.9–29.9 · 2 חדרים · Kostava 70 · $115 · ביטול חינם",
+        link: "https://www.booking.com/Share-qT3VBX",
         image: "IMG.martvili",
       },
     ],
@@ -788,7 +782,7 @@ const DAYS = [
       { name: N.okatseCanyon, lat: 42.4167, lng: 42.5167 },
       { name: N.martvili, lat: 42.4167, lng: 42.3667 },
       { name: N.nokalakeviHotSprings, lat: 42.3533, lng: 42.3167 },
-      { name: N.zugdidi, lat: 42.5088, lng: 41.8709 },
+      { name: N.whiteHotelGuesthouse, lat: 42.508974, lng: 41.870705, overnight: true },
     ],
   },
   {
@@ -798,7 +792,7 @@ const DAYS = [
     title: `${N.enguriDam.split(" · ")[0]} ו${N.mestia.split(" · ")[0]}`,
     emoji: "🏔",
     theme: fmt("עלייה לסוואנטי", "Ascent to Svaneti", "სვანეთში"),
-    overnight: N.mestia,
+    overnight: N.mestiaAirbnb,
     driving: "כ-4–5 שעות (140 ק\"מ) – כביש מפותל",
     summary: "עלייה לסוואנטי: נסיעה מזוגדידי דרך סכר אנגורי, הגעה למסטיה – בירת ההרים.",
     activities: [
@@ -824,11 +818,11 @@ const DAYS = [
         linkLabel: fmt("מסעדות בדרך", "Road restaurants", "გზის რესტორნები"),
       },
       {
-        name: fmt("הגעה ולינה במסטיה", "Arrival & check-in Mestia", "ჩასვლა მესტიაში"),
+        name: fmt("הגעה ו-check-in – Home in Mestia (Airbnb)", "Arrival & check-in – Home in Mestia", "Home in Mestia"),
         description:
-          "הגעה צפויה 13:30–14:30. check-in, מנוחה קצרה. לרכוש מזומן מהכספומט (ATM מוגבל), חטיפים ומים לימי הטרק. להזמין ג'יפ ל-Ushguli ליום 8.",
-        link: "https://www.google.com/maps/search/hotels+Mestia",
-        linkLabel: N.mestia,
+          "הגעה צפויה 13:30–14:30. check-in ב-Airbnb (29.9–1.10) · 21 Mestia. מנוחה קצרה. לרכוש מזומן מהכספומט (ATM מוגבל), חטיפים ומים לימי הטרק. להזמין ג'יפ ל-Ushguli ליום 8.",
+        link: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ",
+        linkLabel: N.mestiaAirbnb,
       },
       {
         name: fmt("סיור במסטיה – מגדלים ומוזיאון", "Mestia walking tour", "მესტიის სვლა"),
@@ -846,17 +840,17 @@ const DAYS = [
     ],
     hotels: [
       {
-        name: N.mestia,
+        name: N.mestiaAirbnb,
         area: `${N.mestia}, ${N.svaneti}`,
         nights: 2,
-        note: "בסיס לימים 7–8",
-        link: "https://www.google.com/maps/search/hotels+Mestia",
+        note: "✅ מאושר · 29.9–1.10 · Home in Mestia · 21 Mestia",
+        link: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ",
         image: "IMG.mestia",
       },
     ],
     mapPoints: [
       { name: N.enguriDam, lat: 42.7583, lng: 42.0333 },
-      { name: N.mestia, lat: 43.0458, lng: 42.7289 },
+      { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788, overnight: true },
     ],
   },
   {
@@ -866,7 +860,7 @@ const DAYS = [
     title: `${N.ushguli.split(" · ")[0]} ו${N.shkharaGlacier.split(" · ")[0]}`,
     emoji: "🏔",
     theme: fmt("4x4 לכפר הגבוה באירופה", "4x4 to Europe's highest village", "4x4 უშგულში"),
-    overnight: N.mestia,
+    overnight: N.mestiaAirbnb,
     driving: "כ-3.5 שעות שטח (90 ק\"מ הלוך-חזור)",
     summary: "ג'יפ 4x4 עם נהג לאושגולי, סוסים או הליכה לקרחון שחארה.",
     activities: [
@@ -892,15 +886,16 @@ const DAYS = [
     ],
     hotels: [
       {
-        name: N.mestia,
+        name: N.mestiaAirbnb,
         area: N.mestia,
         nights: 1,
-        link: "https://www.google.com/maps/search/hotels+Mestia",
+        note: "✅ Airbnb – לילה שני (30.9)",
+        link: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ",
         image: "IMG.ushguli",
       },
     ],
     mapPoints: [
-      { name: N.mestia, lat: 43.0458, lng: 42.7289 },
+      { name: N.mestiaAirbnb, lat: 43.0432, lng: 42.719788, overnight: true },
       { name: N.ushguli, lat: 42.9114, lng: 43.0136 },
     ],
   },
@@ -913,7 +908,7 @@ const DAYS = [
     theme: fmt("טרק קליל ולינה בטבע", "Easy hike & nature stay", "მსუბუქი ლაშქრობა და ბუნებაში ღამე"),
     overnight: N.mazeriCabin,
     driving: "כ-45 דק' נסיעה (25 ק\"מ) + הליכה 2–3 שעות",
-    summary: "בוקר: טרק לקרחון צ'לאדי. אחר הצהריים: איסוף ציוד ונסיעה למאזרי – בקתת עץ עם נוף לאושבה. ערב רגוע בטבע.",
+    summary: "בוקר: check-out מ-Airbnb במסטיה (1.10) · טרק לקרחון צ'לאדי. אחר הצהריים: נסיעה למאזרי – בקתת עץ עם נוף לאושבה.",
     activities: [
       {
         name: N.chalaadiGlacier,
@@ -1245,15 +1240,11 @@ const LOGISTICS = {
   accommodationSummary: [
     { place: N.batumi, nights: 2, note: "לילה ראשון + אחרון" },
     { place: N.kutaisi, nights: 1, note: "יום 2" },
-    { place: N.chiatura, nights: 1, note: "יום 3 – אזור צ'יאתורה" },
-    {
-      place: `${N.ambrolauri} / ${N.adventureCamping}`,
-      nights: 1,
-      note: "יום 4 – אמברולאורי או Adventure Camping (רפטינג + קניונינג)",
-    },
+    { place: N.cottageMebirashi, nights: 1, note: "✅ יום 3 · 25.9–26.9 · Cottage Mebirashi" },
+    { place: N.adventureCamping, nights: 1, note: "יום 4 · Adventure Camping (רפטינג + קניונינג)" },
     { place: `${N.tskaltubo} / ${N.okatseCanyon}`, nights: 1, note: "יום 5 – בלי חזרה לזוגדידי" },
-    { place: N.zugdidi, nights: 1, note: "יום 6 – לפני סוואנטי" },
-    { place: `${N.mestia}, ${N.svaneti}`, nights: 2, note: "ימים 7–8" },
+    { place: N.whiteHotelGuesthouse, nights: 1, note: "✅ יום 6 · 28.9–29.9 · 2 חדרים" },
+    { place: N.mestiaAirbnb, nights: 2, note: "✅ ימים 7–8 · Airbnb 29.9–1.10" },
     { place: N.mazeriCabin, nights: 2, note: "בקתה / גסטהאוס – ימים 9–10" },
     { place: N.anaklia, nights: 1, note: fmt("ים השחור", "Black Sea", "შავი ზღვა") },
   ],

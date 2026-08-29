@@ -21,6 +21,9 @@ const PLACE_CATEGORIES = {
 
 const TRIP_PLACES = [
   { id: "adventure-camping", he: "קמפינג Adventure", en: "Adventure Camping", category: "lodging", area: "אימרתי · טקיבולי", lat: 42.558234, lng: 42.851748, cid: "14158453649228106590" },
+  { id: "cottage-mebirashi", he: "Cottage Mebirashi", en: "Cottage Mebirashi", category: "lodging", area: "אמברולאורי · ראצ'ה", lat: 42.512732, lng: 43.144137, address: "Village Ukeshi, Racha, Ambrolauri 0417, גאורגיה", tip: "הזמנה 25.9–26.9" },
+  { id: "white-hotel-guesthouse", he: "White Hotel Guesthouse", en: "White Hotel Guesthouse", category: "lodging", area: "זוגדידי", lat: 42.508974, lng: 41.870705, address: "Kostava Str. 70, Zugdidi 2100, גאורגיה", tip: "2 חדרים · 28.9–29.9" },
+  { id: "mestia-airbnb", he: "Home in Mestia (Airbnb)", en: "Home in Mestia", category: "lodging", area: "מסטיה · סוואנטי", lat: 43.0432, lng: 42.719788, address: "21 Mestia, Samegrelo-Zemo Svaneti 3200, גאורגיה", tip: "29.9–1.10" },
   { id: "chateau-dio", he: "יקב שאטו דיו", en: "Chateau Dio", category: "wine", area: "ראצ'ה · אמברולאורי", lat: 42.536156, lng: 43.130021, address: "G4PJ+F26, Dzirageuli Village, Ambrolauri 0400, גאורגיה", cid: "15440637857124317573" },
   { id: "hillside-kazbegi", he: "Hillside Kazbegi", en: "Hillside Kazbegi", category: "lodging", area: "קזבגי", lat: 42.657366, lng: 44.643271, address: "სტეფანწმინდა, Ilia Chavchavadze 32 B, Stepantsminda 4700, גאורגיה", cid: "5471305070392668729" },
   { id: "ananuri", he: "אנאנורי", en: "Ananuri", category: "attraction", area: "קרתלי", lat: 42.17314, lng: 44.694246, address: "גאורגיה", cid: "17061534747835163384" },

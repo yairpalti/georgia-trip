@@ -4,6 +4,24 @@ const SITE_UPDATES = {
   intro: "עדכונים, המלצות ותוכן חדש שנוסף לאחרונה לתוכנית הטיול.",
   items: [
     {
+      id: "confirmed-hotels",
+      date: "29.8.2026",
+      badge: "הזמנות",
+      title: "לינה מאושרת – Mebirashi, White Hotel, Airbnb מסטיה",
+      summary:
+        "שלוש הזמנות שעודכנו במסלול ובמפה: Cottage Mebirashi באמברולאורי (25.9–26.9, $174) · White Hotel Guesthouse, Zugdidi (28.9–29.9, 2 חדרים, $115) · Home in Mestia Airbnb (29.9–1.10, 21 Mestia).",
+      links: [
+        { label: "יום 3 – Cottage Mebirashi", url: "day.html?id=3" },
+        { label: "יום 4 – Adventure Camping (לילה אחרי)", url: "day.html?id=4" },
+        { label: "יום 6 – White Hotel Guesthouse", url: "day.html?id=6" },
+        { label: "ימים 7–8 – Airbnb מסטיה", url: "day.html?id=7" },
+        { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
+        { label: "Cottage Mebirashi – Google Maps", url: "https://www.google.com/maps/search/Cottage+Mebirashi+Ambrolauri" },
+        { label: "White Hotel – Booking", url: "https://www.booking.com/Share-qT3VBX" },
+        { label: "Airbnb מסטיה", url: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ" },
+      ],
+    },
+    {
       id: "family-two-weeks",
       date: "29.8.2026",
       badge: "סיפור מטיילים",
