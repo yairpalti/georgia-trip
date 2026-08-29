@@ -75,7 +75,7 @@ const RAFTING_KUTAISI = {
       duration: fmt("יום מלא", "1 day", "1 დღე"),
       relatedDays: [3],
       url: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
-      note: "Via Ferrata הראשון בקווקז – Sveri, ליד צ'יאתורה. אופציה ב' ביום 3.",
+      note: "Via Ferrata הראשון בקווקז – Sveri, ליד צ'יאתורה. Camp in Georgia ~€35 או Rafting in Kutaisi ₾200. אופציה ב' ביום 3.",
     },
     {
       id: "rioni-rafting",

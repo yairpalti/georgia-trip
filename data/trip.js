@@ -30,7 +30,7 @@ const TRIP_META = {
 const ROUTE_COORDS = [
   { name: N.batumi, lat: 41.6168, lng: 41.6367, day: 1 },
   { name: N.kutaisi, lat: 42.2679, lng: 42.6946, day: 2 },
-  { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, day: 3 },
+  { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng, day: 3 },
   { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484, day: 4 },
   { name: N.tskaltubo, lat: 42.3417, lng: 42.5986, day: 5 },
   { name: N.whiteHotelGuesthouse, lat: 42.508974, lng: 41.870705, day: 6 },
@@ -79,22 +79,22 @@ const ROUTE_SEGMENTS = [
   {
     day: 3,
     from: { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
-    to: { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
+    to: { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng, overnight: true },
     waypoints: [
       { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
       { name: N.chiatura, lat: 42.2989, lng: 43.289 },
       { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
-      { name: N.sveriViaFerrata, lat: 42.352, lng: 43.268, optional: true },
-      { name: N.teaGezruli, lat: 42.178974, lng: 43.22241, optional: true },
+      { name: N.campInGeorgia, lat: SVERI.camp.lat, lng: SVERI.camp.lng, optional: true },
+      { name: N.sveriViaFerrata, lat: SVERI.viaFerrata.lat, lng: SVERI.viaFerrata.lng, optional: true },
     ],
-    places: [N.katskhiPillar, N.chiatura, N.lunchAtLia, N.mgvimevi, N.cottageMebirashi, N.teaGezruli],
-    distanceKm: 160,
-    duration: "3–3.5h",
-    overnight: N.cottageMebirashi,
+    places: [N.katskhiPillar, N.chiatura, N.lunchAtLia, N.mgvimevi, N.hotelChiatura],
+    distanceKm: 130,
+    duration: "2.5–3.5h",
+    overnight: N.hotelChiatura,
   },
   {
     day: 4,
-    from: { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
+    from: { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng },
     to: { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484, overnight: true },
     waypoints: [
       { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
@@ -321,10 +321,10 @@ const DAYS = [
     title: `${N.katskhiPillar.split(" · ")[0]} ו${N.chiatura.split(" · ")[0]}`,
     emoji: "🚠",
     theme: fmt("תרבות, מים ואקסטרים – ברכב עצמי", "Culture, water & adventure – own car", "კულტურა, წყალი და ექსტრემი"),
-    overnight: N.cottageMebirashi,
-    driving: "כ-160 ק\"מ · רכב עצמי · לינה ב-Cottage Mebirashi, אמברולאורי",
+    overnight: N.hotelChiatura,
+    driving: "כ-130 ק\"מ · רכב עצמי · לינה בצ'יאתורה (Booking 25.9–26.9)",
     summary:
-      "יום 3 ברכב שלכם – check-out מקוטאיסי בבוקר. קצחי, צ'יאתורה, Lia, מגווימבי (או Via Ferrata ב-Sveri) – ואז נסיעה ערב (~1.5–2 ש') ל-Cottage Mebirashi (check-in 25.9).",
+      "יום 3 ברכב שלכם – check-out מקוטאיסי בבוקר. קצחי, צ'יאתורה, Lia, מגווימבי (או Via Ferrata ב-Sveri) – לינה במלון בצ'יאתורה, רח' צ'אבצ'אvadze (check-in 25.9 מ-14:00).",
     activities: [
       {
         name: N.katskhiPillar,
@@ -341,7 +341,7 @@ const DAYS = [
         timeOfDay: "10:30–17:00",
         duration: "יום מלא",
         description:
-          "Urbex ורכבל Sanatorium · ארוחה אצל Lia (WhatsApp מראש!) · מנזר מגווימבי. ערב: נסיעה ל-Cottage Mebirashi באמברולאורי (הזמנה 25.9–26.9).",
+          "Urbex ורכבל Sanatorium · ארוחה אצל Lia (WhatsApp מראש!) · מנזר מגווימבי. ערב: check-in במלון בצ'יאתורה (Booking 25.9–26.9, מ-14:00).",
         link: "https://www.google.com/maps/search/Chiatura+Georgia",
         linkLabel: N.chiatura,
         image: "IMG.chiatura",
@@ -351,9 +351,9 @@ const DAYS = [
         timeOfDay: "10:00–17:00",
         duration: "יום מלא",
         description:
-          "נסיעה ברכב ל-Sveri Adventure Camp (~110 ק\"מ / 2 ש' מקוטאיסי). Via Ferrata עם Rafting in Kutaisi במקום (₾200 – בלי הסעה). שחייה, BBQ. ערב: לינה ב-Tea Gezruli בכפר Gezruli (~45 דק' מ-Sveri) או נסיעה ל-Cottage Mebirashi (~2 ש').",
-        link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
-        linkLabel: N.raftingInKutaisi + " – Via Ferrata",
+          "נסיעה ברכב ל-Sveri Adventure Camp (~110 ק\"מ / 2 ש' מקוטאיסי). Via Ferrata מונחה – Camp in Georgia (~€35) או Rafting in Kutaisi (₾200). שחייה, BBQ. ערב: חזרה לצ'יאתורה – מלון ברח' צ'אבצ'אvadze.",
+        link: "https://campingeorgia.ge/hiking/",
+        linkLabel: "Camp in Georgia – Via Ferrata",
         image: "IMG.rafting",
       },
     ],
@@ -361,23 +361,23 @@ const DAYS = [
       {
         name: "📋 אופציה א' – קצחי, צ'יאתורה, Lia ומגווימבי",
         description:
-          "יום תרבות ו-Urbex ברכב עצמי: קצחי → צ'יאתורה → Lia → מגווימבי → ערב: Cottage Mebirashi, אמברולאורי.",
-        overnight: N.cottageMebirashi,
+          "יום תרבות ו-Urbex ברכב עצמי: קצחי → צ'יאתורה → Lia → מגווימבי → לינה במלון בצ'יאתורה.",
+        overnight: N.hotelChiatura,
         recommended: true,
         image: "IMG.chiatura",
       },
       {
         name: "🧗 אופציה ב' – Via Ferrata ב-Sveri (רכב עצמי)",
         description:
-          "ברכב שלכם ל-Sveri. מפגש עם Rafting in Kutaisi – Via Ferrata, שחייה ו-BBQ. ערב: Tea Gezruli בכפר Gezruli (~45 דק' מ-Sveri) או Cottage Mebirashi. לתאם מראש: +995 595 41 15 47.",
-        overnight: N.teaGezruli,
-        link: "https://www.raftinginkutaisi.com/trip/via-ferrata-in-georgia/",
-        linkLabel: N.raftingInKutaisi + " – Via Ferrata",
+          "ברכב שלכם ל-Sveri Adventure Camp (Camp in Georgia). Via Ferrata מונחה – ~€35 ישירות (+995 558 48 63 48) או Rafting in Kutaisi (+995 595 41 15 47). שחייה ו-BBQ. ערב: מלון בצ'יאתורה (Booking).",
+        overnight: N.hotelChiatura,
+        link: "https://campingeorgia.ge/hiking/",
+        linkLabel: "Camp in Georgia – Via Ferrata",
         image: "IMG.rafting",
         tips: [
-          "לינה מומלצת: Tea Gezruli – כפר Gezruli, ~45 דק' מ-Sveri",
-          "Booking: 25.9–26.9 · דירוג 9.4",
-          "~25 ק\"מ מעיר צ'יאתורה · לא בתוך העיר",
+          "check-in במלון מ-14:00 · check-out 26.9 עד 12:00",
+          "דירוג 9.2 (Wonderful) · מיקום 9.8 · WiFi · חניה · מסעדה",
+          "רח' ილია ჭავჭავაძე (Ilia Chavchavadze), 5500 Chiatura",
         ],
       },
     ],
@@ -392,19 +392,11 @@ const DAYS = [
     ],
     hotels: [
       {
-        name: N.cottageMebirashi,
-        area: `${N.ambrolauri}, ${N.racha}`,
+        name: N.hotelChiatura,
+        area: N.chiatura,
         nights: 1,
-        note: "✅ מאושר · 25.9–26.9 · Village Ukeshi · $174 · ביטול חינם",
-        link: "https://www.google.com/maps/search/Cottage+Mebirashi+Ambrolauri",
-        image: "IMG.racha",
-      },
-      {
-        name: N.teaGezruli,
-        area: "כפר Gezruli · Likhi Range",
-        nights: 1,
-        note: "אופציה · אחרי Via Ferrata · ~25 ק\"מ מעיר צ'יאתורה · Booking 25.9–26.9 · דירוג 9.4",
-        link: "https://maps.app.goo.gl/TPEcCxEHx7YhyRYN6",
+        note: "✅ Booking 25.9–26.9 · check-in מ-14:00 · check-out עד 12:00 · דירוג 9.2 (Wonderful, 12 ביקורות) · מיקום 9.8 · WiFi · חניה · מסעדה",
+        link: "https://www.booking.com/hotel/ge/hotel-in-chiatura.html",
         image: "IMG.chiatura",
       },
     ],
@@ -413,9 +405,9 @@ const DAYS = [
       { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
       { name: N.chiatura, lat: 42.2989, lng: 43.289 },
       { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
-      { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
-      { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
-      { name: N.teaGezruli, lat: 42.178974, lng: 43.22241, optional: true },
+      { name: N.campInGeorgia, lat: SVERI.camp.lat, lng: SVERI.camp.lng },
+      { name: N.sveriViaFerrata, lat: SVERI.viaFerrata.lat, lng: SVERI.viaFerrata.lng },
+      { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng, overnight: true },
     ],
     mapRoutes: [
       {
@@ -427,7 +419,7 @@ const DAYS = [
           { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
           { name: N.chiatura, lat: 42.2989, lng: 43.289 },
           { name: N.mgvimevi, lat: 42.2974, lng: 43.3007 },
-          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137, overnight: true },
+          { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng, overnight: true },
         ],
       },
       {
@@ -437,8 +429,9 @@ const DAYS = [
         points: [
           { name: N.kutaisi, lat: 42.2679, lng: 42.6946 },
           { name: N.katskhiPillar, lat: 42.2872, lng: 43.2125 },
-          { name: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "Sveri"), lat: 42.352, lng: 43.268 },
-          { name: N.teaGezruli, lat: 42.178974, lng: 43.22241, overnight: true },
+          { name: N.campInGeorgia, lat: SVERI.camp.lat, lng: SVERI.camp.lng },
+          { name: N.sveriViaFerrata, lat: SVERI.viaFerrata.lat, lng: SVERI.viaFerrata.lng },
+          { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng, overnight: true },
         ],
       },
     ],
@@ -449,18 +442,18 @@ const DAYS = [
     weekday: "שבת",
     title: fmt("רפטינג וחבל ראצ'ה", "Rafting & Racha", "rafting და რაჭა"),
     emoji: "🛶",
-    theme: fmt("Mebirashi לראצ'ה – נהר, יין ונוף", "Mebirashi to Racha – river, wine & views", "Mebirashi, რაჭა"),
+    theme: fmt("צ'יאתורה לראצ'ה – נהר, יין ונוף", "Chiatura to Racha – river, wine & views", "ჭიათურა, რაჭა"),
     overnight: N.adventureCamping,
-    driving: "כ-90 ק\"מ · ~1.5–2 ש' מ-Cottage Mebirashi",
+    driving: "כ-90 ק\"מ · ~1.5–2 ש' מצ'יאתורה",
     summary:
-      "יום 4: check-out מ-Cottage Mebirashi (26.9) → רפטינג וראצ'ה. אופציה א': רפטינג → שאורי → יקב. אופציה ב': רפטינג + Shareula. אופציה ג' (מומלץ): Adventure Camping – check-in 12:00, רפטינג, לינה בקוטג' · יום 5 בוקר קניונינג.",
+      "יום 4: check-out מהמלון בצ'יאתורה (26.9, עד 12:00) → רפטינג וראצ'ה. אופציה א': רפטינג → שאורי → יקב. אופציה ב': רפטינג + Shareula. אופציה ג' (מומלץ): Adventure Camping – check-in 12:00, רפטינג, לינה בקוטג' · יום 5 בוקר קניונינג.",
     activities: [
       {
         name: fmt("נסיעה לנקודת הרפטינג / Adventure Camping", "Drive to rafting / Adventure Camping", "rafting"),
         timeOfDay: "08:00–12:00",
         duration: "~1–1.5 ש'",
         description:
-          "check-out מ-Cottage Mebirashi בבוקר. אופציה ג': check-in ב-Adventure Camping ב־12:00 (הכנה לרפטינג 12:30). אופציות א'/ב': נסיעה ישירה לנקודת רפטינג.",
+          "check-out מהמלון בצ'יאתורה בבוקר (עד 12:00). אופציה ג': check-in ב-Adventure Camping ב־12:00 (הכנה לרפטינג 12:30). אופציות א'/ב': נסיעה ישירה לנקודת רפטינג.",
         link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
         linkLabel: N.adventureCamping,
         image: "IMG.racha",
@@ -498,7 +491,7 @@ const DAYS = [
       {
         name: "📋 אופציה א' – רפטינג, שאורי ויין → אמברולאורי",
         description:
-          "מ-Cottage Mebirashi לרפטינג (₾150), מאגר שאורי ויקב Khvanchkara. לינה ב-Adventure Camping.",
+          "מצ'יאתורה לרפטינג (₾150), מאגר שאורי ויקב Khvanchkara. לינה ב-Adventure Camping.",
         overnight: N.adventureCamping,
         link: "https://www.raftinginkutaisi.com/trip/rafting-on-the-rioni-river/",
         linkLabel: N.raftingInKutaisi + " – Rioni",
@@ -562,7 +555,7 @@ const DAYS = [
 
     ],
     mapPoints: [
-      { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
+      { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng },
       { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
       { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484, overnight: true },
       { name: N.shaoriReservoir, lat: 42.5833, lng: 43.0833 },
@@ -575,7 +568,7 @@ const DAYS = [
         color: "#7b2d3e",
         dashed: true,
         points: [
-          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
+          { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng },
           { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
           { name: N.shaoriReservoir, lat: 42.5833, lng: 43.0833 },
           { name: N.khvanchkaraWinery, lat: 42.55, lng: 43.1 },
@@ -587,7 +580,7 @@ const DAYS = [
         color: "#2d5a3d",
         dashed: true,
         points: [
-          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
+          { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng },
           { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
           { name: N.shareulaRiver, lat: 42.545, lng: 43.135 },
           { name: N.ambrolauri, lat: 42.5211, lng: 43.1622 },
@@ -598,7 +591,7 @@ const DAYS = [
         color: "#1a5276",
         dashed: true,
         points: [
-          { name: N.cottageMebirashi, lat: 42.512732, lng: 43.144137 },
+          { name: N.hotelChiatura, lat: CHIATURA_HOTEL.lat, lng: CHIATURA_HOTEL.lng },
           { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
           { name: N.rioniRiver, lat: 42.45, lng: 43.05 },
           { name: N.adventureCamping, lat: 42.5582341, lng: 42.8517484 },
@@ -1306,7 +1299,7 @@ const LOGISTICS = {
   accommodationSummary: [
     { place: N.batumi, nights: 2, note: "לילה ראשון + אחרון" },
     { place: N.kutaisi, nights: 1, note: "יום 2" },
-    { place: N.cottageMebirashi, nights: 1, note: "✅ יום 3 · 25.9–26.9 · Cottage Mebirashi" },
+    { place: N.hotelChiatura, nights: 1, note: "✅ יום 3 · 25.9–26.9 · Booking · דירוג 9.2 · מיקום 9.8 · רח' צ'אבצ'אvadze" },
     { place: N.adventureCamping, nights: 1, note: "יום 4 · Adventure Camping (רפטינג + קניונינג)" },
     { place: `${N.tskaltubo} / ${N.okatseCanyon}`, nights: 1, note: "יום 5 – בלי חזרה לזוגדידי" },
     { place: N.whiteHotelGuesthouse, nights: 1, note: "✅ יום 6 · 28.9–29.9 · 2 חדרים" },

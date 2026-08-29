@@ -1203,13 +1203,85 @@ function renderExtremeDetail(activity, categories) {
           activity.website
             ? `<div class="extreme-detail-links">
                 <a href="${activity.website}" target="_blank" rel="noopener noreferrer" class="btn btn-primary extreme-detail-link">🔗 ${activity.websiteLabel || "אתר / הזמנה"}</a>
-                ${activity.operatorHome ? `<a href="${activity.operatorHome}" target="_blank" rel="noopener noreferrer" class="btn btn-outline extreme-detail-link">🌐 Rafting in Kutaisi</a>` : ""}
+                ${activity.operatorHome ? `<a href="${activity.operatorHome}" target="_blank" rel="noopener noreferrer" class="btn btn-outline extreme-detail-link">🌐 ${activity.operatorLabel || "מפעיל"}</a>` : ""}
               </div>`
             : ""
         }
       </div>
     </article>
   `;
+}
+
+function renderCampInGeorgiaGuide() {
+  if (typeof CAMP_IN_GEORGIA === "undefined") return "";
+  const g = CAMP_IN_GEORGIA;
+  const vf = g.viaFerrata;
+
+  return `
+    <section class="section extreme-rafting-guide" id="camp-in-georgia-guide">
+      <div class="card operator-card extreme-rafting-card">
+        <h2 class="section-title">⛓️ ${g.name} – ${g.tagline}</h2>
+        <p>${g.summary}</p>
+        <p class="extreme-rafting-link-note">${g.location.driving}</p>
+
+        <div class="extreme-rafting-companies">
+          <article class="extreme-rafting-company extreme-rafting-company-featured">
+            <h3>${vf.title}</h3>
+            <p><strong>${vf.price}</strong> · ${vf.priceNote}</p>
+            <ul class="guide-list">
+              ${vf.specs.map((s) => `<li>${s}</li>`).join("")}
+            </ul>
+            <p><strong>מסלולים:</strong> ${vf.routes.map((r) => `${r.name} (${r.duration})`).join(" · ")}</p>
+            <p class="extreme-rafting-verify"><strong>חשוב:</strong> ${vf.guidedOnly}</p>
+            <p>
+              <a href="${vf.url}" target="_blank" rel="noopener noreferrer" class="external-link">campingeorgia.ge/hiking/</a>
+            </p>
+          </article>
+
+          <article class="extreme-rafting-company">
+            <h3>${g.camp.title}</h3>
+            <ul class="guide-list">${g.camp.facilities.map((f) => `<li>${f}</li>`).join("")}</ul>
+            <p>
+              <a href="${g.camp.url}" target="_blank" rel="noopener noreferrer" class="external-link">campingeorgia.ge/camp/</a>
+              ·
+              <a href="${g.location.maps}" target="_blank" rel="noopener noreferrer" class="external-link">מפה</a>
+            </p>
+          </article>
+        </div>
+
+        <h3 class="extreme-category-title" style="margin-top:1.25rem">הזמנה ומפעילים</h3>
+        <div class="extreme-rafting-companies">
+          ${g.operators
+            .map(
+              (c) => `
+            <article class="extreme-rafting-company${c.featured ? " extreme-rafting-company-featured" : ""}">
+              <h3>${c.name}${c.featured ? ' <span class="extreme-rafting-badge">ישירות מהמחנה</span>' : ""}</h3>
+              <p>${c.description}</p>
+              <ul class="extreme-rafting-link-list">
+                ${(c.links || [])
+                  .map(
+                    (l) => `
+                  <li>
+                    <a href="${l.url}" target="_blank" rel="noopener noreferrer" class="external-link">${l.label}</a>
+                    ${l.note ? `<span class="extreme-rafting-link-note">${l.note}</span>` : ""}
+                  </li>`
+                  )
+                  .join("")}
+              </ul>
+            </article>`
+            )
+            .join("")}
+        </div>
+
+        <ul class="guide-list extreme-season-tips" style="margin-top:1rem">
+          ${g.tips.map((t) => `<li>${t}</li>`).join("")}
+        </ul>
+        <p style="margin-top:0.75rem">
+          ${g.contact.phone.map((p) => `<a href="tel:${p.replace(/\s/g, "")}" class="external-link">${p}</a>`).join(" · ")}
+          · <a href="${g.contact.emailLink}" class="external-link">${g.contact.email}</a>
+        </p>
+      </div>
+    </section>`;
 }
 
 function renderKutaisiRaftingGuide() {
@@ -1365,10 +1437,12 @@ function renderExtremePage() {
         <h1>🧗 פעילויות אקסטרים</h1>
         <p style="opacity:0.9;margin:0">רפטינג, קניונינג, Via Ferrata, כדורים פורחים, Paragliding ועוד – ליד מסלול הטיול</p>
         <p style="margin:0.75rem 0 0"><a href="https://www.raftinginkutaisi.com/" target="_blank" rel="noopener noreferrer" class="external-link" style="color:var(--gold-light)">🛶 Rafting in Kutaisi – ספק מומלץ לימים 3–4 (Via Ferrata, Rioni, Shareula)</a></p>
+        <p style="margin:0.5rem 0 0"><a href="#camp-in-georgia-guide" class="external-link" style="color:var(--gold-light)">⛓️ Camp in Georgia – Via Ferrata ב-Sveri (~€35)</a> · <a href="https://campingeorgia.ge/hiking/" target="_blank" rel="noopener noreferrer" class="external-link" style="color:var(--gold-light)">אתר רשמי</a></p>
       </div>
     </section>
     <main class="container extreme-page">
       ${renderExtremeSeasonGuide()}
+      ${renderCampInGeorgiaGuide()}
       ${renderKutaisiRaftingGuide()}
       <section class="section">
         <h2 class="section-title">🗺 מפה – מסלול + אטרקציות</h2>

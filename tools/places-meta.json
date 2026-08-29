@@ -71,17 +71,17 @@
   "category": "attraction",
   "area": "אימרתי"
  },
+ "Hotel in Chiatura · Ilia Chavchavadze St.": {
+  "id": "hotel-chiatura",
+  "he": "מלון בצ'יאתורה",
+  "category": "lodging",
+  "area": "צ'יאתורה · אימרתי"
+ },
  "Cottage Mebirashi": {
   "id": "cottage-mebirashi",
   "he": "Cottage Mebirashi",
   "category": "lodging",
   "area": "ראצ'ה"
- },
- "Eco-friendly Guesthouse Tea Gezruli": {
-  "id": "tea-gezruli",
-  "he": "Tea Gezruli Guesthouse",
-  "category": "lodging",
-  "area": "כפר Gezruli · Likhi Range · אימרתי"
  },
  "Chiatura": {
   "id": "chiatura",
@@ -238,5 +238,17 @@
   "he": "קמפינג Adventure",
   "category": "lodging",
   "area": "אימרתי · טקיבולי"
+ },
+ "Camp in Georgia – Sveri Adventure Camp": {
+  "id": "camp-in-georgia",
+  "he": "Camp in Georgia – Sveri Adventure Camp",
+  "category": "activity",
+  "area": "כפר Sveri · צ'יאתורה"
+ },
+ "Via Ferrata – Sveri": {
+  "id": "sveri-via-ferrata",
+  "he": "Via Ferrata – Sveri",
+  "category": "activity",
+  "area": "כפר Sveri · צ'יאתורה"
  }
 }

@@ -21,8 +21,8 @@ const PLACE_CATEGORIES = {
 
 const TRIP_PLACES = [
   { id: "adventure-camping", he: "קמפינג Adventure", en: "Adventure Camping", category: "lodging", area: "אימרתי · טקיבולי", lat: 42.558234, lng: 42.851748, cid: "14158453649228106590" },
-  { id: "cottage-mebirashi", he: "Cottage Mebirashi", en: "Cottage Mebirashi", category: "lodging", area: "אמברולאורי · ראצ'ה", lat: 42.512732, lng: 43.144137, address: "Village Ukeshi, Racha, Ambrolauri 0417, גאורגיה", tip: "הזמנה 25.9–26.9" },
-  { id: "tea-gezruli", he: "Tea Gezruli Guesthouse", en: "Eco-friendly Guesthouse Tea Gezruli", category: "lodging", area: "כפר Gezruli · Likhi Range · אימרתי", lat: 42.178974, lng: 43.22241, address: "Village Gezruli, Chiatura Municipality, Imereti, גאורגיה", tip: "אופציית לינה אחרי Via Ferrata · ~25 ק\"מ מעיר צ'יאתורה · 25.9" },
+  { id: "hotel-chiatura", he: "מלון בצ'יאתורה", en: "Hotel in Chiatura · Ilia Chavchavadze St.", category: "lodging", area: "צ'יאתורה · אימרתי", lat: 42.290831, lng: 43.28909, address: "ი. ჭავჭავაძის ქუჩა, 5500 Chiatʼura, Georgia", tip: "✅ Booking 25.9–26.9 · דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה" },
+  { id: "cottage-mebirashi", he: "Cottage Mebirashi", en: "Cottage Mebirashi", category: "lodging", area: "אמברולאורי · ראצ'ה", lat: 42.512732, lng: 43.144137, address: "Village Ukeshi, Racha, Ambrolauri 0417, גאורגיה" },
   { id: "white-hotel-guesthouse", he: "White Hotel Guesthouse", en: "White Hotel Guesthouse", category: "lodging", area: "זוגדידי", lat: 42.508974, lng: 41.870705, address: "Kostava Str. 70, Zugdidi 2100, גאורגיה", tip: "2 חדרים · 28.9–29.9" },
   { id: "mestia-airbnb", he: "Home in Mestia (Airbnb)", en: "Home in Mestia", category: "lodging", area: "מסטיה · סוואנטי", lat: 43.0432, lng: 42.719788, address: "21 Mestia, Samegrelo-Zemo Svaneti 3200, גאורגיה", tip: "29.9–1.10" },
   { id: "chateau-dio", he: "יקב שאטו דיו", en: "Chateau Dio", category: "wine", area: "ראצ'ה · אמברולאורי", lat: 42.536156, lng: 43.130021, address: "G4PJ+F26, Dzirageuli Village, Ambrolauri 0400, גאורגיה", cid: "15440637857124317573" },
@@ -38,6 +38,8 @@ const TRIP_PLACES = [
   { id: "rafting-kutaisi", he: "רפטינג בקוטאיסי", en: "Rafting in Kutaisi", category: "activity", area: "קוטאיסי", lat: 42.282429, lng: 42.715725, cid: "152386738702801434" },
   { id: "nokalakevi-springs", he: "מעיינות גופרית נוקאלאקווי", en: "Sulfur Spring Nokalakevi", category: "nature", area: "סמגרלו", lat: 42.365371, lng: 42.19579, cid: "3600652347521564833" },
   { id: "katskhi-pillar", he: "עמוד קצחי", en: "Katskhi Pillar", category: "attraction", area: "אימרתי", lat: 42.28748, lng: 43.215845, cid: "1625285156159950249" },
+  { id: "camp-in-georgia", he: "Camp in Georgia – Sveri Adventure Camp", en: "Camp in Georgia – Sveri Adventure Camp", category: "activity", area: "כפר Sveri · צ'יאתורה", lat: 42.237867, lng: 43.300874, tip: "Via Ferrata הראשון בקווקז · מחנה + מסלול · יום 3 אופציה ב'" },
+  { id: "sveri-via-ferrata", he: "Via Ferrata – Sveri", en: "Via Ferrata – Sveri", category: "activity", area: "כפר Sveri · צ'יאתורה", lat: 42.2422, lng: 43.2958, tip: "700 מ' מהמחנה · 2 מסלולים · מונחה בלבד" },
   { id: "chiatura", he: "צ'יאתורה", en: "Chiatura", category: "town", area: "אימרתי", lat: 42.290217, lng: 43.283141, cid: "4971417979139731105" },
   { id: "kutaisi", he: "קוטאיסי", en: "Kutaisi", category: "town", area: "אימרתי", lat: 42.271834, lng: 42.705944, cid: "18152956434376451439" },
   { id: "vani", he: "ואני", en: "Vani", category: "attraction", area: "אימרתי", lat: 42.08896, lng: 42.504484, cid: "8638110546791954750" },

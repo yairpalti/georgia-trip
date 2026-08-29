@@ -27,6 +27,7 @@ const N = {
   katskhiPillar: fmt("עמוד קצחי", "Katskhi Pillar", "კაცხის სვეტი"),
   chiatura: fmt("צ'יאתורה", "Chiatura", "ჭიათურა"),
   mgvimevi: fmt("מנזר מגווימבי", "Mgvimevi Convent", "მღვიმევის მონასტერი"),
+  campInGeorgia: fmt("Camp in Georgia – Sveri Adventure Camp", "Camp in Georgia – Sveri Adventure Camp", "Camp in Georgia"),
   sveriViaFerrata: fmt("Sveri – Via Ferrata", "Sveri – Via Ferrata", "სვერი – Via Ferrata"),
 
   rioniRiver: fmt("נהר הריוני", "Rioni River", "რიონი"),
@@ -58,8 +59,8 @@ const N = {
   naberauliWines: fmt("יקב Naberauli", "Naberauli Wines", "ნაბერაულის მარანი"),
   raftingInKutaisi: fmt("Rafting in Kutaisi", "Rafting in Kutaisi", "Rafting in Kutaisi"),
   adventureCamping: fmt("Adventure Camping", "Adventure Camping (Rafting in Kutaisi)", "Adventure Camping"),
+  hotelChiatura: fmt("מלון בצ'יאתורה", "Hotel in Chiatura · Ilia Chavchavadze St.", "Hotel in Chiatura"),
   cottageMebirashi: fmt("Cottage Mebirashi", "Cottage Mebirashi", "Cottage Mebirashi"),
-  teaGezruli: fmt("Tea Gezruli Guesthouse", "Eco-friendly Guesthouse Tea Gezruli, village Gezruli", "Tea Gezruli"),
   whiteHotelGuesthouse: fmt("White Hotel Guesthouse", "White Hotel Guesthouse", "White Hotel Guesthouse"),
   mestiaAirbnb: fmt("Home in Mestia (Airbnb)", "Home in Mestia (Airbnb)", "Home in Mestia"),
   satapliaReserve: fmt("שמורת סטאפליה", "Sataplia Nature Reserve", "სათაფლია"),
@@ -75,3 +76,12 @@ const N = {
 function placeLabel(name) {
   return name;
 }
+
+/** Sveri – Camp in Georgia base + Via Ferrata route (~700 m apart) */
+const SVERI = {
+  camp: { lat: 42.237867, lng: 43.300874 },
+  viaFerrata: { lat: 42.2422, lng: 43.2958 },
+};
+
+/** Chiatura – Hotel in Chiatura (Booking, רח' צ'אבצ'אvadze) */
+const CHIATURA_HOTEL = { lat: 42.290831, lng: 43.28909 };

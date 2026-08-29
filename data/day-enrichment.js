@@ -151,12 +151,14 @@ const DAY_ENRICHMENT = {
   3: {
     heroImage: "IMG.chiatura",
     summary:
-      "יום 3 (25.9) – ברכב עצמי. check-out מקוטאיסי בבוקר. אופציה א': קצחי, Urbex, Lia, מגווימבי → Mebirashi. אופציה ב': Via Ferrata ב-Sveri → Tea Gezruli בכפר Gezruli.",
+      "יום 3 (25.9) – ברכב עצמי. check-out מקוטאיסי בבוקר. אופציה א': קצחי, Urbex, Lia, מגווימבי → מלון בצ'יאתורה. אופציה ב': Via Ferrata ב-Sveri → מלון בצ'יאתורה.",
     tips: [
       "check-out קוטאיסי בבוקר – כל הציוד ברכב",
       "Lunch at Lia – WhatsApp מראש! (אופציה א')",
-      "Via Ferrata – מפגש ב-Sveri, בלי הסעה: +995 595 41 15 47",
-      "Sveri → Tea Gezruli (כפר Gezruli) ~45 דק' ללינה (אופציה Via Ferrata)",
+      "מלון בצ'יאתורה – check-in 25.9 מ-14:00 · check-out 26.9 עד 12:00",
+      "Booking: דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה",
+      "Via Ferrata – Camp in Georgia ~€35 · +995 558 48 63 48",
+      "או Rafting in Kutaisi – מפגש ב-Sveri: +995 595 41 15 47",
       "רכבל Sanatorium – לבדוק שעות ובטיחות",
     ],
     activityExtras: [
@@ -181,19 +183,11 @@ const DAY_ENRICHMENT = {
     ],
     extraHotels: [
       {
-        name: N.cottageMebirashi,
-        area: `${N.ambrolauri}, ${N.racha}`,
+        name: N.hotelChiatura,
+        area: N.chiatura,
         nights: 1,
-        note: "✅ מאושר 25.9–26.9 · Village Ukeshi · $174",
-        link: "https://www.google.com/maps/search/Cottage+Mebirashi+Ambrolauri",
-        image: "IMG.racha",
-      },
-      {
-        name: N.teaGezruli,
-        area: "כפר Gezruli · Likhi Range",
-        nights: 1,
-        note: "אופציה · אחרי Via Ferrata · ~25 ק\"מ מעיר צ'יאתורה · Booking 25.9–26.9 · דירוג 9.4",
-        link: "https://maps.app.goo.gl/TPEcCxEHx7YhyRYN6",
+        note: "✅ Booking 25.9–26.9 · check-in מ-14:00 · check-out עד 12:00 · דירוג 9.2 (Wonderful, 12 ביקורות) · מיקום 9.8 · WiFi · חניה · מסעדה · ი. ჭავჭავაძის ქუჩה",
+        link: "https://www.booking.com/hotel/ge/hotel-in-chiatura.html",
         image: "IMG.chiatura",
       },
     ],
