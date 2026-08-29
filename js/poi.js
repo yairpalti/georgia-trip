@@ -174,6 +174,37 @@ function googleMapsUrl(lat, lng, name) {
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
+/** Google Maps search for hotels or restaurants centered on a map point */
+function googleMapsNearbyUrl(lat, lng, category = "hotels", zoom = 14) {
+  const query = category === "restaurants" ? "restaurants" : "hotels";
+  return `https://www.google.com/maps/search/${query}/@${lat},${lng},${zoom}z`;
+}
+
+/** Standard popup links: place page + nearby hotels + restaurants */
+function appendGoogleMapsLinks(container, lat, lng, options = {}) {
+  const actions = poiEl("div", "poi-popup-actions poi-popup-maps-actions");
+  const maps = poiEl("a", "poi-popup-link", options.label || "פתיחה ב-Google Maps");
+  maps.href = options.href || googleMapsUrl(lat, lng, options.name);
+  maps.target = "_blank";
+  maps.rel = "noopener noreferrer";
+  actions.appendChild(maps);
+
+  const hotels = poiEl("a", "poi-popup-link poi-popup-link-nearby", "🏨 מלונות בסביבה");
+  hotels.href = googleMapsNearbyUrl(lat, lng, "hotels");
+  hotels.target = "_blank";
+  hotels.rel = "noopener noreferrer";
+  actions.appendChild(hotels);
+
+  const restaurants = poiEl("a", "poi-popup-link poi-popup-link-nearby", "🍽 מסעדות בסביבה");
+  restaurants.href = googleMapsNearbyUrl(lat, lng, "restaurants");
+  restaurants.target = "_blank";
+  restaurants.rel = "noopener noreferrer";
+  actions.appendChild(restaurants);
+
+  container.appendChild(actions);
+  return actions;
+}
+
 function poiEl(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -212,19 +243,13 @@ function buildPoiPopup(poi, measure) {
 
   if (measure) wrap.appendChild(buildMeasureButtons(poi, measure));
 
-  const actions = poiEl("div", "poi-popup-actions");
-  const link = poiEl("a", "poi-popup-link", "פתיחה ב-Google Maps");
-  link.href = googleMapsUrl(poi.lat, poi.lng, poi.name);
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  actions.appendChild(link);
+  const actions = appendGoogleMapsLinks(wrap, poi.lat, poi.lng, { name: poi.name });
 
   const del = poiEl("button", "poi-btn poi-btn-danger", "🗑 הסרה");
   del.type = "button";
   del.addEventListener("click", () => removePoi(poi.id));
   actions.appendChild(del);
 
-  wrap.appendChild(actions);
   return wrap;
 }
 
@@ -245,6 +270,11 @@ function buildResultPopup(result, dayId) {
   add.addEventListener("click", () => addPoi({ ...result, dayId, category }));
   actions.appendChild(add);
   wrap.appendChild(actions);
+
+  if (result.lat != null && result.lng != null) {
+    appendGoogleMapsLinks(wrap, result.lat, result.lng, { name: result.name });
+  }
+
   return wrap;
 }
 

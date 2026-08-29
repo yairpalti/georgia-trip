@@ -143,10 +143,11 @@ function bindExtremeMeasurePopup(layer, activity, cat, measure, popupRegistry) {
     if (typeof appendDistanceFromUser === "function") {
       appendDistanceFromUser(wrap, activity.lat, activity.lng);
     }
-    const link = poiEl("a", "external-link poi-popup-link", "פרטים בעמוד האקסטרים →");
-    link.href = "extreme.html";
-    wrap.appendChild(link);
+    const details = poiEl("a", "external-link poi-popup-link", "פרטים בעמוד האקסטרים →");
+    details.href = "extreme.html";
+    wrap.appendChild(details);
     if (measure) wrap.appendChild(buildMeasureButtons(place, measure));
+    appendGoogleMapsLinks(wrap, activity.lat, activity.lng, { name: activity.name });
     return wrap;
   };
   layer.bindPopup(build);
@@ -302,6 +303,7 @@ function bindTripMeasurePopup(layer, point, title, subtitle, measure, popupRegis
     if (subtitle) wrap.appendChild(poiEl("div", "poi-popup-meta", subtitle));
     if (typeof appendDistanceFromUser === "function") appendDistanceFromUser(wrap, point.lat, point.lng);
     if (measure) wrap.appendChild(buildMeasureButtons(place, measure));
+    appendGoogleMapsLinks(wrap, point.lat, point.lng, { name: title });
     return wrap;
   };
   layer.bindPopup(build);

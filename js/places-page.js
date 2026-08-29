@@ -446,12 +446,10 @@ function buildPlacePopup(place, notes, onNoteChange, measure) {
     wrap.appendChild(buildMeasureButtons(place, measure));
   }
 
-  const actions = poiEl("div", "poi-popup-actions");
-  const maps = poiEl("a", "poi-popup-link", "פתיחה ב-Google Maps");
-  maps.href = placeMapsUrl(place);
-  maps.target = "_blank";
-  maps.rel = "noopener noreferrer";
-  actions.appendChild(maps);
+  const actions = appendGoogleMapsLinks(wrap, place.lat, place.lng, {
+    href: placeMapsUrl(place),
+    name: place.en || place.he,
+  });
   if (place.link) {
     const extra = poiEl("a", "poi-popup-link", place.linkLabel || "לינק");
     extra.href = place.link;
@@ -465,7 +463,6 @@ function buildPlacePopup(place, notes, onNoteChange, measure) {
     del.addEventListener("click", () => removePoi(place.id));
     actions.appendChild(del);
   }
-  wrap.appendChild(actions);
 
   return wrap;
 }
