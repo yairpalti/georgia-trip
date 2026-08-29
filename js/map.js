@@ -135,15 +135,23 @@ function tameWheelZoom(map) {
   return map;
 }
 
+/*
+ * רקע המפה בכל העמודים. CARTO התחילו לדרוש מפתח API ולהטביע
+ * "API KEY REQUIRED" על האריחים, ולכן עברנו לאריחים של OpenStreetMap –
+ * חינמיים, בלי מפתח וללא הגבלת דומיין.
+ */
+function addBaseTiles(map) {
+  return L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 19,
+  }).addTo(map);
+}
+
 function initRouteMap(containerId, segments, dayColors) {
   const map = L.map(containerId, { scrollWheelZoom: true }).setView([42.3, 42.5], 7);
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-    subdomains: "abcd",
-    maxZoom: 19,
-  }).addTo(map);
+  addBaseTiles(map);
 
   const allBounds = [];
   const overnightSeen = new Set();
@@ -239,12 +247,7 @@ function initExtremeMap(containerId, options) {
 
   const map = L.map(containerId, { scrollWheelZoom: true }).setView([42.3, 42.5], 7);
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-    subdomains: "abcd",
-    maxZoom: 19,
-  }).addTo(map);
+  addBaseTiles(map);
 
   const bounds = [];
   const markerById = {};
@@ -351,11 +354,7 @@ function initDayMap(containerId, options) {
   if (!routes.length) return null;
 
   const map = L.map(containerId);
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: "abcd",
-    maxZoom: 19,
-  }).addTo(map);
+  addBaseTiles(map);
 
   const routeColors = ["#7b2d3e", "#2d5a3d", "#c47b2b", "#2980b9"];
   const multi = routes.length > 1;
@@ -448,11 +447,7 @@ function initDroneSpotsMap(containerId, options, onSelectMaybe) {
   if (!spots?.length) return null;
 
   const map = L.map(containerId, { scrollWheelZoom: true });
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: "abcd",
-    maxZoom: 19,
-  }).addTo(map);
+  addBaseTiles(map);
 
   const bounds = [];
   const markerById = {};
