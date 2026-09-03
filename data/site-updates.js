@@ -4,6 +4,20 @@ const SITE_UPDATES = {
   intro: "עדכונים, המלצות ותוכן חדש שנוסף לאחרונה לתוכנית הטיול.",
   items: [
     {
+      id: "mestia-weather",
+      date: "2.9.2026",
+      badge: "מזג אוויר",
+      title: "תחזית 10 ימים – מסטיה (Foreca)",
+      summary:
+        "תחזית מפורטת לסוואנטי – שימושי לפני ואחרי הגעה לימים 7–10 (מסטיה, Ushguli, Mazeri).",
+      links: [
+        { label: "Foreca – מסטיה (10 ימים)", url: "https://www.foreca.ru/Georgia/Mestia?tenday=" },
+        { label: "יום 7 – הגעה למסטיה", url: "day.html?id=7" },
+        { label: "יום 8 – Ushguli", url: "day.html?id=8" },
+        { label: "יום 9 – צ'לאדי", url: "day.html?id=9" },
+      ],
+    },
+    {
       id: "confirmed-hotels",
       date: "29.8.2026",
       badge: "הזמנות",

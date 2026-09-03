@@ -1213,16 +1213,22 @@ const LOGISTICS = {
   ],
   rentalCars: [
     {
-      name: fmt("איסוף והחזרה בשדה התעופה באטומי", "Pick-up & drop-off at Batumi Airport", "აღება და დაბრუნება ბათუმის აეროპორტში"),
-      details: `מומלץ SUV – כבישים הרריים ומפותלים. לא 4×4: ל-Ushguli ו-Koruldi יש ג'יפ נפרד עם נהג (ימים 7–8). איסוף ביום 1 (23.9), החזרה ביום 13 (5.10).`,
+      name: fmt("השכרת רכב (TbilisiCars) באטומי", "Car rental (TbilisiCars) in Batumi", "ავტომობილის ქირა (TbilisiCars) ბათუმში"),
+      details: `מומלץ SUV – כבישים הרריים ומפותלים. לא 4×4: ל-Ushguli ו-Koruldi יש ג'יפ נפרד עם נהג (ימים 7–8). איסוף ביום 1 (23.9), החזרה ביום 13 (5.10).
+ספק: TbilisiCars (tbilisicars.com)
+טלפון: +995591002630 / +995574888784
+כתובת: Batumi Airport, 33 Nikoloz BarataShvili Street
+שעות פעילות: 00:00–23:59 (כל יום, 7/7).`,
       tips: [
         "להזמין מראש – עונת ספטמבר-אוקטובר",
         "ביטוח מלא (CDW) מומלץ מאוד",
         "רישיון נהיגה בינלאומי + רישיון ישראלי",
         "GPS / Waze – עובד מצוין בגיאורגיה",
+        "להחזיק פרטי קשר של הספק בטלפון (TbilisiCars)",
         "ראו גם: מסטיה – SUV מול ג'יפ (#mestia-vehicle)",
       ],
       links: [
+        { label: "TbilisiCars.com", url: "https://tbilisicars.com/" },
         { label: "Rentalcars.com", url: "https://www.rentalcars.com/" },
         { label: "Localrent Georgia", url: "https://localrent.com/ge/" },
         { label: "Economy Bookings", url: "https://www.economybookings.com/" },
