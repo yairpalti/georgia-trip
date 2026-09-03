@@ -1229,6 +1229,10 @@ const LOGISTICS = {
       ],
       links: [
         { label: "TbilisiCars.com", url: "https://tbilisicars.com/" },
+        {
+          label: "Google Maps",
+          url: "https://www.google.com/maps/search/?api=1&query=Batumi+Airport%2C+33+Nikoloz+BarataShvili+Street",
+        },
         { label: "Rentalcars.com", url: "https://www.rentalcars.com/" },
         { label: "Localrent Georgia", url: "https://localrent.com/ge/" },
         { label: "Economy Bookings", url: "https://www.economybookings.com/" },
