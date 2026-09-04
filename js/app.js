@@ -1,12 +1,155 @@
-function renderPlaceCards(items, type) {
+function escAttr(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function placeEnName(name) {
+  if (typeof enPlace === "function") return enPlace(name);
+  if (!name) return "";
+  const parts = String(name).split(" · ");
+  return parts.length >= 2 ? parts[1] : name;
+}
+
+function buildGoogleMapsSearchUrl(query) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function parseCoordsFromMapsUrl(url) {
+  if (!url) return null;
+  const q = String(url).match(/[?&]query=(-?\d+\.?\d*),\s*(-?\d+\.?\d*)/);
+  if (q) return { lat: parseFloat(q[1]), lng: parseFloat(q[2]) };
+  const at = String(url).match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+  if (at) return { lat: parseFloat(at[1]), lng: parseFloat(at[2]) };
+  const place = String(url).match(/!3d(-?\d+\.?\d*)!4d(-?\d+\.?\d*)/);
+  if (place) return { lat: parseFloat(place[1]), lng: parseFloat(place[2]) };
+  return null;
+}
+
+function normalizePlaceKey(name) {
+  return placeEnName(name)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function lookupKnownPlaceCoords(name) {
+  if (!name) return null;
+  const key = normalizePlaceKey(name);
+  if (!key) return null;
+
+  const candidates = [];
+  const push = (keys, lat, lng, address) => {
+    if (lat == null || lng == null) return;
+    candidates.push({ keys: keys.map((k) => normalizePlaceKey(k)).filter(Boolean), lat, lng, address });
+  };
+
+  if (typeof PRIME_HEAVEN !== "undefined") push(["Prime Heaven"], PRIME_HEAVEN.lat, PRIME_HEAVEN.lng);
+  if (typeof PEAK_MAZERI !== "undefined") {
+    push(["Peak Mazeri", "Peak Mazeri Guest House", "mazeri cabin"], PEAK_MAZERI.lat, PEAK_MAZERI.lng, PEAK_MAZERI.address);
+  }
+  push(["Adventure Camping"], 42.5582341, 42.8517484);
+  push(["Cottage Mebirashi", "Mebirashi"], 42.512732, 43.144137);
+  push(["White Hotel Guesthouse", "White Hotel"], 42.508974, 41.870705);
+  push(["21 Mestia", "Mestia Airbnb"], 43.0432, 42.719788);
+
+  if (typeof ROUTE_COORDS !== "undefined") {
+    ROUTE_COORDS.forEach((p) => push([p.name], p.lat, p.lng));
+  }
+  if (typeof TRIP_PLACES !== "undefined") {
+    TRIP_PLACES.forEach((p) => push([p.en, p.he, p.name], p.lat, p.lng, p.address));
+  }
+
+  for (const c of candidates) {
+    if (c.keys.some((k) => k && (key.includes(k) || k.includes(key)))) {
+      return { lat: c.lat, lng: c.lng, address: c.address };
+    }
+  }
+  return null;
+}
+
+function resolvePlaceGeo(item) {
+  if (!item) return null;
+  if (item.lat != null && item.lng != null) return { lat: item.lat, lng: item.lng };
+  const fromLink = parseCoordsFromMapsUrl(item.link || item.mapsUrl);
+  if (fromLink) return fromLink;
+  return lookupKnownPlaceCoords(item.name || item.label || item.area);
+}
+
+function resolvePlaceMapsUrl(item) {
+  const existing = item.mapsUrl || item.link;
+  if (existing && /google\.com\/maps|maps\.app\.goo\.gl|maps\.google|goo\.gl\/maps/i.test(existing)) {
+    return existing;
+  }
+  const geo = resolvePlaceGeo(item);
+  if (geo) {
+    const label = placeEnName(item.name || item.label) || "";
+    return label
+      ? buildGoogleMapsSearchUrl(`${label} ${geo.lat},${geo.lng}`)
+      : buildGoogleMapsSearchUrl(`${geo.lat},${geo.lng}`);
+  }
+  if (item.mapsQuery) return buildGoogleMapsSearchUrl(item.mapsQuery);
+  const q = placeEnName(item.name || item.label) || item.name || item.label || "";
+  const area = placeEnName(item.area) || item.area || "Georgia";
+  return buildGoogleMapsSearchUrl(`${q} ${area}`.trim());
+}
+
+function resolvePlaceSearchQuery(item) {
+  if (item.mapsQuery) return item.mapsQuery;
+  const en = placeEnName(item.name || item.label) || item.name || item.label || "";
+  const area = placeEnName(item.area) || item.area || "Georgia";
+  return `${en} ${area}`.trim();
+}
+
+function placeCardKey(kind, index, name) {
+  const slug = normalizePlaceKey(name || kind)
+    .replace(/\s+/g, "-")
+    .slice(0, 40);
+  return `${kind}-${index}-${slug || "place"}`;
+}
+
+function enrichPlaceItem(item, kind) {
+  const geo = resolvePlaceGeo(item);
+  const mapsUrl = resolvePlaceMapsUrl({ ...item, ...geo });
+  return {
+    ...item,
+    kind,
+    ...(geo ? { lat: geo.lat, lng: geo.lng } : {}),
+    mapsUrl,
+    link: mapsUrl,
+    mapsQuery: item.mapsQuery || resolvePlaceSearchQuery(item),
+  };
+}
+
+function renderPlaceMapActions(item, placeId) {
+  const mapsUrl = escAttr(item.mapsUrl || resolvePlaceMapsUrl(item));
+  const lat = item.lat != null ? ` data-lat="${item.lat}"` : "";
+  const lng = item.lng != null ? ` data-lng="${item.lng}"` : "";
+  const query = escAttr(item.mapsQuery || resolvePlaceSearchQuery(item));
+  const kind = escAttr(item.kind || "place");
+  const name = escAttr(placeEnName(item.name || item.label) || item.name || item.label || "");
+  return `
+    <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="external-link">פתיחה ב-Google Maps</a>
+    <button type="button" class="place-map-btn" data-show-on-map
+      data-place-id="${escAttr(placeId)}"
+      data-place-kind="${kind}"
+      data-place-name="${name}"
+      data-maps-url="${mapsUrl}"
+      data-maps-query="${query}"${lat}${lng}>הצג על המפה</button>`;
+}
+
+function renderPlaceCards(items, type = "place") {
   if (!items || !items.length) return "";
   return `
     <div class="place-grid">
       ${items
-        .map((item) => {
+        .map((raw, index) => {
+          const item = enrichPlaceItem(raw, type);
+          const placeId = placeCardKey(type, index, item.name);
           const isTraveler = item.source === "traveler-stories";
           const isBooked = item.booked === true || /✅\s*Booked|✅\s*מאושר/.test(item.note || "");
-          const mapsUrl = item.link || item.mapsUrl || "#";
           const badge = isTraveler
             ? `<span class="place-source-badge">📖 סיפורי מטיילים</span>`
             : "";
@@ -25,7 +168,7 @@ function renderPlaceCards(items, type) {
               ? `<a href="${item.bookingUrl}" target="_blank" rel="noopener noreferrer" class="external-link">הזמנה / Airbnb</a>`
               : "";
           return `
-        <article class="place-card${isTraveler ? " place-card--traveler" : ""}${isBooked ? " place-card--booked" : ""}">
+        <article class="place-card${isTraveler ? " place-card--traveler" : ""}${isBooked ? " place-card--booked" : ""}" data-place-id="${escAttr(placeId)}">
           ${renderImg(item.image, "", item.name, "supra")}
           <div class="place-card-body">
             ${bookedBadge}${badge}
@@ -35,7 +178,7 @@ function renderPlaceCards(items, type) {
             ${address}
             ${item.note ? `<p>${item.note}</p>` : ""}
             <div class="place-card-actions">
-              <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="external-link">פתיחה ב-Google Maps</a>
+              ${renderPlaceMapActions(item, placeId)}
               ${booking}
               ${storyLink}
             </div>
@@ -393,17 +536,49 @@ function renderStorySections(sections) {
     .join("");
 }
 
-function renderCulinaryLinkList(items) {
+function enrichCulinaryItem(item, kind) {
+  const name = item.label || item.name;
+  return enrichPlaceItem(
+    {
+      ...item,
+      name,
+      label: name,
+      mapsUrl: item.mapsUrl,
+      mapsQuery: item.mapsQuery || `${placeEnName(name)} Georgia`,
+      link: item.mapsUrl || item.link,
+    },
+    kind
+  );
+}
+
+function renderCulinaryPlaceCards(items, kind) {
   if (!items?.length) return "";
-  return `<ul class="culinary-link-list">${items
-    .map(
-      (item) => `
-    <li>
-      <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="external-link">📘 ${item.label}</a>
-      ${item.note ? `<span class="culinary-link-note">${item.note}</span>` : ""}
-    </li>`
-    )
-    .join("")}</ul>`;
+  return `
+    <div class="place-grid culinary-place-grid">
+      ${items
+        .map((raw, index) => {
+          const item = enrichCulinaryItem(raw, kind);
+          const placeId = placeCardKey(kind, index, item.name);
+          const fb =
+            item.url && /facebook\.com/i.test(item.url)
+              ? `<a href="${escAttr(item.url)}" target="_blank" rel="noopener noreferrer" class="external-link">📘 פייסבוק</a>`
+              : item.url
+                ? `<a href="${escAttr(item.url)}" target="_blank" rel="noopener noreferrer" class="external-link">קישור</a>`
+                : "";
+          return `
+        <article class="place-card place-card--culinary" data-place-id="${escAttr(placeId)}">
+          <div class="place-card-body">
+            <h3>${item.name}</h3>
+            ${item.note ? `<p>${item.note}</p>` : ""}
+            <div class="place-card-actions">
+              ${renderPlaceMapActions(item, placeId)}
+              ${fb}
+            </div>
+          </div>
+        </article>`;
+        })
+        .join("")}
+    </div>`;
 }
 
 function renderCulinaryLinksCard(dayId) {
@@ -425,16 +600,137 @@ function renderCulinaryLinksCard(dayId) {
       </p>
       ${
         workshops.length
-          ? `<div class="culinary-group"><h3>👨‍🍳 סדנאות בישול</h3>${renderCulinaryLinkList(workshops)}</div>`
+          ? `<div class="culinary-group"><h3>👨‍🍳 סדנאות בישול</h3>${renderCulinaryPlaceCards(workshops, "workshop")}</div>`
           : ""
       }
       ${
         wineries.length
-          ? `<div class="culinary-group"><h3>🍷 יקבים וטעימות</h3>${renderCulinaryLinkList(wineries)}</div>`
+          ? `<div class="culinary-group"><h3>🍷 יקבים וטעימות</h3>${renderCulinaryPlaceCards(wineries, "winery")}</div>`
           : ""
       }
     </div>
   `;
+}
+
+function collectDaySidePlaces(day, dayId) {
+  const places = [];
+  (day.hotels || []).forEach((raw, index) => {
+    const item = enrichPlaceItem(raw, "lodging");
+    places.push({
+      id: placeCardKey("lodging", index, item.name),
+      name: placeEnName(item.name) || item.name,
+      kind: "lodging",
+      lat: item.lat,
+      lng: item.lng,
+      mapsUrl: item.mapsUrl,
+      mapsQuery: item.mapsQuery,
+    });
+  });
+  (day.restaurants || []).forEach((raw, index) => {
+    const item = enrichPlaceItem(raw, "restaurant");
+    places.push({
+      id: placeCardKey("restaurant", index, item.name),
+      name: placeEnName(item.name) || item.name,
+      kind: "restaurant",
+      lat: item.lat,
+      lng: item.lng,
+      mapsUrl: item.mapsUrl,
+      mapsQuery: item.mapsQuery,
+    });
+  });
+  const culinary = typeof CULINARY_LINKS !== "undefined" ? CULINARY_LINKS.byDay?.[dayId] : null;
+  (culinary?.workshops || []).forEach((raw, index) => {
+    const item = enrichCulinaryItem(raw, "workshop");
+    places.push({
+      id: placeCardKey("workshop", index, item.name),
+      name: placeEnName(item.name) || item.name,
+      kind: "workshop",
+      lat: item.lat,
+      lng: item.lng,
+      mapsUrl: item.mapsUrl,
+      mapsQuery: item.mapsQuery,
+    });
+  });
+  (culinary?.wineries || []).forEach((raw, index) => {
+    const item = enrichCulinaryItem(raw, "winery");
+    places.push({
+      id: placeCardKey("winery", index, item.name),
+      name: placeEnName(item.name) || item.name,
+      kind: "winery",
+      lat: item.lat,
+      lng: item.lng,
+      mapsUrl: item.mapsUrl,
+      mapsQuery: item.mapsQuery,
+    });
+  });
+  return places;
+}
+
+async function resolveCoordsForShowOnMap(btn) {
+  const lat = btn.dataset.lat ? parseFloat(btn.dataset.lat) : NaN;
+  const lng = btn.dataset.lng ? parseFloat(btn.dataset.lng) : NaN;
+  if (Number.isFinite(lat) && Number.isFinite(lng)) return { lat, lng };
+
+  const query = btn.dataset.mapsQuery || btn.dataset.placeName;
+  if (!query || typeof searchPlaces !== "function") return null;
+  const results = await searchPlaces(query);
+  const hit = results?.[0];
+  if (!hit) return null;
+  btn.dataset.lat = String(hit.lat);
+  btn.dataset.lng = String(hit.lng);
+  return { lat: hit.lat, lng: hit.lng };
+}
+
+function bindDayPlaceCardActions() {
+  document.querySelectorAll("[data-show-on-map]").forEach((btn) => {
+    if (btn.dataset.bound === "1") return;
+    btn.dataset.bound = "1";
+    btn.addEventListener("click", async () => {
+      const mapEl = document.getElementById("day-map");
+      mapEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      const api = window.__dayMapApi;
+      if (!api?.ensurePlace) {
+        btn.textContent = "אין מפה ליום זה";
+        setTimeout(() => {
+          btn.textContent = "הצג על המפה";
+        }, 1800);
+        return;
+      }
+
+      const original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "מאתר…";
+      try {
+        const coords = await resolveCoordsForShowOnMap(btn);
+        if (!coords) {
+          btn.textContent = "לא נמצא מיקום";
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.disabled = false;
+          }, 1800);
+          return;
+        }
+        api.ensurePlace({
+          id: btn.dataset.placeId,
+          name: btn.dataset.placeName,
+          kind: btn.dataset.placeKind || "place",
+          lat: coords.lat,
+          lng: coords.lng,
+          mapsUrl: btn.dataset.mapsUrl,
+        });
+        btn.textContent = original;
+      } catch (err) {
+        console.warn("show-on-map failed", err);
+        btn.textContent = "שגיאה באיתור";
+        setTimeout(() => {
+          btn.textContent = original;
+        }, 1800);
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  });
 }
 
 function renderHikingTrailsCard(dayId) {
@@ -1109,7 +1405,7 @@ function renderDayPage(dayId) {
           <h2>🍽 מסעדות מומלצות</h2>
           ${
             day.restaurants && day.restaurants.length
-              ? renderPlaceCards(day.restaurants)
+              ? renderPlaceCards(day.restaurants, "restaurant")
               : "<p class='empty-section'>אין המלצות ספציפיות ליום זה – שאלו את המארח/ת או חפשו באזור הלינה.</p>"
           }
         </div>
@@ -1118,7 +1414,7 @@ function renderDayPage(dayId) {
           <h2>🏨 לינה</h2>
           ${
             day.hotels && day.hotels.length
-              ? renderPlaceCards(day.hotels)
+              ? renderPlaceCards(day.hotels, "lodging")
               : "<p class='empty-section'>לינה לא רלוונטית (יום נסיעה / המראה).</p>"
           }
         </div>
@@ -1159,16 +1455,20 @@ function renderDayPage(dayId) {
   `;
 
   const dayRoutes = getDayMapRoutes(day);
-  if (dayRoutes.length) {
-    setTimeout(
-      () =>
-        initDayMap("day-map", {
-          routes: dayRoutes,
-          overnight: day.overnight,
-          dayId,
-        }),
-      100
-    );
+  const sidePlaces = collectDaySidePlaces(day, dayId);
+  window.__dayMapApi = null;
+  if (dayRoutes.length || sidePlaces.length) {
+    setTimeout(() => {
+      window.__dayMapApi = initDayMap("day-map", {
+        routes: dayRoutes.length ? dayRoutes : [{ label: `יום ${dayId}`, points: [], dashed: false }],
+        overnight: day.overnight,
+        dayId,
+        places: sidePlaces,
+      });
+      bindDayPlaceCardActions();
+    }, 100);
+  } else {
+    setTimeout(() => bindDayPlaceCardActions(), 100);
   }
   if (typeof DRONE_SPOTS !== "undefined" && DRONE_SPOTS[dayId]?.spots?.length) {
     setTimeout(() => initDroneSpotsSection(dayId), 150);

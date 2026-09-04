@@ -282,14 +282,27 @@ function buildResultPopup(result, dayId) {
 
 function createPoiControl(map, options) {
   const dayId = options.dayId || null;
-  const control = L.control({ position: options.position || "topright" });
-  const state = { results: [], preview: null, listOpen: false };
+  const compact = !!options.compact;
+  const control = L.control({ position: options.position || (compact ? "bottomleft" : "topright") });
+  const state = { results: [], preview: null, listOpen: false, expanded: !compact };
 
   control.onAdd = function () {
-    const box = poiEl("div", "poi-control");
+    const box = poiEl("div", `poi-control${compact ? " poi-control--compact poi-control--collapsed" : ""}`);
     L.DomEvent.disableClickPropagation(box);
     L.DomEvent.disableScrollPropagation(box);
     stopKeyPropagation(box);
+
+    let expandBtn = null;
+    if (compact) {
+      expandBtn = poiEl("button", "poi-expand-btn", "🔎 חיפוש");
+      expandBtn.type = "button";
+      expandBtn.title = "חיפוש מקום על המפה";
+      expandBtn.setAttribute("aria-label", "פתיחת חיפוש מקום");
+      box.appendChild(expandBtn);
+    }
+
+    const panel = poiEl("div", "poi-control-panel");
+    if (compact) panel.hidden = true;
 
     const searchRow = poiEl("div", "poi-search-row");
     const input = poiEl("input", "poi-search-input");
@@ -300,19 +313,52 @@ function createPoiControl(map, options) {
     searchRow.appendChild(input);
     const status = poiEl("span", "poi-search-status");
     searchRow.appendChild(status);
-    box.appendChild(searchRow);
+    if (compact) {
+      const collapseBtn = poiEl("button", "poi-collapse-btn", "✕");
+      collapseBtn.type = "button";
+      collapseBtn.title = "סגירת חיפוש";
+      collapseBtn.setAttribute("aria-label", "סגירת חיפוש מקום");
+      collapseBtn.addEventListener("click", () => setExpanded(false));
+      searchRow.appendChild(collapseBtn);
+    }
+    panel.appendChild(searchRow);
 
     const results = poiEl("ul", "poi-results");
     results.hidden = true;
-    box.appendChild(results);
+    panel.appendChild(results);
 
     const listToggle = poiEl("button", "poi-list-toggle");
     listToggle.type = "button";
-    box.appendChild(listToggle);
+    panel.appendChild(listToggle);
 
     const listWrap = poiEl("ul", "poi-list");
     listWrap.hidden = true;
-    box.appendChild(listWrap);
+    panel.appendChild(listWrap);
+
+    box.appendChild(panel);
+
+    function setExpanded(open) {
+      state.expanded = open;
+      box.classList.toggle("poi-control--collapsed", compact && !open);
+      box.classList.toggle("poi-control--expanded", compact && open);
+      panel.hidden = compact && !open;
+      if (expandBtn) expandBtn.hidden = !compact || open;
+      if (open) {
+        setTimeout(() => input.focus(), 0);
+      } else {
+        input.value = "";
+        state.results = [];
+        renderResults();
+        status.textContent = "";
+        clearPreview();
+        state.listOpen = false;
+        refreshList();
+      }
+    }
+
+    if (expandBtn) {
+      expandBtn.addEventListener("click", () => setExpanded(true));
+    }
 
     let controller = null;
     let debounce;
@@ -402,6 +448,10 @@ function createPoiControl(map, options) {
         clearTimeout(debounce);
         runSearch(input.value);
       } else if (event.key === "Escape") {
+        if (compact && state.expanded) {
+          setExpanded(false);
+          return;
+        }
         input.value = "";
         state.results = [];
         renderResults();
@@ -419,6 +469,9 @@ function createPoiControl(map, options) {
       const pois = loadPois();
       listToggle.textContent = `📌 נקודות עניין (${pois.length}) ${state.listOpen ? "▴" : "▾"}`;
       listToggle.hidden = pois.length === 0;
+      if (expandBtn && compact) {
+        expandBtn.textContent = pois.length ? `🔎 חיפוש (${pois.length})` : "🔎 חיפוש";
+      }
 
       if (!state.listOpen || !pois.length) {
         listWrap.hidden = true;
@@ -457,6 +510,7 @@ function createPoiControl(map, options) {
 
     control.refreshList = refreshList;
     control.clearPreview = clearPreview;
+    control.setExpanded = setExpanded;
     refreshList();
     return box;
   };

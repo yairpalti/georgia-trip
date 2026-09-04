@@ -1072,6 +1072,31 @@ img {
   align-items: center;
 }
 
+.place-map-btn {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--wine, #7b2d3e);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.place-map-btn:hover {
+  color: var(--wine-dark, #5a1f2c);
+}
+
+.place-map-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+  text-decoration: none;
+}
+
 .place-card-story-link {
   font-size: 0.8rem;
   color: var(--wine, #7b2d3e);
@@ -1428,6 +1453,36 @@ img {
   margin: 0 0 0.5rem;
 }
 
+.culinary-place-grid {
+  margin-top: 0.35rem;
+}
+
+.place-card--culinary {
+  border: 1px solid rgba(123, 45, 62, 0.12);
+}
+
+.place-card--culinary .place-card-body {
+  padding: 0.85rem 1rem;
+}
+
+.side-place-marker-wrap {
+  background: transparent;
+  border: none;
+}
+
+.side-place-marker {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.95rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  border: 2px solid #fff;
+}
+
 .culinary-link-list {
   margin: 0;
   padding-right: 1.25rem;
@@ -1776,6 +1831,40 @@ img {
   height: 280px;
   border-radius: var(--radius-sm);
   margin-top: 1rem;
+  position: relative;
+  z-index: 0;
+}
+
+#day-map .poi-control--compact.poi-control--collapsed {
+  width: auto;
+  max-width: none;
+  box-shadow: 0 1px 6px rgba(44, 36, 25, 0.2);
+}
+
+#day-map .poi-control--compact.poi-control--expanded {
+  width: min(220px, calc(100% - 12px));
+  max-width: calc(100% - 12px);
+  max-height: min(200px, 70%);
+  overflow: auto;
+}
+
+#day-map .leaflet-bottom.leaflet-left {
+  z-index: 800;
+}
+
+#day-map .leaflet-popup {
+  max-width: min(240px, calc(100% - 24px));
+}
+
+#day-map .leaflet-popup-content {
+  margin: 0.55rem 0.65rem;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+#day-map .leaflet-control-zoom {
+  margin-top: 8px;
+  margin-left: 8px;
 }
 
 .day-map-legend {
@@ -2798,6 +2887,51 @@ img {
   box-shadow: 0 2px 12px rgba(44, 36, 25, 0.25);
   overflow: hidden;
   font-size: 0.85rem;
+}
+
+.poi-control-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.poi-expand-btn,
+.poi-collapse-btn {
+  border: none;
+  background: var(--white);
+  font-family: var(--font);
+  cursor: pointer;
+  color: var(--text);
+}
+
+.poi-expand-btn {
+  padding: 0.4rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.poi-expand-btn:hover {
+  background: var(--cream);
+}
+
+.poi-collapse-btn {
+  flex-shrink: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.poi-collapse-btn:hover {
+  opacity: 1;
+  background: var(--cream-dark);
+}
+
+.poi-control--compact.poi-control--collapsed .poi-control-panel {
+  display: none;
 }
 
 .poi-search-row {

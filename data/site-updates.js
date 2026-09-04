@@ -6,15 +6,28 @@ const SITE_UPDATES = {
   intro: "עדכונים, המלצות ותוכן חדש שנוסף לאחרונה לתוכנית הטיול.",
   items: [
     {
+      id: "mebirashi-cancelled",
+      date: "4.9.2026",
+      time: "13:05",
+      badge: "הזמנות",
+      title: "Cottage Mebirashi – בוטל",
+      summary:
+        "Cottage Mebirashi (Ambrolauri) בוטל. נשאר בדף יום 3 כאופציה בלבד – ללא סימון Booked. Prime Heaven נשאר מאושר ללילה 25.9–26.9.",
+      links: [
+        { label: "יום 3 – לינה", url: "day.html?id=3" },
+        { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
+      ],
+    },
+    {
       id: "confirmed-hotels",
       date: "4.9.2026",
       time: "12:35",
       badge: "הזמנות",
-      title: "לינה Booked – Peak Mazeri, Mebirashi ועוד",
+      title: "לינה Booked – Peak Mazeri ועוד",
       summary:
-        "הזמנות מאושרות: Prime Heaven (25.9–26.9, Chiatura, $153) · Cottage Mebirashi (25.9–26.9, Ambrolauri, $174) · White Hotel Zugdidi (28.9–29.9, $115) · Airbnb מסטיה 21 Mestia (29.9–1.10) · Peak Mazeri Guest House (1.10–3.10, 3 rooms, $239).",
+        "הזמנות מאושרות: Prime Heaven (25.9–26.9, Chiatura, $153) · White Hotel Zugdidi (28.9–29.9, $115) · Airbnb מסטיה 21 Mestia (29.9–1.10) · Peak Mazeri Guest House (1.10–3.10, 3 rooms, $239). Cottage Mebirashi בוטל.",
       links: [
-        { label: "יום 3 – Prime Heaven + Mebirashi", url: "day.html?id=3" },
+        { label: "יום 3 – Prime Heaven", url: "day.html?id=3" },
         { label: "יום 6 – White Hotel", url: "day.html?id=6" },
         { label: "ימים 7–8 – Airbnb מסטיה", url: "day.html?id=7" },
         { label: "ימים 9–10 – Peak Mazeri", url: "day.html?id=9" },

@@ -115,6 +115,32 @@ function createOvernightIcon() {
   });
 }
 
+function createSidePlaceIcon(kind) {
+  const meta = {
+    lodging: { emoji: "🏨", color: "#7b2d3e" },
+    restaurant: { emoji: "🍽", color: "#c47b2b" },
+    workshop: { emoji: "👨‍🍳", color: "#2d5a3d" },
+    winery: { emoji: "🍷", color: "#6c3483" },
+  }[kind] || { emoji: "📍", color: "#2980b9" };
+  return L.divIcon({
+    className: "side-place-marker-wrap",
+    html: `<div class="side-place-marker" style="background:${meta.color}" title="${kind}" aria-label="${kind}"><span>${meta.emoji}</span></div>`,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+  });
+}
+
+function sidePlaceKindLabel(kind) {
+  return (
+    {
+      lodging: "לינה",
+      restaurant: "מסעדה",
+      workshop: "סדנת בישול",
+      winery: "יקב",
+    }[kind] || "מקום"
+  );
+}
+
 const EXTREME_LAYER_STORAGE_KEY = "georgia-trip-show-extreme";
 
 function getStoredExtremeVisible() {
@@ -824,7 +850,9 @@ async function drawDayRouteLines(map, lineLayer, routes, routeColors, multi, mod
 function initDayMap(containerId, options) {
   const routes = Array.isArray(options) ? [{ points: options }] : options?.routes || [];
   const overnightName = options?.overnight || null;
-  if (!routes.length) return null;
+  const places = Array.isArray(options) ? [] : options?.places || [];
+  const placesWithCoords = places.filter((p) => p && p.lat != null && p.lng != null);
+  if (!routes.length && !placesWithCoords.length && !places.length) return null;
 
   const map = L.map(containerId);
   addBaseTiles(map);
@@ -836,15 +864,19 @@ function initDayMap(containerId, options) {
   const popupRegistry = [];
   const measure = createMapMeasure(map, popupRegistry);
   const lineLayer = L.layerGroup().addTo(map);
+  const placeLayer = L.layerGroup().addTo(map);
+  const placeMarkers = {};
 
   routes.forEach((route) => {
     const points = route.points || [];
     points.forEach((p) => bounds.push([p.lat, p.lng]));
   });
 
-  mountRouteModeBar(containerId, (mode, ui, buttons) => {
-    drawDayRouteLines(map, lineLayer, routes, routeColors, multi, mode, ui, buttons);
-  });
+  if (routes.some((r) => (r.points || []).length >= 2) && typeof mountRouteModeBar === "function") {
+    mountRouteModeBar(containerId, (mode, ui, buttons) => {
+      drawDayRouteLines(map, lineLayer, routes, routeColors, multi, mode, ui, buttons);
+    });
+  }
 
   routes.forEach((route, idx) => {
     const points = route.points || [];
@@ -873,8 +905,44 @@ function initDayMap(containerId, options) {
     });
   });
 
+  function addSidePlaceMarker(place, { open = false, pan = false } = {}) {
+    if (!place || place.lat == null || place.lng == null) return null;
+    const existing = placeMarkers[place.id];
+    if (existing) {
+      existing.marker.setLatLng([place.lat, place.lng]);
+      if (pan) map.setView([place.lat, place.lng], Math.max(map.getZoom(), 14), { animate: true });
+      if (open) existing.marker.openPopup();
+      return existing.marker;
+    }
+
+    const marker = L.marker([place.lat, place.lng], {
+      icon: createSidePlaceIcon(place.kind),
+      zIndexOffset: 200,
+    }).addTo(placeLayer);
+    bounds.push([place.lat, place.lng]);
+
+    const title = place.name || sidePlaceKindLabel(place.kind);
+    const subtitle = sidePlaceKindLabel(place.kind);
+    bindTripMeasurePopup(marker, place, title, subtitle, measure, popupRegistry);
+    marker.bindTooltip(title, {
+      permanent: false,
+      direction: "top",
+      offset: [0, -14],
+      className: "place-tooltip",
+    });
+
+    placeMarkers[place.id] = { marker, place };
+    if (pan) map.setView([place.lat, place.lng], Math.max(map.getZoom(), 14), { animate: true });
+    if (open) marker.openPopup();
+    return marker;
+  }
+
+  placesWithCoords.forEach((place) => addSidePlaceMarker(place));
+
   if (bounds.length) {
     map.fitBounds(bounds, { padding: [30, 30] });
+  } else {
+    map.setView([42.3, 43.0], 7);
   }
 
   const legendEl = document.getElementById("day-map-legend");
@@ -897,13 +965,33 @@ function initDayMap(containerId, options) {
   }
 
   tameWheelZoom(map);
-  const poiApi = attachPoiLayer(map, { dayId: options?.dayId || null, measureApi: measure });
+  const poiApi = attachPoiLayer(map, {
+    dayId: options?.dayId || null,
+    measureApi: measure,
+    compact: true,
+    position: "bottomleft",
+  });
   measure?.onPopupRefresh?.(() => {
     Object.values(poiApi.markerById).forEach((marker) => {
       if (marker.isPopupOpen()) marker.setPopupContent(buildPoiPopup(marker.poi, measure));
     });
   });
-  return map;
+
+  return {
+    map,
+    focusPlace(id) {
+      const entry = placeMarkers[id];
+      if (!entry) return false;
+      map.setView(entry.marker.getLatLng(), Math.max(map.getZoom(), 14), { animate: true });
+      entry.marker.openPopup();
+      return true;
+    },
+    ensurePlace(place) {
+      if (!place?.id || place.lat == null || place.lng == null) return false;
+      addSidePlaceMarker(place, { open: true, pan: true });
+      return true;
+    },
+  };
 }
 
 const DRONE_COLORS = { destination: "#6c5ce7", enRoute: "#e67e22" };
