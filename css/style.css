@@ -1033,6 +1033,21 @@ img {
   border: 1px solid rgba(123, 45, 62, 0.25);
 }
 
+.place-card--booked {
+  border: 1px solid rgba(46, 125, 50, 0.35);
+}
+
+.place-booked-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1b5e20;
+  background: rgba(46, 125, 50, 0.12);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin: 0 0.35rem 0.4rem 0;
+}
+
 .place-source-badge {
   display: inline-block;
   font-size: 0.72rem;

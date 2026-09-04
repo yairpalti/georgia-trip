@@ -5,9 +5,13 @@ function renderPlaceCards(items, type) {
       ${items
         .map((item) => {
           const isTraveler = item.source === "traveler-stories";
+          const isBooked = item.booked === true || /✅\s*Booked|✅\s*מאושר/.test(item.note || "");
           const mapsUrl = item.link || item.mapsUrl || "#";
           const badge = isTraveler
             ? `<span class="place-source-badge">📖 סיפורי מטיילים</span>`
+            : "";
+          const bookedBadge = isBooked
+            ? `<span class="place-booked-badge">✅ Booked</span>`
             : "";
           const address = item.address
             ? `<p class="place-card-address">📍 ${item.address}</p>`
@@ -21,10 +25,10 @@ function renderPlaceCards(items, type) {
               ? `<a href="${item.bookingUrl}" target="_blank" rel="noopener noreferrer" class="external-link">הזמנה / Airbnb</a>`
               : "";
           return `
-        <article class="place-card${isTraveler ? " place-card--traveler" : ""}">
+        <article class="place-card${isTraveler ? " place-card--traveler" : ""}${isBooked ? " place-card--booked" : ""}">
           ${renderImg(item.image, "", item.name, "supra")}
           <div class="place-card-body">
-            ${badge}
+            ${bookedBadge}${badge}
             <h3>${item.name}</h3>
             ${item.cuisine ? `<p>${item.cuisine}</p>` : ""}
             ${item.area ? `<p>${item.area}</p>` : ""}
@@ -1392,12 +1396,28 @@ function renderExtremeSeasonGuide() {
     </section>`;
 }
 
-function parseUpdateDate(dateStr) {
+function parseUpdateDate(itemOrDate, timeStr) {
+  const dateStr = typeof itemOrDate === "object" && itemOrDate ? itemOrDate.date : itemOrDate;
+  const time = typeof itemOrDate === "object" && itemOrDate ? itemOrDate.time : timeStr;
   if (!dateStr) return 0;
-  const dmy = dateStr.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
-  if (dmy) return new Date(+dmy[3], +dmy[2] - 1, +dmy[1]).getTime();
+  const dmy = String(dateStr).match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if (dmy) {
+    let h = 0;
+    let m = 0;
+    const tm = String(time || "").match(/^(\d{1,2}):(\d{2})$/);
+    if (tm) {
+      h = +tm[1];
+      m = +tm[2];
+    }
+    return new Date(+dmy[3], +dmy[2] - 1, +dmy[1], h, m).getTime();
+  }
   if (/אוגוסט\s*2026/.test(dateStr)) return new Date(2026, 7, 1).getTime();
   return 0;
+}
+
+function formatUpdateStamp(item) {
+  if (!item?.date) return "";
+  return item.time ? `${item.date} · ${item.time}` : item.date;
 }
 
 function renderNewPage() {
@@ -1405,7 +1425,7 @@ function renderNewPage() {
   if (!root || typeof SITE_UPDATES === "undefined") return;
 
   const data = SITE_UPDATES;
-  const items = [...data.items].sort((a, b) => parseUpdateDate(b.date) - parseUpdateDate(a.date));
+  const items = [...data.items].sort((a, b) => parseUpdateDate(b) - parseUpdateDate(a));
   root.innerHTML = `
     <section class="day-hero new-hero">
       <div class="day-hero-inner container">
@@ -1422,7 +1442,7 @@ function renderNewPage() {
           <article class="card new-update-card" id="${item.id}">
             <div class="new-update-meta">
               <span class="new-update-badge">${item.badge}</span>
-              <time class="new-update-date">${item.date}</time>
+              <time class="new-update-date" datetime="${item.date}${item.time ? `T${item.time}` : ""}">${formatUpdateStamp(item)}</time>
             </div>
             <h2>${item.title}</h2>
             <p>${item.summary}</p>

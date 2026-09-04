@@ -181,16 +181,7 @@ const DAY_ENRICHMENT = {
         image: "IMG.mgvimevi",
       },
     ],
-    extraHotels: [
-      {
-        name: N.primeHeaven,
-        area: N.chiatura,
-        nights: 1,
-        note: "✅ Booking 25.9–26.9 · Prime Heaven · check-in מ-14:00 · check-out עד 12:00 · דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה",
-        link: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A",
-        image: "IMG.chiatura",
-      },
-    ],
+    extraHotels: [],
   },
   4: {
     heroImage: "IMG.racha",
@@ -354,16 +345,7 @@ const DAY_ENRICHMENT = {
         image: "IMG.martvili",
       },
     ],
-    extraHotels: [
-      {
-        name: N.whiteHotelGuesthouse,
-        area: N.zugdidi,
-        nights: 1,
-        note: "✅ מאושר 28.9–29.9 · Kostava 70 · 2 חדרים · $115",
-        link: "https://www.booking.com/Share-qT3VBX",
-        image: "IMG.zugdidi",
-      },
-    ],
+    extraHotels: [],
   },
   7: {
     heroImage: "IMG.mestia",
@@ -443,16 +425,7 @@ const DAY_ENRICHMENT = {
         image: "IMG.supra",
       },
     ],
-    extraHotels: [
-      {
-        name: N.mestiaAirbnb,
-        area: `${N.mestia}, ${N.svaneti}`,
-        nights: 2,
-        note: "✅ מאושר · Home in Mestia · 29.9–1.10 · 21 Mestia",
-        link: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ",
-        image: "IMG.mestia",
-      },
-    ],
+    extraHotels: [],
   },
   8: {
     heroImage: "IMG.ushguli",
@@ -489,25 +462,16 @@ const DAY_ENRICHMENT = {
         image: "IMG.ushguli",
       },
     ],
-    extraHotels: [
-      {
-        name: N.mestiaAirbnb,
-        area: N.mestia,
-        nights: 1,
-        note: "✅ Airbnb – לילה שני (30.9)",
-        link: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ",
-        image: "IMG.mestia",
-      },
-    ],
+    extraHotels: [],
   },
   9: {
     heroImage: "IMG.ushba",
     summary:
-      "בוקר: טרק קל לקרחון צ'לאדי ממסטיה. אחר הצהריים: איסוף ציוד, נסיעה 45 דק' למאזרי – בקתת עץ בלב עמק בצו, נוף ישיר לפסגת אושבה. ערב רגוע בטבע.",
+      "בוקר: טרק קל לקרחון צ'לאדי ממסטיה. אחר הצהריים: איסוף ציוד, נסיעה 45 דק' למאזרי – Peak Mazeri Guest House (Booked · 1.10–3.10). ערב רגוע בטבע.",
     tips: [
       "🚗 SUV – צ'לאדי + נסיעה למאזרי · 🚙 ג'יפ אופציונלי עד גשר (~80 ₾)",
       "צ'לאדי – לצאת מוקדם",
-      "לארוז ל-2 לילות בבקתה",
+      "✅ Booked – Peak Mazeri Guest House · 3 rooms · $239",
       "מזון – מוגבל במאזרי, לקנות במסטיה",
       "נעליים waterproof לטרק",
     ],
@@ -543,16 +507,7 @@ const DAY_ENRICHMENT = {
         image: "IMG.mestia",
       },
     ],
-    extraHotels: [
-      {
-        name: fmt("Guesthouse Mazeri", "Guesthouse Mazeri", "მაზერი"),
-        area: N.bechoValley,
-        nights: 2,
-        note: "חלופות: Ushba Homestead, Guesthouse Mazeri",
-        link: "https://www.google.com/maps/search/guesthouse+Mazeri+Ushba",
-        image: "IMG.ushba",
-      },
-    ],
+    extraHotels: [],
   },
   10: {
     heroImage: "IMG.ushba",

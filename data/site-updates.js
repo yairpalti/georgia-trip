@@ -1,11 +1,33 @@
-/** עדכונים אחרונים באתר – מוצג ב-new.html */
+/** עדכונים אחרונים באתר – מוצג ב-new.html
+ * date: D.M.YYYY · time: HH:MM (אופציונלי, משמש גם למיון)
+ */
 const SITE_UPDATES = {
   title: "חדש באתר",
   intro: "עדכונים, המלצות ותוכן חדש שנוסף לאחרונה לתוכנית הטיול.",
   items: [
     {
+      id: "confirmed-hotels",
+      date: "4.9.2026",
+      time: "12:35",
+      badge: "הזמנות",
+      title: "לינה Booked – Peak Mazeri, Mebirashi ועוד",
+      summary:
+        "הזמנות מאושרות: Prime Heaven (25.9–26.9, Chiatura, $153) · Cottage Mebirashi (25.9–26.9, Ambrolauri, $174) · White Hotel Zugdidi (28.9–29.9, $115) · Airbnb מסטיה 21 Mestia (29.9–1.10) · Peak Mazeri Guest House (1.10–3.10, 3 rooms, $239).",
+      links: [
+        { label: "יום 3 – Prime Heaven + Mebirashi", url: "day.html?id=3" },
+        { label: "יום 6 – White Hotel", url: "day.html?id=6" },
+        { label: "ימים 7–8 – Airbnb מסטיה", url: "day.html?id=7" },
+        { label: "ימים 9–10 – Peak Mazeri", url: "day.html?id=9" },
+        { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
+        { label: "Prime Heaven – Google Maps", url: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A" },
+        { label: "Peak Mazeri – Google Maps", url: "https://www.google.com/maps/search/Peak+Mazeri+Guest+House+Mazeri" },
+        { label: "Airbnb מסטיה", url: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ" },
+      ],
+    },
+    {
       id: "family-road-summary",
       date: "4.9.2026",
+      time: "10:45",
       badge: "סיפור מטיילים",
       title: "שבועיים מטורפים – סיכום דרך למשפחות",
       summary:
@@ -22,6 +44,7 @@ const SITE_UPDATES = {
     {
       id: "mestia-weather",
       date: "2.9.2026",
+      time: "14:05",
       badge: "מזג אוויר",
       title: "תחזית 10 ימים – מסטיה (Foreca)",
       summary:
@@ -34,26 +57,9 @@ const SITE_UPDATES = {
       ],
     },
     {
-      id: "confirmed-hotels",
-      date: "29.8.2026",
-      badge: "הזמנות",
-      title: "לינה מאושרת – Prime Heaven, White Hotel, Airbnb מסטיה",
-      summary:
-        "שלוש הזמנות שעודכנו במסלול ובמפה: Prime Heaven, צ'יאתורה (25.9–26.9, Booking, דירוג 9.2) · White Hotel Guesthouse, Zugdidi (28.9–29.9, 2 חדרים, $115) · Home in Mestia Airbnb (29.9–1.10, 21 Mestia).",
-      links: [
-        { label: "יום 3 – Prime Heaven", url: "day.html?id=3" },
-        { label: "יום 4 – Adventure Camping (לילה אחרי)", url: "day.html?id=4" },
-        { label: "יום 6 – White Hotel Guesthouse", url: "day.html?id=6" },
-        { label: "ימים 7–8 – Airbnb מסטיה", url: "day.html?id=7" },
-        { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
-        { label: "Prime Heaven – Google Maps", url: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A" },
-        { label: "White Hotel – Booking", url: "https://www.booking.com/Share-qT3VBX" },
-        { label: "Airbnb מסטיה", url: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ" },
-      ],
-    },
-    {
       id: "family-two-weeks",
       date: "29.8.2026",
+      time: "11:00",
       badge: "סיפור מטיילים",
       title: "גאורגיה – שבועיים של חוויות, טבע, הרים, מים ופינוקים",
       summary:
@@ -69,6 +75,7 @@ const SITE_UPDATES = {
     {
       id: "bacho-jeep",
       date: "29.8.2026",
+      time: "10:45",
       badge: "המלצה",
       title: "טיול ג'יפים – Bacho Tsotsoria (אזור קוטאיסי)",
       summary:
@@ -81,6 +88,7 @@ const SITE_UPDATES = {
     {
       id: "sataplia",
       date: "29.8.2026",
+      time: "10:30",
       badge: "אתר",
       title: "שמורת סטאפליה – עקבות דינוזאורים",
       summary: "יער, מערה, תצפיות – הילדים אהבו במיוחד את עקבות הדינוזאורים. ליד קוטאיסי.",
@@ -92,6 +100,7 @@ const SITE_UPDATES = {
     {
       id: "adventure-camping",
       date: "25.8.2026",
+      time: "16:00",
       badge: "לינה + אקסטרים",
       title: "Adventure Camping – רפטינג, קניונינג ולינה בראצ'ה",
       summary:
@@ -106,6 +115,7 @@ const SITE_UPDATES = {
     {
       id: "hiking-trails",
       date: "25.8.2026",
+      time: "15:30",
       badge: "טרקים",
       title: "מסלולי hiking עם מפות Mapy.cz",
       summary: "כרטיסי טרק לימים 2, 6, 8, 9, 10 – מטיראלה, Okatse, Ushguli, Chalaadi, Mazeri/Shdugra.",
@@ -117,7 +127,8 @@ const SITE_UPDATES = {
     },
     {
       id: "places-map",
-      date: "אוגוסט 2026",
+      date: "1.8.2026",
+      time: "12:00",
       badge: "מפה",
       title: "דף «מקומות» – כל הנקודות על מפה אחת",
       summary: "סינון, חיפוש, הערות מקומיות וצבעים לפי סוג (אוכל, לינה, טבע, אקסטרים).",

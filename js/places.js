@@ -13,7 +13,8 @@ const N = {
   anaklia: fmt("אנאקליה", "Anaklia", "ანაკლია"),
   mazeri: fmt("מאזרי", "Mazeri", "მაზერი"),
   ushba: fmt("הר אושבה", "Mount Ushba", "უშბა"),
-  mazeriCabin: fmt("בקתה / גסטהאוס במאזרי", "Cabin / Guesthouse in Mazeri", "კოტეჯი / სასტუმრო მაზერში"),
+  mazeriCabin: fmt("Peak Mazeri Guest House", "Peak Mazeri Guest House", "Peak Mazeri Guest House"),
+  peakMazeriGuestHouse: fmt("Peak Mazeri Guest House", "Peak Mazeri Guest House", "Peak Mazeri Guest House"),
   racha: fmt("ראצ'ה", "Racha", "რაჭა"),
   svaneti: fmt("סוואנטי", "Svaneti", "სვანეთი"),
   bechoValley: fmt("עמק בצ'ו", "Becho Valley", "ბეჩოს ხეობა"),
@@ -85,3 +86,10 @@ const SVERI = {
 
 /** Prime Heaven – צ'יאתורה, רח' ჭავჭავაძე (Booking 25.9–26.9) */
 const PRIME_HEAVEN = { lat: 42.2893119, lng: 43.2880929 };
+
+/** Peak Mazeri Guest House – מאזרי / Becho (Booking 1.10–3.10) */
+const PEAK_MAZERI = {
+  lat: 43.0833,
+  lng: 42.5167,
+  address: "Mazeri village, Becho, Turbaza, Shikhra, 3200, Georgia",
+};
