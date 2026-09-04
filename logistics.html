@@ -85,6 +85,8 @@
           </thead>
           <tbody id="accommodation-body"></tbody>
         </table>
+        <div id="traveler-lodging-tips" class="traveler-tips-block"></div>
+        <div id="traveler-restaurant-tips" class="traveler-tips-block"></div>
       </div>
     </div>
   </main>
@@ -96,6 +98,8 @@
   <script src="js/places.js"></script>
   <script src="data/rafting-kutaisi.js"></script>
   <script src="data/mestia-vehicle-guide.js"></script>
+  <script src="data/mestia-trek-guide.js"></script>
+  <script src="data/traveler-stories.js"></script>
   <script src="data/trip.js"></script>
   <script>
     function renderAdventureOperator(op) {
@@ -294,6 +298,45 @@
       `
         )
         .join("");
+
+      function renderTravelerTipsBlock(kind, title) {
+        if (typeof getAllTravelerRecommendations !== "function") return "";
+        const items = getAllTravelerRecommendations(kind);
+        if (!items.length) return "";
+        return `
+          <h3 class="traveler-tips-title">${title}</h3>
+          <p class="traveler-tips-intro"><span class="place-source-badge">📖 סיפורי מטיילים</span> המלצות מהשטח – בנוסף להזמנות שלנו</p>
+          <ul class="traveler-tips-list">
+            ${items
+              .map(
+                (rec) => `
+              <li class="traveler-tip-item">
+                <strong>${rec.name}</strong>
+                ${rec.area ? ` · ${rec.area}` : ""}
+                ${rec.address ? `<br><span class="traveler-tip-address">📍 ${rec.address}</span>` : ""}
+                ${rec.note ? `<br><span class="traveler-tip-note">${rec.note}</span>` : ""}
+                <br>
+                <a href="${rec.mapsUrl}" target="_blank" rel="noopener noreferrer" class="external-link">פתיחה ב-Google Maps</a>
+                ${
+                  rec.bookingUrl
+                    ? ` · <a href="${rec.bookingUrl}" target="_blank" rel="noopener noreferrer" class="external-link">הזמנה / Airbnb</a>`
+                    : ""
+                }
+                ${
+                  rec.storyDay
+                    ? ` · <a href="stories.html?id=${rec.storyDay}" class="external-link">סיפור יום ${rec.storyDay}</a>`
+                    : ""
+                }
+              </li>`
+              )
+              .join("")}
+          </ul>`;
+      }
+
+      const lodgingTipsEl = document.getElementById("traveler-lodging-tips");
+      if (lodgingTipsEl) lodgingTipsEl.innerHTML = renderTravelerTipsBlock("lodging", "🏨 המלצות לינה מסיפורי מטיילים");
+      const restaurantTipsEl = document.getElementById("traveler-restaurant-tips");
+      if (restaurantTipsEl) restaurantTipsEl.innerHTML = renderTravelerTipsBlock("restaurants", "🍽 המלצות מסעדות מסיפורי מטיילים");
     });
   </script>
 </body>

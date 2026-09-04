@@ -3,20 +3,41 @@ function renderPlaceCards(items, type) {
   return `
     <div class="place-grid">
       ${items
-        .map(
-          (item) => `
-        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="place-card">
+        .map((item) => {
+          const isTraveler = item.source === "traveler-stories";
+          const mapsUrl = item.link || item.mapsUrl || "#";
+          const badge = isTraveler
+            ? `<span class="place-source-badge">📖 סיפורי מטיילים</span>`
+            : "";
+          const address = item.address
+            ? `<p class="place-card-address">📍 ${item.address}</p>`
+            : "";
+          const storyLink =
+            isTraveler && item.storyDay
+              ? `<a href="stories.html?id=${item.storyDay}" class="place-card-story-link">לסיפור ←</a>`
+              : "";
+          const booking =
+            item.bookingUrl
+              ? `<a href="${item.bookingUrl}" target="_blank" rel="noopener noreferrer" class="external-link">הזמנה / Airbnb</a>`
+              : "";
+          return `
+        <article class="place-card${isTraveler ? " place-card--traveler" : ""}">
           ${renderImg(item.image, "", item.name, "supra")}
           <div class="place-card-body">
+            ${badge}
             <h3>${item.name}</h3>
             ${item.cuisine ? `<p>${item.cuisine}</p>` : ""}
             ${item.area ? `<p>${item.area}</p>` : ""}
+            ${address}
             ${item.note ? `<p>${item.note}</p>` : ""}
-            <span class="external-link">פתיחה במפה</span>
+            <div class="place-card-actions">
+              <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer" class="external-link">פתיחה ב-Google Maps</a>
+              ${booking}
+              ${storyLink}
+            </div>
           </div>
-        </a>
-      `
-        )
+        </article>`;
+        })
         .join("")}
     </div>
   `;
@@ -712,25 +733,35 @@ function renderStoriesPage(dayId) {
 }
 
 function enrichDay(day) {
-  if (!day || typeof DAY_ENRICHMENT === "undefined") return day;
-  const e = DAY_ENRICHMENT[day.id];
-  if (!e) return day;
+  if (!day) return day;
+  const e = typeof DAY_ENRICHMENT !== "undefined" ? DAY_ENRICHMENT[day.id] : null;
 
   const actDetails = typeof ACTIVITY_DETAILS !== "undefined" ? ACTIVITY_DETAILS[day.id] : null;
-  const activities = (day.activities || []).map((a, i) => ({
+  let activities = (day.activities || []).map((a, i) => ({
     ...a,
     ...(actDetails?.[i] || {}),
-    ...(e.activityExtras?.[i] || {}),
+    ...(e?.activityExtras?.[i] || {}),
   }));
-  if (e.extraActivities?.length) activities.push(...e.extraActivities);
+  if (e?.extraActivities?.length) activities = [...activities, ...e.extraActivities];
 
-  const restaurants = [...(day.restaurants || []), ...(e.extraRestaurants || [])];
-  const hotels = [...(day.hotels || []), ...(e.extraHotels || [])];
+  const restaurants = [...(day.restaurants || []), ...(e?.extraRestaurants || [])];
+  const hotels = [...(day.hotels || []), ...(e?.extraHotels || [])];
+
+  if (typeof getTravelerRestaurantsForDay === "function" && typeof mapTravelerRecToPlaceCard === "function") {
+    getTravelerRestaurantsForDay(day.id).forEach((rec) => {
+      restaurants.push(mapTravelerRecToPlaceCard(rec, "restaurant"));
+    });
+  }
+  if (typeof getTravelerLodgingForDay === "function" && typeof mapTravelerRecToPlaceCard === "function") {
+    getTravelerLodgingForDay(day.id).forEach((rec) => {
+      hotels.push(mapTravelerRecToPlaceCard(rec, "lodging"));
+    });
+  }
 
   const alternatives = (day.alternatives || []).map((alt, i) => {
     const altExtra =
-      e.alternativeExtras?.[i] ||
-      e.alternativeExtras?.[String(i)] ||
+      e?.alternativeExtras?.[i] ||
+      e?.alternativeExtras?.[String(i)] ||
       (typeof ALTERNATIVE_ENRICHMENT !== "undefined" && ALTERNATIVE_ENRICHMENT[day.id]?.[i]) ||
       (typeof ALTERNATIVE_ENRICHMENT !== "undefined" && ALTERNATIVE_ENRICHMENT[day.id]?.[String(i)]) ||
       {};
@@ -739,9 +770,9 @@ function enrichDay(day) {
 
   return {
     ...day,
-    summary: e.summary || day.summary,
-    tips: e.tips || day.tips || [],
-    heroImage: e.heroImage || day.heroImage,
+    summary: e?.summary || day.summary,
+    tips: e?.tips || day.tips || [],
+    heroImage: e?.heroImage || day.heroImage,
     activities,
     restaurants,
     hotels,

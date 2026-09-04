@@ -72,6 +72,19 @@ const TRAVELER_STORIES = {
           { label: N.kutaisi + " – Google Maps", url: "https://www.google.com/maps/search/Kutaisi+Georgia" },
           { label: "Palaty Restaurant", url: "https://www.google.com/maps/search/Palaty+Kutaisi" },
         ],
+        recommendations: {
+          restaurants: [
+            {
+              name: "Palaty Restaurant",
+              area: N.kutaisi,
+              address: "Kutaisi city center · חיפוש ב-Google Maps: Palaty Kutaisi",
+              cuisine: "גיאורגית",
+              note: "המלצה מסיפור מטיילים באזור קוטאיסי",
+              mapsUrl: "https://www.google.com/maps/search/Palaty+Kutaisi",
+              image: "IMG.supra",
+            },
+          ],
+        },
         gallery: [
           {
             src: "IMG.supra",
@@ -92,6 +105,19 @@ const TRAVELER_STORIES = {
           { label: "Airbnb – קוטג' בקוטאיסי", url: "https://he.airbnb.com/rooms/678687088249315048" },
           { label: N.kutaisi + " – Google Maps", url: "https://www.google.com/maps/search/Kutaisi+Georgia" },
         ],
+        recommendations: {
+          lodging: [
+            {
+              name: "קוטג' קטן ומתוק – קוטאיסי (Airbnb)",
+              area: N.kutaisi,
+              address: "Kutaisi, Georgia · כ־3 שעות מטביליסי / קרוב יותר מבאטומי במסלול שלנו",
+              note: "לילה אחד מומלץ באזור – קטן ומתוק",
+              mapsUrl: "https://www.google.com/maps/search/Kutaisi+cottage+Airbnb+Georgia",
+              bookingUrl: "https://he.airbnb.com/rooms/678687088249315048",
+              image: "IMG.kutaisi",
+            },
+          ],
+        },
       },
     ],
   },
@@ -229,6 +255,19 @@ const TRAVELER_STORIES = {
           { label: "קניון בלדה / מפל קאגו", url: "https://www.google.com/maps/search/Balda+Canyon+Martvili" },
           { label: N.martviliCanyon, url: "https://www.google.com/maps/search/Martvili+Canyon" },
         ],
+        recommendations: {
+          lodging: [
+            {
+              name: "Airbnb שקט ביער – מרטווילי / בלדה",
+              area: N.martvili,
+              address: "אזור מרטווילי · באמצע יער ליד קניון בלדה (כתובת מדויקת ב-Airbnb אחרי הזמנה)",
+              note: "שקט עם גינה – קצת קטן, לא 5★, אבל עושה את העבודה לסופ״ש",
+              mapsUrl: "https://www.google.com/maps/search/Balda+Canyon+Martvili+accommodation",
+              bookingUrl: "https://www.airbnb.com/l/iScvSENb",
+              image: "IMG.martvili",
+            },
+          ],
+        },
       },
     ],
   },
@@ -294,6 +333,19 @@ const TRAVELER_STORIES = {
           { label: N.koruldiLakes, url: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z" },
           { label: "Yandex Navi", url: "https://yandex.com/maps/" },
         ],
+        recommendations: {
+          lodging: [
+            {
+              name: "בית גאורגי מחוץ למסטיה (Airbnb)",
+              area: N.mestia,
+              address: "מחוץ למסטיה, Samegrelo-Zemo Svaneti · גינה באמצע הטבע (כתובת מדויקת ב-Airbnb אחרי הזמנה)",
+              note: "חוויה גאורגית על מלא · הילדים הכי נהנו · בעלת בית מקסימה · לא 5★",
+              mapsUrl: "https://www.google.com/maps/search/Mestia+guesthouse+garden+Georgia",
+              bookingUrl: "https://he.airbnb.com/rooms/52625150",
+              image: "IMG.mestia",
+            },
+          ],
+        },
       },
     ],
   },
@@ -388,6 +440,34 @@ const TRAVELER_STORIES = {
           { label: "Gaul Gavkhe Khaleda", url: "https://www.google.com/maps/search/Gaul+Gavkhe+Khalde" },
           { label: "Chazhashi Guesthouse Ushguli", url: "https://www.google.com/maps/search/Chazhashi+guesthouse+Ushguli" },
         ],
+        recommendations: {
+          lodging: [
+            {
+              name: "Ciuri (Tsiuri) Guesthouse",
+              area: "Zhabeshi · סוואנטי",
+              address: "Zhabeshi, Svaneti, Georgia",
+              note: "מקסים · מאקה · ארוחות מעולות · ריבת פטל",
+              mapsUrl: "https://www.google.com/maps/search/Ciuri+guesthouse+Zhabeshi",
+              image: "IMG.ushguli",
+            },
+            {
+              name: "Gaul Gavkhe",
+              area: "Khalde · סוואנטי",
+              address: "Khalde / Khaleda, Svaneti, Georgia",
+              note: "מפנק ברמות – הכי טוב בכל הטיול לפי המלצת מטיילים",
+              mapsUrl: "https://www.google.com/maps/search/Gaul+Gavkhe+Khalde",
+              image: "IMG.ushguli",
+            },
+            {
+              name: "Chazhashi Guesthouse",
+              area: N.ushguli,
+              address: "Ushguli, Svaneti, Georgia",
+              note: "נוף מהמם · אוכל מושקע · ארגנו טיול סוסים",
+              mapsUrl: "https://www.google.com/maps/search/Chazhashi+guesthouse+Ushguli",
+              image: "IMG.ushguli",
+            },
+          ],
+        },
       },
       {
         title: "מחירי מוניות (לארי) – מסטיה וסביבה",
@@ -606,4 +686,67 @@ if (typeof MESTIA_TREK_GUIDE !== "undefined") {
   }
 }
 
-if (typeof module !== "undefined") module.exports = { TRAVELER_STORIES };
+function getTravelerRecommendationsForDay(dayId, kind) {
+  const page = typeof TRAVELER_STORIES !== "undefined" ? TRAVELER_STORIES[dayId] : null;
+  if (!page?.stories?.length) return [];
+  const items = [];
+  page.stories.forEach((story) => {
+    (story.recommendations?.[kind] || []).forEach((rec) => {
+      items.push({
+        ...rec,
+        source: "traveler-stories",
+        sourceLabel: "סיפורי מטיילים",
+        storyDay: Number(dayId),
+        storyTitle: story.title,
+      });
+    });
+  });
+  return items;
+}
+
+function getTravelerLodgingForDay(dayId) {
+  return getTravelerRecommendationsForDay(dayId, "lodging");
+}
+
+function getTravelerRestaurantsForDay(dayId) {
+  return getTravelerRecommendationsForDay(dayId, "restaurants");
+}
+
+function getAllTravelerRecommendations(kind) {
+  if (typeof TRAVELER_STORIES === "undefined") return [];
+  const all = [];
+  Object.keys(TRAVELER_STORIES)
+    .map(Number)
+    .sort((a, b) => a - b)
+    .forEach((dayId) => {
+      getTravelerRecommendationsForDay(dayId, kind).forEach((rec) => all.push(rec));
+    });
+  return all;
+}
+
+function mapTravelerRecToPlaceCard(rec, type) {
+  return {
+    name: rec.name,
+    area: rec.area,
+    address: rec.address,
+    cuisine: rec.cuisine,
+    note: rec.note,
+    link: rec.mapsUrl,
+    bookingUrl: rec.bookingUrl,
+    image: rec.image || (type === "restaurant" ? "IMG.supra" : "IMG.mestia"),
+    source: rec.source,
+    sourceLabel: rec.sourceLabel || "סיפורי מטיילים",
+    storyDay: rec.storyDay,
+    storyTitle: rec.storyTitle,
+  };
+}
+
+if (typeof module !== "undefined") {
+  module.exports = {
+    TRAVELER_STORIES,
+    getTravelerLodgingForDay,
+    getTravelerRestaurantsForDay,
+    getAllTravelerRecommendations,
+    mapTravelerRecToPlaceCard,
+  };
+}
