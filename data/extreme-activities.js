@@ -232,7 +232,7 @@ const EXTREME_ACTIVITIES = [
     relatedDays: [7, 11],
     onRoute: true,
     description:
-      "עלייה בג'יפ 4×4 לאגמי Koruldi בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi ו-Shkhara. לא נגיש ברכב רגיל. אופציה לערב יום 7 (אחרי הגעה למסטיה) או בבוקר יום 11 בירידה.",
+      "עלייה בג'יפ 4×4 לאגמי Koruldi בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi ו-Shkhara. הדרך מאוד מאתגרת (יש קטעי רוורס) – מומלץ חזק לקחת נהג, לא לנסוע לבד. אופציה לערב יום 7 או בוקר יום 11.",
     website: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
     websiteLabel: "Koruldi Lakes – מפה",
     image: "IMG.koruldi",

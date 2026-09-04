@@ -18,6 +18,21 @@ const TRAVELER_STORIES = {
           { label: "מפת Google – המסלול שלנו", url: "https://maps.app.goo.gl/7n7fm83nZTDq31La7" },
         ],
       },
+      {
+        title: "שבועיים מטורפים – סיכום פתיחה",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.batumi",
+        paragraphs: [
+          "שבועיים מטורפים עם חבורה של משוגעים הכי מתוקים בעולם! גאורגיה מדהימה – עוצמתית, קיצונית, אלפינית ומיוחדת. קשה לתאר במילים את היופי הכמעט בתולי; הטיול היה מלא במראות שהעין והלב מתרחבים מולם. אנשיה טובים, ולטייל בה היה תענוג.",
+          "גאורגיה עשירה במסלולי טיול – לא היינו באזורים עם הרבה אטרקציות מלאכותיות. אם אתם משפחה שאוהבת לטייל – היא מושלמת.",
+          "טיפ כללי: אין לסמוך בגאורגיה לא על התחזית, לא על אפליקציות הניווט, ולא על שעות הפתיחה של החנויות. להביא גם בגדים לקיץ וגם בגדים חמים ומעילי גשם – טיילנו גם בימי גשם זלעפות.",
+        ],
+        links: [
+          { label: "לוגיסטיקה – טיפים", url: "logistics.html#rental" },
+          { label: "מפת Google – המסלול שלנו", url: "https://maps.app.goo.gl/7n7fm83nZTDq31La7" },
+        ],
+      },
     ],
   },
   2: {
@@ -62,6 +77,20 @@ const TRAVELER_STORIES = {
             src: "IMG.supra",
             caption: "ארוחה גיאורגית טיפוסית",
           },
+        ],
+      },
+      {
+        title: "לילה בקוטג' קטן ומתוק – קוטאיסי",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.kutaisi",
+        paragraphs: [
+          "רגע לפני חזרה לארץ – לילה אחד בקוטג' קטן ומתוק בקוטאיסי. כ־3 שעות נסיעה משדה התעופה בטיביליסי (במסלול שלנו: באטומי קרוב יותר).",
+          "ארץ יפיפיה, לא יקרה ומאד ידידותית למשתמש – שווה כל דקה באזור.",
+        ],
+        links: [
+          { label: "Airbnb – קוטג' בקוטאיסי", url: "https://he.airbnb.com/rooms/678687088249315048" },
+          { label: N.kutaisi + " – Google Maps", url: "https://www.google.com/maps/search/Kutaisi+Georgia" },
         ],
       },
     ],
@@ -182,6 +211,25 @@ const TRAVELER_STORIES = {
           },
         ],
       },
+      {
+        title: "מרטווילי, בלדה, אוקצה וקינצחה – יום מים וגשרים",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.okatse",
+        paragraphs: [
+          "לינה: בסופ״ש העדפנו אזור שקט עם גינה באמצע יער ליד מרטווילי – מקום קצת קטן, לא 5 כוכבים, אבל אם מחפשים שקט באזור – עושה את העבודה.",
+          "מפל קאגו בקניון בלדה – שחייה במפל קר וחמוד. גם שחייה בנחל ליד הבית בבלדה.",
+          "קניון אוקצה – שעה נסיעה ממרטווילי. הליכה על מערכת גשרים תלויה בגובה ~200 מ' מעל קניון מחורץ – חוויה חזקה. כניסה ~40 לארי לאדם. יש ~2 ק״מ הליכה אל הגשרים ביער יפה; אפשר לשכור נהג מקומי (~50 לארי) – הלכנו רגלית בהלוך ובחזור לקחנו נהג.",
+          "סיימנו במפלי קינצחה – ~15 דק' מאוקצה: מפל נחמד לשחייה עם קפיצות למים. אחלה סיומת ליום.",
+        ],
+        links: [
+          { label: "Airbnb – מרטווילי / יער", url: "https://www.airbnb.com/l/iScvSENb" },
+          { label: N.okatseCanyon, url: "https://www.google.com/maps/search/Okatse+Canyon" },
+          { label: "מפלי קינצחה", url: "https://www.google.com/maps/search/Kinchkha+waterfall" },
+          { label: "קניון בלדה / מפל קאגו", url: "https://www.google.com/maps/search/Balda+Canyon+Martvili" },
+          { label: N.martviliCanyon, url: "https://www.google.com/maps/search/Martvili+Canyon" },
+        ],
+      },
     ],
   },
   7: {
@@ -211,8 +259,9 @@ const TRAVELER_STORIES = {
         image: "IMG.mestia",
         paragraphs: [
           "בזכות המלצה – הקדשנו יום ל'מנוחה' לפני הטרק הגדול. בעל הגסטהאוס ארגן ג'יפ + נהג (300 לארי – אפשר בפחות, אבל היו מעולים).",
-          "אי אפשר עם רכב רגיל – הוזהרתם. הדרך למעלה – הלב והסרעפת מחליפים מקום. נוף 360° של הרים מושלגים, שלוליות (לא אגמים ענקיים) – אבל מלחמת שלג מושלמת.",
-          "ירדנו ברגל לבקתת הקפה – קפה משובח, עוגיות בית, מרק. להביא ברכיים, מעיל גשם לסנובורד. לא לעלות בלי ראות טובה.",
+          "הדרך לאגמי קורולדי מאוד מאתגרת – יש מקומות שהנהג עלה ברוורס. מומלץ חזק לקחת נהג; לא לנסוע לבד גם עם 4×4.",
+          "נוף 360° של הרים מושלגים, שלוליות (לא אגמים ענקיים) – אבל מלחמת שלג מושלמת.",
+          "ירדנו ברגל לבקתת הקפה – קפה משובח, עוגיות בית, מרק. להביא ברכיים, מעיל גשם. לא לעלות בלי ראות טובה.",
           "במסטיה: מונית (50 לארי) חוסכת 4 ק\"מ הליכה. למעלה – מיץ דובדבנים ממותק שווה.",
         ],
         links: [
@@ -224,6 +273,26 @@ const TRAVELER_STORIES = {
             src: "IMG.ushba",
             caption: N.ushba,
           },
+        ],
+      },
+      {
+        title: "עלייה למסטיה – כבישים כפריים, Hatsvali וקורולדי",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.enguriDam",
+        paragraphs: [
+          "הנסיעה למסטיה ארכה יותר משציפינו – כולה בכבישים כפריים, פרות וחזירים חוצים. Google Maps / Waze לא מדייקות בהערכת זמנים; נהג מקומי המליץ על Yandex Navi.",
+          "אפשר לעצור לזיפ ליין (~80 לארי) וסיור בסכר אנגורי. בצד הדרך – מפלים ובריכות קטנות שכדאי לעצור בהן כדי לחתוך את הנסיעה. אצלנו: ~7 שעות סה״כ.",
+          "רכבל האצוואלי (Hatsvali) – נסגר ב־17:00. עלייה ~25 לארי למבוגר (מגיל 12), ~17 לארי לילד. למעלה אפשר לטייל שעה–שעתיים – נוף מרהיב.",
+          "לינה: היינו מחוץ למסטיה, בבית גאורגי עם גינה מדהימה באמצע הטבע וכלב – חוויה גאורגית על מלא. לא 5 כוכבים, אבל הבית שהילדים הכי נהנו ממנו; בעלת הבית מקסימה.",
+          "אגם קורולדי: שכרנו נהג (~250 לארי) ליום מעל מסטיה – לצלב ולאגמים. הדרך מאוד מאתגרת (יש קטעי רוורס) – מומלץ חזק לקחת נהג, לא לבד גם עם 4×4. הוא הוריד באגם וירדנו ברגל ~3 ק״מ עד הצלב (בדרך כלל עושים הפוך – העלייה קשה מאוד). יום מרהיב.",
+        ],
+        links: [
+          { label: N.enguriDam, url: "https://www.google.com/maps/search/Enguri+Dam" },
+          { label: "רכבל Hatsvali", url: "https://www.google.com/maps/search/Hatsvali+cable+car+Mestia" },
+          { label: "Airbnb – בית מחוץ למסטיה", url: "https://he.airbnb.com/rooms/52625150" },
+          { label: N.koruldiLakes, url: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z" },
+          { label: "Yandex Navi", url: "https://yandex.com/maps/" },
         ],
       },
     ],
@@ -336,6 +405,35 @@ const TRAVELER_STORIES = {
           { label: N.shkharaGlacier, url: "https://www.google.com/maps/search/Shkhara+Glacier" },
         ],
       },
+      {
+        title: "אושגולי וקרחון שחארה – יום בלתי נשכח",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.ushguli",
+        paragraphs: [
+          "אושגולי – כפר מטריף! כשעה נסיעה ממסטיה. מסטיה→אושגולי: כביש לכל רכב (SUV מספיק).",
+          "מאושגולי לקרחון שחארה: אפשר כמעט בכל רכב עד סוף הדרך; החלק האחרון הליכה רגלית. אופציה: סוסים (~70 לארי לסוס) לחלק מדרך העפר.",
+          "אנחנו נסענו חצי דרך ברכב והלכנו רגלית; בחזרה – עם סוסים. חוויה מדהימה לרכב בחופשיות בנופים האלה.",
+          "בסוף המסלול התיישבנו על הגבעות באושגולי ותצפינו על הנוף – אפשר לבלות שם בכיף כמה שעות.",
+        ],
+        links: [
+          { label: N.ushguli, url: "https://www.google.com/maps/search/Ushguli" },
+          { label: N.shkharaGlacier, url: "https://www.google.com/maps/search/Shkhara+Glacier" },
+        ],
+      },
+      {
+        title: "תצפית הנדנדה – The Swing Viewpoint",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.mestia",
+        paragraphs: [
+          "~15 דק' ממסטיה – תצפית מטורפת באחו ענק מלא סוסים ופרות, ונוף שקשה לתאר.",
+          "הבאנו אוכל, ישבנו לפיקניק ונדנדנו על הנוף – בילינו בנקודה ~3 שעות. לא לפספס.",
+        ],
+        links: [
+          { label: "The Swing Viewpoint – מסטיה", url: "https://www.google.com/maps/search/Swing+Viewpoint+Mestia" },
+        ],
+      },
     ],
   },
   9: {
@@ -354,6 +452,19 @@ const TRAVELER_STORIES = {
         links: [
           { label: N.chalaadiGlacier, url: "https://www.google.com/maps/search/Chalaadi+Glacier" },
           { label: N.mazeri, url: "https://www.google.com/maps/search/Mazeri+Georgia" },
+        ],
+      },
+      {
+        title: "קרחון צ'לאדי – יום גשם מושלם",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.chalaadi",
+        paragraphs: [
+          "הליכה של ~3–4 ק״מ לכל כיוון – עלייה לקרחון מרשים וחזרה. לא קשה מדי; רוב הטיול ביער ולכן מתאים גם ליום גשם.",
+          "שימו לב: המסלול מתחיל בחציית גשר קצת מפחיד ולא בטיחותי במיוחד – להחזיק היטב את הילדים.",
+        ],
+        links: [
+          { label: N.chalaadiGlacier, url: "https://www.google.com/maps/search/Chalaadi+Glacier" },
         ],
       },
     ],
@@ -388,12 +499,27 @@ const TRAVELER_STORIES = {
         image: "IMG.anaklia",
         paragraphs: [
           "חזרנו דרך אושגולי למפלי מרטווילי – הדרך הרבה יותר קצרה ונוחה ממה שחשbנו, נוף מהמם.",
-          "Koruldi בבוקר – אם לא עליתם ביום 7, אפשר לשלב בירידה (ג'יפ!).",
+          "Koruldi בבוקר – אם לא עליתם ביום 7, אפשר לשלב בירידה (ג'יפ + נהג – דרך מאתגרת מאוד).",
           "אנאקליה – עיירת חוף רגועה אחרי סוואנטי.",
         ],
         links: [
           { label: N.anaklia, url: "https://www.google.com/maps/search/Anaklia+Georgia" },
           { label: N.dadianiPalace, url: "https://www.google.com/maps/search/Dadiani+Palace" },
+        ],
+      },
+      {
+        title: "ירידה ממסטיה – זיפ ליין, מפל ופארק חבלים",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.enguriDam",
+        paragraphs: [
+          "בדרך ממסטיה חזרה לכיוון קוטאיסי/החוף: עצירה בזיפ ליין בסכר אנגורי ובמפל במרטווילי לשכשוך.",
+          "במסטיה יש גם פארק חבלים לכל הגילאים (~20 לארי לאדם, נפתח ב־11:00) – אומרים שהוא אחלה אם מספיקים.",
+        ],
+        links: [
+          { label: N.enguriDam, url: "https://www.google.com/maps/search/Enguri+Dam" },
+          { label: N.martvili + " – מפל", url: "https://www.google.com/maps/search/Martvili+waterfall" },
+          { label: "פארק חבלים מסטיה", url: "https://www.google.com/maps/search/ropes+park+Mestia" },
         ],
       },
     ],

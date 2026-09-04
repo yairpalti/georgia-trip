@@ -52,7 +52,7 @@ const TRIP_PLACES = [
   { id: "shkhara-glacier", he: "קרחון שחארה", en: "Shkhara Glacier", category: "nature", area: "סוואנטי", lat: 42.982581, lng: 43.103614, cid: "402500232358537801" },
   { id: "ushguli", he: "אושגולי", en: "Ushguli", category: "attraction", area: "סוואנטי", lat: 42.915824, lng: 43.018924, cid: "7519855403429438862" },
   { id: "mestia", he: "מסטיה", en: "Mestia", category: "town", area: "סוואנטי", lat: 43.046355, lng: 42.718537, cid: "18166460198586430709" },
-  { id: "koruldi-lakes", he: "אגמי קורולדי", en: "Koruldi Lakes", category: "nature", area: "סוואנטי · מעל מסטיה", lat: 43.086749, lng: 42.70565, tip: "ג'יפ 4×4 בלבד · אופציה ליום 7 או 11" },
+  { id: "koruldi-lakes", he: "אגמי קורולדי", en: "Koruldi Lakes", category: "nature", area: "סוואנטי · מעל מסטיה", lat: 43.086749, lng: 42.70565, tip: "דרך מאתגרת מאוד · ג'יפ + נהג מומלץ · אופציה ליום 7 או 11" },
   { id: "enguri-dam", he: "סכר אנגורי", en: "Inguri Dam", category: "attraction", area: "סמגרלו", lat: 42.76, lng: 42.03, cid: "9656860743801892767" },
   { id: "martvili-canyon", he: "קניון מרטווילי", en: "Martvili Canyon", category: "nature", area: "סמגרלו", lat: 42.457204, lng: 42.376926, cid: "15002075937782105156" },
   { id: "sataplia", he: "שמורת סטאפליה", en: "Sataplia Nature Reserve", category: "nature", area: "קוטאיסי", lat: 42.248, lng: 42.775, tip: "עקבות דינוזאורים" },

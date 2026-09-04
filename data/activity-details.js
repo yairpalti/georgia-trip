@@ -189,14 +189,14 @@ const ACTIVITY_DETAILS = {
   8: [
     {
       description:
-        "08:00 – ג'יפ 4×4 עם נהג מקומי ממסטיה (להזמין מראש, ~150–200 ₾/רכב). נסיעה 45 ק\"מ / 2–2.5 ש' על כביש עפר לאושגולi – הכפר המיושb ב-Europa (2,200 מ'). רואים: מגדלי Svanetian, בקתות אבן, נוף ל-Shkhara. עצירות: Zhabeshi, Adishi (אם טrek multi-day).",
+        "08:00 – יציאה ב-SUV ממסטיה לאושגולי (~45 ק\"מ / 2–2.5 ש'). מסטיה→אושגולי: כביש לכל רכב. הכפר הגבוה באירופה (2,200 מ') – מגדלי Svanetian, בקתות אבן, נוף ל-Shkhara.",
       image: "IMG.ushguli",
       link: "https://www.google.com/maps/search/Ushguli",
       linkLabel: N.ushguli,
     },
     {
       description:
-        "מאושגולi – רכיבה על סוסים (~20–30 ₾) או הליכה 3–4 ש' H/R לקרחון Shkhara (5,193 מ'). מסלול יחסית שטוח לאורך העמק, נוף לפסגות מושלגות. חזרה בג'יפ למסטיה – 14:00–16:00.",
+        "מאושגולי לקרחון Shkhara: אפשר כמעט בכל רכב עד סוף הדרך; החלק האחרון הליכה רגלית. אופציה: סוסים (~20–70 ₾). נוף לפסגות מושלגות. חזרה ב-SUV למסטיה – 14:00–16:00.",
       image: "IMG.shkhara",
       link: "https://www.google.com/maps/search/Shkhara+Glacier",
       linkLabel: N.shkharaGlacier,
@@ -237,7 +237,7 @@ const ACTIVITY_DETAILS = {
   11: [
     {
       description:
-        "08:00 – יציאה ממאזרי. ג'יפ 4×4 ל-Koruldi Lakes (2,850 מ') – ~45 דק' על כביש עפר. אגמים alpine, נוף 360° ל-Ushba. 45–60 דק' צילום. לדלג אם ביקרתם בערב יום 7. ממשיכים דרומה.",
+        "08:00 – יציאה ממאזרי. ג'יפ + נהג ל-Koruldi Lakes (2,850 מ') – דרך מאתגרת מאוד (~45 דק'). אגמים alpine, נוף 360° ל-Ushba. 45–60 דק' צילום. לדלג אם ביקרתם בערב יום 7. ממשיכים דרומה.",
       image: "IMG.koruldi",
       link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
       linkLabel: N.koruldiLakes,

@@ -833,7 +833,7 @@ const DAYS = [
       {
         name: fmt("הגעה ו-check-in – Home in Mestia (Airbnb)", "Arrival & check-in – Home in Mestia", "Home in Mestia"),
         description:
-          "הגעה צפויה 13:30–14:30. check-in ב-Airbnb (29.9–1.10) · 21 Mestia. מנוחה קצרה. לרכוש מזומן מהכספומט (ATM מוגבל), חטיפים ומים לימי הטרק. להזמין ג'יפ ל-Ushguli ליום 8.",
+          "הגעה צפויה 13:30–14:30. check-in ב-Airbnb (29.9–1.10) · 21 Mestia. מנוחה קצרה. לרכוש מזומן מהכספומט (ATM מוגבל), חטיפים ומים לימי הטרק. מחר Ushguli ב-SUV. אם Koruldi – להזמין ג'יפ + נהג (דרך מאתגרת).",
         link: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ",
         linkLabel: N.mestiaAirbnb,
       },
@@ -853,14 +853,15 @@ const DAYS = [
     ],
     alternatives: [
       {
-        name: "🚙 אופציה – אגמי קורולדי (ג'יפ 4×4)",
+        name: "🚙 אופציה – אגמי קורולדי (ג'יפ + נהג)",
         description:
-          "יום מנוחה קל לפני Ushguli: עלייה בג'יפ לאגמים alpine בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi ו-Shkhara. לא נגיש ברכב רגיל. אפשר גם בבוקר יום 11 בירידה אם מדלגים.",
+          "יום מנוחה קל לפני Ushguli: עלייה לאגמים alpine בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi ו-Shkhara. הדרך מאוד מאתגרת (יש קטעים שהנהג עולה ברוורס) – מומלץ חזק לקחת נהג, לא לנסוע לבד. אפשר גם בבוקר יום 11 בירידה אם מדלגים.",
         link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
         linkLabel: N.koruldiLakes,
         image: "IMG.koruldi",
         tips: [
-          "ג'יפ + נהג – ~150–300 ₾ (לתאם במסטיה / Airbnb)",
+          "ג'יפ + נהג – ~150–300 ₾ (לתאם במסטיה / Airbnb) · לא לבד",
+          "דרך מאתגרת מאוד – גם עם 4×4 יש קטעי רוורס",
           "חצי יום – ערב אחרי check-in וסיור במסטיה",
           "לבוש חם – רוח בגובה",
           "אם לא מספיקים בערב 7 – אפשר בבוקר יום 11",
@@ -909,28 +910,29 @@ const DAYS = [
     weekday: "רביעי",
     title: `${N.ushguli.split(" · ")[0]} ו${N.shkharaGlacier.split(" · ")[0]}`,
     emoji: "🏔",
-    theme: fmt("4x4 לכפר הגבוה באירופה", "4x4 to Europe's highest village", "4x4 უშგულში"),
+    theme: fmt("הכפר הגבוה באירופה", "Europe's highest village", "უშგული"),
     overnight: N.mestiaAirbnb,
-    driving: "ג'יפ 4×4 · ~3.5 ש' (90 ק\"מ H/R) – הרכב חונה",
-    summary: "ג'יפ 4x4 עם נהג לאושגולי, סוסים או הליכה לקרחון שחארה.",
+    driving: "SUV · מסטיה→אושגולי כביש לכל רכב · ~3–3.5 ש' (90 ק\"מ H/R)",
+    summary: "נסיעה ב-SUV לאושגולי (כביש לכל רכב), המשך כמעט עד שחארה בכל רכב, והליכה בחלק האחרון – או סוסים.",
     activities: [
       {
         name: N.ushguli,
-        description: "הכפר הגבוה ביותר באירופה – מגדלי אבן, UNESCO.",
+        description: "הכפר הגבוה ביותר באירופה – מגדלי אבן, UNESCO. מסטיה→אושגולי: כביש לכל רכב (SUV מספיק).",
         link: "https://www.google.com/maps/search/Ushguli",
         linkLabel: N.ushguli,
       },
       {
         name: N.shkharaGlacier,
-        description: "רכיבה על סוסים או הליכה לקרחון.",
+        description:
+          "מאושגולי לקרחון: אפשר כמעט בכל רכב עד סוף הדרך; החלק האחרון הליכה רגלית. אופציה: סוסים.",
         link: "https://www.google.com/maps/search/Shkhara+Glacier",
         linkLabel: N.shkharaGlacier,
       },
     ],
     alternatives: [
       {
-        name: fmt("טיול מודרך", "Guided tour", "საგიდო ტური"),
-        description: "להזמין ג'יפ מראש במסטיה – הכביש מחלקו סלע ונדרש נהג מקומי.",
+        name: fmt("סוסים / הליכה מלאה", "Horses / full walk", "ცხენები / სიარული"),
+        description: "אם מעדיפים לא לנסוע את דרך העפר – סוסים מאושגולי או הליכה מלאה לקרחון.",
         image: "IMG.ushguli",
       },
     ],
@@ -1049,7 +1051,7 @@ const DAYS = [
       {
         name: N.koruldiLakes,
         description:
-          "תצפית בוקר על אגמים alpine בגובה ~2,850 מ' – נוף ל-Ushba. ג'יפ 4×4 + נהג (~45 דק' ממסטיה). לדלג אם כבר ביקרתם בערב יום 7.",
+          "תצפית בוקר על אגמים alpine בגובה ~2,850 מ' – נוף ל-Ushba. ג'יפ + נהג חובה מומלצת (~45 דק' ממסטיה) – הדרך מאוד מאתגרת. לדלג אם כבר ביקרתם בערב יום 7.",
         link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
         linkLabel: N.koruldiLakes,
       },
@@ -1175,8 +1177,12 @@ const LOGISTICS = {
     },
     {
       id: "mestia-jeep",
-      label: fmt("ג'יפ 4×4 – Ushguli (יום 8)", "4×4 jeep – Ushguli (day 8)", "ჯიპი – უშგული"),
-      note: fmt("להזמין ב-check-in מסטיה (יום 7) · ~150–200 ₾", "Book at Mestia check-in (day 7) · ~150–200 GEL", "~150–200 ₾"),
+      label: fmt("ג'יפ + נהג – Koruldi (אופציה)", "Jeep + driver – Koruldi (optional)", "ჯიპი – კორულდი"),
+      note: fmt(
+        "דרך מאתגרת מאוד · לתאם במסטיה · ~150–300 ₾ · Ushguli ב-SUV",
+        "Very rough road · book in Mestia · ~150–300 GEL · Ushguli by SUV",
+        "Koruldi + driver"
+      ),
       link: "#mestia-vehicle",
       linkLabel: fmt("SUV מול ג'יפ – מסטיה", "SUV vs jeep – Mestia", "SUV vs jeep"),
     },
@@ -1214,7 +1220,7 @@ const LOGISTICS = {
   rentalCars: [
     {
       name: fmt("השכרת רכב (TbilisiCars) באטומי", "Car rental (TbilisiCars) in Batumi", "ავტომობილის ქირა (TbilisiCars) ბათუმში"),
-      details: `מומלץ SUV – כבישים הרריים ומפותלים. לא 4×4: ל-Ushguli ו-Koruldi יש ג'יפ נפרד עם נהג (ימים 7–8). איסוף ביום 1 (23.9), החזרה ביום 13 (5.10).
+      details: `מומלץ SUV – כבישים הרריים ומפותלים. מסטיה→אושגולי: כביש לכל רכב. אושגולי→שחארה: כמעט עד סוף הדרך בכל רכב + הליכה בסוף. ל-Koruldi: ג'יפ + נהג מומלץ מאוד (דרך מאתגרת). איסוף ביום 1 (23.9), החזרה ביום 13 (5.10).
 ספק: TbilisiCars (tbilisicars.com)
 טלפון: +995591002630 / +995574888784
 כתובת: Batumi Airport, 33 Nikoloz BarataShvili Street
@@ -1245,6 +1251,24 @@ const LOGISTICS = {
         `כבישים ל${N.svaneti.split(" · ")[0]} – מפותלים, לנהוג בזהירות`,
         "חניה בערים – בדרך כלל קלה",
         "שמירת דלק – תחנות דלק נדירות באזורים מרוחקים",
+        "בעלייה למסטיה: הרבה עצירות; Google/Waze לא תמיד מדויקים בזמנים – מומלץ Yandex Navi",
+        "ככל שמתקדמים בהרים – כבישים קצת משובשים (פרות, חזירים, בורות)",
+      ],
+      links: [{ label: "Yandex Navi / Maps", url: "https://yandex.com/maps/" }],
+    },
+    {
+      name: fmt("אוכל כשר, כסף ומזג אוויר", "Kosher food, money & weather", "კოშერი, ფული და ამინდი"),
+      details:
+        "מטיילים כשרים: בשר מהארץ; פסטות/שוקולד/ציפסים בחנויות כמו באירופה. אפליקציית Kosher Scan עובדת – יוגורט, פילדלפיה ועוד. לחם tone (קמח+מים) במאפיות עם שלט Tone – ~2 ₪, חם, במזומן.",
+      tips: [
+        "כסף: רוב המקומות לוקחים אשראי – בכל זאת להחזיק מזומן לנהגים מקומיים וחנויות קטנות",
+        "ציינג' Intel Express בשדה – שער טוב; עדיף להגיע עם דולרים",
+        "מזג אוויר הפכפך – בגדי קיץ + חמים + מעיל גשם; גם בימי גשם זלעפות שווה לצאת",
+        "אין לסמוך על תחזית, אפליקציות ניווט, או שעות פתיחה של חנויות",
+      ],
+      links: [
+        { label: "Kosher Scan", url: "https://kosherscan.app" },
+        { label: "Intel Express", url: "https://www.google.com/maps/search/Intel+Express+currency+exchange+Georgia" },
       ],
     },
   ],

@@ -311,12 +311,12 @@ const ALTERNATIVE_ENRICHMENT = {
     0: {
       driving: "חצי יום · ג'יפ 4×4 + נהג · ~10 ק\"מ ממסטיה",
       description:
-        "אופציה לערב יום 7 – יום מנוחה קל לפני Ushguli. עלייה בג'יפ לאגמי Koruldi alpine בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi, Shkhara ועמק Enguri. לא נגיש ברכב השכור.",
+        "אופציה לערב יום 7 – יום מנוחה קל לפני Ushguli. עלייה בג'יפ לאגמי Koruldi alpine בגובה ~2,850 מ' – נוף 360° ל-Ushba, Tetnuldi, Shkhara ועמק Enguri. הדרך מאוד מאתגרת (יש קטעי רוורס) – מומלץ חזק לקחת נהג, לא לנסוע לבד.",
       image: "IMG.koruldi",
       link: "https://www.google.com/maps/place/Koruldi+Lakes/@43.0867487,42.7056495,15z",
       linkLabel: N.koruldiLakes,
       tips: [
-        "לתאם ג'יפ + נהג במסטיה – ~150–300 ₾ (Airbnb / מרכז העיירה)",
+        "לתאם ג'יפ + נהג במסטיה – ~150–300 ₾ (Airbnb / מרכז העיירה) · לא לבד",
         "אחרי check-in וסיור במסטיה – יציאה ~16:30",
         "לבוש חם, כובע, מים – רוח בגובה",
         "אם לא מספיקים – אפשר בבוקר יום 11 בירידה מההרים",

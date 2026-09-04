@@ -2,10 +2,10 @@
 const MESTIA_VEHICLE_GUIDE = {
   title: "מסטיה: רכב שכור (SUV) מול ג'יפ 4×4",
   intro:
-    "הרכב השכור (SUV) מספיק לרוב הימים במסטיה. ג'יפ 4×4 עם נהג מקומי נדרש רק ליעדי שטח – בעיקר Ushguli. להזמין ג'יפ מראש ב-check-in (יום 7).",
+    "הרכב השכור (SUV) מספיק למסטיה→אושגולי ולרוב הדרך לקרחון שחארה. ג'יפ 4×4 עם נהג מקומי מומלץ מאוד ל-Koruldi – הדרך מאתגרת מאוד. צ'לאדי: ג'יפ אופציונלי עד הגשר.",
   bookAhead: [
-    "יום 8 (Ushguli) – ג'יפ + נהג, ~150–200 ₾/רכב · לתאם ביום 7",
-    "אופציה Koruldi (יום 7 ערב / יום 11 בוקר) – ~150–300 ₾ · לא נגיש ב-SUV",
+    "אופציה Koruldi (יום 7 ערב / יום 11 בוקר) – ג'יפ + נהג ~150–300 ₾ · הדרך מאוד מאתגרת (יש קטעים ברוורס) – לא לנסוע לבד",
+    "יום 8 (Ushguli + Shkhara) – SUV מספיק: מסטיה→אושגולי כביש לכל רכב; אושגולי→שחארה כמעט עד סוף הדרך בכל רכב, ואז הליכה",
     "אופציה Chalaadi עד הגשר (יום 9) – ~80 ₾ H/R · חוסך ~2 ש' הליכה",
   ],
   days: [
@@ -15,19 +15,21 @@ const MESTIA_VEHICLE_GUIDE = {
       title: "זוגדידi → מסטיה",
       suv: "🚗 SUV – מספיק",
       suvNote: "140 ק\"מ, כביש סלול מפותל. שעה–שעה וחצי אחרונות: serpentine, פרות, בורות – נהיגה זהירה.",
-      jeep: "🚙 ג'יפ – אופציה בערב",
-      jeepNote: "Koruldi Lakes (~2,850 מ') – לא ברכב רגיל. חצי יום אחרי check-in.",
+      jeep: "🚙 ג'יפ – מומלץ בערב (Koruldi)",
+      jeepNote:
+        "Koruldi Lakes (~2,850 מ') – דרך מאוד מאתגרת; יש מקומות שהנהג עולה ברוורס. מומלץ חזק לקחת נהג. לא ברכב שכור לבד.",
       jeepRequired: false,
     },
     {
       day: 8,
       date: "30.9",
       title: "Ushguli + Shkhara",
-      suv: "🚗 SUV – חונה במסטיה",
-      suvNote: "לא נוסעים ל-Ushguli ברכב השכור – הכביש מחלקו סלע.",
-      jeep: "🚙 ג'יפ 4×4 – חובה",
-      jeepNote: "ג'יפ + נהג מקומי (~150–200 ₾). 90 ק\"מ H/R, ~3.5 ש'.",
-      jeepRequired: true,
+      suv: "🚗 SUV – מספיק",
+      suvNote:
+        "מסטיה→אושגולי: כביש לכל רכב. מאושגולי לקרחון שחארה: אפשר כמעט בכל רכב עד סוף הדרך; החלק האחרון – הליכה רגלית.",
+      jeep: "🚙 ג'יפ – לא חובה",
+      jeepNote: "אופציונלי לנוחות / נהג מקומי. לא נדרש לכביש אושגולי עצמו.",
+      jeepRequired: false,
     },
     {
       day: 9,
@@ -45,8 +47,8 @@ const MESTIA_VEHICLE_GUIDE = {
       title: "Koruldi בירידה (ממאזרי)",
       suv: "🚗 SUV – המשך לים",
       suvNote: "נסיעה Mazeri → Anaklia – כביש רגיל.",
-      jeep: "🚙 ג'יפ – אופציה בבוקר",
-      jeepNote: "Koruldi – רק אם לא ביקרתם ביום 7. ג'יפ 4×4 + נהג.",
+      jeep: "🚙 ג'יפ + נהג – מומלץ ל-Koruldi",
+      jeepNote: "רק אם לא ביקרתם ביום 7. דרך מאתגרת מאוד – לקחת נהג, לא לבד.",
       jeepRequired: false,
       related: true,
     },
@@ -76,7 +78,7 @@ function renderMestiaVehicleGuideHtml(options = {}) {
         </div>
         ${
           d.day === 7
-            ? `<p class="vehicle-footnote">💡 מחר (יום 8) – ג'יפ חובה ל-Ushguli. לתאם היום.</p>`
+            ? `<p class="vehicle-footnote">💡 מחר (יום 8) – מסטיה→אושגולי ב-SUV. ל-Koruldi הערב: לקחת נהג.</p>`
             : ""
         }
         <p class="vehicle-footnote"><a href="logistics.html#mestia-vehicle">טבלה מלא → לוגיסטיקה</a></p>
@@ -106,7 +108,7 @@ function renderMestiaVehicleGuideHtml(options = {}) {
     <h3 style="font-size:1rem;margin:1.25rem 0 0.5rem">להזמין מראש</h3>
     <ul>${g.bookAhead.map((t) => `<li>${t}</li>`).join("")}</ul>
     <p style="font-size:0.9rem;color:var(--text-muted);margin-top:1rem">
-      <strong>בקצרה:</strong> רק יום 8 חייב ג'יפ. ימים 7 ו-9 – SUV. Koruldi וקטע צ'לאדי – ג'יפ אופציונלי.
+      <strong>בקצרה:</strong> מסטיה→אושגולי→שחארה – SUV מספיק (הליכה בסוף לשחארה). Koruldi – ג'יפ + נהג מומלץ מאוד. צ'לאדי – ג'יפ אופציונלי עד הגשר.
     </p>`;
 }
 
