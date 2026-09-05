@@ -110,6 +110,52 @@ function placeCardKey(kind, index, name) {
   return `${kind}-${index}-${slug || "place"}`;
 }
 
+/** Identity keys for lodging/restaurant cards – used to drop duplicates across sources */
+function placeItemIdentityKeys(item) {
+  const keys = [];
+  const nameKey = normalizePlaceKey(item?.name);
+  if (nameKey) keys.push(`n:${nameKey}`);
+
+  const link = item?.link || item?.mapsUrl || "";
+  const coords = parseCoordsFromMapsUrl(link);
+  if (coords && Number.isFinite(coords.lat) && Number.isFinite(coords.lng)) {
+    keys.push(`c:${coords.lat.toFixed(4)},${coords.lng.toFixed(4)}`);
+  } else if (link) {
+    const cleaned = String(link).split(/[?#]/)[0].replace(/\/$/, "").toLowerCase();
+    if (cleaned) keys.push(`u:${cleaned}`);
+  }
+
+  const booking = item?.bookingUrl;
+  if (booking) {
+    const cleaned = String(booking).split(/[?#]/)[0].replace(/\/$/, "").toLowerCase();
+    if (cleaned) keys.push(`b:${cleaned}`);
+  }
+  return keys;
+}
+
+function dedupePlaceItems(items) {
+  if (!items?.length) return [];
+  const seen = new Set();
+  return items.filter((item) => {
+    const keys = placeItemIdentityKeys(item);
+    if (!keys.length) return true;
+    if (keys.some((k) => seen.has(k))) return false;
+    keys.forEach((k) => seen.add(k));
+    return true;
+  });
+}
+
+function filterActivitiesDuplicatingHotels(activities, hotels) {
+  if (!activities?.length || !hotels?.length) return activities || [];
+  const hotelKeys = new Set(
+    hotels.map((h) => normalizePlaceKey(h?.name)).filter(Boolean)
+  );
+  return activities.filter((a) => {
+    const key = normalizePlaceKey(a?.name);
+    return !key || !hotelKeys.has(key);
+  });
+}
+
 function enrichPlaceItem(item, kind) {
   const geo = resolvePlaceGeo(item);
   const mapsUrl = resolvePlaceMapsUrl({ ...item, ...geo });
@@ -1044,8 +1090,8 @@ function enrichDay(day) {
   }));
   if (e?.extraActivities?.length) activities = [...activities, ...e.extraActivities];
 
-  const restaurants = [...(day.restaurants || []), ...(e?.extraRestaurants || [])];
-  const hotels = [...(day.hotels || []), ...(e?.extraHotels || [])];
+  let restaurants = [...(day.restaurants || []), ...(e?.extraRestaurants || [])];
+  let hotels = [...(day.hotels || []), ...(e?.extraHotels || [])];
 
   if (typeof getTravelerRestaurantsForDay === "function" && typeof mapTravelerRecToPlaceCard === "function") {
     getTravelerRestaurantsForDay(day.id).forEach((rec) => {
@@ -1057,6 +1103,10 @@ function enrichDay(day) {
       hotels.push(mapTravelerRecToPlaceCard(rec, "lodging"));
     });
   }
+
+  hotels = dedupePlaceItems(hotels);
+  restaurants = dedupePlaceItems(restaurants);
+  activities = filterActivitiesDuplicatingHotels(activities, hotels);
 
   const alternatives = (day.alternatives || []).map((alt, i) => {
     const altExtra =

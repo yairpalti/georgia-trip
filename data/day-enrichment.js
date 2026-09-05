@@ -228,24 +228,8 @@ const DAY_ENRICHMENT = {
         image: "IMG.supra",
       },
     ],
-    extraHotels: [
-      {
-        name: N.adventureCamping,
-        area: N.racha,
-        nights: 1,
-        note: "אופציה ג' · קוטג' ₾250 / אוהלים · +995 595 41 15 47",
-        link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
-        image: "IMG.racha",
-      },
-      {
-        name: fmt("Guesthouse Racha", "Guesthouse in Racha", "სასტუმრო რაჭა"),
-        area: `${N.ambrolauri}, ${N.racha}`,
-        nights: 1,
-        note: "אופציות א'/ב' – לינה ב-Adventure Camping",
-        link: "https://www.google.com/maps/place/Adventure+Camping/@42.5582341,42.8517484,17z",
-        image: "IMG.racha",
-      },
-    ],
+    // לינה: Adventure Camping כבר ב-trip.js – בלי כפילות ב-extraHotels
+    extraHotels: [],
   },
   5: {
     heroImage: "IMG.prometheus",
@@ -288,24 +272,8 @@ const DAY_ENRICHMENT = {
         image: "IMG.prometheus",
       },
     ],
-    extraHotels: [
-      {
-        name: fmt("Hotel / guesthouse צקאלטובו", "Hotel near Tskaltubo", "ცხალტუბო"),
-        area: N.tskaltubo,
-        nights: 1,
-        note: "אופציה א'",
-        link: "https://www.google.com/maps/search/hotels+Tskaltubo",
-        image: "IMG.tskaltubo",
-      },
-      {
-        name: fmt("Guesthouse ליד Okatse", "Guesthouse near Okatse", "ოკაცე"),
-        area: N.okatseCanyon,
-        nights: 1,
-        note: "אופציה ב' · בוקר בקניון",
-        link: "https://www.google.com/maps/search/guesthouse+Okatse+Canyon",
-        image: "IMG.okatse",
-      },
-    ],
+    // לינה: צקאלטובו / Okatse כבר ב-trip.js – בלי כפילות
+    extraHotels: [],
   },
   6: {
     heroImage: "IMG.martvili",
