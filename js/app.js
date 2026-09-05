@@ -47,6 +47,14 @@ function lookupKnownPlaceCoords(name) {
   };
 
   if (typeof PRIME_HEAVEN !== "undefined") push(["Prime Heaven"], PRIME_HEAVEN.lat, PRIME_HEAVEN.lng);
+  if (typeof HOTEL_LONDON_1889 !== "undefined") {
+    push(
+      ["Hotel London 1889", "London 1889", "Hotel London"],
+      HOTEL_LONDON_1889.lat,
+      HOTEL_LONDON_1889.lng,
+      HOTEL_LONDON_1889.address
+    );
+  }
   if (typeof PEAK_MAZERI !== "undefined") {
     push(["Peak Mazeri", "Peak Mazeri Guest House", "mazeri cabin"], PEAK_MAZERI.lat, PEAK_MAZERI.lng, PEAK_MAZERI.address);
   }
@@ -970,6 +978,20 @@ function renderMtiralaKutaisiCard(dayId) {
           )
           .join("")}</ul>
       </div>
+
+      ${
+        k.tours?.length
+          ? `<div class="guide-section">
+        <h3>🚶 סיורים מודרכים</h3>
+        <ul class="guide-adventure-list">${k.tours
+          .map(
+            (t) =>
+              `<li><a href="${t.url}" target="_blank" rel="noopener noreferrer" class="external-link"><strong>${t.name}</strong>${t.duration ? ` – ${t.duration}` : ""}</a><span class="operator-tour-note">${t.note || ""}</span></li>`
+          )
+          .join("")}</ul>
+      </div>`
+          : ""
+      }
 
       <div class="guide-section">
         <h3>🔗 לינקים – קוטאיסי</h3>

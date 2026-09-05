@@ -6,6 +6,37 @@ const SITE_UPDATES = {
   intro: "עדכונים, המלצות ותוכן חדש שנוסף לאחרונה לתוכנית הטיול.",
   items: [
     {
+      id: "hotel-london-1889",
+      date: "5.9.2026",
+      time: "19:35",
+      badge: "הזמנות",
+      title: "Hotel London 1889 – Booked (באטומי)",
+      summary:
+        "לינה ראשונה מאושרת: Hotel London 1889 & Casino, באטומי · 23.9–24.9 · 3 חדרים · ~$308 · ארוחת בוקר כלולה · תשלום במלון · ביטול חינם עד 19.9. כתובת: Zhordania / Gamsakhurdia 8/15.",
+      links: [
+        { label: "יום 1 – לינה", url: "day.html?id=1" },
+        { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/?api=1&query=41.65095,41.64138" },
+        { label: "Booking.com – המלון", url: "https://www.booking.com/hotel/ge/divan-suites-batumi.html" },
+      ],
+    },
+    {
+      id: "kutaisi-walking-tour",
+      date: "5.9.2026",
+      time: "19:30",
+      badge: "פעילות",
+      title: "מה לעשות בקוטאיסי – סיור הליכה מודרך",
+      summary:
+        "ליום 2 (ערב בקוטאיסי): סיור GetYourGuide עם מדריך מקומי – «3,000 שנה בשעתיים». כולל מזרקת Colchis, גשר הלב, השוק הירוק והרובע המלכותי. עודכנו גם נקודות עניין במדריך מטיראלה+קוטאיסי.",
+      links: [
+        {
+          label: "GetYourGuide – סיור הליכה בקוטאיסי",
+          url: "https://www.getyourguide.com/kutaisi-l90033/kutaisi-walking-tour-with-local-guide-3000-years-in-2-hours-t1220975/",
+        },
+        { label: "יום 2 – תוכנית", url: "day.html?id=2" },
+      ],
+    },
+    {
       id: "mebirashi-cancelled",
       date: "4.9.2026",
       time: "13:05",
@@ -25,13 +56,15 @@ const SITE_UPDATES = {
       badge: "הזמנות",
       title: "לינה Booked – Peak Mazeri ועוד",
       summary:
-        "הזמנות מאושרות: Prime Heaven (25.9–26.9, Chiatura, $153) · White Hotel Zugdidi (28.9–29.9, $115) · Airbnb מסטיה 21 Mestia (29.9–1.10) · Peak Mazeri Guest House (1.10–3.10, 3 rooms, $239). Cottage Mebirashi בוטל.",
+        "הזמנות מאושרות: Hotel London 1889 Batumi (23.9–24.9, 3 rooms, ~$308) · Prime Heaven (25.9–26.9, Chiatura, $153) · White Hotel Zugdidi (28.9–29.9, $115) · Airbnb מסטיה 21 Mestia (29.9–1.10) · Peak Mazeri Guest House (1.10–3.10, 3 rooms, $239). Cottage Mebirashi בוטל.",
       links: [
+        { label: "יום 1 – Hotel London 1889", url: "day.html?id=1" },
         { label: "יום 3 – Prime Heaven", url: "day.html?id=3" },
         { label: "יום 6 – White Hotel", url: "day.html?id=6" },
         { label: "ימים 7–8 – Airbnb מסטיה", url: "day.html?id=7" },
         { label: "ימים 9–10 – Peak Mazeri", url: "day.html?id=9" },
         { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
+        { label: "Hotel London 1889 – Google Maps", url: "https://www.google.com/maps/search/?api=1&query=41.65095,41.64138" },
         { label: "Prime Heaven – Google Maps", url: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A" },
         { label: "Peak Mazeri – Google Maps", url: "https://www.google.com/maps/search/Peak+Mazeri+Guest+House+Mazeri" },
         { label: "Airbnb מסטיה", url: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ" },

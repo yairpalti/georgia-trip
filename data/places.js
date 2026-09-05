@@ -20,6 +20,7 @@ const PLACE_CATEGORIES = {
 };
 
 const TRIP_PLACES = [
+  { id: "hotel-london-1889", he: "Hotel London 1889 & Casino", en: "Hotel London 1889 & Casino", category: "lodging", area: "באטומי", lat: 41.65095, lng: 41.64138, address: "Zhordania/Z. Gamsakhurdia Str 8/15, 6000 Batumi, Georgia", tip: "✅ Booked · 23.9–24.9 · 3 rooms · ~$308 · ארוחת בוקר" },
   { id: "adventure-camping", he: "קמפינג Adventure", en: "Adventure Camping", category: "lodging", area: "אימרתי · טקיבולי", lat: 42.558234, lng: 42.851748, cid: "14158453649228106590" },
   { id: "prime-heaven", he: "Prime Heaven", en: "Prime Heaven · Restaurant & Hotel", category: "lodging", area: "צ'יאתורה · אימרתי", lat: 42.2893119, lng: 43.2880929, address: "ი. ჭავჭავაძის ქუჩა, 5500 Chiatʼura, Georgia", tip: "✅ Booked · 25.9–26.9 · 3 rooms · $153 · Booking" },
   { id: "cottage-mebirashi", he: "Cottage Mebirashi", en: "Cottage Mebirashi", category: "lodging", area: "אמברולאורי · ראצ'ה", lat: 42.512732, lng: 43.144137, address: "Village Ukeshi, Racha, Ambrolauri 0417, גאורגיה", tip: "בוטל · אופציה באמברולאורי (לא מוזמן)" },

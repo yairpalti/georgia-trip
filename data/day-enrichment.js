@@ -3,12 +3,13 @@ const DAY_ENRICHMENT = {
   1: {
     heroImage: "IMG.batumi",
     summary:
-      "יום הגעה רגוע. נחיתה בשעה 18:10, איסוף רכב SUV בשדה התעופה, נסיעה קצרה למרכז העיר. ערב ראשון על טיילת הבוליבארד – ארוחה גיאורגית, הליכה לאורך הים והתרגלות לקצב הטיול.",
+      "יום הגעה רגוע. נחיתה בשעה 18:10, איסוף רכב SUV בשדה התעופה, check-in ב-Hotel London 1889 & Casino (Booked). ערב ראשון על טיילת הבוליבארד – ארוחה גיאורגית, הליכה לאורך הים והתרגלות לקצב הטיול.",
     tips: [
       "להזמין SUV מראש – חובה לכבישים הרריים בהמשך",
       "לקנות SIM/eSIM (Magti / Cellfie) בשדה או בבאטומי",
+      "Hotel London 1889 – check-in מ-14:00 · הגעה משוערת 18:00–19:00 · ארוחת בוקר כלולה",
+      "חניה ציבורית ליד המלון (בתשלום אפשרי) – לוודא עם הקבלה",
       "לא לעמיס יותר מדי בערב – מחר נסיעה ארוכה לקוטאיסי",
-      "לשאול את המלון לגבי חניה – בדרך כלל קלה במרכז",
     ],
     activityExtras: [
       {
@@ -53,35 +54,20 @@ const DAY_ENRICHMENT = {
         image: "IMG.supra",
       },
     ],
-    extraHotels: [
-      {
-        name: fmt("Hilton Batumi", "Hilton Batumi", "Hilton ბათუმი"),
-        area: N.batumiCenter,
-        nights: 1,
-        note: "5 כוכבים · מרינה וטיילת · בריכה",
-        link: "https://www.google.com/maps/search/Hilton+Batumi",
-        image: "IMG.batumi",
-      },
-      {
-        name: fmt("Intourist Palace", "Intourist Palace Batumi", "Intourist"),
-        area: N.batumiBoulevard,
-        nights: 1,
-        note: "מלון קלאסי על הטיילת · נוף לים",
-        link: "https://www.google.com/maps/search/Intourist+Palace+Batumi",
-        image: "IMG.batumiBoulevard",
-      },
-    ],
+    // Hilton / Intourist – חלופות בלבד; לינה מאושרת: Hotel London 1889
+    extraHotels: [],
   },
   2: {
     heroImage: "IMG.mtirala",
     summary:
-      "יום מלא של טבע ואדרנלין. בוקר: יער הגשם מטיראלה – מסלול Tsablnari (7 ק\"מ), zipline (₾15), Rope Park, מפל ואגם. אחר הצהריים: נסיעה לקוטאיסי – גשר הלב, Bagrati, מזרקת Colchis.",
+      "יום מלא של טבע ואדרנלין. בוקר: יער הגשם מטיראלה – מסלול Tsablnari (7 ק\"מ), zipline (₾15), Rope Park, מפל ואגם. אחר הצהריים: נסיעה לקוטאיסי – גשר הלב, Bagrati, מזרקת Colchis, או סיור מודרך שעתיים (GetYourGuide).",
     tips: [
       "לצאת מוקדם (8:00) – מטיראלה + נסיעה ארוכה",
       "מעיל גשם ונעלי hiking waterproof – יער גשום באמת",
       "Mapy.cz offline – מפת טיול רגלי ביער",
       "zipline & Rope Park – מאי–אוקטובר, מזומן ₾15–20",
       "למלא דלק לפני יציאה מבאטומי",
+      "ערב בקוטאיסי: סיור GetYourGuide ~2 ש׳ או הליכה עצמאית",
     ],
     activityExtras: [
       {
@@ -102,13 +88,19 @@ const DAY_ENRICHMENT = {
     ],
     extraActivities: [
       {
-        name: fmt("סיור ערב בקוטאיסי", "Evening in Kutaisi", "საღამო ქუთაისში"),
-        timeOfDay: "18:00–21:00",
-        duration: "2 שעות",
-        description: "הליכה בכיכר הלב (White Bridge), גשר הזכוכית, אווירה נעימה. ארוחת ערב במסעדה מקומית.",
-        link: "https://www.google.com/maps/search/Kutaisi+White+Bridge",
-        linkLabel: N.kutaisi,
+        name: fmt(
+          "סיור הליכה בקוטאיסי – 3,000 שנה בשעתיים",
+          "Kutaisi walking tour – 3000 years in 2 hours",
+          "ქუთაისის საფეხმავლო ტური"
+        ),
+        timeOfDay: "ערב (אחרי ההגעה)",
+        duration: "כ־2 שעות",
+        description:
+          "סיור מודרך עם מדריך מקומי: מזרקת Colchis, גשר הלב, השוק הירוק, הרובע המלכותי/הצרפתי. מפגש ליד עמודי הפארק המרכזי (מול המזרקה). חלופה להליכה עצמאית בערב הראשון בעיר.",
+        link: "https://www.getyourguide.com/kutaisi-l90033/kutaisi-walking-tour-with-local-guide-3000-years-in-2-hours-t1220975/",
+        linkLabel: fmt("GetYourGuide – הזמנה", "GetYourGuide – book", "GetYourGuide"),
         image: "IMG.kutaisi",
+        tips: ["ביטול עד 24 ש׳ מראש", "מתאים אחרי נסיעה ממטיראלה – קצב נוח"],
       },
     ],
     extraRestaurants: [

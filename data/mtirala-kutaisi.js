@@ -126,12 +126,22 @@ const MTIRALA_KUTAISI = {
     name: N.kutaisi,
     tagline: fmt("עיר היסטורית – בסיס ליום 3 בבוקר", "Historic city – base for day 3 morning", "ქუთაისი"),
     summary:
-      "אחר הצהריים: נסיעה ~90 ק\"מ / 2 ש' ממטיראלה. קוטאיסי – העיר השנייה בגודלה בגיאורגיה, עיר הבירה של ממלכת Colchis העתיקה. ערב ראשון: הליכה בכיכר הלב, גשר הזכוכית, ארוחה גיאורגית (או תאילנדית ב-SIAM).",
+      "אחר הצהריים: נסיעה ~90 ק\"מ / 2 ש' ממטיראלה. קוטאיסי – העיר השנייה בגודלה בגיאורגיה, בירת ממלכת Colchis העתיקה (~3,000 שנות היסטוריה). ערב ראשון: הליכה עצמאית (גשר הלב, מזרקת Colchis, Bagrati) או סיור מודרך של שעתיים – וארוחה גיאורגית / SIAM Thai.",
     sights: [
       {
         name: fmt("גשר הלב (White Bridge)", "White Bridge", "თეთრი ხიდი"),
-        note: "מרכז העיר – נקודת מפגש, בתי קפה, SIAM Thai ליד",
+        note: "מרכז העיר – נקודת מפגש, בתי קפה, SIAM Thai ליד · אגדת גיזת הזהב",
         url: "https://www.google.com/maps/search/Kutaisi+White+Bridge",
+      },
+      {
+        name: fmt("מזרקת Colchis", "Colchis Fountain", "კოლხეთის ფონტანი"),
+        note: "30 פסלי זהב – ז'רגון וארגו · נקודת מפגש לסיורים",
+        url: "https://www.google.com/maps/search/Colchis+Fountain+Kutaisi",
+      },
+      {
+        name: fmt("השוק הירוק (Green Bazaar)", "Green Bazaar", "მწვანე ბაზარი"),
+        note: "גבינות, תבלינים, ממתקי פירות יבשים, אווירה מקומית",
+        url: "https://www.google.com/maps/search/Green+Bazaar+Kutaisi",
       },
       {
         name: fmt("גשר הזכוכית", "Glass Bridge", "მინის ხიდი"),
@@ -140,16 +150,36 @@ const MTIRALA_KUTAISI = {
       },
       {
         name: fmt("Bagrati Cathedral", "Bagrati Cathedral", "ბაგრატი"),
-        note: "UNESCO – על גבעה מעל העיר, נוף מרהיב",
+        note: "UNESCO – על גבעה מעל העיר, נוף מרהיב (גם בלילה)",
         url: "https://www.google.com/maps/search/Bagrati+Cathedral+Kutaisi",
       },
       {
-        name: fmt("מזרקת Colchis", "Colchis Fountain", "კოლხეთის ფონტანი"),
-        note: "30 פסלים מזהב – ז'argon וארגו",
-        url: "https://www.google.com/maps/search/Colchis+Fountain+Kutaisi",
+        name: fmt("הרובע המלכותי / הצרפתי", "Royal & French districts", "სამეფო და ფრანგული უბანი"),
+        note: "ארכיטקטורה, תיאטרון הדרמה, כנסייה על גדות הריוני, סטריט-ארט",
+        url: "https://www.google.com/maps/search/Kutaisi+Drama+Theatre",
+      },
+    ],
+    tours: [
+      {
+        name: fmt(
+          "סיור הליכה עם מדריך מקומי – 3,000 שנה בשעתיים",
+          "Walking tour with local guide – 3000 years in 2 hours",
+          "ქუთაისის საფეხმავლო ტური"
+        ),
+        duration: "כ־2 שעות",
+        note: "Colchis Fountain → גשר הלב → השוק הירוק → רובע מלכותי/צרפתי. מפגש ליד עמודי הפארק המרכזי (מול מזרקת Colchis). ביטול עד 24 ש׳ מראש.",
+        url: "https://www.getyourguide.com/kutaisi-l90033/kutaisi-walking-tour-with-local-guide-3000-years-in-2-hours-t1220975/",
       },
     ],
     links: [
+      {
+        label: fmt(
+          "GetYourGuide – סיור הליכה בקוטאיסי (2 ש׳)",
+          "GetYourGuide – Kutaisi walking tour (2h)",
+          "GetYourGuide"
+        ),
+        url: "https://www.getyourguide.com/kutaisi-l90033/kutaisi-walking-tour-with-local-guide-3000-years-in-2-hours-t1220975/",
+      },
       {
         label: fmt("Mapy.cz – סיור ערב בעיר", "Mapy.cz – evening walk in Kutaisi", "Mapy.cz"),
         url: "https://mapy.cz/turisticka?x=42.6946000&y=42.2679000&z=15",
@@ -164,6 +194,7 @@ const MTIRALA_KUTAISI = {
       { src: "IMG.kutaisiBagrati", caption: fmt("Bagrati Cathedral", "Bagrati Cathedral", "ბაგრატი") },
     ],
     tips: [
+      "אופציה מומלצת אחרי ההגעה: סיור מודרך שעתיים (GetYourGuide) במקום הליכה עצמאית בלבד",
       "חניה במרכז – בדרך כלל קלה",
       "בסיס ללילה 2 · יום 3 – צ'יאתורה",
       "SIAM Thai – הפסקה מהגיאורגית (ליד גשר הלב)",

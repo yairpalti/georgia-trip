@@ -209,13 +209,14 @@ const DAYS = [
     title: `נחיתה ב${N.batumi.split(" · ")[0]} והתאקלמות`,
     emoji: "🌊",
     theme: "נחיתה, התאקלמות וטיילת",
-    overnight: N.batumiCenter,
+    overnight: N.hotelLondon1889,
     driving: "כ-15–20 דק' (10 ק\"מ)",
-    summary: "נחיתה ב-18:10, איסוף רכב SUV בשדה התעופה, ארוחת ערב בטיילת.",
+    summary:
+      "נחיתה ב-18:10, איסוף רכב SUV בשדה התעופה, check-in ב-Hotel London 1889, ארוחת ערב בטיילת.",
     activities: [
       {
         name: `נחיתה ואיסוף רכב – ${N.batumiAirport}`,
-        description: `נחיתה ב${N.batumiAirport.split(" · ")[0]}. מומלץ SUV. נסיעה קצרה למרכז.`,
+        description: `נחיתה ב${N.batumiAirport.split(" · ")[0]}. מומלץ SUV. נסיעה קצרה ל-Hotel London 1889 (מרכז).`,
         link: TRIP_META.globalMapUrl,
         linkLabel: "מפת Google",
       },
@@ -229,7 +230,7 @@ const DAYS = [
     restaurants: [
       {
         name: fmt("מסעדות על הטיילת", "Restaurants on the Boulevard", "რესტორნები ბულვარზე"),
-        cuisine: "גיאורגית – חצ'פורი, סלטים",
+        cuisine: "גיאורגית – חצ'פורי, סלטים",
         note: "הזדמנות מעולה לטעום חצ'פורי אג'רי",
         link: "https://www.google.com/maps/search/restaurants+Batumi+boulevard",
         image: "IMG.khachapuri",
@@ -237,15 +238,24 @@ const DAYS = [
     ],
     hotels: [
       {
-        name: N.batumiCenter,
-        area: N.batumi,
+        name: N.hotelLondon1889,
+        area: N.batumiCenter,
         nights: 1,
-        note: "לינה ראשונה – קרוב לטיילת ולמרינה",
-        link: "https://www.google.com/maps/search/hotels+Batumi+center",
+        booked: true,
+        address: "Zhordania/Z. Gamsakhurdia Str 8/15, 6000 Batumi, Georgia",
+        lat: 41.65095,
+        lng: 41.64138,
+        note: "✅ Booked · 23.9–24.9 · 3 rooms · ~$308 · ארוחת בוקר כלולה · תשלום במלון · ביטול חינם עד 19.9",
+        link: "https://www.google.com/maps/search/?api=1&query=41.65095,41.64138",
+        bookingUrl: "https://www.booking.com/hotel/ge/divan-suites-batumi.html",
         image: "IMG.batumi",
       },
     ],
-    mapPoints: [{ name: N.batumi, lat: 41.6168, lng: 41.6367 }],
+    mapPoints: [
+      { name: N.batumiAirport, lat: 41.6103, lng: 41.5997 },
+      { name: N.hotelLondon1889, lat: 41.65095, lng: 41.64138, overnight: true },
+      { name: N.batumiBoulevard, lat: 41.6508, lng: 41.6367 },
+    ],
   },
   {
     id: 2,
@@ -257,7 +267,7 @@ const DAYS = [
     overnight: fmt("מרכז קוטאיסי", "Kutaisi Center", "ქუთაისის ცენტრი"),
     driving: "כ-3.5 שעות (170 ק\"מ)",
     summary:
-      "בוקר: יער הגשם מטיראלה – מסלול Tsablnari, zipline ו-Rope Park. אחר הצהריים: נסיעה לקוטאיסי וערב ראשון בעיר.",
+      "בוקר: יער הגשם מטיראלה – מסלול Tsablnari, zipline ו-Rope Park. אחר הצהריים: נסיעה לקוטאיסי וערב בעיר – הליכה עצמאית או סיור מודרך של שעתיים (GetYourGuide).",
     activities: [
       {
         name: N.mtirala,
@@ -281,6 +291,22 @@ const DAYS = [
       },
     ],
     alternatives: [
+      {
+        name: fmt(
+          "סיור הליכה מודרך בקוטאיסי (ערב)",
+          "Guided Kutaisi walking tour (evening)",
+          "ქუთაისის საფეხმავლო ტური"
+        ),
+        description: fmt(
+          "אחרי ההגעה ממטיראלה – סיור שעתיים עם מדריך מקומי: Colchis Fountain, גשר הלב, השוק הירוק, הרובע המלכותי. הזמנה ב-GetYourGuide.",
+          "After arriving from Mtirala – 2h local walking tour: Colchis Fountain, White Bridge, Green Bazaar, Royal district. Book on GetYourGuide.",
+          "GetYourGuide – 2 საათი"
+        ),
+        link: "https://www.getyourguide.com/kutaisi-l90033/kutaisi-walking-tour-with-local-guide-3000-years-in-2-hours-t1220975/",
+        linkLabel: fmt("GetYourGuide – הזמנה", "GetYourGuide – book", "GetYourGuide"),
+        image: "IMG.kutaisi",
+        tips: ["~2 שעות", "מפגש ליד מזרקת Colchis", "ביטול עד 24 ש׳ מראש"],
+      },
       {
         name: fmt("יום רגוע בבאטומי", "Relaxed day in Batumi", "დასვენების დღე ბათუმში"),
         description: fmt(
@@ -1355,7 +1381,8 @@ const LOGISTICS = {
     },
   ],
   accommodationSummary: [
-    { place: N.batumi, nights: 2, note: "לילה ראשון + אחרון" },
+    { place: N.hotelLondon1889, nights: 1, note: "✅ Booked · יום 1 · 23.9–24.9 · 3 rooms · ~$308 · ארוחת בוקר" },
+    { place: N.batumi, nights: 1, note: "לילה אחרון (יום 12)" },
     { place: N.kutaisi, nights: 1, note: "יום 2" },
     { place: N.primeHeaven, nights: 1, note: "✅ Booked · יום 3 · 25.9–26.9 · 3 rooms · $153 · Chiatura" },
     { place: N.cottageMebirashi, nights: 1, note: "בוטל · Ambrolauri · נשאר כאופציה ביום 3 (לא Booked)" },

@@ -23,6 +23,7 @@ const N = {
   batumiBoulevard: fmt("טיילת הבוליבארד", "Batumi Boulevard", "ბათუმის ბულვარი"),
   batumiOldTown: fmt("העיר העתיקה של באטומי", "Batumi Old Town", "ძველი ბათუმი"),
   batumiCenter: fmt("מרכז באטומי", "Batumi City Center", "ბათუმის ცენტრი"),
+  hotelLondon1889: fmt("Hotel London 1889 & Casino", "Hotel London 1889 & Casino", "Hotel London 1889"),
 
   mtirala: fmt("פארק לאומי מטיראלה", "Mtirala National Park", "მტირალის ეროვნული პარკი"),
   katskhiPillar: fmt("עמוד קצחי", "Katskhi Pillar", "კაცხის სვეტი"),
@@ -86,6 +87,13 @@ const SVERI = {
 
 /** Prime Heaven – צ'יאתורה, רח' ჭავჭავაძე (Booking 25.9–26.9) */
 const PRIME_HEAVEN = { lat: 42.2893119, lng: 43.2880929 };
+
+/** Hotel London 1889 & Casino – באטומי (Booking 23.9–24.9) */
+const HOTEL_LONDON_1889 = {
+  lat: 41.65095,
+  lng: 41.64138,
+  address: "Zhordania/Z. Gamsakhurdia Str 8/15, 6000 Batumi, Georgia",
+};
 
 /** Peak Mazeri Guest House – מאזרי / Becho (Booking 1.10–3.10) */
 const PEAK_MAZERI = {

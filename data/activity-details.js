@@ -3,10 +3,11 @@ const ACTIVITY_DETAILS = {
   1: [
     {
       description:
-        "נחיתה בשעה 18:10 ב-BUS. איסוף רכב SUV (מומלץ להזמין מראש עם ביטוח מלא). נסיעה של כ-10 ק\"מ / 15–20 דק' למרכז באטומי. בדרך: נוף ראשון לים השחור, שלטי גיאורגית-אנגלית. לצלם את מצב הרכב לפני יציאה, לוודא USB/מטען.",
+        "נחיתה בשעה 18:10 ב-BUS. איסוף רכב SUV (מומלץ להזמין מראש עם ביטוח מלא). נסיעה של כ-10 ק\"מ / 15–20 דק' ל-Hotel London 1889 & Casino (Zhordania 8/15). check-in מ-14:00 · הגעה משוערת 18:00–19:00. לצלם את מצב הרכב לפני יציאה, לוודא USB/מטען.",
       image: "IMG.batumiAirport",
       link: "https://www.google.com/maps/search/Batumi+International+Airport",
       linkLabel: N.batumiAirport,
+      tips: ["Hotel London 1889 – ארוחת בוקר כלולה", "חניה ציבורית ליד המלון (ייתכן בתשלום)"],
     },
     {
       description:
@@ -49,10 +50,22 @@ const ACTIVITY_DETAILS = {
     },
     {
       description:
-        "אחר הצהריים: ~90 ק\"מ / 2 ש' לקוטאיסי. ערב: גשר הלב, גשר הזכוכית, Bagrati Cathedral (UNESCO), מזרקת Colchis. בסיס ל-2 לילות.",
+        "אחר הצהריים: ~90 ק\"מ / 2 ש' לקוטאיסי. ערב: הליכה עצמאית (גשר הלב, גשר הזכוכית, Bagrati, מזרקת Colchis, השוק הירוק) או סיור מודרך של שעתיים עם מדריך מקומי – 3,000 שנות היסטוריה. בסיס ללילה 2.",
       image: "IMG.kutaisiBagrati",
-      tips: ["SIAM Thai ליד גשר הלב – הפסקה מהגיאורגית", "חניה במרכז – בדרך כלל קלה"],
+      tips: [
+        "אופציה: סיור GetYourGuide ~2 ש׳ אחרי ההגעה",
+        "SIAM Thai ליד גשר הלב – הפסקה מהגיאורגית",
+        "חניה במרכז – בדרך כלל קלה",
+      ],
       links: [
+        {
+          label: fmt(
+            "GetYourGuide – סיור הליכה (2 ש׳)",
+            "GetYourGuide – walking tour (2h)",
+            "GetYourGuide"
+          ),
+          url: "https://www.getyourguide.com/kutaisi-l90033/kutaisi-walking-tour-with-local-guide-3000-years-in-2-hours-t1220975/",
+        },
         {
           label: fmt("Mapy.cz – סיור ערב", "Mapy.cz – evening walk", "Mapy.cz"),
           url: "https://mapy.cz/turisticka?x=42.6946000&y=42.2679000&z=15",
@@ -64,6 +77,10 @@ const ACTIVITY_DETAILS = {
         {
           label: fmt("גשר הלב", "White Bridge", "თეთრი ხიდი"),
           url: "https://www.google.com/maps/search/Kutaisi+White+Bridge",
+        },
+        {
+          label: fmt("השוק הירוק", "Green Bazaar", "მწვანე ბაზარი"),
+          url: "https://www.google.com/maps/search/Green+Bazaar+Kutaisi",
         },
       ],
       gallery: [
