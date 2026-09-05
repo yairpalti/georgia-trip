@@ -225,6 +225,93 @@ const CULINARY_LINKS = {
       wineries: [],
     },
   },
+  /** אופציה ב' – ימים 2–5 שונים (חוף / Sairme / קוטאיסי / צקאלטובו) */
+  byDayOptionB: {
+    2: {
+      workshops: [
+        {
+          label: fmt("Ethno-Tavern Sanapiro – ערב גיאורגי (באטומי)", "Ethno-Tavern Sanapiro (Batumi)", "Sanapiro"),
+          url: "https://www.facebook.com/EthnoTavernSanapiro",
+          note: fmt("אופציה אם חוזרים לבאטומי לערב · אחרת – מסעדות חוף ב-Grigoleti", "Only if back in Batumi; else beach restaurants in Grigoleti", "ბათუმი / გრიგოლეთი"),
+        },
+        {
+          label: fmt("AGROguesthouse – סדנאות באדג'ריה / חוף", "AGROguesthouse – Adjara / coast workshops", "AGROguesthouse"),
+          url: "https://www.facebook.com/share/1GZgCgBBXL/",
+          note: fmt("לתאום סדנת בישול באזור החוף לפני/אחרי מטיראלה", "Book coastal cooking class around Mtirala day", "საზღვაო culinary"),
+        },
+      ],
+      wineries: [
+        {
+          label: fmt("AGROguesthouse – סיורים באדג'ריה", "AGROguesthouse – Adjara tours", "AGROguesthouse"),
+          url: "https://www.facebook.com/share/1GZgCgBBXL/",
+          note: fmt("יקבים וטעימות באזור החוף – לתאם מראש", "Coastal wineries & tastings – book ahead", "აჭარა"),
+        },
+      ],
+    },
+    3: {
+      workshops: [
+        {
+          label: fmt("ארוחה / סדנה קצרה בריזורט Sairme", "Resort dining / short class at Sairme", "საირმე"),
+          url: "https://sairmeresort.ge/",
+          note: fmt("מסעדות הריזורט · לתאם חוויית אוכל עם המלון", "Resort restaurants – ask hotel about food experiences", "რესორტი"),
+        },
+      ],
+      wineries: [
+        {
+          label: N.baiaWine,
+          url: "https://www.google.com/maps/search/Baia's+Wine+Baghdati+Georgia",
+          note: fmt("יקב משפחתי ליד Baghdati – עצירה בדרך ל-Sairme או בבוקר מחר", "Family winery near Baghdati – stop en route or next morning", "Baia's Wine"),
+        },
+        {
+          label: fmt("AGROguesthouse – יקבי אימרתי", "AGROguesthouse – Imereti wineries", "AGROguesthouse"),
+          url: "https://www.facebook.com/share/1GZgCgBBXL/",
+          note: fmt("לתאום טעימות באזור Baghdati / קוטאיסי", "Book tastings around Baghdati / Kutaisi", "იმერეთი"),
+        },
+      ],
+    },
+    4: {
+      workshops: [
+        {
+          label: fmt("Kutaisi Cooking Classes – חינקלי וחצ'פורי", "Kutaisi Cooking Classes – khinkali & khachapuri", "Kutaisi Cooking Classes"),
+          url: "https://www.facebook.com/KutaisiCookingClasses",
+          note: fmt("Nikoladze Family – סדנה + טעימות · אם נשאר זמן בסיבוב העיר", "Nikoladze family – if time during city walk", "Nikoladze"),
+        },
+        {
+          label: fmt("Lunch at Lia – ארוחה ביתית", "Lunch at Lia – home lunch", "Lunch at Lia"),
+          url: "https://www.facebook.com/share/1GZgCgBBXL/",
+          note: fmt("חוויה ביתית – להזמין מראש", "Home dining – book ahead", "სახლის ლანჩი"),
+        },
+      ],
+      wineries: [
+        {
+          label: fmt("Nikoladze Family Winery", "Nikoladze Family Winery", "Nikoladze მარანი"),
+          url: "https://www.facebook.com/KutaisiCookingClasses",
+          note: fmt("יקב משפחתי + חנות יין במרכז קוטאיסי", "Family winery & tasting shop near White Bridge", "ქუთაისი"),
+        },
+        {
+          label: N.baiaWine,
+          url: "https://www.google.com/maps/search/Baia's+Wine+Baghdati+Georgia",
+          note: fmt("אם לא עצרתם אתמול – בדרך מ-Sairme לקוטאיסי", "If skipped yesterday – on Sairme→Kutaisi drive", "Baia's Wine"),
+        },
+      ],
+    },
+    5: {
+      workshops: [
+        {
+          label: fmt("Mate's Marani – סדנת בישול (צקאלטובו)", "Mate's Marani – cooking masterclass", "Mate's Marani"),
+          url: "https://www.facebook.com/winecellarmate",
+          note: fmt("יקב משפחתי + masterclass – לתאם מראש אחרי הרפטינג", "Family winery + cooking class – book after rafting", "Mate's Marani"),
+        },
+      ],
+      wineries: [
+        {
+          label: fmt("Mate's Marani – טעימות יין וצ'אצ'ה", "Mate's Marani – wine & chacha tasting", "Mate's Marani"),
+          url: "https://www.facebook.com/winecellarmate",
+          note: fmt("בצקאלטובו, ליד מערת פרומתאוס", "In Tskaltubo, near Prometheus Cave", "წყალტუბოში"),
+        },
+      ],
+    },
+  },
 };
 
 if (typeof module !== "undefined") module.exports = { CULINARY_LINKS };

@@ -147,8 +147,9 @@ const DAY_ENRICHMENT = {
     tips: [
       "check-out קוטאיסי בבוקר – כל הציוד ברכב",
       "Lunch at Lia – WhatsApp מראש! (אופציה א')",
-      "Prime Heaven – check-in 25.9 מ-14:00 · check-out 26.9 עד 12:00",
-      "Booking: דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה",
+      "Prime Heaven – check-in 25.9 מ-14:00 (הגעה ~14–15) · check-out 26.9 עד 12:00",
+      "Booking: 3 חדרים · $154 · WiFi · חניה חינם במקום · בלי ארוחות · ביטול חינם עד 23.9",
+      "Prime Heaven: +995 599 51 41 52",
       "Via Ferrata – Camp in Georgia ~€35 · +995 558 48 63 48",
       "או Rafting in Kutaisi – מפגש ב-Sveri: +995 595 41 15 47",
       "רכבל Sanatorium – לבדוק שעות ובטיחות",
@@ -270,11 +271,12 @@ const DAY_ENRICHMENT = {
   6: {
     heroImage: "IMG.martvili",
     summary:
-      "יוצאים מלינת יום 5 (צקאלטובו או Okatse) מערבה: אוקאצה → מרטווילי → נוקאלאקווי. לינה בזוגדידי – בסיס ליציאה לסוואנטי ביום 7.",
+      "יוצאים מלינת יום 5 (צקאלטובו או Okatse) מערבה: אוקאצה → מרטווילי → נוקאלאקווי. לינה: White Hotel Guesthouse בזוגדידי (Booked · 28.9–29.9) – בסיס ליציאה לסוואנטי ביום 7.",
     tips: [
       "אם לנו ב-Okatse – מתחילים בקניון בבוקר",
       "אם לנו בצקאלטובו – ~30–40 דק' ל-Okatse",
       "בגד ים / מגבת למעיינות",
+      "✅ Booked – White Hotel Guesthouse · 2 rooms · ~$115 · הגעה ~16–17 · +995 571 25 25 20",
       "ערב: check-in בזוגדידי + דלק מלא ליום 7",
     ],
     activityExtras: [
@@ -431,7 +433,7 @@ const DAY_ENRICHMENT = {
     tips: [
       "🚗 SUV – צ'לאדי + נסיעה למאזרי · 🚙 ג'יפ אופציונלי עד גשר (~80 ₾)",
       "צ'לאדי – לצאת מוקדם",
-      "✅ Booked – Peak Mazeri Guest House · 3 rooms · $239",
+      "✅ Booked – Peak Mazeri Guest House · 3 rooms · ~$240 · ארוחת בוקר · check-in מ-13:00 · +995 595 70 27 51",
       "מזון – מוגבל במאזרי, לקנות במסטיה",
       "נעליים waterproof לטרק",
     ],
@@ -445,7 +447,7 @@ const DAY_ENRICHMENT = {
       {
         timeOfDay: "13:00–18:00",
         duration: "45 דק' + ערב",
-        tips: ["להזמין בקתה מראש", "להביא אוכל לערב"],
+        tips: ["Booked – Peak Mazeri", "להביא אוכל לערב"],
         image: "IMG.ushba",
       },
     ],

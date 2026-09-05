@@ -38,6 +38,7 @@
   <main class="container">
     <section class="section" id="map">
       <h2 class="section-title">🗺 מסלול הטיול על המפה</h2>
+      <div class="trip-options" id="trip-options"></div>
       <div class="map-section">
         <div class="measure-panel" id="poi-measure-panel" hidden></div>
         <div id="route-map"></div>
@@ -46,7 +47,7 @@
     </section>
 
     <section class="section">
-      <h2 class="section-title">📅 תוכנית לפי ימים</h2>
+      <h2 class="section-title" id="days-section-title">📅 תוכנית לפי ימים</h2>
       <div class="days-grid" id="days-grid"></div>
     </section>
 
@@ -76,6 +77,7 @@
   <script src="js/places.js"></script>
   <script src="data/images.js"></script>
   <script src="data/trip.js"></script>
+  <script src="data/trip-options.js"></script>
   <script src="data/extreme-activities.js"></script>
   <script src="data/day-enrichment.js"></script>
   <script src="data/activity-details.js"></script>
@@ -90,24 +92,11 @@
   <script src="js/app.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      renderDaysGrid();
-      initRouteMap("route-map", ROUTE_SEGMENTS, DAY_COLORS, {
-        activities: typeof EXTREME_ACTIVITIES !== "undefined" ? EXTREME_ACTIVITIES : [],
-        categories: typeof EXTREME_CATEGORIES !== "undefined" ? EXTREME_CATEGORIES : null,
-      });
+      const params = new URLSearchParams(window.location.search);
+      const opt = params.get("option");
+      if (opt === "a" || opt === "b") setStoredTripOptionId(opt);
 
-      const tbody = document.getElementById("accommodation-body");
-      tbody.innerHTML = LOGISTICS.accommodationSummary
-        .map(
-          (row) => `
-        <tr>
-          <td>${row.place}</td>
-          <td>${row.nights}</td>
-          <td>${row.note}</td>
-        </tr>
-      `
-        )
-        .join("");
+      applyTripOption(getStoredTripOptionId());
     });
   </script>
 </body>

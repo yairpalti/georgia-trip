@@ -87,8 +87,71 @@ function pathMidpoint(path) {
   return path[Math.floor(path.length / 2)];
 }
 
+/** Shift a lat/lng path sideways so overlapping day lines stay both visible.
+ *  Uses absolute east–west shift (not relative to travel direction) so reverse
+ *  traffic on the same road (day 3 in / day 4 out) lands on opposite sides.
+ */
+function offsetPolylinePath(path, offsetMeters) {
+  if (!path?.length || !offsetMeters) return path;
+
+  const lat0 = path[0][0];
+  const metersPerDegLng = 111320 * Math.cos((lat0 * Math.PI) / 180) || 1;
+  const dLng = offsetMeters / metersPerDegLng;
+  return path.map(([lat, lng]) => [lat, lng + dLng]);
+}
+
+/** True when two resolved paths share a corridor (same road both ways). */
+function pathsShareCorridor(pathA, pathB, thresholdM = 120, minHits = 4) {
+  if (!pathA?.length || !pathB?.length) return false;
+  const step = Math.max(1, Math.floor(pathA.length / 40));
+  let hits = 0;
+  for (let i = 0; i < pathA.length; i += step) {
+    const a = L.latLng(pathA[i]);
+    for (let j = 0; j < pathB.length; j += step) {
+      if (a.distanceTo(L.latLng(pathB[j])) < thresholdM) {
+        hits += 1;
+        break;
+      }
+    }
+    if (hits >= minHits) return true;
+  }
+  return false;
+}
+
+/** Twin-line offset in meters – wide enough to read at city/region zoom. */
+const ROUTE_TWIN_OFFSET_M = 160;
+
+/** Per-segment lateral offset (m) so overlapping days show as twin lines. */
+function computeOverlapOffsets(resolvedPaths, items, meters = ROUTE_TWIN_OFFSET_M) {
+  const offsets = resolvedPaths.map(() => 0);
+
+  for (let i = 0; i < resolvedPaths.length; i++) {
+    for (let j = i + 1; j < resolvedPaths.length; j++) {
+      if (!pathsShareCorridor(resolvedPaths[i].path, resolvedPaths[j].path)) continue;
+      if (!offsets[i]) offsets[i] = -meters;
+      if (!offsets[j]) offsets[j] = meters;
+    }
+  }
+
+  // Days 3 ↔ 4 share Sairme↔Baghdati both ways – always twin lines
+  const idx3 = items.findIndex((it) => it.segment?.day === 3);
+  const idx4 = items.findIndex((it) => it.segment?.day === 4);
+  if (idx3 >= 0 && idx4 >= 0) {
+    offsets[idx3] = -meters; // west (orange)
+    offsets[idx4] = meters; // east (blue)
+  }
+
+  return offsets;
+}
+
 function dayDateLabel(dayId) {
-  const day = (typeof DAYS !== "undefined" ? DAYS : []).find((d) => d.id === dayId);
+  const days =
+    typeof getActiveDays === "function"
+      ? getActiveDays()
+      : typeof DAYS !== "undefined"
+        ? DAYS
+        : [];
+  const day = days.find((d) => d.id === dayId);
   if (!day) return "";
   return day.weekday ? `${day.date} (${day.weekday})` : day.date;
 }
@@ -389,23 +452,42 @@ async function drawRouteLines(map, lineLayer, segments, dayColors, mode, ui, but
       ? await Promise.all(items.map((item) => resolvePathLatLngs(item.points, "roads")))
       : items.map((item) => ({ path: directPathLatLngs(item.points), usedFallback: false }));
 
+  const offsets = computeOverlapOffsets(resolvedPaths, items);
+  const hasTwinLines = offsets.some((o) => o !== 0);
+
   items.forEach((item, i) => {
     const { path, usedFallback } = resolvedPaths[i];
     if (usedFallback) fallbackCount += 1;
 
     const label = segmentLabel(item.segment);
+    const offsetM = offsets[i] || 0;
+    const drawnPath = offsetPolylinePath(path, offsetM);
+    const isTwin = offsetM !== 0;
 
-    L.polyline(path, {
+    // Light casing so twin lines stay readable when close
+    if (isTwin) {
+      L.polyline(drawnPath, {
+        color: "#ffffff",
+        weight: 8,
+        opacity: 0.85,
+        lineJoin: "round",
+        lineCap: "round",
+        interactive: false,
+      }).addTo(lineLayer);
+    }
+
+    L.polyline(drawnPath, {
       color: item.color,
-      weight: 5,
-      opacity: mode === "roads" ? 0.85 : 0.75,
+      weight: isTwin ? 5 : 5,
+      opacity: mode === "roads" ? 0.95 : 0.85,
       dashArray: mode === "direct" ? "10 8" : null,
       lineJoin: "round",
+      lineCap: "round",
     })
       .addTo(lineLayer)
       .bindTooltip(label, { sticky: true, className: "segment-tooltip" });
 
-    const mid = pathMidpoint(path);
+    const mid = pathMidpoint(drawnPath);
     L.marker(mid, {
       icon: createSegmentBadge(label, item.color),
       interactive: false,
@@ -417,6 +499,8 @@ async function drawRouteLines(map, lineLayer, segments, dayColors, mode, ui, but
     ui.setButtonsDisabled(false, buttons);
     if (fallbackCount) {
       ui.setHint(`${fallbackCount} מקטעים ללא כביש – מוצגים כקווים ישירים`);
+    } else if (hasTwinLines) {
+      ui.setHint("מסלולי כביש · ימים חופפים מוצגים כשני קווים מקבילים");
     } else {
       ui.setHint("מסלולי כביש · OSRM / OpenStreetMap");
     }
@@ -748,7 +832,7 @@ function renderMapLegend(segments, dayColors, legendOptions = {}) {
       ${segments
         .map(
           (s) => `
-        <a href="day.html?id=${s.day}" class="legend-day-item" style="--day-color:${dayColors[s.day]}">
+        <a href="${typeof dayHref === "function" ? dayHref(s.day) : `day.html?id=${s.day}`}" class="legend-day-item" style="--day-color:${dayColors[s.day]}">
           <span class="legend-day-line" style="background:${dayColors[s.day]}"></span>
           <span class="legend-day-text">
             <strong>יום ${s.day}</strong>
@@ -767,6 +851,7 @@ function renderMapLegend(segments, dayColors, legendOptions = {}) {
       <span><span class="place-marker inline place-marker-optional"></span> אקסטרים / אופציות</span>
       <span>🏨 לינה</span>
       ${extremeCategories ? "<span>🧗 «פעילויות אקסטרים» – שכבה נוספת לנקודות שלא על המסלול</span>" : ""}
+      <span>🔀 ימים 3 ו-4 על אותו כביש – שני קווים מקבילים (צבע לכל יום)</span>
       <span>📍 לחצו 📍 בפינת המפה למיקום שלכם + מרחק לנקודות</span>
       <span>📏 לחצו על נקודה → 📏 מכאן / 📏 לכאן לחישוב זמן ומרחק</span>
       <span>📐 / 🛣 החליפו בין קווים ישירים למסלול כביש מעל המפה</span>

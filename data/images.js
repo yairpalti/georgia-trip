@@ -15,6 +15,7 @@ const IMG = {
   mtirala: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Mtirala_National_Park%2C_Adjara%2C_Georgia.jpg/960px-Mtirala_National_Park%2C_Adjara%2C_Georgia.jpg",
   mtiralaWaterfall: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Tsablnari_falls%2C_Mtirala_National_Park%2C_Adjara%2C_Georgia.jpg/960px-Tsablnari_falls%2C_Mtirala_National_Park%2C_Adjara%2C_Georgia.jpg",
   mtiralaForest: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Waterfall_in_Mtirala_National_Park.JPG/960px-Waterfall_in_Mtirala_National_Park.JPG",
+  sairme: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/View_to_Shaori_-_panoramio.jpg/960px-View_to_Shaori_-_panoramio.jpg",
   kutaisiBagrati: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Bagrati_Cathedral%2C_Kutaisi%2C_Georgia.jpg/960px-Bagrati_Cathedral%2C_Kutaisi%2C_Georgia.jpg",
   racha: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/View_to_Shaori_-_panoramio.jpg/960px-View_to_Shaori_-_panoramio.jpg",
   rafting: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Rafting_in_Georgia.jpg/960px-Rafting_in_Georgia.jpg",

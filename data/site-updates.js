@@ -6,6 +6,49 @@ const SITE_UPDATES = {
   intro: "עדכונים, המלצות ותוכן חדש שנוסף לאחרונה לתוכנית הטיול.",
   items: [
     {
+      id: "white-hotel-confirmed",
+      date: "5.9.2026",
+      time: "20:15",
+      badge: "הזמנות",
+      title: "White Hotel Guesthouse – אישור Booking (זוגדידי)",
+      summary:
+        "עודכן לפי אישור Booking: 28.9–29.9 · 2 חדרים · ~$115 (GEL 300) · 7 מבוגרים · check-in 07:00–00:00 (הגעה ~16–17) · בלי ארוחות · מזומן בלבד · ביטול חינם עד 26.9 · conf. 5528.261.271 · PIN 8617 · טלפון +995 571 25 25 20 · Kostava 70.",
+      links: [
+        { label: "יום 6 – לינה", url: "day.html?id=6" },
+        { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/?api=1&query=42.508974,41.870705" },
+      ],
+    },
+    {
+      id: "peak-mazeri-confirmed",
+      date: "5.9.2026",
+      time: "20:15",
+      badge: "הזמנות",
+      title: "Peak Mazeri Guest House – אישור Booking (מאזרי)",
+      summary:
+        "עודכן לפי אישור Booking: 1.10–3.10 · 3 חדרים · ~$240 (GEL 625) · 7 מבוגרים · check-in 13:00–23:30 · ארוחת בוקר כלולה · מזומן בלבד · ביטול חינם עד 27.9 · conf. 5938.193.291 · PIN 7301 · טלפון +995 595 70 27 51 · GPS מעודכן מאישור.",
+      links: [
+        { label: "יום 9 – לינה", url: "day.html?id=9" },
+        { label: "יום 10 – לינה", url: "day.html?id=10" },
+        { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/?api=1&query=43.07843,42.60767" },
+      ],
+    },
+    {
+      id: "prime-heaven-confirmed",
+      date: "5.9.2026",
+      time: "19:40",
+      badge: "הזמנות",
+      title: "Prime Heaven – אישור Booking (צ'יאתורה)",
+      summary:
+        "עודכן לפי אישור Booking: 25.9–26.9 · 3 חדרים · $154 · check-in מ-14:00 (הגעה ~14–15) · חניה חינם · WiFi · בלי ארוחות · ביטול חינם עד 23.9 · טלפון +995 599 51 41 52 · רח' צ'אבצ'אוודזה, צ'יאתורה.",
+      links: [
+        { label: "יום 3 – לינה", url: "day.html?id=3" },
+        { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
+        { label: "Prime Heaven – Google Maps", url: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A" },
+      ],
+    },
+    {
       id: "hotel-london-1889",
       date: "5.9.2026",
       time: "19:35",
@@ -56,7 +99,7 @@ const SITE_UPDATES = {
       badge: "הזמנות",
       title: "לינה Booked – Peak Mazeri ועוד",
       summary:
-        "הזמנות מאושרות: Hotel London 1889 Batumi (23.9–24.9, 3 rooms, ~$308) · Prime Heaven (25.9–26.9, Chiatura, $153) · White Hotel Zugdidi (28.9–29.9, $115) · Airbnb מסטיה 21 Mestia (29.9–1.10) · Peak Mazeri Guest House (1.10–3.10, 3 rooms, $239). Cottage Mebirashi בוטל.",
+        "הזמנות מאושרות: Hotel London 1889 Batumi (23.9–24.9, 3 rooms, ~$308) · Prime Heaven (25.9–26.9, Chiatura, $154) · White Hotel Zugdidi (28.9–29.9, ~$115) · Airbnb מסטיה 21 Mestia (29.9–1.10) · Peak Mazeri Guest House (1.10–3.10, 3 rooms, ~$240). Cottage Mebirashi בוטל.",
       links: [
         { label: "יום 1 – Hotel London 1889", url: "day.html?id=1" },
         { label: "יום 3 – Prime Heaven", url: "day.html?id=3" },
@@ -65,8 +108,8 @@ const SITE_UPDATES = {
         { label: "ימים 9–10 – Peak Mazeri", url: "day.html?id=9" },
         { label: "לוגיסטיקה – סיכום לינה", url: "logistics.html#accommodation" },
         { label: "Hotel London 1889 – Google Maps", url: "https://www.google.com/maps/search/?api=1&query=41.65095,41.64138" },
-        { label: "Prime Heaven – Google Maps", url: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A" },
-        { label: "Peak Mazeri – Google Maps", url: "https://www.google.com/maps/search/Peak+Mazeri+Guest+House+Mazeri" },
+        { label: "White Hotel – Google Maps", url: "https://www.google.com/maps/search/?api=1&query=42.508974,41.870705" },
+        { label: "Peak Mazeri – Google Maps", url: "https://www.google.com/maps/search/?api=1&query=43.07843,42.60767" },
         { label: "Airbnb מסטיה", url: "https://www.airbnb.com/trips/v1/1759464519441989123/ro/RESERVATION2_CHECKIN/HMN32SS2XJ" },
       ],
     },

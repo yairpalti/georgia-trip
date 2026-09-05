@@ -686,8 +686,71 @@ if (typeof MESTIA_TREK_GUIDE !== "undefined") {
   }
 }
 
+/**
+ * אופציה ב': ימים 2–5 שונים – ממפים סיפורים לימים הנכונים
+ * (קוטאיסי + Airbnb → יום 4; רפטינג/צקאלטובו → יום 5; מטיראלה → יום 2).
+ */
+const TRAVELER_STORIES_B = {
+  2: {
+    pageIntro:
+      "מטיראלה וחוף הים השחור – טיפים ליער גשם, מזג אוויר ושבירת נסיעה לפני Sairme.",
+    stories: [
+      {
+        title: "פארק מטיראלה – יער גשם בדרך",
+        author: "משפחה (3 ילדים)",
+        date: "2026",
+        image: "IMG.mtirala",
+        paragraphs: [
+          "פארק מטיראלה – מומלץ כשיש אנרגיה לטיול פעיל: יער גשם Colchic, מפלים ואווירה. מתאים גם למשפחות עם ילדים אם משלבים מנוחה.",
+          "טיפ: מעיל גשם ונעליים עמידות למים – באזור יורד גשם גם בעונה החמה. לצאת מוקדם כדי להספיק מסלול + נסיעה לחוף אחר הצהריים.",
+        ],
+        links: [
+          { label: N.mtirala, url: "https://www.google.com/maps/search/Mtirala+National+Park" },
+          { label: "APA – Mtirala", url: "https://apa.gov.ge/en/eco-tourism/servisebi-da-tarifebi/mtiralas-erovnuli-parki" },
+        ],
+      },
+      {
+        title: "אין לסמוך על התחזית – גם בחוף",
+        author: "משפחה · סיכום דרך",
+        date: "2025–2026",
+        image: "IMG.ureki",
+        paragraphs: [
+          "טיפ כללי שחוזר בכל הסיפורים: אין לסמוך בגאורגיה לא על התחזית, לא על אפליקציות הניווט, ולא על שעות הפתיחה.",
+          "להביא גם בגדים לקיץ וגם מעילי גשם – אחרי מטיראלה שוברים נסיעה בחוף (Supsa / Grigoleti) ונוח לנוח ליד הים.",
+        ],
+        links: [
+          { label: N.supsa + " – Google Maps", url: "https://www.google.com/maps/search/Supsa+Georgia" },
+          { label: N.grigoleti + " – Google Maps", url: "https://www.google.com/maps/search/Grigoleti+Georgia" },
+        ],
+      },
+    ],
+  },
+  3: {
+    pageIntro: "טיפים למשפחות עם גילאים מעורבים – רלוונטי גם ליום נסיעה וספא ב-Sairme.",
+    stories: TRAVELER_STORIES[3]?.stories || [],
+  },
+  4: {
+    pageIntro:
+      "קוטאיסי והאזור – לפני Adventure Camping. (באופציה א' הסיפורים האלה היו ביום 2.)",
+    stories: TRAVELER_STORIES[2]?.stories || [],
+  },
+  5: {
+    pageIntro: "רפטינג, צקאלטובו, פרומתאוס וסטאפליה – Urbex, מערות וטיפים מהשטח.",
+    stories: [...(TRAVELER_STORIES[5]?.stories || []), ...(TRAVELER_STORIES[4]?.stories || [])],
+  },
+};
+
+function getActiveTravelerStoriesMap() {
+  const optB =
+    typeof getStoredTripOptionId === "function" && getStoredTripOptionId() === "b";
+  if (optB && typeof TRAVELER_STORIES_B !== "undefined") {
+    return { ...TRAVELER_STORIES, ...TRAVELER_STORIES_B };
+  }
+  return TRAVELER_STORIES;
+}
+
 function getTravelerRecommendationsForDay(dayId, kind) {
-  const page = typeof TRAVELER_STORIES !== "undefined" ? TRAVELER_STORIES[dayId] : null;
+  const page = getActiveTravelerStoriesMap()?.[dayId] || null;
   if (!page?.stories?.length) return [];
   const items = [];
   page.stories.forEach((story) => {
@@ -744,6 +807,8 @@ function mapTravelerRecToPlaceCard(rec, type) {
 if (typeof module !== "undefined") {
   module.exports = {
     TRAVELER_STORIES,
+    TRAVELER_STORIES_B,
+    getActiveTravelerStoriesMap,
     getTravelerLodgingForDay,
     getTravelerRestaurantsForDay,
     getAllTravelerRecommendations,

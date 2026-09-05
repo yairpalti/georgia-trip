@@ -33,6 +33,7 @@
   <script src="js/places.js"></script>
   <script src="data/images.js"></script>
   <script src="data/trip.js"></script>
+  <script src="data/trip-options.js"></script>
   <script src="data/day-enrichment.js"></script>
   <script src="data/activity-details.js"></script>
   <script src="data/alternative-enrichment.js"></script>
@@ -42,6 +43,8 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(window.location.search);
+      const opt = params.get("option");
+      if (opt === "a" || opt === "b") setStoredTripOptionId(opt);
       const dayId = parseInt(params.get("id"), 10) || 1;
       renderStoriesPage(dayId);
     });

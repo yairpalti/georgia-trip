@@ -46,7 +46,9 @@ function lookupKnownPlaceCoords(name) {
     candidates.push({ keys: keys.map((k) => normalizePlaceKey(k)).filter(Boolean), lat, lng, address });
   };
 
-  if (typeof PRIME_HEAVEN !== "undefined") push(["Prime Heaven"], PRIME_HEAVEN.lat, PRIME_HEAVEN.lng);
+  if (typeof PRIME_HEAVEN !== "undefined") {
+    push(["Prime Heaven"], PRIME_HEAVEN.lat, PRIME_HEAVEN.lng, PRIME_HEAVEN.address);
+  }
   if (typeof HOTEL_LONDON_1889 !== "undefined") {
     push(
       ["Hotel London 1889", "London 1889", "Hotel London"],
@@ -58,9 +60,11 @@ function lookupKnownPlaceCoords(name) {
   if (typeof PEAK_MAZERI !== "undefined") {
     push(["Peak Mazeri", "Peak Mazeri Guest House", "mazeri cabin"], PEAK_MAZERI.lat, PEAK_MAZERI.lng, PEAK_MAZERI.address);
   }
+  if (typeof WHITE_HOTEL !== "undefined") {
+    push(["White Hotel Guesthouse", "White Hotel"], WHITE_HOTEL.lat, WHITE_HOTEL.lng, WHITE_HOTEL.address);
+  }
   push(["Adventure Camping"], 42.5582341, 42.8517484);
   push(["Cottage Mebirashi", "Mebirashi"], 42.512732, 43.144137);
-  push(["White Hotel Guesthouse", "White Hotel"], 42.508974, 41.870705);
   push(["21 Mestia", "Mestia Airbnb"], 43.0432, 42.719788);
 
   if (typeof ROUTE_COORDS !== "undefined") {
@@ -215,7 +219,7 @@ function renderPlaceCards(items, type = "place") {
             : "";
           const storyLink =
             isTraveler && item.storyDay
-              ? `<a href="stories.html?id=${item.storyDay}" class="place-card-story-link">לסיפור ←</a>`
+              ? `<a href="${storiesPageHref(item.storyDay)}" class="place-card-story-link">לסיפור ←</a>`
               : "";
           const booking =
             item.bookingUrl
@@ -302,15 +306,39 @@ function renderActivities(activities) {
 }
 
 function renderRaftingKutaisiCard(dayId) {
-  if (typeof RAFTING_KUTAISI === "undefined" || !RAFTING_KUTAISI.relatedDays.includes(dayId)) return "";
+  if (typeof RAFTING_KUTAISI === "undefined") return "";
+  const optionB = typeof getStoredTripOptionId === "function" && getStoredTripOptionId() === "b";
+  if (optionB) {
+    if (![4, 5].includes(dayId)) return "";
+  } else if (!RAFTING_KUTAISI.relatedDays.includes(dayId)) {
+    return "";
+  }
   const op = RAFTING_KUTAISI;
-  const dayTours = op.tours.filter((t) => t.relatedDays.includes(dayId));
+  let dayTours = op.tours.filter((t) => t.relatedDays.includes(dayId));
+  if (optionB && dayId === 4) {
+    // הגעה בערב – רפטינג רק ביום 5
+    dayTours = [];
+  }
+  if (optionB && dayId === 5) {
+    dayTours = op.tours.filter(
+      (t) => t.relatedDays.includes(5) && /rioni|rafting/i.test(`${t.name} ${t.url || ""}`)
+    );
+    if (!dayTours.length) {
+      dayTours = op.tours.filter((t) => t.relatedDays.includes(5));
+    }
+  }
   const camp = op.camping;
-  const showCamp = camp && camp.relatedDays.includes(dayId);
+  const showCamp = camp && (optionB ? [4, 5].includes(dayId) : camp.relatedDays.includes(dayId));
   return `
     <div class="card operator-card">
       <h2>🛶 ${op.name}</h2>
-      <p>${op.summary}</p>
+      <p>${
+        optionB && dayId === 5
+          ? "בוקר רפטינג מ-Adventure Camping, אחר כך יציאה לצקאלטובו."
+          : optionB && dayId === 4
+            ? "הגעה למחנה אחר הצהריים – לינה ומסעדה. רפטינג מחר בבוקר."
+            : op.summary
+      }</p>
       <ul class="operator-contact">
         <li><a href="${op.home}" target="_blank" rel="noopener noreferrer" class="external-link">🌐 raftinginkutaisi.com</a></li>
         <li><a href="${op.contact.whatsapp}" target="_blank" rel="noopener noreferrer" class="external-link">📱 WhatsApp ${op.contact.phone}</a></li>
@@ -321,8 +349,16 @@ function renderRaftingKutaisiCard(dayId) {
         showCamp
           ? `<div class="operator-camping">
               <h3>🏕️ ${camp.name}</h3>
-              <p>${camp.summary}</p>
-              <p class="operator-tour-note">${camp.scheduleHint}</p>
+              <p>${
+                optionB
+                  ? "לינה ביום 4 · רפטינג בבוקר יום 5 · מסעדה במקום."
+                  : camp.summary
+              }</p>
+              <p class="operator-tour-note">${
+                optionB
+                  ? "אופציה ב': check-in אחה\"צ יום 4 · רפטינג ~09:00 יום 5"
+                  : camp.scheduleHint
+              }</p>
               <p>${camp.restaurant}</p>
               <ul class="operator-lodging">${camp.lodging
                 .map((l) => `<li><strong>${l.name}</strong> – ${l.price}<span class="operator-tour-note">${l.note}</span></li>`)
@@ -401,7 +437,8 @@ function renderAlternatives(alts) {
 }
 
 function getDayById(id) {
-  return DAYS.find((d) => d.id === id);
+  const days = typeof getActiveDays === "function" ? getActiveDays() : DAYS;
+  return days.find((d) => d.id === Number(id));
 }
 
 const TRIP_YEAR = 2026;
@@ -418,7 +455,9 @@ function addDayToTripDate(dateStr) {
 }
 
 function getWeatherLocationForDay(dayId) {
-  const seg = ROUTE_SEGMENTS.find((s) => s.day === dayId);
+  const segments =
+    typeof getActiveRouteSegments === "function" ? getActiveRouteSegments() : ROUTE_SEGMENTS;
+  const seg = segments.find((s) => s.day === dayId);
   if (seg?.to) return { name: seg.to.name, lat: seg.to.lat, lng: seg.to.lng };
 
   const day = getDayById(dayId);
@@ -513,7 +552,18 @@ function renderImg(src, className, alt = "", fallbackKey = "mestia") {
 
 function getStoriesForDay(dayId) {
   if (typeof TRAVELER_STORIES === "undefined") return null;
-  return TRAVELER_STORIES[dayId] || null;
+  const map =
+    typeof getActiveTravelerStoriesMap === "function"
+      ? getActiveTravelerStoriesMap()
+      : TRAVELER_STORIES;
+  return map[dayId] || null;
+}
+
+function storiesPageHref(dayId) {
+  if (typeof storiesHref === "function") return storiesHref(dayId);
+  const opt =
+    typeof getStoredTripOptionId === "function" && getStoredTripOptionId() === "b" ? "b" : "a";
+  return `stories.html?id=${dayId}&option=${opt}`;
 }
 
 function getStoryCount(dayId) {
@@ -637,7 +687,18 @@ function renderCulinaryPlaceCards(items, kind) {
 
 function renderCulinaryLinksCard(dayId) {
   if (typeof CULINARY_LINKS === "undefined") return "";
-  const dayLinks = CULINARY_LINKS.byDay?.[dayId];
+  let lookupDay = dayId;
+  let dayLinks = null;
+  if (typeof getStoredTripOptionId === "function" && getStoredTripOptionId() === "b") {
+    // אופציה ב': מפת ימים שונה – חוף / Sairme / קוטאיסי / צקאלטובו
+    dayLinks = CULINARY_LINKS.byDayOptionB?.[dayId] || null;
+    if (!dayLinks) {
+      if (dayId === 2) lookupDay = 1; // אדג'ריה / חוף
+      else if (dayId === 4) lookupDay = 3; // סדנאות קוטאיסי
+      else lookupDay = dayId;
+    }
+  }
+  if (!dayLinks) dayLinks = CULINARY_LINKS.byDay?.[lookupDay];
   if (!dayLinks) return "";
   const workshops = dayLinks.workshops || [];
   const wineries = dayLinks.wineries || [];
@@ -880,6 +941,8 @@ function renderHikingTrailsCard(dayId) {
 function renderMtiralaKutaisiCard(dayId) {
   if (typeof MTIRALA_KUTAISI === "undefined" || !MTIRALA_KUTAISI.relatedDays.includes(dayId)) return "";
   const { mtirala: m, kutaisi: k } = MTIRALA_KUTAISI;
+  const hideKutaisi =
+    typeof getStoredTripOptionId === "function" && getStoredTripOptionId() === "b";
 
   const renderGuideGallery = (items) =>
     items?.length
@@ -963,6 +1026,10 @@ function renderMtiralaKutaisiCard(dayId) {
         <ul class="guide-list">${m.tips.map((t) => `<li>${t}</li>`).join("")}</ul>
       </div>
 
+      ${
+        hideKutaisi
+          ? `<p class="operator-tour-note">אופציה ב': אחרי מטיראלה – לינה באזור Supsa (לא קוטאיסי). סיבוב בעיר ביום 4.</p>`
+          : `
       <hr class="guide-divider" />
 
       <h2>🏛 ${k.name}</h2>
@@ -1008,7 +1075,8 @@ function renderMtiralaKutaisiCard(dayId) {
       <div class="guide-section">
         <h3>💡 טיפים – קוטאיסי</h3>
         <ul class="guide-list">${k.tips.map((t) => `<li>${t}</li>`).join("")}</ul>
-      </div>
+      </div>`
+      }
     </div>
   `;
 }
@@ -1052,6 +1120,10 @@ function renderStoriesPage(dayId) {
 
   document.title = `סיפורי מטיילים – יום ${day.id} | ${TRIP_META.title}`;
 
+  const optId = typeof getStoredTripOptionId === "function" ? getStoredTripOptionId() : "a";
+  const homeHref = optId === "b" ? "index.html?option=b" : "index.html";
+  const dayLink = typeof dayHref === "function" ? dayHref(day.id) : `day.html?id=${day.id}`;
+
   const storiesHtml =
     data?.stories?.length > 0
       ? data.stories.map((story, i) => renderStoryFrame(story, i)).join("")
@@ -1061,8 +1133,8 @@ function renderStoriesPage(dayId) {
     <section class="day-hero stories-hero">
       <div class="day-hero-inner container">
         <div class="breadcrumb">
-          <a href="index.html">דף הבית</a> /
-          <a href="day.html?id=${day.id}">יום ${day.id}</a> /
+          <a href="${homeHref}">דף הבית</a> /
+          <a href="${dayLink}">יום ${day.id}</a> /
           סיפורי מטיילים
         </div>
         <h1>📖 סיפורי מטיילים – יום ${day.id}</h1>
@@ -1087,13 +1159,13 @@ function renderStoriesPage(dayId) {
     <div class="container day-nav">
       ${
         dayId > 1
-          ? `<a href="stories.html?id=${dayId - 1}">סיפורים יום ${dayId - 1} →</a>`
+          ? `<a href="${storiesPageHref(dayId - 1)}">סיפורים יום ${dayId - 1} →</a>`
           : "<span></span>"
       }
-      <a href="day.html?id=${dayId}">תוכנית היום</a>
+      <a href="${dayLink}">תוכנית היום</a>
       ${
         dayId < 13
-          ? `<a href="stories.html?id=${dayId + 1}">← סיפורים יום ${dayId + 1}</a>`
+          ? `<a href="${storiesPageHref(dayId + 1)}">← סיפורים יום ${dayId + 1}</a>`
           : "<span></span>"
       }
     </div>
@@ -1102,6 +1174,37 @@ function renderStoriesPage(dayId) {
 
 function enrichDay(day) {
   if (!day) return day;
+
+  if (day.skipEnrichment) {
+    let restaurants = [...(day.restaurants || [])];
+    let hotels = [...(day.hotels || [])];
+    let activities = [...(day.activities || [])];
+
+    if (typeof getTravelerRestaurantsForDay === "function" && typeof mapTravelerRecToPlaceCard === "function") {
+      getTravelerRestaurantsForDay(day.id).forEach((rec) => {
+        restaurants.push(mapTravelerRecToPlaceCard(rec, "restaurant"));
+      });
+    }
+    if (typeof getTravelerLodgingForDay === "function" && typeof mapTravelerRecToPlaceCard === "function") {
+      getTravelerLodgingForDay(day.id).forEach((rec) => {
+        hotels.push(mapTravelerRecToPlaceCard(rec, "lodging"));
+      });
+    }
+
+    hotels = dedupePlaceItems(hotels);
+    restaurants = dedupePlaceItems(restaurants);
+    activities = filterActivitiesDuplicatingHotels(activities, hotels);
+
+    return {
+      ...day,
+      tips: day.tips || [],
+      activities,
+      restaurants,
+      hotels,
+      alternatives: day.alternatives || [],
+    };
+  }
+
   const e = typeof DAY_ENRICHMENT !== "undefined" ? DAY_ENRICHMENT[day.id] : null;
 
   const actDetails = typeof ACTIVITY_DETAILS !== "undefined" ? ACTIVITY_DETAILS[day.id] : null;
@@ -1255,8 +1358,12 @@ function renderDroneSpotDetail(spot) {
 }
 
 function renderDroneSpotsSection(dayId) {
-  if (typeof DRONE_SPOTS === "undefined") return "";
-  const data = DRONE_SPOTS[dayId];
+  const data =
+    typeof getDroneSpotsForDay === "function"
+      ? getDroneSpotsForDay(dayId)
+      : typeof DRONE_SPOTS !== "undefined"
+        ? DRONE_SPOTS[dayId]
+        : null;
   if (!data?.spots?.length) return "";
 
   const day = typeof getDayById === "function" ? enrichDay(getDayById(dayId)) : null;
@@ -1311,7 +1418,12 @@ function renderDroneSpotsSection(dayId) {
 }
 
 function initDroneSpotsSection(dayId) {
-  const data = typeof DRONE_SPOTS !== "undefined" ? DRONE_SPOTS[dayId] : null;
+  const data =
+    typeof getDroneSpotsForDay === "function"
+      ? getDroneSpotsForDay(dayId)
+      : typeof DRONE_SPOTS !== "undefined"
+        ? DRONE_SPOTS[dayId]
+        : null;
   if (!data?.spots?.length) return;
 
   const day = enrichDay(getDayById(dayId));
@@ -1358,15 +1470,19 @@ function initDroneSpotsSection(dayId) {
 }
 
 function renderDayNav(dayId, { top = false } = {}) {
+  const href =
+    typeof dayHref === "function" ? (id) => dayHref(id) : (id) => `day.html?id=${id}`;
+  const optId = typeof getStoredTripOptionId === "function" ? getStoredTripOptionId() : "a";
+  const homeHref = optId === "b" ? "index.html?option=b#map" : "index.html";
   const prev =
     dayId > 1
-      ? `<a href="day.html?id=${dayId - 1}">יום ${dayId - 1} →</a>`
+      ? `<a href="${href(dayId - 1)}">יום ${dayId - 1} →</a>`
       : "<span></span>";
   const next =
     dayId < 13
-      ? `<a href="day.html?id=${dayId + 1}">← יום ${dayId + 1}</a>`
+      ? `<a href="${href(dayId + 1)}">← יום ${dayId + 1}</a>`
       : "<span></span>";
-  const center = `<a href="index.html">כל הימים</a>`;
+  const center = `<a href="${homeHref}">כל הימים</a>`;
   const cls = top ? "day-nav day-nav-top" : "container day-nav";
   return `<nav class="${cls}" aria-label="ניווט בין ימים">${prev}${center}${next}</nav>`;
 }
@@ -1379,10 +1495,9 @@ function getDayMapRoutes(day) {
     }));
   }
 
-  const seg =
-    typeof ROUTE_SEGMENTS !== "undefined"
-      ? ROUTE_SEGMENTS.find((s) => s.day === day.id)
-      : null;
+  const segments =
+    typeof getActiveRouteSegments === "function" ? getActiveRouteSegments() : ROUTE_SEGMENTS;
+  const seg = segments?.find((s) => s.day === day.id);
 
   if (seg) {
     const points = [
@@ -1423,11 +1538,20 @@ function renderDayPage(dayId) {
     ? ` style="background-image: linear-gradient(to bottom, rgba(90,31,45,0.75), rgba(45,90,61,0.85)), url('${resolveImageUrl(day.heroImage)}')"`
     : "";
 
+  const optId = typeof getStoredTripOptionId === "function" ? getStoredTripOptionId() : "a";
+  const opt = typeof getTripOption === "function" ? getTripOption(optId) : null;
+  const homeHref = optId === "b" ? "index.html?option=b" : "index.html";
+  const optionBadge =
+    opt && typeof TRIP_OPTIONS !== "undefined"
+      ? `<div class="day-option-badge">${opt.name} · ${opt.blurb}</div>`
+      : "";
+
   document.getElementById("day-content").innerHTML = `
     <section class="day-hero"${heroStyle}>
       <div class="day-hero-inner container">
-        <div class="breadcrumb"><a href="index.html">דף הבית</a> / יום ${day.id}</div>
+        <div class="breadcrumb"><a href="${homeHref}">דף הבית</a> / יום ${day.id}</div>
         ${renderDayNav(dayId, { top: true })}
+        ${optionBadge}
         <h1>${day.emoji} יום ${day.id}: ${day.title}</h1>
         <div class="day-meta-row">
           <span>📅 ${day.date} (${day.weekday})</span>
@@ -1442,7 +1566,7 @@ function renderDayPage(dayId) {
         ${
           getStoryCount(dayId) > 0
             ? `
-        <a href="stories.html?id=${dayId}" class="stories-banner card">
+        <a href="${storiesPageHref(dayId)}" class="stories-banner card">
           <span class="stories-banner-icon">📖</span>
           <div>
             <strong>סיפורי מטיילים</strong>
@@ -1516,7 +1640,7 @@ function renderDayPage(dayId) {
         <div class="card sidebar-card stories-sidebar">
           <h2>📖 סיפורי מטיילים</h2>
           <p>${getStoryCount(dayId)} סיפורים עם תמונות, לינקים וטיפים מהשטח</p>
-          <a href="stories.html?id=${dayId}" class="btn btn-outline stories-sidebar-btn">לסיפורים ←</a>
+          <a href="${storiesPageHref(dayId)}" class="btn btn-outline stories-sidebar-btn">לסיפורים ←</a>
         </div>`
             : ""
         }
@@ -1542,42 +1666,169 @@ function renderDayPage(dayId) {
   } else {
     setTimeout(() => bindDayPlaceCardActions(), 100);
   }
-  if (typeof DRONE_SPOTS !== "undefined" && DRONE_SPOTS[dayId]?.spots?.length) {
+  if (
+    (typeof getDroneSpotsForDay === "function"
+      ? getDroneSpotsForDay(dayId)
+      : typeof DRONE_SPOTS !== "undefined"
+        ? DRONE_SPOTS[dayId]
+        : null
+    )?.spots?.length
+  ) {
     setTimeout(() => initDroneSpotsSection(dayId), 150);
   }
+}
+
+function renderAccommodationSummary() {
+  const tbody = document.getElementById("accommodation-body");
+  if (!tbody) return;
+  const rows =
+    typeof getActiveAccommodationSummary === "function"
+      ? getActiveAccommodationSummary()
+      : LOGISTICS.accommodationSummary;
+  tbody.innerHTML = rows
+    .map(
+      (row) => `
+        <tr>
+          <td>${row.place}</td>
+          <td>${row.nights}</td>
+          <td>${row.note}</td>
+        </tr>
+      `
+    )
+    .join("");
 }
 
 function renderDaysGrid() {
   const grid = document.getElementById("days-grid");
   if (!grid) return;
 
-  grid.innerHTML = DAYS.map(
-    (day) => {
+  const days = typeof getActiveDays === "function" ? getActiveDays() : DAYS;
+  const href = typeof dayHref === "function" ? (id) => dayHref(id) : (id) => `day.html?id=${id}`;
+
+  grid.innerHTML = days
+    .map((day) => {
       const d = enrichDay(day);
       return `
     <article class="day-card">
       ${d.heroImage ? `<div class="day-card-thumb" style="background-image:url('${resolveImageUrl(d.heroImage)}')"></div>` : ""}
       <div class="day-card-header">
         <div class="day-card-num">${d.emoji} יום ${d.id} · ${d.date} (${d.weekday})</div>
-        <h3 class="day-card-title"><a href="day.html?id=${d.id}" class="day-card-title-link">${d.title}</a></h3>
+        <h3 class="day-card-title"><a href="${href(d.id)}" class="day-card-title-link">${d.title}</a></h3>
       </div>
       <div class="day-card-body">
         <div class="day-card-meta">${d.theme} · <span class="ltr-num">${d.driving}</span></div>
         <p class="day-card-summary">${d.summary}</p>
         <div class="day-card-overnight">🏨 ${d.overnight}</div>
         <div class="day-card-links">
-          <a href="day.html?id=${d.id}" class="day-card-link">פרטים מלאים ←</a>
+          <a href="${href(d.id)}" class="day-card-link">פרטים מלאים ←</a>
           ${
             getStoryCount(d.id) > 0
-              ? `<a href="stories.html?id=${d.id}" class="day-card-link day-card-stories">📖 סיפורי מטיילים</a>`
+              ? `<a href="${storiesPageHref(d.id)}" class="day-card-link day-card-stories">📖 סיפורי מטיילים</a>`
               : ""
           }
         </div>
       </div>
     </article>
   `;
+    })
+    .join("");
+}
+
+let routeMapApi = null;
+
+function destroyRouteMap() {
+  if (routeMapApi?.map) {
+    try {
+      routeMapApi.map.remove();
+    } catch {
+      /* ignore */
     }
-  ).join("");
+    routeMapApi = null;
+  }
+  const mapEl = document.getElementById("route-map");
+  if (mapEl) {
+    mapEl.innerHTML = "";
+    if (mapEl._leaflet_id) delete mapEl._leaflet_id;
+  }
+  const measurePanel = document.getElementById("poi-measure-panel");
+  if (measurePanel) {
+    measurePanel.hidden = true;
+    measurePanel.innerHTML = "";
+  }
+}
+
+function renderHomeRouteMap() {
+  destroyRouteMap();
+  const segments =
+    typeof getActiveRouteSegments === "function" ? getActiveRouteSegments() : ROUTE_SEGMENTS;
+  routeMapApi = initRouteMap("route-map", segments, DAY_COLORS, {
+    activities: typeof EXTREME_ACTIVITIES !== "undefined" ? EXTREME_ACTIVITIES : [],
+    categories: typeof EXTREME_CATEGORIES !== "undefined" ? EXTREME_CATEGORIES : null,
+  });
+}
+
+function renderTripOptions() {
+  const host = document.getElementById("trip-options");
+  if (!host || typeof TRIP_OPTIONS === "undefined") return;
+
+  const activeId = getStoredTripOptionId();
+
+  host.innerHTML = `
+    <div class="trip-options-intro">
+      <h3 class="trip-options-heading">בחירת מסלול לימים 2–5</h3>
+      <p class="trip-options-note">מיום 6 ואילך המסלול זהה. הלחיצה מעדכנת את המפה, רשימת הימים, הלינות ודפי היום (כולל רחפן).</p>
+    </div>
+    <div class="trip-options-grid" role="radiogroup" aria-label="אופציות מסלול">
+      ${TRIP_OPTIONS.map((opt) => {
+        const segments = opt.getSegments();
+        const km = totalRouteKm(segments);
+        const daysDelta = opt.id === "b" ? [2, 3, 4, 5] : [2, 3, 4];
+        const days24 = totalRouteKm(segments.filter((s) => daysDelta.includes(s.day)));
+        const selected = opt.id === activeId;
+        return `
+          <button type="button"
+            class="trip-option-card${selected ? " is-selected" : ""}"
+            role="radio"
+            aria-checked="${selected}"
+            data-option="${opt.id}">
+            <div class="trip-option-top">
+              <span class="trip-option-name">${opt.name}</span>
+              <span class="trip-option-km ltr-num">${km.toLocaleString("en-US")} km</span>
+            </div>
+            <div class="trip-option-blurb">${opt.blurb}</div>
+            <div class="trip-option-highlight">${opt.highlight}</div>
+            <div class="trip-option-subkm ltr-num">ימים ${daysDelta[0]}–${daysDelta[daysDelta.length - 1]}: ${days24} km</div>
+          </button>
+        `;
+      }).join("")}
+    </div>
+  `;
+
+  host.querySelectorAll("[data-option]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-option");
+      if (id === getStoredTripOptionId()) return;
+      setStoredTripOptionId(id);
+      const url = new URL(window.location.href);
+      url.searchParams.set("option", id);
+      history.replaceState(null, "", `${url.pathname}${url.search}${url.hash || "#map"}`);
+      applyTripOption(id);
+    });
+  });
+}
+
+function applyTripOption(id) {
+  setStoredTripOptionId(id);
+  renderTripOptions();
+  renderHomeRouteMap();
+  renderDaysGrid();
+  renderAccommodationSummary();
+
+  const sectionTitle = document.getElementById("days-section-title");
+  if (sectionTitle) {
+    const opt = getTripOption(id);
+    sectionTitle.textContent = `📅 תוכנית לפי ימים · ${opt.name}`;
+  }
 }
 
 function renderExtremeDetail(activity, categories) {

@@ -189,7 +189,7 @@ const ACTIVITY_DETAILS = {
     },
     {
       description:
-        "אחר הצהריים – מעיינות חמים נוקאלאקווי. נסיעה ~20 ק\"מ, הליכה 10 דק' לבריכות טבעיות. בגד ים, מגבת. אחר כך נסיעה לזוגדידי ללינה (יציאה לסוואנטי מחר).",
+        "אחר הצהריים – מעיינות חמים נוקאלאקווי. נסיעה ~20 ק\"מ, הליכה 10 דק' לבריכות טבעיות. בגד ים, מגבת. אחר כך נסיעה לזוגדידי – White Hotel Guesthouse (Booked · הגעה ~16–17).",
       image: "IMG.nokalakevi",
       link: "https://www.google.com/maps/search/Nokalakevi+Hot+Springs",
       linkLabel: N.nokalakeviHotSprings,

@@ -54,7 +54,7 @@ const ALTERNATIVE_ENRICHMENT = {
           timeOfDay: "17:00–",
           duration: "ערב",
           description:
-            "check-in ב-Prime Heaven (Booking 25.9–26.9, מ-14:00). דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה. מחר יציאה לראצ'ה.",
+            "check-in ב-Prime Heaven (Booking 25.9–26.9, מ-14:00, הגעה ~14–15). $154 · WiFi · חניה חינם · בלי ארוחות · ביטול עד 23.9 · +995 599 51 41 52. מחר יציאה לראצ'ה.",
           link: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A",
           linkLabel: N.primeHeaven,
           image: "IMG.chiatura",
@@ -74,7 +74,7 @@ const ALTERNATIVE_ENRICHMENT = {
         "בגד ספורט, נעליים סגורות",
         "עצירה בקצחי בדרך (~15 דק')",
         "Sveri → צ'יאתורה ~1 ש' · check-in במלון מ-14:00",
-        "Booking: דירוג 9.2 · מיקום 9.8 · WiFi · חניה · מסעדה",
+        "Booking: $154 · WiFi · חניה חינם · בלי ארוחות · ביטול עד 23.9 · +995 599 51 41 52",
       ],
       activities: [
         {
@@ -119,7 +119,7 @@ const ALTERNATIVE_ENRICHMENT = {
           timeOfDay: "16:30–18:00",
           duration: "~1 ש'",
           description:
-            "Sveri → Prime Heaven, צ'יאתורה (რესტორანი & სასტუმრო). Booking 25.9–26.9 · check-in מ-14:00 · דירוג 9.2 · מיקום 9.8.",
+            "Sveri → Prime Heaven, צ'יאתורה. Booking 25.9–26.9 · check-in מ-14:00 · $154 · חניה חינם · +995 599 51 41 52.",
           link: "https://maps.app.goo.gl/ykQspZ4zZXnftZH1A",
           linkLabel: N.primeHeaven,
           image: "IMG.chiatura",
