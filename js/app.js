@@ -441,6 +441,68 @@ function getDayById(id) {
   return days.find((d) => d.id === Number(id));
 }
 
+function getRouteSegmentForDay(dayId) {
+  const segments =
+    typeof getActiveRouteSegments === "function"
+      ? getActiveRouteSegments()
+      : typeof ROUTE_SEGMENTS !== "undefined"
+        ? ROUTE_SEGMENTS
+        : [];
+  return segments.find((s) => s.day === Number(dayId)) || null;
+}
+
+/** "3.5h" / "20 min" / "2.5–3.5h" → תצוגה בעברית עם ~ */
+function formatRouteDurationHe(duration) {
+  if (!duration) return "";
+  let d = String(duration).trim();
+  d = d
+    .replace(/(\d+(?:[.,]\d+)?(?:\s*[–—−-]\s*\d+(?:[.,]\d+)?)?)\s*h\b/gi, "$1 ש'")
+    .replace(/(\d+(?:[.,]\d+)?(?:\s*[–—−-]\s*\d+(?:[.,]\d+)?)?)\s*mins?\b/gi, "$1 דק'")
+    .replace(/\bhike\b/gi, "הליכה");
+  return d.startsWith("~") ? d : `~${d}`;
+}
+
+/** הערות נסיעה (SUV, לינה…) בלי לכפול מרחק/זמן */
+function drivingExtraNote(original) {
+  if (!original) return "";
+  return String(original)
+    .split(/\s*·\s*/)
+    .map((p) => p.trim())
+    .filter((p) => {
+      if (!p) return false;
+      if (/ללא\s+נסיעות/i.test(p)) return false;
+      if (/ק["״']?מ/.test(p)) return false;
+      if (/\d/.test(p) && /(?:ש'|שעות|שעה|דק'|דקות|\bh\b|min|הליכה)/i.test(p) && p.length < 48) {
+        return false;
+      }
+      return true;
+    })
+    .join(" · ");
+}
+
+/** מרחק כולל + זמן נסיעה בצמוד – ממקטע המסלול הפעיל */
+function formatDayDriving(day) {
+  if (!day) return "";
+  const seg = getRouteSegmentForDay(day.id);
+  if (!seg || (seg.distanceKm == null && !seg.duration)) {
+    return day.driving || "";
+  }
+
+  const parts = [];
+  if (Number(seg.distanceKm) === 0) {
+    parts.push("ללא נסיעות");
+  } else if (seg.distanceKm != null) {
+    parts.push(`כ-${seg.distanceKm} ק"מ`);
+  }
+  if (seg.duration) {
+    parts.push(formatRouteDurationHe(seg.duration));
+  }
+
+  const core = parts.join(" · ");
+  const extra = drivingExtraNote(day.driving);
+  return extra ? `${core} · ${extra}` : core;
+}
+
 const TRIP_YEAR = 2026;
 
 function shortPlaceName(name) {
@@ -1198,6 +1260,7 @@ function enrichDay(day) {
     return {
       ...day,
       tips: day.tips || [],
+      driving: formatDayDriving(day),
       activities,
       restaurants,
       hotels,
@@ -1248,6 +1311,7 @@ function enrichDay(day) {
     summary: e?.summary || day.summary,
     tips: e?.tips || day.tips || [],
     heroImage: e?.heroImage || day.heroImage,
+    driving: formatDayDriving(day),
     activities,
     restaurants,
     hotels,
